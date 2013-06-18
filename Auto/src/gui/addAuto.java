@@ -32,8 +32,7 @@ public class addAuto {
 			new SpinnerNumberModel());
 	final static JSpinner KFZ_ERST_ZULASSUNG_SPINNER = new JSpinner(
 			new SpinnerDateModel());
-	final static JSpinner KFZ_KAUF_SPINNER = new JSpinner(
-			new SpinnerDateModel());
+	final static JSpinner KFZ_KAUF_SPINNER = new JSpinner(new SpinnerDateModel());
 	final static JButton NEW_AUTO_BUTTON = new JButton("neues Auto");
 	final static JLabel KFZ_LABEL_LABEL = new JLabel("Kennzeichen:");
 	final static JLabel KM_LABEL = new JLabel("Km-Stand:");

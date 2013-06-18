@@ -9,14 +9,14 @@ public class Auto {
 	private double km;
 	private Date kauf;
 	private Date erstZulassung;
-	private String[] BenzinArten;
+	private String[] benzinArten;
 
 	public String[] getBenzinArten() {
-		return BenzinArten;
+		return benzinArten;
 	}
 
 	public void setBenzinArten(String[] benzinArten) {
-		BenzinArten = benzinArten;
+		benzinArten = benzinArten;
 	}
 
 	public String getKfz() {
@@ -35,11 +35,11 @@ public class Auto {
 		this.id = id;
 	}
 
-	public int getKm() {
+	public double getKm() {
 		return km;
 	}
 
-	public void setKm(int km) {
+	public void setKm(double km) {
 		this.km = km;
 	}
 
