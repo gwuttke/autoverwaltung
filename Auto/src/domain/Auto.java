@@ -16,7 +16,7 @@ public class Auto {
 	}
 
 	public void setBenzinArten(String[] benzinArten) {
-		benzinArten = benzinArten;
+		this.benzinArten = benzinArten;
 	}
 
 	public String getKfz() {
