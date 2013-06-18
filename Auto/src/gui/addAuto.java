@@ -2,11 +2,9 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.math.BigInteger;
 import java.text.DecimalFormat;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
