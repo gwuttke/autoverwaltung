@@ -7,12 +7,12 @@ public class Tanken {
 
 	private int kmStand;
 	private int landId;
-	private int ort;
+	private int ortId;
 	private boolean voll;
 	private BigDecimal kosten;
 	private int autoId;
 	private Date datum;
-	private int Liter;
+	private int liter;
 	private BigDecimal preisProLiter;
 
 	public int getKmStand() {
