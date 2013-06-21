@@ -10,6 +10,8 @@ public class SonstigeAusgaben {
 	private double kosten;
 	private int autoId;
 
+	private static Berechnung berechne = new Berechnung();
+	
 	public Date getDatum() {
 		return datum;
 	}
@@ -35,9 +37,7 @@ public class SonstigeAusgaben {
 	}
 
 	public BigDecimal getKosten() {
-		BigDecimal b = new BigDecimal(kosten);
-		b=b.setScale(2, BigDecimal.ROUND_HALF_UP);
-		return b;
+		return berechne.getRound(kosten, 2);
 	}
 
 	public void setKosten(double kosten) {
@@ -52,8 +52,4 @@ public class SonstigeAusgaben {
 		this.autoId = autoId;
 	}
 
-	public static void main(String[] args) {
-		SonstigeAusgaben sonsAusg = new SonstigeAusgaben();
-
-	}
 }

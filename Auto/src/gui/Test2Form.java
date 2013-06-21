@@ -81,7 +81,7 @@ public class Test2Form {
 			benzin.removeAllItems();
 			for (Auto a : aut.autos) {
 				for (String ba : a.getBenzinArten()) {
-					getBenzinCombo.addItem(ba);
+					//getBenzinCombo.addItem(ba);
 				}
 			}
 			// for (Benzinart b : ben.autoBenzinList)
