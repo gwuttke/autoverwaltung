@@ -7,8 +7,8 @@ public class SonstigeAusgaben {
 	private Date datum;
 	private int kmStand;
 	private String kommentar;
-	private BigDecimal kosten;
-	private int AutoId;
+	private double kosten;
+	private int autoId;
 
 	public Date getDatum() {
 		return datum;
@@ -35,19 +35,25 @@ public class SonstigeAusgaben {
 	}
 
 	public BigDecimal getKosten() {
-		return kosten;
+		BigDecimal b = new BigDecimal(kosten);
+		b=b.setScale(2, BigDecimal.ROUND_HALF_UP);
+		return b;
 	}
 
-	public void setKosten(BigDecimal kosten) {
+	public void setKosten(double kosten) {
 		this.kosten = kosten;
 	}
 
 	public int getAutoId() {
-		return AutoId;
+		return autoId;
 	}
 
 	public void setAutoId(int autoId) {
-		AutoId = autoId;
+		this.autoId = autoId;
 	}
 
+	public static void main(String[] args) {
+		SonstigeAusgaben sonsAusg = new SonstigeAusgaben();
+
+	}
 }
