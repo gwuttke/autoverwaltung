@@ -3,6 +3,7 @@ package domain;
 public class Ort {
 	private String ort;
 	private int id;
+	private int landId;
 
 	public String getOrt() {
 		return ort;
@@ -18,6 +19,14 @@ public class Ort {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getLandId() {
+		return landId;
+	}
+
+	public void setLandId(int landId) {
+		this.landId = landId;
 	}
 
 }
