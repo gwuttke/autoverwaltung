@@ -7,84 +7,62 @@ public class Tanken {
 
 	private int kmStand;
 	private int landId;
-	private int ort;
+	private int ortId;
 	private boolean voll;
 	private BigDecimal kosten;
 	private int autoId;
 	private Date datum;
-	private int Liter;
-	private BigDecimal preisProLiter;
-
+	private double liter;
 	public int getKmStand() {
 		return kmStand;
 	}
-
 	public void setKmStand(int kmStand) {
 		this.kmStand = kmStand;
 	}
-
 	public int getLandId() {
 		return landId;
 	}
-
 	public void setLandId(int landId) {
 		this.landId = landId;
 	}
-
-	public int getOrt() {
-		return ort;
+	public int getOrtId() {
+		return ortId;
 	}
-
-	public void setOrt(int ort) {
-		this.ort = ort;
+	public void setOrtId(int ortId) {
+		this.ortId = ortId;
 	}
-
 	public boolean isVoll() {
 		return voll;
 	}
-
 	public void setVoll(boolean voll) {
 		this.voll = voll;
 	}
-
 	public BigDecimal getKosten() {
 		return kosten;
 	}
-
 	public void setKosten(BigDecimal kosten) {
 		this.kosten = kosten;
 	}
-
 	public int getAutoId() {
 		return autoId;
 	}
-
 	public void setAutoId(int autoId) {
 		this.autoId = autoId;
 	}
-
 	public Date getDatum() {
 		return datum;
 	}
-
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
-
-	public int getLiter() {
-		return Liter;
+	public double getLiter() {
+		return liter;
 	}
-
-	public void setLiter(int liter) {
-		Liter = liter;
+	public void setLiter(double liter) {
+		this.liter = liter;
 	}
-
-	public BigDecimal getPreisProLiter() {
-		return preisProLiter;
-	}
-
-	public void setPreisProLiter(BigDecimal preisProLiter) {
-		this.preisProLiter = preisProLiter;
-	}
+	
+	
+	
 
 }

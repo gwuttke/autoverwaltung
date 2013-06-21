@@ -14,19 +14,6 @@ public class Auto {
 	private int kmGefahren;
 	private String autoAlter;
 	private String kaufAlter;
-	
-	public String getAutoAlter() {
-		return autoAlter;
-	}
-	public void setAutoAlter(String autoAlter) {
-		this.autoAlter = autoAlter;
-	}
-	public String getKaufAlter() {
-		return kaufAlter;
-	}
-	public void setKaufAlter(String kaufAlter) {
-		this.kaufAlter = kaufAlter;
-	}
 	public String getKfz() {
 		return kfz;
 	}
@@ -75,6 +62,18 @@ public class Auto {
 	public void setKmGefahren(int kmGefahren) {
 		this.kmGefahren = kmGefahren;
 	}
-
-
+	public String getAutoAlter() {
+		return autoAlter;
+	}
+	public void setAutoAlter(String autoAlter) {
+		this.autoAlter = autoAlter;
+	}
+	public String getKaufAlter() {
+		return kaufAlter;
+	}
+	public void setKaufAlter(String kaufAlter) {
+		this.kaufAlter = kaufAlter;
+	}
+	
+	
 }

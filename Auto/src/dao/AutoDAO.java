@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Array;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +14,7 @@ public class AutoDAO {
 	SqlServer sqlS = new SqlServer();
 	Procedures proc = new Procedures();
 	private ResultSet rs;
-	private String selectAuto = "SELECT Auto_ID," + "Kennzeichen,"
-			+ "Anfangs_Km," + "Kauf_Datum," + "ErstZulassung" + "FROM T_Auto "
-			+ "ORDER BY Auto_ID;";
+
 	private String autoSQL2 = "SELECT Auto_ID, Kennzeichen, Anfangs_Km, Kauf_Datum, ErstZulassung FROM T_Auto ORDER BY Auto_ID;";
 
 	public List<Auto> autos = new ArrayList<Auto>();
@@ -64,7 +61,7 @@ public class AutoDAO {
 
 			auto.setErstZulassung(rsAuto.getDate("ErstZulassung"));
 			auto.setKauf(rsAuto.getDate("Kauf_Datum"));
-			auto.setKm(rsAuto.getInt("Anfangs_Km"));
+			auto.setKmKauf(rsAuto.getInt("Anfangs_Km"));
 			autos.add(auto);
 
 		}
