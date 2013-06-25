@@ -1,8 +1,5 @@
 package database;
 
-import gui.Test2Form;
-
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,24 +7,48 @@ import java.sql.ResultSet;
 import javax.swing.JComboBox;
 
 public class Procedures extends database.SqlServer {
-	
+
 	private ResultSet rs = null;
 
-	public ResultSet getKosten(JComboBox<String> comboBox, int jahr){
+	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
+			Date erstZulassung, int[] BenzinArten) {
+
+		return this.callAddAuto(kfz, kaufKm, kaufDatum, erstZulassung,
+				BenzinArten);
+	}
+
+	public void getNewSonstigeAusgabe(JComboBox<String> comboBox, Date datum, int kmStand,
+			String kommentar, Double kosten){
+		
 		String kennzeichen = comboBox.getSelectedItem().toString();
-		return this.callKosten(kfz, jahr)
+		
+		this.callAddSonstigeAusgaben(datum, kmStand, kommentar, kosten, kennzeichen);
 		
 	}
 	
-	
+	public void getRefuel(JComboBox<String> comboBox, int kmStand, String land,
+			String ort, int voll, Double kosten, Date datum, Double liter,
+			double preisProLiter, int benzinArt) {
+
+		String kennzeichen = comboBox.getSelectedItem().toString();
+
+		callAddTanken(kennzeichen, kmStand, land, ort, voll, kosten, datum,
+				liter, preisProLiter, benzinArt);
+
+	}
+
+	public ResultSet getKosten(JComboBox<String> comboBox, int jahr) {
+		String kennzeichen = comboBox.getSelectedItem().toString();
+		return this.callKosten(kennzeichen, jahr);
+	}
+
 	public ResultSet getKennzeichen(int AutoId) {
 		return this.callKennzeichen(AutoId);
 	}
 
-	public ResultSet getAutoBenzinArten(JComboBox<String > comboBox) {
+	public ResultSet getAutoBenzinArten(JComboBox<String> comboBox) {
 		if (comboBox.getItemCount() > 0) {
-			String kennzeichen = comboBox.getSelectedItem()
-					.toString();
+			String kennzeichen = comboBox.getSelectedItem().toString();
 			rs = callAutoBenzinArten(kennzeichen);
 		} else {
 			comboBox.addItem("Null");
@@ -35,16 +56,11 @@ public class Procedures extends database.SqlServer {
 		return rs;
 	}
 
-	public ResultSet getAutoAlter(JComboBox<String > comboBox) {
+	public ResultSet getAutoAlter(JComboBox<String> comboBox) {
 		String kennzeichen = comboBox.getSelectedItem().toString();
 		return callAutoAlter(kennzeichen);
 	}
 
-	/*
-	 * // oder volgende Methode public ResultSet getAutoBenzinArten() { String
-	 * kennzeichen = tf.getCombo2().getSelectedItem().toString(); rs =
-	 * PAutoBenzinArten(kennzeichen); return rs; }
-	 */
 	private ResultSet callKennzeichen(int AutoId) {
 		String kennzeichenOut = null;
 		try {
@@ -126,8 +142,17 @@ public class Procedures extends database.SqlServer {
 	}
 
 	private ResultSet callAddAuto(String kfz, int kaufKm, Date kaufDatum,
-			Date erstZulassung, String BenzinArten) {
+			Date erstZulassung, int[] benzinArten) {
 		int autoId = 0;
+		String strBenzinArten = "";
+
+		// Int Array in einen String umwandeln mit kommata getrennt
+		for (int benzin : benzinArten) {
+			strBenzinArten += strBenzinArten + benzin + ",";
+		}
+		strBenzinArten = strBenzinArten.substring(0,
+				strBenzinArten.length() - 1);
+
 		try {
 			openConnection();
 			PreparedStatement pstm = getConn().prepareStatement(
@@ -137,7 +162,7 @@ public class Procedures extends database.SqlServer {
 			pstm.setDate(3, kaufDatum);
 			pstm.setDate(4, erstZulassung);
 			pstm.setInt(5, autoId);
-			pstm.setString(6, BenzinArten);
+			pstm.setString(6, strBenzinArten);
 
 			rs = pstm.executeQuery();
 
@@ -152,17 +177,10 @@ public class Procedures extends database.SqlServer {
 
 	private void callAddTanken(String kfz, int kmStand, String land,
 			String ort, int voll, Double kosten, Date datum, Double liter,
-			Double preisProLiter, int[] benzinArt) {
+			Double preisProLiter, int benzinArt) {
 		int autoId = 0;
 		int landId = 0;
 		int ortId = 0;
-		String strBenzinArt = "";
-
-		// Int Array in einen String umwandeln mit kommata getrennt
-		for (int benzin : benzinArt) {
-			strBenzinArt += strBenzinArt + benzin + ",";
-		}
-		strBenzinArt = strBenzinArt.substring(0, strBenzinArt.length() - 1);
 
 		try {
 			openConnection();
@@ -177,7 +195,7 @@ public class Procedures extends database.SqlServer {
 			pstm.setDate(7, datum);
 			pstm.setDouble(8, liter);
 			pstm.setDouble(9, preisProLiter);
-			pstm.setString(10, strBenzinArt);
+			pstm.setInt(10, benzinArt);
 			pstm.setInt(11, autoId);
 			pstm.setInt(12, landId);
 			pstm.setInt(13, ortId);
