@@ -45,12 +45,10 @@ public class SqlServer {
 		return ps;
 	}
 
-	public void setPs(PreparedStatement ps, String string) {
+	public void setPs(PreparedStatement ps, String x) {
 		this.ps = ps;
-		// if (string != null){
-		// for (int i = 0; i <= string.length -1; i++){
 		try {
-			this.ps.setString(1, string);
+			this.ps.setString(1, x);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,43 +94,59 @@ public class SqlServer {
 
 	public Connection openConnection() throws ClassNotFoundException,
 			SQLException {
-		// Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		this.setConn(DriverManager.getConnection(connectionUrl));
-		if (this.conn != null) {
+		if (hasConnection() == false) {
+			// Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			this.setConn(DriverManager.getConnection(connectionUrl));
+			return this.getConn();
+
+		} else {
 			return this.getConn();
 		}
-		return null;
+
 	}
 
-	public boolean hasConnection() throws SQLException {
-		if ((this.conn != null) || (this.conn.isValid(1))) {
-			return true;
+	public boolean hasConnection() {
+
+		try {
+			if ((this.conn != null) || (this.conn.isValid(1))) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return false;
 
 	}
 
-	public void closeResults(Statement st, ResultSet rs, Connection conn)
-			throws SQLException {
-		if (this.st != null) {
-			this.st.close();
-			this.setSt(null);
-		}
+	public void closeResults(Statement st, ResultSet rs, Connection conn) {
+		try {
+			if (this.st != null) {
+				this.st.close();
+				this.setSt(null);
+			}
 
-		if (this.rs != null) {
-			this.rs.close();
-			this.setRs(null);
+			if (this.rs != null) {
+				this.rs.close();
+				this.setRs(null);
+			}
+			if (this.conn != null) {
+				this.closeConnection();
+			}
+		} catch (Exception e) {
+			e.getMessage();
 		}
-		if (this.conn != null) {
-			this.closeConnection();
-		}
-
 	}
 
-	public void closeConnection() throws SQLException {
+	public void closeConnection() {
+
 		if (this.hasConnection() == true) {
-			this.conn.close();
-			this.setConn(null);
+			try {
+				this.conn.close();
+				this.setConn(null);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 	}
