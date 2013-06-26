@@ -10,6 +10,10 @@ public class Procedures extends database.SqlServer {
 
 	private ResultSet rs = null;
 
+	public ResultSet getAutos() {
+		return this.callAuto();
+	}
+
 	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] BenzinArten) {
 
@@ -17,15 +21,16 @@ public class Procedures extends database.SqlServer {
 				BenzinArten);
 	}
 
-	public void getNewSonstigeAusgabe(JComboBox<String> comboBox, Date datum, int kmStand,
-			String kommentar, Double kosten){
-		
+	public void getNewSonstigeAusgabe(JComboBox<String> comboBox, Date datum,
+			int kmStand, String kommentar, Double kosten) {
+
 		String kennzeichen = comboBox.getSelectedItem().toString();
-		
-		this.callAddSonstigeAusgaben(datum, kmStand, kommentar, kosten, kennzeichen);
-		
+
+		this.callAddSonstigeAusgaben(datum, kmStand, kommentar, kosten,
+				kennzeichen);
+
 	}
-	
+
 	public void getRefuel(JComboBox<String> comboBox, int kmStand, String land,
 			String ort, int voll, Double kosten, Date datum, Double liter,
 			double preisProLiter, int benzinArt) {
@@ -37,27 +42,22 @@ public class Procedures extends database.SqlServer {
 
 	}
 
-	public ResultSet getKosten(JComboBox<String> comboBox, int jahr) {
-		String kennzeichen = comboBox.getSelectedItem().toString();
-		return this.callKosten(kennzeichen, jahr);
+	public ResultSet getKosten(String kfz, int jahr) {
+		return this.callKosten(kfz, jahr);
 	}
 
 	public ResultSet getKennzeichen(int AutoId) {
 		return this.callKennzeichen(AutoId);
 	}
 
-	public ResultSet getAutoBenzinArten(JComboBox<String> comboBox) {
-		if (comboBox.getItemCount() > 0) {
-			String kennzeichen = comboBox.getSelectedItem().toString();
-			rs = callAutoBenzinArten(kennzeichen);
-		} else {
-			comboBox.addItem("Null");
-		}
+	public ResultSet getAutoBenzinArten(String kfz) {
+		rs = callAutoBenzinArten(kfz);
+
 		return rs;
 	}
 
-	public ResultSet getAutoAlter(JComboBox<String> comboBox) {
-		String kennzeichen = comboBox.getSelectedItem().toString();
+	public ResultSet getAutoAlter(String kfz) {
+		String kennzeichen = kfz;
 		return callAutoAlter(kennzeichen);
 	}
 
@@ -129,6 +129,24 @@ public class Procedures extends database.SqlServer {
 			pstm.setString(1, kfz);
 			pstm.setInt(2, jahr);
 			pstm.setInt(3, autoId);
+			rs = pstm.executeQuery();
+
+			return rs;
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		} finally {
+			closeResults(getSt(), getRs(), getConn());
+		}
+
+	}
+
+	private ResultSet callAuto() {
+		try {
+			openConnection();
+			PreparedStatement pstm = getConn().prepareStatement(
+					"call dbo.V_Auto ");
+
 			rs = pstm.executeQuery();
 
 			return rs;
