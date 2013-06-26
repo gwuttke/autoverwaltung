@@ -15,9 +15,12 @@ public class AutoDAO {
 
 	private List<Auto> autoList = new ArrayList<Auto>();
 
-	private ResultSet autoBenzinRS;
+	private ResultSet autoBenzinRS = null;
 
-	public ResultSet getAutoBenzinRS() {
+	public ResultSet getAutoBenzinRS(String kfz) {
+		if (this.autoBenzinRS == null) {
+			setAutoBenzinRS(kfz);
+		}
 		return autoBenzinRS;
 	}
 
@@ -44,17 +47,23 @@ public class AutoDAO {
 		ResultSet rsAuto = this.getAutosRS();
 	
 		int i = 0;
-		String[] autoBenzin = new String[this.length(autoBenzinRS)];
-		while (autoBenzinRS.next()) {
-			autoBenzin[i] = autoBenzinRS.getString("Benzinart");
-			i++;
-		}
-
+		String[] autoBenzin = new String[5];
+		
+		
+		
 		while (rsAuto.next()) {
 			final Auto auto = new Auto();
 
+			
+			
 			auto.setId(rsAuto.getInt("AUTO_ID"));
 			auto.setKfz(rsAuto.getString("KENNZEICHEN"));
+		
+			while (getAutoBenzinRS(rsAuto.getString("KENNZEICHEN")).next()) {
+			autoBenzin[i] = getAutoBenzinRS(rsAuto.getString("KENNZEICHEN")).getString("Benzinart");
+			i++;
+		}
+			
 			auto.setBenzinArten(autoBenzin);
 			auto.setErstZulassung(rsAuto.getDate("ErstZulassung"));
 			auto.setKauf(rsAuto.getDate("Kauf_Datum"));
@@ -66,10 +75,9 @@ public class AutoDAO {
 			
 			autoList.add(auto);
 
-		}
+		}}
 
-	}
-
+	
 	private int length(ResultSet rs) {
 		int count = 0;
 
@@ -82,5 +90,5 @@ public class AutoDAO {
 		}
 
 	}
-
 }
+
