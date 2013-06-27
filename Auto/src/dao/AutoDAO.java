@@ -45,45 +45,48 @@ public class AutoDAO {
 	public void setAutoList() throws SQLException {
 
 		ResultSet rsAuto = this.getAutosRS();
-	
-		int i = 0;
-		String[] autoBenzin = new String[5];
-		
-		
-		
+
+		String[] autoBenzin;
+
 		while (rsAuto.next()) {
 			final Auto auto = new Auto();
+			int i = 0;
 
-			
-			
+			autoBenzin = new String[length(getAutoBenzinRS(rsAuto
+					.getString("KENNZEICHEN")))];
 			auto.setId(rsAuto.getInt("AUTO_ID"));
 			auto.setKfz(rsAuto.getString("KENNZEICHEN"));
-		
+
+			// länge des String Arrays Benzinarten je Auto setzen
+
+			// Auto Benzinarten füllen
 			while (getAutoBenzinRS(rsAuto.getString("KENNZEICHEN")).next()) {
-			autoBenzin[i] = getAutoBenzinRS(rsAuto.getString("KENNZEICHEN")).getString("Benzinart");
-			i++;
-		}
-			
+				autoBenzin[i] = getAutoBenzinRS(rsAuto.getString("KENNZEICHEN"))
+						.getString("Benzinart");
+				i++;
+			}
+
 			auto.setBenzinArten(autoBenzin);
 			auto.setErstZulassung(rsAuto.getDate("ErstZulassung"));
 			auto.setKauf(rsAuto.getDate("Kauf_Datum"));
 			auto.setKmKauf(rsAuto.getInt("Anfangs_Km"));
-			//auto.setKmAktuell(kmAktuell)
-			//auto.setAutoAlter(autoAlter)
-			//auto.setKaufAlter(kaufAlter)
-			//auto.setKmGefahren();
-			
+			// auto.setKmAktuell(kmAktuell)
+			// auto.setAutoAlter(autoAlter)
+			// auto.setKaufAlter(kaufAlter)
+			// auto.setKmGefahren();
+
 			autoList.add(auto);
 
-		}}
+		}
+	}
 
-	
 	private int length(ResultSet rs) {
 		int count = 0;
 
 		try {
 			rs.last();
 			count = rs.getRow();
+			rs.beforeFirst();
 			return count;
 		} catch (SQLException e) {
 			return -1;
@@ -91,4 +94,3 @@ public class AutoDAO {
 
 	}
 }
-
