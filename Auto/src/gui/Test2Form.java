@@ -10,13 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import dao.AutoDAO;
-import dao.BenzinDAO;
+import dao.BenzinartDAO;
 import database.Procedures;
 import domain.Auto;
 import domain.Benzinart;
 
 public class Test2Form {
-	final static BenzinDAO ben = new BenzinDAO();
+	final static BenzinartDAO ben = new BenzinartDAO();
 	final static AutoDAO aut = new AutoDAO();
 	final static Test2Form tf = new Test2Form();
 	final static Procedures proc = new Procedures();
@@ -36,7 +36,7 @@ public class Test2Form {
 	private void allAktuallisieren() {
 		try {
 			aut.setAutoList();
-			tf.comboboxFill("Auto");
+			//tf.comboboxFill("Auto");
 			// ben.setAutoBenzinList();
 			// tf.comboboxFill("Benzin");
 
@@ -79,7 +79,7 @@ public class Test2Form {
 
 		if (funktion == "Benzin") {
 			benzin.removeAllItems();
-			for (Auto a : aut.autos) {
+			for (Auto a : aut.getAutoList()) {
 				for (String ba : a.getBenzinArten()) {
 					//getBenzinCombo.addItem(ba);
 				}
@@ -88,7 +88,7 @@ public class Test2Form {
 			// combo1.addItem(b.getName());
 		} else if (funktion == "Auto") {
 			auto.removeAllItems();
-			for (Auto a : aut.autos)
+			for (Auto a : aut.getAutoList())
 				getAutoCombo().addItem(a.getKfz());
 		}
 	}
@@ -97,7 +97,7 @@ public class Test2Form {
 
 		tf.allAktuallisieren();
 
-		tf.getAutoCombo().addActionListener(new ActionListener() {
+		/*tf.getAutoCombo().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings({ "unchecked" })
@@ -114,7 +114,13 @@ public class Test2Form {
 		frame.add(getBenzinCombo(), BorderLayout.EAST);
 
 		frame.pack();
-		frame.setVisible(true);
+		frame.setVisible(true);*/
+		
+		
+		for (Auto x : aut.getAutoList()){
+			System.out.print(x.getKfz());
+			
+		}
 
 	}
 

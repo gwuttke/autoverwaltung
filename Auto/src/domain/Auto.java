@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 public class Auto {
 
@@ -103,6 +104,13 @@ public class Auto {
 			return -1;
 		}
 
+	}
+	
+	private void berechneAutoAlter(){
+		//Date datumHeute = 
+		
+		
+		
 	}
 
 }
