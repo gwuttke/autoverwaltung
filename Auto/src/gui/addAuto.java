@@ -157,7 +157,7 @@ public class addAuto extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 
 		frame.add(KFZ_LABEL_LABEL, BorderLayout.BEFORE_LINE_BEGINS);
-		frame.add(KFZ_ZEICHEN_TEXT_FIELD, BorderLayout.);
+		//frame.add(KFZ_ZEICHEN_TEXT_FIELD, BorderLayout);
 		frame.add(getKmSpinner(), BorderLayout.LINE_START);
 		frame.add(KM_LABEL, BorderLayout.SOUTH);
 		
