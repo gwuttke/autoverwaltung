@@ -12,7 +12,7 @@ public class BenzinartDAO {
 	SqlServer sqlS = new SqlServer();
 	Procedures proced = new Procedures();
 
-	public List<Benzinart> benzinList = new ArrayList<Benzinart>();
+	private List<Benzinart> benzinList = new ArrayList<Benzinart>();
 	
 
 	public void setBenzinList() throws SQLException {
