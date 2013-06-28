@@ -3,6 +3,7 @@ package database;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JComboBox;
 
@@ -14,6 +15,7 @@ public class Procedures extends database.SqlServer {
 		return this.callAuto();
 	}
 
+	
 	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] BenzinArten) {
 
@@ -251,4 +253,6 @@ public class Procedures extends database.SqlServer {
 		}
 
 	}
+
+	
 }
