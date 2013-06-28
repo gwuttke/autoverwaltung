@@ -1,30 +1,37 @@
 package domain;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class Berechnung {
-	private BigDecimal b;
-	
-	
-	public BigDecimal getRound(double value, int nachkommata){
+	private double b;
+
+	public String getRound(double value, int nachkommata) {
 		return round(value, nachkommata);
-		
+
 	}
-	
-	public BigDecimal getB() {
+
+	public double getB() {
 		return b;
 	}
 
-	public void setB(BigDecimal b) {
+	public void setB(double b) {
 		this.b = b;
 	}
 
-	private BigDecimal round(double value, int nachkommaStelle) {
-		setB(new BigDecimal(value));
-		setB(getB().setScale(nachkommaStelle, BigDecimal.ROUND_HALF_UP));
+	private String round(double value, int nachkommaStelle) {
+		DecimalFormat df = new DecimalFormat();
+		switch (nachkommaStelle) {
 
-		return getB();
+		case 2:
+			df = new DecimalFormat(",##0.00");
+			return df.format(value);
+		case 3:
+			df = new DecimalFormat(",###0.000");
+			return df.format(value);
+		default:
+			return "keine gültige eingabe";
+		}
 
 	}
-
 }

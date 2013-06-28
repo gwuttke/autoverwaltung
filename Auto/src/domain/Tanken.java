@@ -1,6 +1,6 @@
 package domain;
 
-import java.math.BigDecimal;
+
 import java.sql.Date;
 
 public class Tanken {
@@ -67,7 +67,7 @@ public class Tanken {
 		this.ortId = ortId;
 	}
 
-	public BigDecimal getKosten() {
+	public String getKosten() {
 		
 		return berechne.getRound(kosten, 3);
 
@@ -93,7 +93,7 @@ public class Tanken {
 		this.datum = datum;
 	}
 
-	public BigDecimal getLiter() {
+	public String getLiter() {
 		return berechne.getRound(liter, 2);
 	}
 

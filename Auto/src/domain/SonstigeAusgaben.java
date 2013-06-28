@@ -1,6 +1,6 @@
 package domain;
 
-import java.math.BigDecimal;
+
 import java.sql.Date;
 
 public class SonstigeAusgaben {
@@ -36,7 +36,7 @@ public class SonstigeAusgaben {
 		this.kommentar = kommentar;
 	}
 
-	public BigDecimal getKosten() {
+	public String getKosten() {
 		return berechne.getRound(kosten, 2);
 	}
 
