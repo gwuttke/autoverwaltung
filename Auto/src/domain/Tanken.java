@@ -18,9 +18,9 @@ public class Tanken {
 
 	private static Berechnung berechne = new Berechnung();
 
-	public double getPreisProLiter() {
+	public String getPreisProLiter() {
 
-		return preisProLiter;
+		return berechne.getRound(preisProLiter, 3);
 	}
 
 	public void setPreisProLiter(double preisProLiter) {
