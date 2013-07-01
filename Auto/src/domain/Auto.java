@@ -1,7 +1,7 @@
 package domain;
 
 import java.sql.Date;
-
+import java.util.GregorianCalendar;
 
 public class Auto {
 
@@ -15,6 +15,8 @@ public class Auto {
 	private int kmGefahren;
 	private String autoAlter;
 	private String kaufAlter;
+
+	private static Datum datum = new Datum();
 
 	public String getKfz() {
 		return kfz;
@@ -96,6 +98,10 @@ public class Auto {
 		this.kaufAlter = kaufAlter;
 	}
 
+	public void setAlter() {
+		berechneAutoAlter();
+	}
+
 	private int berechneGefahreneKm() {
 
 		if (getKmAktuell() > getKmKauf()) {
@@ -105,12 +111,20 @@ public class Auto {
 		}
 
 	}
-	
-	private void berechneAutoAlter(){
-		//Date datumHeute = 
-		
-		
-		
-	}
 
+	@SuppressWarnings("deprecation")
+	private void berechneAutoAlter() {
+
+		if (this.getKauf().getYear() > 0
+				&& this.getErstZulassung().getYear() > 0) {
+
+			setKaufAlter(datum.getDifference(new GregorianCalendar(getKauf()
+					.getYear(), getKauf().getMonth(), getKauf().getDay())));
+
+			setAutoAlter(datum
+					.getDifference(new GregorianCalendar(getErstZulassung()
+							.getYear(), getErstZulassung().getMonth(),
+							getErstZulassung().getDay())));
+		}
+	}
 }
