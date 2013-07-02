@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.activation.MailcapCommandMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +29,8 @@ import javax.swing.SwingConstants;
 
 import dao.AutoDAO;
 
-public class addAuto extends JFrame implements ActionListener {
+public class addAuto extends JFrame 
+implements ActionListener {
 
 	// Klassen
 	final static AutoDAO autoDao = new AutoDAO();
@@ -61,7 +63,7 @@ public class addAuto extends JFrame implements ActionListener {
 				.getEditor();
 		DateFormat format = editor.getFormat();
 		format.setTimeZone(TimeZone.getTimeZone("Europe/London"));
-		format.applyPettern("");
+		//format.applyPettern("dd.MM.yyyy");
 		editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
 		Dimension d = KM_STAND_SPINNER.getPreferredSize();
 		d.width = 85;
@@ -129,12 +131,20 @@ public class addAuto extends JFrame implements ActionListener {
 		//smtpServer = new JTextField(20);
 		add(getKmSpinner(), gbc, 1, 2, 1, 1);
 
-		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 0;
+		add(new JLabel("Kauf Datum"), gbc, 0, 3, 1, 1);
 		gbc.weighty = 100;
-		message = new JTextArea();
-		add(new JScrollPane(message), gbc, 0, 3, 2, 1);
+		//message = new JTextArea();
+		add(getDateSpinner(), gbc, 1, 3, 1, 1);
+		
+		gbc.weightx = 0;
+		add(new JLabel("Erstzulassungs Datum"), gbc, 0, 4, 1, 1);
+		gbc.weighty = 100;
+		//message = new JTextArea();
+		add(getDateSpinner(), gbc, 1, 4, 1, 1);
+		
 
-		response = new JTextArea();
+		/*response = new JTextArea();
 		add(new JScrollPane(response), gbc, 0, 4, 2, 1);
 
 		gbc.weighty = 0;
@@ -143,6 +153,7 @@ public class addAuto extends JFrame implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(sendButton);
 		add(buttonPanel, gbc, 0, 5, 2, 1);
+		*/
 	}
 
 	private void add(Component c, GridBagConstraints gbc, int x, int y, int w,
@@ -155,12 +166,13 @@ public class addAuto extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-
-		frame.add(KFZ_LABEL_LABEL, BorderLayout.BEFORE_LINE_BEGINS);
+		addAuto addA = new addAuto();
+		/*frame.add(KFZ_LABEL_LABEL, BorderLayout.BEFORE_LINE_BEGINS);
 		//frame.add(KFZ_ZEICHEN_TEXT_FIELD, BorderLayout);
 		frame.add(getKmSpinner(), BorderLayout.LINE_START);
 		frame.add(KM_LABEL, BorderLayout.SOUTH);
-		
+		*/
+		addA.MailTestFrame();
 		frame.pack();
 		frame.setVisible(true);
 	}
