@@ -3,9 +3,6 @@ package database;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.swing.JComboBox;
 
 public class Procedures extends database.SqlServer {
 
@@ -15,7 +12,7 @@ public class Procedures extends database.SqlServer {
 		return this.callAuto();
 	}
 
-	public void getUpdateAuto(String kfz, int AktuellKm, int[] BenzinArten) {
+	public void getAutoUpdate(String kfz, int AktuellKm, int[] BenzinArten) {
 		this.callUpdateAuto(kfz, AktuellKm, BenzinArten);
 	}
 	
