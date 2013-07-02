@@ -15,7 +15,7 @@ public class Procedures extends database.SqlServer {
 	public void getAutoUpdate(String kfz, int AktuellKm, int[] BenzinArten) {
 		this.callUpdateAuto(kfz, AktuellKm, BenzinArten);
 	}
-	
+
 	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] BenzinArten) {
 
@@ -28,13 +28,11 @@ public class Procedures extends database.SqlServer {
 
 		this.callAddSonstigeAusgaben(datum, kmStand, kommentar, kosten,
 				kennzeichen);
-
 	}
 
 	public void getRefuel(String kennzeichen, int kmStand, String land,
 			String ort, int voll, Double kosten, Date datum, Double liter,
 			double preisProLiter, int benzinArt) {
-
 
 		callAddTanken(kennzeichen, kmStand, land, ort, voll, kosten, datum,
 				liter, preisProLiter, benzinArt);
