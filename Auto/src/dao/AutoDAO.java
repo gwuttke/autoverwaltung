@@ -13,7 +13,7 @@ import domain.Auto;
 
 public class AutoDAO {
 	SqlServer sqlS = new SqlServer();
-	Procedures proc = new Procedures();,
+	Procedures proc = new Procedures();
 	Auto a = new Auto();
 
 	private List<Auto> autoList = new ArrayList<Auto>();
