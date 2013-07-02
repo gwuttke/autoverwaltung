@@ -15,7 +15,6 @@ public class Procedures extends database.SqlServer {
 		return this.callAuto();
 	}
 
-	
 	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] BenzinArten) {
 
@@ -23,21 +22,18 @@ public class Procedures extends database.SqlServer {
 				BenzinArten);
 	}
 
-	public void getNewSonstigeAusgabe(JComboBox<String> comboBox, Date datum,
+	public void getNewSonstigeAusgabe(String kennzeichen, Date datum,
 			int kmStand, String kommentar, Double kosten) {
-
-		String kennzeichen = comboBox.getSelectedItem().toString();
 
 		this.callAddSonstigeAusgaben(datum, kmStand, kommentar, kosten,
 				kennzeichen);
 
 	}
 
-	public void getRefuel(JComboBox<String> comboBox, int kmStand, String land,
+	public void getRefuel(String kennzeichen, int kmStand, String land,
 			String ort, int voll, Double kosten, Date datum, Double liter,
 			double preisProLiter, int benzinArt) {
 
-		String kennzeichen = comboBox.getSelectedItem().toString();
 
 		callAddTanken(kennzeichen, kmStand, land, ort, voll, kosten, datum,
 				liter, preisProLiter, benzinArt);
@@ -164,14 +160,6 @@ public class Procedures extends database.SqlServer {
 	private ResultSet callAddAuto(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] benzinArten) {
 		int autoId = 0;
-		String strBenzinArten = "";
-
-		// Int Array in einen String umwandeln mit kommata getrennt
-		for (int benzin : benzinArten) {
-			strBenzinArten += strBenzinArten + benzin + ",";
-		}
-		strBenzinArten = strBenzinArten.substring(0,
-				strBenzinArten.length() - 1);
 
 		try {
 			openConnection();
@@ -182,7 +170,7 @@ public class Procedures extends database.SqlServer {
 			pstm.setDate(3, kaufDatum);
 			pstm.setDate(4, erstZulassung);
 			pstm.setInt(5, autoId);
-			pstm.setString(6, strBenzinArten);
+			pstm.setString(6, this.ArrayToString(benzinArten));
 
 			rs = pstm.executeQuery();
 
@@ -254,5 +242,39 @@ public class Procedures extends database.SqlServer {
 
 	}
 
-	
+	private void callUpdateAuto(String kfz, int AktuellKm, int[] BenzinArten) {
+		int autoID = 0;
+		try {
+			openConnection();
+			PreparedStatement pstm = getConn().prepareStatement(
+					"call dbo.P_addTanken (?,?,?,?)");
+			pstm.setString(1, kfz);
+			pstm.setInt(2, AktuellKm);
+			pstm.setString(3, ArrayToString(BenzinArten));
+			pstm.setInt(4, autoID);
+
+			rs = pstm.executeQuery();
+
+		} catch (Exception e) {
+			e.getMessage();
+		} finally {
+			closeResults(getSt(), getRs(), getConn());
+		}
+
+	}
+
+	private String ArrayToString(int[] a) {
+		String strBenzinArten = null;
+		// Int Array in einen String umwandeln mit kommata getrennt
+		for (int benzin : a) {
+			strBenzinArten += strBenzinArten + benzin + ",";
+		}
+		// das letzte komma löschen
+		strBenzinArten = strBenzinArten.substring(0,
+				strBenzinArten.length() - 1);
+
+		return strBenzinArten;
+
+	}
+
 }
