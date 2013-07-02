@@ -15,6 +15,10 @@ public class Procedures extends database.SqlServer {
 		return this.callAuto();
 	}
 
+	public void getUpdateAuto(String kfz, int AktuellKm, int[] BenzinArten) {
+		this.callUpdateAuto(kfz, AktuellKm, BenzinArten);
+	}
+	
 	public ResultSet getNewCar(String kfz, int kaufKm, Date kaufDatum,
 			Date erstZulassung, int[] BenzinArten) {
 
