@@ -107,8 +107,9 @@ public class Auto {
 	}
 	
 	private void berechneAutoAlter(){
-		//Date datumHeute = 
+		//Date datumHeute = new Date();
 		
+			
 		
 		
 	}
