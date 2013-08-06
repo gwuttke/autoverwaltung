@@ -36,6 +36,14 @@ public class BenzinartDAO {
 	}
 
 	public List<Benzinart> getBenzinList() {
+		if (benzinList.isEmpty()){
+			try {
+				setBenzinList();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return benzinList;
 	}
 
