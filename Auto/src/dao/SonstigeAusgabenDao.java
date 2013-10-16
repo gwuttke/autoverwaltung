@@ -36,7 +36,7 @@ public class SonstigeAusgabenDao {
 				sonsAusgaben.setDatum(rs.getDate("Datum"));
 				sonsAusgaben.setKmStand(rs.getInt("KM_Stand"));
 				sonsAusgaben.setKommentar(rs.getString("Kommentar"));
-				sonsAusgaben.setKosten(rs.getDouble("Kosten"));
+				sonsAusgaben.setKosten(rs.getBigDecimal("Kosten"));
 				sonstigeAusgabenList.add(sonsAusgaben);
 
 			}

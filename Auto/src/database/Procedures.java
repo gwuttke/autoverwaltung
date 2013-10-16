@@ -1,5 +1,6 @@
 package database;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,13 +9,11 @@ import dao.BenzinartDAO;
 import domain.Auto;
 import domain.Benzinart;
 
-//in Zeile 283 Weiter machen
-
 public class Procedures extends database.SqlServer {
 
-	//Klassen
-	BenzinartDAO benzinartDao = new BenzinartDAO();
-	
+	// Klassen
+	//BenzinartDAO benzinartDao = new BenzinartDAO();
+
 	private ResultSet rs = null;
 
 	public ResultSet getAutos() {
@@ -25,7 +24,6 @@ public class Procedures extends database.SqlServer {
 		this.callUpdateAuto(kfz, AktuellKm, BenzinArten);
 	}
 
-
 	public void getNewSonstigeAusgabe(String kennzeichen, Date datum,
 			int kmStand, String kommentar, Double kosten) {
 
@@ -34,8 +32,8 @@ public class Procedures extends database.SqlServer {
 	}
 
 	public void getRefuel(String kennzeichen, int kmStand, String land,
-			String ort, int voll, Double kosten, Date datum, Double liter,
-			double preisProLiter, int benzinArt) {
+			String ort, int voll, BigDecimal kosten, Date datum, BigDecimal liter,
+			BigDecimal preisProLiter, int benzinArt) {
 
 		callAddTanken(kennzeichen, kmStand, land, ort, voll, kosten, datum,
 				liter, preisProLiter, benzinArt);
@@ -61,23 +59,31 @@ public class Procedures extends database.SqlServer {
 		return callAutoAlter(kennzeichen);
 	}
 
-	public void setAddAuto(){
+	public void setAddAuto(String kfz, int kaufKm, Date kaufDatum,
+		Date erstZulassung, int[] benzinArten) {
+		
+		
 		Auto auto = new Auto();
-		this.benzinArrayToString(auto.getBenzinArten());
+		auto.setKfz(kfz);
+		auto.setKmKauf(kaufKm);
+		auto.setKauf(kaufDatum);
+		auto.setErstZulassung(erstZulassung);
+		auto.setBenzinArten(benzinArten);
+		
+
+		callAddAuto(auto.getKfz(), auto.getKmKauf(), auto.getKauf(),
+				auto.getErstZulassung(), benzinArrayToString(benzinArten));
 		
 		
-		callAddAuto(auto.getKfz(), auto.getKmKauf(), auto.getKauf(), auto.getErstZulassung()
-				, auto.getBenzinArten());
-		
-		
+
 	}
-	
+
 	private ResultSet callKennzeichen(int AutoId) {
 		String kennzeichenOut = null;
 		try {
 			openConnection();
 			PreparedStatement pstm = getConn().prepareStatement(
-					"{cal dbo.P_AutoKennzeichen (?,?) }");
+					"{call dbo.P_AutoKennzeichen (?,?) }");
 			pstm.setString(1, kennzeichenOut);
 			pstm.setInt(2, AutoId);
 			rs = pstm.executeQuery();
@@ -197,8 +203,8 @@ public class Procedures extends database.SqlServer {
 	}
 
 	private void callAddTanken(String kfz, int kmStand, String land,
-			String ort, int voll, Double kosten, Date datum, Double liter,
-			Double preisProLiter, int benzinArt) {
+			String ort, int voll, BigDecimal kosten, Date datum, BigDecimal liter,
+			BigDecimal preisProLiter, int benzinArt) {
 		int autoId = 0;
 		int landId = 0;
 		int ortId = 0;
@@ -211,11 +217,11 @@ public class Procedures extends database.SqlServer {
 			pstm.setString(2, land);
 			pstm.setString(3, ort);
 			pstm.setInt(4, voll);
-			pstm.setDouble(5, kosten);
+			pstm.setBigDecimal(5, kosten);
 			pstm.setString(6, kfz);
 			pstm.setDate(7, datum);
-			pstm.setDouble(8, liter);
-			pstm.setDouble(9, preisProLiter);
+			pstm.setBigDecimal(8, liter);
+			pstm.setBigDecimal(9, preisProLiter);
 			pstm.setInt(10, benzinArt);
 			pstm.setInt(11, autoId);
 			pstm.setInt(12, landId);
@@ -263,7 +269,7 @@ public class Procedures extends database.SqlServer {
 					"call dbo.P_addTanken (?,?,?,?)");
 			pstm.setString(1, kfz);
 			pstm.setInt(2, AktuellKm);
-			pstm.setString(3, ArrayToString(BenzinArten));
+			pstm.setString(3, benzinArrayToString(BenzinArten));
 			pstm.setInt(4, autoID);
 
 			rs = pstm.executeQuery();
@@ -276,17 +282,10 @@ public class Procedures extends database.SqlServer {
 
 	}
 
-	
-	
-	private String benzinArrayToString(String[] a) {
+	private String benzinArrayToString(int[] a) {
 		String strBenzinArten = null;
 		// Int Array in einen String umwandeln mit kommata getrennt
-		for (Benzinart x : benzinartDao.getBenzinList()){
-			for (x.etName()g :)
-		}
-		
-		
-		for (String benzin : a) {
+		for (int benzin : a) {
 			strBenzinArten += strBenzinArten + benzin + ",";
 		}
 		// das letzte komma löschen

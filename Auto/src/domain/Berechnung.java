@@ -1,12 +1,13 @@
 package domain;
 
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class Berechnung {
 	private double b;
 
-	public String getRound(double value, int nachkommata) {
+	public String getRound(BigDecimal value, int nachkommata) {
 		return round(value, nachkommata);
 
 	}
@@ -19,7 +20,7 @@ public class Berechnung {
 		this.b = b;
 	}
 
-	private String round(double value, int nachkommaStelle) {
+	private String round(BigDecimal value, int nachkommaStelle) {
 		DecimalFormat df = new DecimalFormat();
 		switch (nachkommaStelle) {
 

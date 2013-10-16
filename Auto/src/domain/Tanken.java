@@ -1,6 +1,7 @@
 package domain;
 
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Tanken {
@@ -9,11 +10,11 @@ public class Tanken {
 	private int landId;
 	private int ortId;
 	private int voll;
-	private double kosten;
+	private BigDecimal kosten;
 	private int autoId;
 	private Date datum;
-	private double liter;
-	private double preisProLiter;
+	private BigDecimal liter;
+	private BigDecimal preisProLiter;
 	private int benzinArtId;
 
 	private static Berechnung berechne = new Berechnung();
@@ -23,7 +24,7 @@ public class Tanken {
 		return berechne.getRound(preisProLiter, 3);
 	}
 
-	public void setPreisProLiter(double preisProLiter) {
+	public void setPreisProLiter(BigDecimal preisProLiter) {
 		this.preisProLiter = preisProLiter;
 	}
 
@@ -39,8 +40,8 @@ public class Tanken {
 		return voll;
 	}
 
-	public void setVoll(int voll) {
-		this.voll = voll;
+	public void setVoll(int b) {
+		this.voll = b;
 	}
 
 	public int getKmStand() {
@@ -73,7 +74,7 @@ public class Tanken {
 
 	}
 
-	public void setKosten(double kosten) {
+	public void setKosten(BigDecimal kosten) {
 		this.kosten = kosten;
 	}
 
@@ -97,7 +98,7 @@ public class Tanken {
 		return berechne.getRound(liter, 2);
 	}
 
-	public void setLiter(double liter) {
+	public void setLiter(BigDecimal liter) {
 		this.liter = liter;
 	}
 

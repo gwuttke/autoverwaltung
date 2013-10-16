@@ -1,13 +1,14 @@
 package domain;
 
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class SonstigeAusgaben {
 	private Date datum;
 	private int kmStand;
 	private String kommentar;
-	private double kosten;
+	private BigDecimal kosten;
 	private int autoId;
 
 	private static Berechnung berechne = new Berechnung();
@@ -40,7 +41,7 @@ public class SonstigeAusgaben {
 		return berechne.getRound(kosten, 2);
 	}
 
-	public void setKosten(double kosten) {
+	public void setKosten(BigDecimal kosten) {
 		this.kosten = kosten;
 	}
 

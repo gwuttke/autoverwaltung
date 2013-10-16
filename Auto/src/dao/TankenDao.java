@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public class TankenDao {
 				tank.setBenzinArtId(rs.getInt("BenzinArt"));
 				tank.setDatum(rs.getDate("Datum"));
 				tank.setKmStand(rs.getInt("Km_Stand"));
-				tank.setKosten(rs.getDouble("Kosten"));
+				tank.setKosten(rs.getBigDecimal("Kosten"));
 				tank.setLandId(rs.getInt("Land"));
-				tank.setLiter(rs.getDouble("Liter"));
+				tank.setLiter(rs.getBigDecimal("Liter"));
 				tank.setOrtId(rs.getInt("Ort"));
-				tank.setPreisProLiter(rs.getDouble("Preis_p_Liter"));
+				tank.setPreisProLiter(rs.getBigDecimal("Preis_p_Liter"));
 
 				tankenList.add(tank);
 			}
@@ -69,11 +70,11 @@ public class TankenDao {
 						tank.setBenzinArtId(t.getBenzinArtId());
 						tank.setDatum(t.getDatum());
 						tank.setKmStand(t.getKmStand());
-						tank.setKosten(new Double(t.getKosten()));
+						tank.setKosten(new BigDecimal(t.getKosten()));
 						tank.setLandId(t.getLandId());
-						tank.setLiter(new Double(t.getLiter()));
+						tank.setLiter(new BigDecimal(t.getLiter()));
 						tank.setOrtId(t.getOrtId());
-						tank.setPreisProLiter(new Double(t.getPreisProLiter()));
+						tank.setPreisProLiter(new BigDecimal(t.getPreisProLiter()));
 
 						autoTankenList.add(tank);
 

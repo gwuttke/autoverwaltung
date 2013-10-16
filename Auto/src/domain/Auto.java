@@ -10,7 +10,7 @@ public class Auto {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	private String[] benzinArten;
+	private int[] benzinArten;
 	private int kmAktuell;
 	private int kmGefahren;
 	private String autoAlter;
@@ -58,12 +58,12 @@ public class Auto {
 		this.erstZulassung = erstZulassung;
 	}
 
-	public String[] getBenzinArten() {
+	public int[] getBenzinArten() {
 		return benzinArten;
 	}
 
-	public void setBenzinArten(String[] benzinArten) {
-		this.benzinArten = benzinArten;
+	public void setBenzinArten(int[] benzinArten2) {
+		this.benzinArten = benzinArten2;
 	}
 
 	public int getKmAktuell() {
@@ -115,8 +115,7 @@ public class Auto {
 
 	private void berechneAutoAlter() {
 
-		if (this.getKauf().getYear() > 0
-				&& this.getErstZulassung().getYear() > 0) {
+		if ((this.getKauf().getYear() > 0) && (this.getErstZulassung() != null)) {
 
 			setKaufAlter(datum.getDifference(new GregorianCalendar(getKauf()
 					.getYear(), getKauf().getMonth(), getKauf().getDay())));
@@ -125,6 +124,8 @@ public class Auto {
 					.getDifference(new GregorianCalendar(getErstZulassung()
 							.getYear(), getErstZulassung().getMonth(),
 							getErstZulassung().getDay())));
+		}else{
+			setAutoAlter("Keine Angabe Moeglich");
 		}
 	}
 }

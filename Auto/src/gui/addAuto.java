@@ -37,14 +37,11 @@ public class addAuto extends JFrame
 implements ActionListener {
 
 	/*
-	 * 
-	 * 
+	 *  
 	 * Hier fehlt noch der Befehl Hinzufügen in die Datenbank 
 	 * 
 	 * 
-	 * 
-	 * 
-	 * */
+	 */
 	
 	
 	// Klassen
@@ -183,8 +180,8 @@ implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				proc.setAddAuto(kfzZeichen.getText(), (int) JKaufKm.getValue(),(Date) JKaufDatum.getValue(),
-						 "BenzinArten");
+			//	proc.setAddAuto(kfzZeichen.getText(), (int) JKaufKm.getValue(),(Date) JKaufDatum.getValue(),
+				//		 "BenzinArten");
 				
 			}
 		});

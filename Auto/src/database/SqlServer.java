@@ -57,10 +57,18 @@ public class SqlServer {
 	}
 
 	public ResultSet retrieveRS(String sql) throws SQLException {
-		this.setSt(this.conn.createStatement());
-		this.setRs(st.executeQuery(sql));
-		return this.getRs();
-
+		if (hasConnection() == false) {
+			try {
+				this.openConnection();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			this.setSt(this.conn.createStatement());
+			this.setRs(this.st.executeQuery(sql));
+			
+			return this.getRs();
 	}
 
 	public ResultSet retrievePs(String sp_name, String string, String values)
@@ -106,16 +114,10 @@ public class SqlServer {
 	}
 
 	public boolean hasConnection() {
-
-		try {
-			if ((this.conn != null) || (this.conn.isValid(1))) {
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if ((this.conn != null)) {
+			return true;
 		}
 		return false;
-
 	}
 
 	public void closeResults(Statement st, ResultSet rs, Connection conn) {
