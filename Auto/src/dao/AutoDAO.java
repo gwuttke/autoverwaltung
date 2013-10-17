@@ -2,12 +2,8 @@ package dao;
 
 import gui.Willkommen;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.sql.Date;
+
 
 import database.Procedures;
 import database.SqlServer;
@@ -18,10 +14,9 @@ public class AutoDAO extends Willkommen{
 	Procedures proc = new Procedures();
 	Auto a = new Auto();
 
-	private ResultSet autoBenzinRS = null;
 	
-	public int CarIntoDatabase(){
-		
+	public int CarIntoDatabase(String kfz, int kaufKm, Date kaufDatum, Date erstZulassung, int[] benzinArten){
+		proc.setAddAuto(kfz, kaufKm, kaufDatum, erstZulassung, benzinArten);
 		
 		return 0;
 	}
