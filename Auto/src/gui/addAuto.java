@@ -1,11 +1,9 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,10 +12,8 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.sql.Date;
 import java.util.TimeZone;
 
-import javax.activation.MailcapCommandMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,7 +27,6 @@ import javax.swing.SwingConstants;
 
 import dao.AutoDAO;
 import database.Procedures;
-import domain.Datum;
 
 public class addAuto extends JFrame {
 
@@ -47,21 +42,19 @@ public class addAuto extends JFrame {
 	final static JList<String> ALL_AUTO_LIST = new JList<String>();
 	final static JTextField KFZ_ZEICHEN_TEXT_FIELD = new JTextField();
 	static JSpinner KM_STAND_SPINNER = new JSpinner(new SpinnerNumberModel());
-	final static JSpinner KFZ_DATUM_SPINNER = new JSpinner(
-			new SpinnerDateModel());
-	final static JSpinner KFZ_KAUF_SPINNER = new JSpinner(
-			new SpinnerDateModel());
+	final static JSpinner KFZ_ERSTDATUM_SPINNER =  getDateSpinner("KFZ_ERSTDATUM_SPINNER");
+	final static JSpinner KFZ_KAUF_SPINNER = getDateSpinner("KFZ_KAUF_SPINNER");
 	final static JButton BTN_NEW_AUTO = new JButton("neues Auto");
 	final static JLabel KFZ_ZEICHEN_LABEL = new JLabel("Kennzeichen:");
 	final static JLabel KM_LABEL = new JLabel("Km-Stand:");
 	final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
 	final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
 
-	int[] benzinArten;
+	int[] benzinArten = new int[]{4,5};
 	
 	private static JSpinner getDateSpinner(final String name) {
 		Calendar cal = Calendar.getInstance();
-		Date date = (Date) cal.getTime();
+		java.util.Date date = (java.util.Date) cal.getTime();
 
 		SpinnerDateModel model = new SpinnerDateModel();
 		model.setValue(date);
@@ -75,8 +68,6 @@ public class addAuto extends JFrame {
 		Dimension d = spinner.getPreferredSize();
 		d.width = 85;
 		spinner.setPreferredSize(d);
-		JPanel panel = new JPanel();
-		panel.add(spinner);
 		return spinner;
 	}
 
@@ -125,7 +116,7 @@ public class addAuto extends JFrame {
 		jplLable.add(KM_LABEL);
 		jplTb.add(KFZ_ZEICHEN_TEXT_FIELD);
 		jplTb.add(KFZ_KAUF_SPINNER);
-		jplTb.add(KFZ_DATUM_SPINNER);
+		jplTb.add(KFZ_ERSTDATUM_SPINNER);
 		jplTb.add(KM_STAND_SPINNER);
 		
 		
@@ -143,8 +134,9 @@ public class addAuto extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				autoDao.CarIntoDatabase(KFZ_ZEICHEN_TEXT_FIELD.getText(), (int) KM_STAND_SPINNER.getValue(), (Date) KFZ_KAUF_SPINNER.getValue(),
-						(Date) KFZ_DATUM_SPINNER.getValue(), benzinArten);
+				 
+				autoDao.CarIntoDatabase(KFZ_ZEICHEN_TEXT_FIELD.getText(), (int) KM_STAND_SPINNER.getValue(), (java.util.Date) KFZ_ERSTDATUM_SPINNER.getValue(),
+						(java.util.Date) KFZ_KAUF_SPINNER.getValue(), benzinArten);
 				
 			}
 		});

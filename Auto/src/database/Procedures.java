@@ -192,7 +192,7 @@ public class Procedures extends database.SqlServer {
 			pstm.setString(6, benzinArten);
 
 			rs = pstm.executeQuery();
-
+			System.out.println("Die übertragung ist beendet!!");
 			return rs;
 		} catch (Exception e) {
 			e.getMessage();
@@ -200,6 +200,7 @@ public class Procedures extends database.SqlServer {
 		} finally {
 			closeResults(getSt(), getRs(), getConn());
 		}
+		
 	}
 
 	private void callAddTanken(String kfz, int kmStand, String land,
@@ -283,7 +284,7 @@ public class Procedures extends database.SqlServer {
 	}
 
 	private String benzinArrayToString(int[] a) {
-		String strBenzinArten = null;
+		String strBenzinArten = "";
 		// Int Array in einen String umwandeln mit kommata getrennt
 		for (int benzin : a) {
 			strBenzinArten += strBenzinArten + benzin + ",";

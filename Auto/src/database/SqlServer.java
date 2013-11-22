@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 
 public class SqlServer {
 
-	private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;integratedSecurity=true;";
-	// "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=Test;passwort=Test123;";
+	//private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;integratedSecurity=true;";
+	private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=User;passwort=Sommer2013;";
 
 	private Connection conn = null;
 	private Statement st = null;

@@ -15,8 +15,11 @@ public class AutoDAO extends Willkommen{
 	Auto a = new Auto();
 
 	
-	public int CarIntoDatabase(String kfz, int kaufKm, Date kaufDatum, Date erstZulassung, int[] benzinArten){
-		proc.setAddAuto(kfz, kaufKm, kaufDatum, erstZulassung, benzinArten);
+	public int CarIntoDatabase(String kfz, int kaufKm, java.util.Date kaufDatum, java.util.Date erstZulassung, int[] benzinArten){
+	java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
+	java.sql.Date kaufSqlDate = new java.sql.Date(kaufDatum.getTime());
+		
+		proc.setAddAuto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinArten);
 		
 		return 0;
 	}
