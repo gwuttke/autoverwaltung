@@ -1,6 +1,6 @@
 package database;
 
-public class TestDatenbank extends SqlServerOverINDI{
+public class TestDatenbank extends SqlServerOverJNDI{
 	
 	public static void main(String[] args) {
 		testDB();
