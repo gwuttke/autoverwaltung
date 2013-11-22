@@ -1,0 +1,411 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Grundlegendes zu den Unterschieden von Datentypen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Unterschiede von Datentypen" />
+<meta name="Microsoft.Help.Id"
+	content="ab8fa00f-cb16-47e2-94b8-3a76f56c2b84" />
+<meta name="Description"
+	content="Es gibt eine Reihe von Unterschieden zwischen den Java-Datentypen und den SQL Server-Datentypen. Microsoft JDBC Driver für SQL Server berücksichtigt diese Unterschiede durch verschiedenartige Konvertierungen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Grundlegendes zu
+						den Unterschieden von Datentypen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Es gibt eine Reihe von Unterschieden zwischen den
+					Java-Datentypen und den SQL Server-Datentypen. Microsoft JDBC
+					Driver für SQL Server berücksichtigt diese Unterschiede durch
+					verschiedenartige Konvertierungen.</p>
+			</div>
+			<h1 class="heading">Zeichentypen</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die JDBC-Datentypen für Zeichenfolgen lauten <span
+						sdata="langKeyword" value="CHAR"><span class="keyword">CHAR</span></span>,
+					<span sdata="langKeyword" value="VARCHAR"><span
+						class="keyword">VARCHAR</span></span> und <span sdata="langKeyword"
+						value="LONGVARCHAR"><span class="keyword">LONGVARCHAR</span></span>.
+					Der JDBC-Treiber unterstützt die JDBC 4.0-API. In JDBC 4.0 sind
+					auch <span sdata="langKeyword" value="NCHAR"><span
+						class="keyword">NCHAR</span></span>, <span sdata="langKeyword"
+						value="NVARCHAR"><span class="keyword">NVARCHAR</span></span> und
+					<span sdata="langKeyword" value="LONGNVARCHAR"><span
+						class="keyword">LONGNVARCHAR</span></span> als JDBC-Zeichenfolgentypen
+					möglich. Diese neuen Zeichenfolgentypen verwalten die systemeigenen
+					Java-Zeichentypen im Unicode-Format, sodass keine Konvertierung von
+					ANSI nach Unicode und Unicode nach ANSI mehr erforderlich ist.
+				</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Typ</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>Feste Länge</p></td>
+							<td><p>
+									Die SQL Server-Datentypen <span sdata="langKeyword"
+										value="char"><span class="keyword">char</span></span> und <span
+										sdata="langKeyword" value="nchar"><span class="keyword">nchar</span></span>
+									sind direkt den JDBC-Typen <span sdata="langKeyword"
+										value="CHAR"><span class="keyword">CHAR</span></span> und <span
+										sdata="langKeyword" value="NCHAR"><span class="keyword">NCHAR</span></span>
+									zugeordnet. Diese Typen weisen eine feste Länge auf und werden
+									vom Server mit Leerstellen aufgefüllt, wenn für die Spalte SET
+									ANSI_PADDING ON festgelegt wurde. Die Auffüllung mit
+									Leerstellen ist für <span sdata="langKeyword" value="nchar"><span
+										class="keyword">nchar</span></span> immer aktiviert. Bei <span
+										sdata="langKeyword" value="char"><span class="keyword">char</span></span>
+									fügt der JDBC-Treiber die Leerstellen jedoch nur hinzu, wenn
+									die char-Spalten des Servers nicht aufgefüllt wurden.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Variable Länge</p></td>
+							<td><p>
+									Die SQL Server-Typen <span sdata="langKeyword" value="varchar"><span
+										class="keyword">varchar</span></span> und <span sdata="langKeyword"
+										value="nvarchar"><span class="keyword">nvarchar</span></span>
+									sind direkt den JDBC-Typen <span sdata="langKeyword"
+										value="VARCHAR"><span class="keyword">VARCHAR</span></span>
+									bzw. <span sdata="langKeyword" value="NVARCHAR"><span
+										class="keyword">NVARCHAR</span></span> zugeordnet.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Long</p></td>
+							<td><p>
+									Die SQL Server-Typen <span sdata="langKeyword" value="text"><span
+										class="keyword">text</span></span> und <span sdata="langKeyword"
+										value="ntext"><span class="keyword">ntext</span></span> sind
+									direkt den JDBC-Typen <span sdata="langKeyword"
+										value="LONGVARCHAR"><span class="keyword">LONGVARCHAR</span></span>
+									bzw. <span sdata="langKeyword" value="LONGNVARCHAR"><span
+										class="keyword">LONGNVARCHAR</span></span> zugeordnet. Diese Typen
+									sind ab SQL Server 2005 veraltet, sodass Sie stattdessen die
+									Typen mit umfangreichen Werten, <span sdata="langKeyword"
+										value="varchar(max)"><span class="keyword">varchar(max)</span></span>
+									oder <span sdata="langKeyword" value="nvarchar(max)"><span
+										class="keyword">nvarchar(max)</span></span>, verwenden sollten.
+								</p>
+								<p>
+									Mit der <b>update&lt;Numeric Type&gt;</b>-Methode und der <a
+										href="4993dfe1-2232-4b3c-b931-dfdb35dd225a.htm">updateObject
+										(int, java.lang.Object)</a>-Methode treten bei <span
+										sdata="langKeyword" value="text"><span class="keyword">text</span></span>-
+									und <span sdata="langKeyword" value="ntext"><span
+										class="keyword">ntext</span></span>-Serverspalten Fehler auf.
+									Allerdings wird die Verwendung der <a
+										href="93a2b22c-82b4-48c7-a428-369ebe98a372.htm">setObject</a>-Methode
+									mit Angabe eines Zeichenkonvertierungstyps für <span
+										sdata="langKeyword" value="text"><span class="keyword">text</span></span>-
+									und <span sdata="langKeyword" value="ntext"><span
+										class="keyword">ntext</span></span>-Serverspalten unterstützt.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Binäre Zeichenfolgetypen</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die binären JDBC-Zeichenfolgentypen lauten <span
+						sdata="langKeyword" value="BINARY"><span class="keyword">BINARY</span></span>,
+					<span sdata="langKeyword" value="VARBINARY"><span
+						class="keyword">VARBINARY</span></span> und <span sdata="langKeyword"
+						value="LONGVARBINARY"><span class="keyword">LONGVARBINARY</span></span>.
+				</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Typ</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>Feste Länge</p></td>
+							<td><p>
+									Der SQL Server-Typ <span sdata="langKeyword" value="binary"><span
+										class="keyword">binary</span></span> ist direkt dem JDBC-Typ <span
+										sdata="langKeyword" value="BINARY"><span
+										class="keyword">BINARY</span></span> zugeordnet. Dieser Typ weist
+									eine feste Länge auf und wird vom Server mit Leerstellen
+									aufgefüllt, wenn für die Spalte SET ANSI_PADDING ON eingestellt
+									wurde. Wenn die Zeichenspalten des Servers nicht mit
+									Leerstellen aufgefüllt sind, fügt der JDBC-Treiber die
+									Leerstellen hinzu.
+								</p>
+								<p>
+									Bei dem SQL Server-Typ <span sdata="langKeyword"
+										value="timestamp"><span class="keyword">timestamp</span></span>
+									handelt es sich um einen JDBC-<span sdata="langKeyword"
+										value="BINARY"><span class="keyword">BINARY</span></span>-Typ
+									mit einer festen Länge von 8 Bytes.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Variable Länge</p></td>
+							<td><p>
+									Der SQL Server-Typ <span sdata="langKeyword" value="varbinary"><span
+										class="keyword">varbinary</span></span> ist dem JDBC-Typ <span
+										sdata="langKeyword" value="VARBINARY"><span
+										class="keyword">VARBINARY</span></span> zugeordnet.
+								</p>
+								<p>
+									Der <span sdata="langKeyword" value="udt"><span
+										class="keyword">udt</span></span>-Typ in SQL Server entspricht dem <span
+										sdata="langKeyword" value="VARBINARY"><span
+										class="keyword">VARBINARY</span></span>-Typ in JDBC.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Long</p></td>
+							<td><p>
+									Der SQL Server-Typ <span sdata="langKeyword" value="image"><span
+										class="keyword">image</span></span> ist dem JDBC-Typ <span
+										sdata="langKeyword" value="LONGVARBINARY"><span
+										class="keyword">LONGVARBINARY</span></span> zugeordnet. Dieser Typ
+									ist ab SQL Server 2005 veraltet, sodass Sie stattdessen einen
+									Typ mit umfangreichen Werten, d. h. <span sdata="langKeyword"
+										value="varbinary(max)"><span class="keyword">varbinary(max)</span></span>,
+									verwenden sollten.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Exakte numerische Typen</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>Die exakten numerischen JDBC-Typen sind direkt den
+					entsprechenden SQL Server-Typen zugeordnet.</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Typ</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>BIT</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="BIT"><span
+										class="keyword">BIT</span></span> stellt ein Bit dar, das 0 oder 1
+									sein kann. Entspricht dem SQL Server-Typ <span
+										sdata="langKeyword" value="bit"><span class="keyword">bit</span></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>TINYINT</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="TINYINT"><span
+										class="keyword">TINYINT</span></span> stellt ein einzelnes Byte dar.
+									Entspricht dem SQL Server-Typ <span sdata="langKeyword"
+										value="tinyint"><span class="keyword">tinyint</span></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SMALLINT</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="SMALLINT"><span
+										class="keyword">SMALLINT</span></span> stellt eine 16-Bit-Ganzzahl
+									mit Vorzeichen dar. Entspricht dem SQL Server-Typ <span
+										sdata="langKeyword" value="smallint"><span
+										class="keyword">smallint</span></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>INTEGER</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="INTEGER"><span
+										class="keyword">INTEGER</span></span> stellt eine 32-Bit-Ganzzahl mit
+									Vorzeichen dar. Entspricht dem SQL Server-Typ <span
+										sdata="langKeyword" value="int"><span class="keyword">int</span></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>BIGINT</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="BIGINT"><span
+										class="keyword">BIGINT</span></span> stellt eine 64-Bit-Ganzzahl mit
+									Vorzeichen dar. Entspricht dem SQL Server-Typ <span
+										sdata="langKeyword" value="bigint"><span
+										class="keyword">bigint</span></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>NUMERIC</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="NUMERIC"><span
+										class="keyword">NUMERIC</span></span> stellt einen Dezimalwert fester
+									Genauigkeit dar, der Werte mit identischer Genauigkeit enthält.
+									Der <span sdata="langKeyword" value="NUMERIC"><span
+										class="keyword">NUMERIC</span></span>-Typ ist dem SQL Server-Typ <span
+										sdata="langKeyword" value="numeric"><span
+										class="keyword">numeric</span></span> zugeordnet.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>DECIMAL</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="DECIMAL"><span
+										class="keyword">DECIMAL</span></span> stellt einen Dezimalwert fester
+									Genauigkeit dar, der Werte mit mindestens der angegebenen
+									Genauigkeit enthält. Der <span sdata="langKeyword"
+										value="DECIMAL"><span class="keyword">DECIMAL</span></span>-Typ
+									ist dem SQL Server-Typ <span sdata="langKeyword"
+										value="decimal"><span class="keyword">decimal</span></span>
+									zugeordnet.
+								</p>
+								<p>
+									Der JDBC-Typ <span sdata="langKeyword" value="DECIMAL"><span
+										class="keyword">DECIMAL</span></span> ist außerdem den SQL
+									Server-Typen <span sdata="langKeyword" value="money"><span
+										class="keyword">money</span></span> und <span sdata="langKeyword"
+										value="smallmoney"><span class="keyword">smallmoney</span></span>
+									zugeordnet. Dabei handelt es sich um spezielle Dezimaltypen
+									fester Genauigkeit, die in 8 bzw. 4 Bytes gespeichert werden.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Angenäherte numerische Typen</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die angenäherten numerischen JDBC-Typen lauten <span
+						sdata="langKeyword" value="REAL"><span class="keyword">REAL</span></span>,
+					<span sdata="langKeyword" value="DOUBLE"><span
+						class="keyword">DOUBLE</span></span> und <span sdata="langKeyword"
+						value="FLOAT"><span class="keyword">FLOAT</span></span>.
+				</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Typ</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>REAL</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="REAL"><span
+										class="keyword">REAL</span></span> weist sieben Ziffern für die
+									Genauigkeit auf (einfache Genauigkeit) und ist dem SQL
+									Server-Typ <span sdata="langKeyword" value="real"><span
+										class="keyword">real</span></span> zugeordnet.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>DOUBLE</p></td>
+							<td><p>
+									Der JDBC-Typ <span sdata="langKeyword" value="DOUBLE"><span
+										class="keyword">DOUBLE</span></span> weist 15 Ziffern für die
+									Genauigkeit auf (doppelte Genauigkeit) und ist dem SQL
+									Server-Typ <span sdata="langKeyword" value="float"><span
+										class="keyword">float</span></span> zugeordnet. Bei dem JDBC-Typ <span
+										sdata="langKeyword" value="FLOAT"><span class="keyword">FLOAT</span></span>
+									handelt es sich um ein Synonym für <span sdata="langKeyword"
+										value="DOUBLE"><span class="keyword">DOUBLE</span></span>. Um
+									Verwechslungen zwischen <span sdata="langKeyword" value="FLOAT"><span
+										class="keyword">FLOAT</span></span> und <span sdata="langKeyword"
+										value="DOUBLE"><span class="keyword">DOUBLE</span></span> zu
+									vermeiden, sollte vorzugsweise <span sdata="langKeyword"
+										value="DOUBLE"><span class="keyword">DOUBLE</span></span>
+									verwendet werden.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Datum-/Zeittypen</h1>
+			<div id="sectionSection4" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Der JDBC-Typ <span sdata="langKeyword" value="TIMESTAMP"><span
+						class="keyword">TIMESTAMP</span></span> ist den SQL Server-Typen <span
+						sdata="langKeyword" value="datetime"><span class="keyword">datetime</span></span>
+					und <span sdata="langKeyword" value="smalldatetime"><span
+						class="keyword">smalldatetime</span></span> zugeordnet. Der <span
+						sdata="langKeyword" value="datetime"><span class="keyword">datetime</span></span>-Typ
+					wird in zwei integer-Werten mit einer Länge von 4 Byte gespeichert.
+					Der <span sdata="langKeyword" value="smalldatetime"><span
+						class="keyword">smalldatetime</span></span>-Typ enthält die gleichen
+					Informationen (Datum und Uhrzeit), allerdings mit geringerer
+					Genauigkeit in zwei integer-Werten mit einer Länge von 2 Byte.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Bei dem SQL Server-Typ <span sdata="langKeyword" value="timestamp"><span
+							class="keyword">timestamp</span></span> handelt es sich um einen binären
+						Zeichenfolgetyp mit fester Länge. Er ist keinem der JDBC-Typen <span
+							sdata="langKeyword" value="DATE"><span class="keyword">DATE</span></span>,
+						<span sdata="langKeyword" value="TIME"><span
+							class="keyword">TIME</span></span> oder <span sdata="langKeyword"
+							value="TIMESTAMP"><span class="keyword">TIMESTAMP</span></span>
+						zugeordnet.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Benutzerdefinierte Typzuordnung</h1>
+			<div id="sectionSection5" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die Zuordnungsfunktion für benutzerdefinierte Typen von JDBC, das
+					die <b>SQLData</b>-Schnittstellen für die erweiterten JDBC-Typen
+					(UDTs, Struct usw.) verwendet, ist im JDBC-Treiber nicht
+					implementiert.
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="7802328d-4d23-4775-9573-4169b127d258.htm">Grundlegendes
+							zu den Datentypen in JDBC Driver</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

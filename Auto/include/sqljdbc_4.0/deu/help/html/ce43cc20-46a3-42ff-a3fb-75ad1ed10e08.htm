@@ -1,0 +1,128 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verbinden und Abrufen von Daten</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verbindungsbeispiele" />
+<meta name="Microsoft.Help.Id"
+	content="ce43cc20-46a3-42ff-a3fb-75ad1ed10e08" />
+<meta name="Description"
+	content="Bei der Arbeit mit Microsoft JDBC Driver für SQL Server gibt es zwei Hauptmethoden, um eine Verbindung mit einer SQL Server-Datenbank herzustellen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verbinden und
+						Abrufen von Daten</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Bei der Arbeit mit Microsoft JDBC Driver für SQL Server gibt es
+					zwei Hauptmethoden, um eine Verbindung mit einer SQL
+					Server-Datenbank herzustellen. Eine Methode besteht darin, die
+					Verbindungseigenschaften in der Verbindungs-URL festzulegen und
+					anschließend die <b>getConnection</b>-Methode der <b>DriverManager</b>-Klasse
+					aufzurufen, um ein <a
+						href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Objekt
+					zurückzugeben.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Eine Liste der vom JDBC-Treiber unterstützten
+						Verbindungseigenschaften finden Sie unter <span sdata="link"><a
+							href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen von
+								Verbindungseigenschaften</a></span>.
+					</p>
+				</div>
+				<p>
+					Bei der zweiten Methode werden die Verbindungseigenschaften mit den
+					Festlegungsmethoden der <a
+						href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse
+					festgelegt und anschließend die <a
+						href="a15ee185-f433-4915-9c75-5ebd90c758fd.htm">getConnection</a>-Methode
+					aufgerufen, um ein <b>SQLServerConnection</b>-Objekt zurückzugeben.
+				</p>
+				<p>Die Themen in diesem Abschnitt beschreiben die verschiedenen
+					Möglichkeiten, um eine Verbindung zu einer SQL Server-Datenbank
+					herzustellen, und die verschiedenen Verfahren, um Daten abzurufen.</p>
+			</div>
+			<h1 class="heading">In diesem Abschnitt</h1>
+			<div id="inThisSectionSection" class="section"
+				name="collapseableSection" style="">
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Thema</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="96fabc42-59d1-4cc0-93c5-db00cbe55e95.htm">Verbindungs-URL
+											- Beispiel</a></span>
+								</p></td>
+							<td><p>Beschreibt die Verwendung einer Verbindungs-URL,
+									um eine Verbindung zu SQL Server herzustellen und Daten
+									anschließend mit einer SQL-Anwendung abzurufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="b4a933ee-f2c6-4e0d-a96d-6dd061abf759.htm">Beispiel
+											für Datenquellen</a></span>
+								</p></td>
+							<td><p>Beschreibt die Verwendung einer Datenquelle, um
+									eine Verbindung zu SQL Server herzustellen und Daten
+									anschließend mit einer gespeicherten Prozedur abzurufen.</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="e136b87c-a138-45d6-8c3e-bcef94b7e483.htm">Beispiele für
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

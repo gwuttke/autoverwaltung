@@ -1,0 +1,193 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Herstellen von Verbindungen mit SSL-Verschlüsselung</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verschlüsselung" />
+<meta name="System.Keywords" content="SSL" />
+<meta name="Microsoft.Help.Id"
+	content="ec91fa8a-ab7e-4c1e-a05a-d7951ddf33b1" />
+<meta name="Description"
+	content="In diesem Beispiel wird veranschaulicht, wie Verbindungszeichenfolgeneigenschaften verwendet werden, mit denen Anwendungen Secure Sockets Layer (SSL)-Verschlüsselung in einer Java-Anwendung verwenden können." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Herstellen von
+						Verbindungen mit SSL-Verschlüsselung</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					In diesem Beispiel wird veranschaulicht, wie
+					Verbindungszeichenfolgeneigenschaften verwendet werden, mit denen
+					Anwendungen Secure Sockets Layer (SSL)-Verschlüsselung in einer
+					Java-Anwendung verwenden können. Weitere Informationen zu den neuen
+					Eigenschaften für Verbindungszeichenfolgen (beispielsweise <span
+						class="label">encrypt</span>, <span class="label">trustServerCertificate</span>,
+					<span class="label">trustStore</span>, <span class="label">trustStorePassword</span>
+					und <span class="label">hostNameInCertificate</span>) finden Sie
+					unter <span sdata="link"><a
+						href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen von
+							Verbindungseigenschaften</a></span>.
+				</p>
+				<p>
+					Wenn die <span class="label">encrypt</span>-Eigenschaft auf <span
+						sdata="langKeyword" value="true"><span class="keyword">true</span></span>
+					festgelegt ist und die <span class="label">trustServerCertificate</span>-Eigenschaft
+					auf <span sdata="langKeyword" value="true"><span
+						class="keyword">true</span></span> festgelegt ist, wird von Microsoft
+					JDBC Driver für SQL Server keine Überprüfung des SQL
+					Server-SSL-Zertifikats ausgeführt. Dies ist normalerweise zum
+					Zulassen von Verbindungen in Testumgebungen erforderlich,
+					beispielsweise wenn die SQL Server-Instanz nur über ein selbst
+					signiertes Zertifikat verfügt.
+				</p>
+				<p>
+					Im folgenden Codebeispiel wird das Festlegen der <span
+						class="label">trustServerCertificate</span>-Eigenschaft in einer
+					Verbindungszeichenfolge veranschaulicht:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true;trustServerCertificate=true";</pre></span>
+				</div>
+				<p>
+					Wenn die <span class="label">encrypt</span>-Eigenschaft auf <span
+						sdata="langKeyword" value="true"><span class="keyword">true</span></span>
+					festgelegt ist und die <span class="label">trustServerCertificate</span>-Eigenschaft
+					auf <span sdata="langKeyword" value="false"><span
+						class="keyword">false</span></span> festgelegt ist, wird von Microsoft
+					JDBC Driver für SQL Server die Überprüfung des SQL
+					Server-SSL-Zertifikats ausgeführt. Das Überprüfen des
+					Serverzertifikats ist Teil des SSL-Handshakes und stellt sicher,
+					dass es sich bei dem Server tatsächlich um den Server handelt, mit
+					dem eine Verbindung hergestellt werden soll. Zum Überprüfen des
+					Serverzertifikats müssen die Vertrauensinformationen zur
+					Verbindungszeit explizit mithilfe der <span class="label">trustStore</span>-Verbindungseigenschaft
+					und der <span class="label">trustStorePassword</span>-Verbindungseigenschaft
+					oder implizit mithilfe des Standardvertrauensspeichers der zugrunde
+					liegenden Java Virtual Machine (JVM) übermittelt werden.
+				</p>
+				<p>
+					Die <span class="label">trustStore</span>-Eigenschaft gibt den Pfad
+					(einschließlich des Dateinamens) der <b>trustStore</b>-Zertifikatsdatei
+					an. Diese enthält die Liste der Zertifikate, denen der Client
+					vertraut. Die <span class="label">trustStorePassword</span>-Eigenschaft
+					gibt das Kennwort an, das verwendet wird, um die Integrität der
+					trustStore-Daten zu überprüfen. Weitere Informationen zum
+					Standardvertrauensspeicher der JVM finden Sie unter <span
+						sdata="link"><a
+						href="ae34cd1f-3569-4759-80c7-7c9b33b3e9eb.htm">Konfigurieren
+							des Clients für SSL-Verschlüsselung</a></span>.
+				</p>
+				<p>
+					Im folgenden Codebeispiel wird das Festlegen der <span
+						class="label">trustStore</span>-Eigenschaft und der <span
+						class="label">trustStorePassword</span>-Eigenschaft in einer
+					Verbindungszeichenfolge veranschaulicht:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true; trustServerCertificate=false;" +
+     "trustStore=storeName;trustStorePassword=storePassword";</pre></span>
+				</div>
+				<p>
+					JDBC Driver stellt die zusätzliche Eigenschaft <span class="label">hostNameInCertificate</span>
+					bereit, mit der der Hostname des Servers angegeben wird. Der Wert
+					dieser Eigenschaft muss mit der <b>subject</b>-Eigenschaft des
+					Zertifikats übereinstimmen.
+				</p>
+				<p>
+					Im folgenden Codebeispiel wird das Verwenden der <span
+						class="label">hostNameInCertificate</span>-Eigenschaft in einer
+					Verbindungszeichenfolge veranschaulicht:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>String connectionUrl = 
+    "jdbc:sqlserver://localhost:1433;" +
+     "databaseName=AdventureWorks;integratedSecurity=true;" +
+     "encrypt=true; trustServerCertificate=false;" +
+     "trustStore=storeName;trustStorePassword=storePassword" +
+     "hostNameInCertificate=hostName";</pre></span>
+				</div>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Sie können den Wert von Verbindungseigenschaften auch mithilfe der
+						entsprechenden <span sdata="langKeyword" value="setter"><span
+							class="keyword">setter</span></span>-Methoden festlegen, die von der <a
+							href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse
+						bereitgestellt werden.
+					</p>
+				</div>
+				<p>
+					Wenn die <span class="label">encrypt</span>-Eigenschaft auf <span
+						sdata="langKeyword" value="true"><span class="keyword">true</span></span>
+					und die <span class="label">trustServerCertificate</span>-Eigenschaft
+					auf <span sdata="langKeyword" value="false"><span
+						class="keyword">false</span></span> festgelegt ist und der Servername in
+					der Verbindungszeichenfolge nicht dem Servernamen im SQL
+					Server-SSL-Zertifikat entspricht, wird der folgende Fehler
+					ausgegeben: Der Treiber konnte keine sichere Verbindung mit SQL
+					Server über die SSL (Secure Sockets Layer)-Verschlüsselung
+					herstellen. Fehler: "java.security.cert.CertificateException:
+					Fehler bei der Servernamenüberprüfung in einem Zertifikat während
+					der SSL (Secure Sockets Layer)-Initialisierung."
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="8e566243-2f93-4b21-8065-3c8336649309.htm">Verwenden der
+							SSL-Verschlüsselung</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

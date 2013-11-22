@@ -1,0 +1,196 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Internationale Funktionen des JDBC-Treibers</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Sortierung" />
+<meta name="System.Keywords" content="Internationale Funktionen" />
+<meta name="System.Keywords" content="Gebietsschema" />
+<meta name="Microsoft.Help.Id"
+	content="bbb74a1d-9278-401f-9530-7b5f45aa79de" />
+<meta name="Description"
+	content="Microsoft JDBC Driver für SQL Server bietet folgende Internationalisierungsfunktionen:" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Internationale
+						Funktionen des JDBC-Treibers</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Microsoft JDBC Driver für SQL Server bietet folgende
+					Internationalisierungsfunktionen:</p>
+				<ul>
+					<li><p>Unterstützung einer vollständigen Lokalisierung in
+							den gleichen Sprachen wie SQL Server</p></li>
+					<li><p>Unterstützung für Java-Sprachumwandlungen für
+							gebietsschemasensitive SQL Server-Daten</p></li>
+					<li><p>Betriebssystemunabhängige Unterstützung
+							internationaler Sprachen</p></li>
+				</ul>
+			</div>
+			<h1 class="heading">Verarbeitung von Zeichendaten</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Zeichendaten in Java werden standardmäßig als Unicode-Daten
+					verarbeitet; das Java-Objekt <span sdata="langKeyword"
+						value="String"><span class="keyword">String</span></span> stellt
+					Unicode-Zeichendaten dar. Die einzige Ausnahme dieser Regel im
+					JDBC-Treiber bilden die Abruf- und Festlegungsmethoden für
+					ASCII-Datenströme. Dabei handelt es sich um Sonderfälle, da
+					Bytedatenströme mit der impliziten Voraussetzung einer einzelnen
+					bekannten Codepage (ASCII) verwendet werden.
+				</p>
+				<p>
+					Darüber hinaus umfasst der JDBC-Treiber die <span
+						sdata="langKeyword" value="sendStringParametersAsUnicode"><span
+						class="keyword">sendStringParametersAsUnicode</span></span>-Verbindungszeichenfolgeeigenschaft.
+					Mit dieser Eigenschaft kann angegeben werden, dass die
+					vorbereiteten Parameter für Zeichendaten anstatt in Unicode in
+					ASCII oder als Multibyte-Zeichensatz (MBCS) gesendet werden.
+					Weitere Informationen über die <span sdata="langKeyword"
+						value="sendStringParametersAsUnicode"><span class="keyword">sendStringParametersAsUnicode</span></span>-Verbindungszeichenfolgeneigenschaft
+					finden Sie unter <span sdata="link"><a
+						href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen von
+							Verbindungseigenschaften</a></span>.
+				</p>
+				<h1 class="heading">Konvertierung eingehender Daten</h1>
+				<div class="subsection">
+					<p>Unicode-Textdaten vom Server brauchen nicht konvertiert zu
+						werden. Sie werden direkt als Unicode-Daten übergeben.
+						Nicht-Unicode-Daten vom Server werden von der Codepage für die
+						Daten auf Datenbank- oder Spaltenebene in Unicode konvertiert. Der
+						JDBC-Treiber verwendet die JVM-Konvertierungsroutinen (Java
+						Virtual Machine) für diese Konvertierungen. Diese Konvertierungen
+						werden in allen Abrufmethoden für typisierte Zeichenfolge- und
+						Zeichendatenströme ausgeführt.</p>
+					<p>Wenn die JVM nicht die richtige Codepage für die Daten aus
+						der Datenbank unterstützt, löst der JDBC-Treiber die Ausnahme
+						"Codepage XXX wird von der Java-Umgebung nicht unterstützt." aus.
+						Zum Beheben dieses Problems sollten Sie die vollständige
+						Unterstützung für internationale Zeichensätze installieren, die
+						für diese JVM erforderlich ist. Ein Beispiel finden Sie auf der
+						Sun Microsystems-Website in der Dokumentation zu unterstützten
+						Codierungen.</p>
+				</div>
+				<h1 class="heading">Konvertierung ausgehender Daten</h1>
+				<div class="subsection">
+					<p>
+						Zeichendaten vom Treiber zum Server können als ASCII oder Unicode
+						übertragen werden. Beispielsweise senden die neuen JDBC
+						4.0-Methoden für nationale Zeichensätze wie <b>setNString</b>, <b>setNCharacterStream</b>
+						und <b>setNClob</b> der <a
+							href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>-Klasse
+						und der <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>-Klasse
+						ihre Parameterwerte immer im Unicode-Format an den Server.
+					</p>
+					<p>
+						Die API-Methoden für nicht nationale Zeichensätze wie <b>setString</b>,
+						<b>setCharacterStream</b> und <b>setClob</b> der <a
+							href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>-Klasse
+						und der <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>-Klasse
+						senden ihre Parameterwerte hingegen nur dann im Unicode-Format an
+						den Server, wenn die <span sdata="langKeyword"
+							value="sendStringParametersAsUnicode"><span
+							class="keyword">sendStringParametersAsUnicode</span></span>-Eigenschaft
+						auf "true" (der Standardwert) festgelegt ist.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Nicht-Unicode-Parameter</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Um bei Verwendung der Typen von Nicht-Unicode-Parametern <span
+						sdata="langKeyword" value="CHAR"><span class="keyword">CHAR</span></span>,
+					<span sdata="langKeyword" value="VARCHAR"><span
+						class="keyword">VARCHAR</span></span> und <span sdata="langKeyword"
+						value="LONGVARCHAR"><span class="keyword">LONGVARCHAR</span></span>
+					eine optimale Leistung zu erhalten, legen Sie die <span
+						sdata="langKeyword" value="sendStringParametersAsUnicode"><span
+						class="keyword">sendStringParametersAsUnicode</span></span>-Verbindungszeichenfolgeneigenschaft
+					auf "false" fest und verwenden die Methoden für nicht nationale
+					Zeichensätze.
+				</p>
+			</div>
+			<h1 class="heading">Formatierungsprobleme</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Bei Datums-, Uhrzeit- und Währungsangaben erfolgt die gesamte
+					Formatierung mit lokalisierten Daten mit dem <b>Locale</b>-Objekt
+					und den verschiedenen Formatierungsmethoden für <span
+						sdata="langKeyword" value="Date"><span class="keyword">Date</span></span>-,
+					<span sdata="langKeyword" value="Calendar"><span
+						class="keyword">Calendar</span></span>- und <span sdata="langKeyword"
+						value="Number"><span class="keyword">Number</span></span>-Datentypen
+					auf Java-Ebene. In den seltenen Fällen, in denen der JDBC-Treiber
+					gebietsschemasensitive Daten in einem lokalisierten Format
+					übergeben muss, wird die entsprechende Formatierungsmethode mit dem
+					JVM-Standardgebietsschema verwendet.
+				</p>
+			</div>
+			<h1 class="heading">Unterstützung für Sortierungen</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>JDBC Driver 3.0 unterstützt alle Sortierungen, die von SQL
+					Server 2000, SQL Server 2005 und den in SQL Server 2008
+					eingeführten neuen Sortierungen bzw. neuen Versionen der
+					Windows-Sortierungsnamen unterstützt werden.</p>
+				<p>
+					Weitere Informationen zu Sortierungen finden Sie unter <a
+						href="http://go.microsoft.com/fwlink/?LinkId=131366">Sortierung
+						und Unicode-Unterstützung</a> und <a
+						href="http://go.microsoft.com/fwlink/?LinkId=131367">Name der
+						Windows-Sortierreihenfolge (Transact-SQL)</a> in der SQL
+					Server-Onlinedokumentation.
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Übersicht über
+							den JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

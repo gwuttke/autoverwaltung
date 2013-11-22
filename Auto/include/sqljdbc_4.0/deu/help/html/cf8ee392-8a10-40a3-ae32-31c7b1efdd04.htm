@@ -1,0 +1,242 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Arbeiten mit Verbindungen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verbindung" />
+<meta name="Microsoft.Help.Id"
+	content="cf8ee392-8a10-40a3-ae32-31c7b1efdd04" />
+<meta name="Description"
+	content="Die folgenden Abschnitte enthalten Beispiele für die verschiedenen Möglichkeiten, um mit der SQLServerConnection-Klasse von Microsoft JDBC Driver für SQL Server eine Verbindung mit einer SQL Server-Datenbank herzustellen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Arbeiten mit
+						Verbindungen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Die folgenden Abschnitte enthalten Beispiele für die verschiedenen
+					Möglichkeiten, um mit der <a
+						href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse
+					von Microsoft JDBC Driver für SQL Server eine Verbindung mit einer
+					SQL Server-Datenbank herzustellen.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn beim Herstellen von Verbindungen zu SQL Server mit dem
+						JDBC-Treiber Probleme auftreten, finden Sie unter <a
+							href="bfba0b49-2e1f-411d-a625-d25fad9ea12d.htm">Behandlung
+							von Verbindungsproblemen</a> Vorschläge zum Beheben der Probleme.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit der
+				DriverManager-Klasse</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die einfachste Vorgehensweise zum Erstellen einer Verbindung zu
+					einer SQL Server-Datenbank besteht darin, den JDBC-Treiber zu laden
+					und die <b>getConnection</b>-Methode der <b>DriverManager</b>-Klasse
+					aufzurufen, wie im Folgenden dargestellt:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+String connectionUrl = "jdbc:sqlserver://localhost;database=AdventureWorks;integratedSecurity=true;"
+Connection con = DriverManager.getConnection(connectionUrl);</pre></span>
+				</div>
+				<p>Bei diesem Verfahren wird eine Datenbankverbindung mit dem
+					ersten verfügbaren Treiber in der Liste der Treiber erstellt, der
+					erfolgreich eine Verbindung mit der angegebenen URL herstellen
+					kann.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Bei Verwendung der <b>sqljdbc4.jar</b>-Klassenbibliothek brauchen
+						Anwendungen den Treiber nicht mit der <b>Class.forName</b>-Methode
+						explizit registriert oder geladen werden. Wenn die <b>getConnection</b>-Methode
+						der <b>DriverManager</b>-Klasse aufgerufen wird, wird aus der
+						Gruppe der registrierten JDBC-Treiber ein geeigneter Treiber
+						ausgewählt. Weitere Informationen finden Sie unter "Verwenden des
+						JDBC-Treibers".
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit der
+				SQLServerDriver-Klasse</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Wenn Sie in der Liste der Treiber für <b>DriverManager</b> einen
+					bestimmten Treiber angeben müssen, können Sie eine
+					Datenbankverbindung mit der <a
+						href="43813a4c-1cc7-4659-ba27-f1786f1371eb.htm">connect</a>-Methode
+					der <a href="fbdceae5-7e7b-4edb-8c33-c701ca6b2d53.htm">SQLServerDriver</a>-Klasse
+					erstellen, wie im Folgenden dargestellt:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>Driver d = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+String connectionUrl = "jdbc:sqlserver://localhost;database=AdventureWorks;integratedSecurity=true;"
+Connection con = d.connect(connectionUrl, new Properties());</pre></span>
+				</div>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit der
+				SQLServerDataSource-Klasse</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Wenn Sie eine Verbindung mit der <a
+						href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse
+					erstellen müssen, können Sie verschiedene Festlegungsmethoden der
+					Klasse verwenden, bevor Sie die <a
+						href="7f520e96-5313-468f-b987-535ddaea027e.htm">getConnection</a>-Methode
+					aufrufen, wie z. B.:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>SQLServerDataSource ds = new SQLServerDataSource();
+ds.setUser("MyUserName");
+ds.setPassword("*****");
+ds.setServerName("localhost");
+ds.setPortNumber(1433); 
+ds.setDatabaseName("AdventureWorks");
+Connection con = ds.getConnection();</pre></span>
+				</div>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit eine sehr
+				speziellen Datenquelle als Ziel</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn Sie eine Datenbankverbindung mit einer sehr speziellen
+					Datenquelle herstellen müssen, können Sie mehrere Verfahren
+					verwenden. Das jeweilige Verfahren hängt von den Eigenschaften ab,
+					die Sie mit der Verbindungs-URL festlegen.</p>
+				<p>Um eine Verbindung zur Standardinstanz auf einem Remoteserver
+					herzustellen, verwenden Sie die folgende URL:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://MyServer;integratedSecurity=true;"</span>
+				</p>
+				<p>Um eine Verbindung zu einem bestimmten Port eines Servers
+					herzustellen, verwenden Sie die folgende URL:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://MyServer:1533;integratedSecurity=true;"</span>
+				</p>
+				<p>Um eine Verbindung zu einer benannten Instanz eines Servers
+					herzustellen, verwenden Sie die folgende URL:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://209.196.43.19;instanceName=INSTANCE1;integratedSecurity=true;"</span>
+				</p>
+				<p>Um eine Verbindung zu einer bestimmten Datenbank eines
+					Servers herzustellen, verwenden Sie die folgende URL:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://172.31.255.255;database=AdventureWorks;integratedSecurity=true;"</span>
+				</p>
+				<p>
+					Weitere Beispiele für Verbindungs-URLs finden Sie unter <span
+						sdata="link"><a
+						href="44996746-d373-4f59-9863-a8a20bb8024a.htm">Erstellen der
+							Verbindungs-URL</a></span>.
+				</p>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit einem
+				benutzerdefinierten Anmeldetimeout</h1>
+			<div id="sectionSection4" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn Sie Serverlast oder Netzwerkverkehr berücksichtigen
+					müssen, können Sie eine Verbindung mit einem bestimmten Timeoutwert
+					für die Anmeldung in Sekunden erstellen, wie z. B.:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://MyServer;loginTimeout=90;integratedSecurity=true;"</span>
+				</p>
+			</div>
+			<h1 class="heading">Erstellen einer Verbindung mit Identität auf
+				Anwendungsebene</h1>
+			<div id="sectionSection5" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn Sie Protokollierung und Profilerstellung verwenden,
+					müssen Sie die Verbindung mit einer bestimmten Anwendung als
+					Ursprung kennzeichnen, wie z. B.:</p>
+				<p>
+					<span class="code">String url =
+						"jdbc:sqlserver://MyServer;applicationName=MYAPP.EXE;integratedSecurity=true;"</span>
+				</p>
+			</div>
+			<h1 class="heading">Schließen einer Verbindung</h1>
+			<div id="sectionSection6" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Sie können durch Aufrufen der <a
+						href="f0f26585-bdf7-4737-b434-8c7e115c8e94.htm">close</a>-Methode
+					der <b>SQLServerConnection</b>-Klasse eine Datenbankverbindung
+					explizit schließen, wie im Folgenden dargestellt:
+				</p>
+				<p>
+					<span class="code">con.close();</span>
+				</p>
+				<p>
+					Dadurch werden die vom <b>SQLServerConnection</b>-Objekt
+					verwendeten Datenbankressourcen freigegeben bzw. die Verbindung in
+					Poolszenarien an den Verbindungspool zurückgegeben.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Durch den Aufruf der <b>close</b>-Methode wird auch ein Rollback
+						aller anstehenden Transaktionen ausgeführt.
+					</p>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Verbinden von
+							SQL Server mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

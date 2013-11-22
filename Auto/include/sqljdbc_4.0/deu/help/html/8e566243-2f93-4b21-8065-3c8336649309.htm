@@ -1,0 +1,146 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden der SSL-Verschlüsselung</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verschlüsselung" />
+<meta name="System.Keywords" content="SSL" />
+<meta name="System.Keywords" content="Verwenden der SSL-Verschlüsselung" />
+<meta name="Microsoft.Help.Id"
+	content="8e566243-2f93-4b21-8065-3c8336649309" />
+<meta name="Description"
+	content="Mit der SSL (Secure Sockets Layer)-Verschlüsselung können verschlüsselte Daten in einem Netzwerk zwischen einer Instanz von SQL Server und einer Clientanwendung übertragen werden." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden der
+						SSL-Verschlüsselung</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Mit der SSL (Secure Sockets Layer)-Verschlüsselung können
+					verschlüsselte Daten in einem Netzwerk zwischen einer Instanz von
+					SQL Server und einer Clientanwendung übertragen werden.</p>
+				<p>Secure Sockets Layer (SSL) ist ein Protokoll zum Einrichten
+					eines sicheren Kommunikationskanals, um das Abfangen von kritischen
+					oder vertraulichen Informationen im Netzwerk und bei anderen
+					Internetkommunikationen zu verhindern. Durch SSL können der Client
+					und der Server die Identität des anderen authentifizieren. Nach dem
+					Authentifizieren der Teilnehmer stellt SSL verschlüsselte
+					Verbindungen zwischen ihnen bereit, damit die Nachrichten sicher
+					übertragen werden können.</p>
+				<p>Microsoft JDBC Driver für SQL Server stellt eine
+					Infrastruktur bereit, mit der die Verschlüsselung für eine
+					bestimmte Verbindung auf Grundlage der benutzerdefinierten
+					Verbindungseigenschaften und der Server- und Clienteinstellungen
+					aktiviert und deaktiviert werden kann. Der Benutzer kann den
+					Speicherort des Zertifikatspeichers und das Kennwort sowie einen
+					Hostnamen zum Überprüfen des Zertifikats angeben und festlegen,
+					wann der Verbindungskanal verschlüsselt werden soll.</p>
+				<p>Das Aktivieren der SSL-Verschlüsselung erhöht die Sicherheit
+					von Daten, die netzwerkübergreifend zwischen Instanzen von SQL
+					Server und Anwendungen übertragen werden. Durch das Aktivieren der
+					Verschlüsselung kommt es jedoch zu Leistungseinbußen.</p>
+				<p>In den Themen in diesem Abschnitt werden die Unterstützung
+					der SSL-Verschlüsselung in der Microsoft JDBC Driver für SQL
+					Server-Version und neue Verbindungseigenschaften sowie das
+					Konfigurieren des Vertrauensspeichers auf Clientseite beschrieben.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Für das Überprüfen eines SSL-Zertifikats wird die <span
+							sdata="langKeyword" value="hostNameInCertificate"><span
+							class="keyword">hostNameInCertificate</span></span>-Verbindungseigenschaft
+						empfohlen.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">In diesem Abschnitt</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Thema</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="073f3b9e-8edd-4815-88ea-de0655d0325e.htm">Grundlegendes
+											zur SSL-Unterstützung</a></span>
+								</p></td>
+							<td><p>Beschreibt die Unterstützung der
+									SSL-Verschlüsselung in Microsoft JDBC Driver für SQL Server.</p></td>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="ec91fa8a-ab7e-4c1e-a05a-d7951ddf33b1.htm">Herstellen
+											von Verbindungen mit SSL-Verschlüsselung</a></span>
+								</p></td>
+							<td><p>Beschreibt das Herstellen einer Verbindung mit
+									einer SQL Server-Datenbank mithilfe der neuen SSL-spezifischen
+									Verbindungseigenschaften.</p></td>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="ae34cd1f-3569-4759-80c7-7c9b33b3e9eb.htm">Konfigurieren
+											des Clients für SSL-Verschlüsselung</a></span>
+								</p></td>
+							<td><p>Beschreibt das Konfigurieren des
+									Standardvertrauensspeichers auf Clientseite und das Importieren
+									eines privaten Zertifikats im Vertrauensspeicher des
+									Clientcomputers.</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verbinden mit einer SQL Azure-Datenbank</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="SQL Azure" />
+<meta name="Microsoft.Help.Id"
+	content="49645b1f-39b1-4757-bda1-c51ebc375c34" />
+<meta name="Description"
+	content="In diesem Thema werden Probleme behandelt, die auftreten, wenn über Microsoft JDBC Driver für SQL Server eine Verbindung mit einer SQL Azure-Datenbank hergestellt wird. Weitere Informationen über SQL Azure-Datenbanken finden Sie unter:" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verbinden mit
+						einer SQL Azure-Datenbank</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>In diesem Thema werden Probleme behandelt, die auftreten,
+					wenn über Microsoft JDBC Driver für SQL Server eine Verbindung mit
+					einer SQL Azure-Datenbank hergestellt wird. Weitere Informationen
+					über SQL Azure-Datenbanken finden Sie unter:</p>
+				<ul>
+					<li><p>
+							<a href="http://go.microsoft.com/fwlink/?LinkID=202490">SQL
+								Azure-Datenbank</a>
+						</p></li>
+					<li><p>
+							<a href="http://msdn.microsoft.com/library/gg715284.aspx">Vorgehensweise:
+								Herstellen einer Verbindung mit SQL Azure mithilfe von JDBC</a>
+						</p></li>
+					<li><p>
+							<a
+								href="http://msdn.microsoft.com/library/windowsazure/hh749029(VS.103).aspx">Verwenden
+								von SQL Azure in Java</a>
+						</p></li>
+				</ul>
+			</div>
+			<h1 class="heading">Details</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<dl class="authored">
+					<dt>
+						In SQL Azure müssen Sie für einen Aufruf von <span
+							sdata="langKeyword" value="SQLServerDatabaseMetaData.getCatalogs"><span
+							class="keyword">SQLServerDatabaseMetaData.getCatalogs</span></span> eine
+						Verbindung mit der Masterdatenbank herstellen.
+					</dt>
+					<dd>
+						<p>
+							Die Rückgabe sämtlicher Kataloge aus einer Benutzerdatenbank wird
+							von SQL Azure nicht unterstützt. <span sdata="langKeyword"
+								value="SQLServerDatabaseMetaData.getCatalogs"><span
+								class="keyword">SQLServerDatabaseMetaData.getCatalogs</span></span>
+							verwendet die sys.databases-Sicht, um die Kataloge abzurufen.
+							Lesen Sie die Beschreibung zu den Berechtigungen unter <a
+								href="http://go.microsoft.com/fwlink/?LinkId=217396">sys.databases
+								(SQL Azure-Datenbank)</a> durch, um sich mit dem <span
+								sdata="langKeyword"
+								value="SQLServerDatabaseMetaData.getCatalogs"><span
+								class="keyword">SQLServerDatabaseMetaData.getCatalogs</span></span>-Verhalten
+							für SQL Azure vertraut zu machen.
+						</p>
+					</dd>
+					<dt>Getrennte Verbindungen</dt>
+					<dd>
+						<p>Bei der Verbindung mit SQL Azure können Verbindungen im
+							Leerlauf nach einer Phase ohne Aktivität durch eine
+							Netzwerkkomponente (z. B. eine Firewall) getrennt werden. Um zu
+							vermeiden, dass Verbindungen im Leerlauf durch eine
+							Netzwerkkomponente getrennt werden, sollten die folgenden
+							Registrierungseinstellungen (bzw. deren
+							Nicht-Windows-Äquivalente) für das Betriebssystem festgelegt
+							werden, unter dem der Treiber geladen wurde:</p>
+						<div class="tableSection">
+							<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+								<tr>
+									<th><p>Registrierungseinstellung</p></th>
+									<th><p>Empfohlener Wert</p></th>
+								</tr>
+								<tr>
+									<td><p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveTime</p></td>
+									<td><p>30000</p></td>
+								</tr>
+								<tr>
+									<td><p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveInterval</p></td>
+									<td><p>1000</p></td>
+								</tr>
+								<tr>
+									<td><p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\TcpMaxDataRetransmission</p></td>
+									<td><p>10</p></td>
+								</tr>
+							</table>
+						</div>
+						<p>Anschließend müssen Sie den Computer neu starten, damit die
+							Registrierungseinstellungen wirksam werden.</p>
+						<p>Um diese Aktion in Windows Azure auszuführen, erstellen Sie
+							einen Starttask, durch den die Registrierungsschlüssel
+							hinzugefügt werden. Fügen Sie der Dienstdefinitionsdatei
+							beispielsweise folgenden Starttask hinzu:</p>
+						<div class="sampleCode">
+							<span codeLanguage="other"><pre>&lt;Startup&gt;
+    &lt;Task commandLine="AddKeepAlive.cmd" executionContext="elevated" taskType="simple"&gt;
+    &lt;/Task&gt;
+&lt;/Startup&gt;</pre></span>
+						</div>
+						<p>
+							Fügen Sie dem Projekt anschließend die Datei <b>AddKeepAlive.cmd</b>
+							hinzu. Legen Sie die Einstellung <b>In Ausgabeverzeichnis
+								kopieren</b> auf <b>Immer kopieren</b> fest. Das folgende Beispiel
+							veranschaulicht eine Datei <b>AddKeepAlive.cmd</b>:
+						</p>
+						<div class="sampleCode">
+							<span codeLanguage="other"><pre>if exist keepalive.txt goto done
+time /t &gt; keepalive.txt
+REM Workaround for JDBC keep alive on SQL Azure
+REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /v KeepAliveTime /t REG_DWORD /d 30000 &gt;&gt; keepalive.txt
+REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /v KeepAliveInterval /t REG_DWORD /d 1000 &gt;&gt; keepalive.txt
+REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters /v TcpMaxDataRetransmission /t REG_DWORD /d 10 &gt;&gt; keepalive.txt
+shutdown /r /t 1
+:done</pre></span>
+						</div>
+					</dd>
+					<dt>Anfügen des Servernamens an die UserId in der
+						Verbindungszeichenfolge</dt>
+					<dd>
+						<p>
+							Vor Microsoft JDBC Driver für SQL Server, Version 4.0, war es bei
+							der Verbindung mit einer SQL Azure-Datenbank erforderlich, den
+							Servernamen an die UserId in der Verbindungszeichenfolge
+							anzufügen, z. B. <b>Benutzer@Servername</b>. Ab Microsoft JDBC
+							Driver für SQL Server, Version 4.0, muss "@Servername" nicht mehr
+							an die UserId in der Verbindungszeichenfolge angefügt werden.
+						</p>
+					</dd>
+					<dt>Einstellung "hostNameInCertificate" zur Verwendung der
+						Verschlüsselung erforderlich</dt>
+					<dd>
+						<p>
+							Bei der Verbindung mit SQL Azure sollte auch <span
+								sdata="langKeyword" value="hostNameInCertificate"><span
+								class="keyword">hostNameInCertificate</span></span> angeben werden,
+							wenn <span sdata="langKeyword" value="encrypt=true"><span
+								class="keyword">encrypt=true</span></span> festgelegt ist. (Wenn der
+							Servername in der Verbindungszeichenfolge <span class="parameter"
+								sdata="paramReference">shortName</span>.<span class="parameter"
+								sdata="paramReference">domainName</span> lautet, legen Sie die <span
+								sdata="langKeyword" value="hostNameInCertificate"><span
+								class="keyword">hostNameInCertificate</span></span>-Eigenschaft auf <b>*.<span
+								class="parameter" sdata="paramReference">domainName</span></b>
+							fest.)
+						</p>
+						<p>Beispiel:</p>
+						<div class="sampleCode">
+							<span codeLanguage="other"><pre>jdbc:sqlserver://abcd.int.mscds.com;databaseName= myDatabase;user=myName;password=myPassword;encrypt=true;hostNameInCertificate= *.int.mscds.com;</pre></span>
+						</div>
+					</dd>
+				</dl>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Verbinden von
+							SQL Server mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

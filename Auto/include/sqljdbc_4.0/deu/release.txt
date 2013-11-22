@@ -1,0 +1,133 @@
+﻿Informationen zu dieser Version
+Microsoft JDBC Driver 4.0 für SQL Server
+März 2012
+
+
+EINFÜHRUNG
+------------
+Die vorliegende Datei enthält aktuelle bzw. sonstige wichtige
+Informationen, die die Dokumentation zu Microsoft JDBC
+Driver 4.0 für SQL Server ergänzen. Sie sollten diese Datei vollständig lesen,
+bevor Sie den JDBC-Treiber installieren.
+
+Ihr Feedback ist für Microsoft sehr wichtig. Microsoft ist
+bestrebt, Ihr Feedback schnellstmöglich zu beantworten. Informationen
+zum Bereitstellen von Feedback über die JDBC Driver-Blogs und
+-Onlineforen finden Sie auf der Seite zu Microsoft JDBC Driver 4.0
+für SQL Server unter "http://msdn.microsoft.com/data/jdbc".
+
+
+INSTALLATION
+------------
+Anweisungen zum Installieren des JDBC-Treibers finden Sie in der Datei "install.txt".
+Diese Datei enthält Informationen zum Installieren des
+JDBC-Treibers unter Windows- und Unix-Betriebssystemen.
+
+UNTERSTÜTZTE BETRIEBSSYSTEME
+---------------------------
+Folgende Betriebssysteme werden vom Microsoft JDBC Driver 4.0 für SQL Server unterstützt: 
+Linux, Unix, Windows Server 2008,
+Windows Vista Service Pack 1, Windows Server 2008 R2 und Windows 7.
+
+Die Liste oben enthält Beispiele für einige der unterstützten Betriebssysteme.
+Der JDBC-Treiber ist für alle Betriebssysteme ausgelegt, die die Verwendung
+einer JVM (Java Virtual Machine) unterstützen.  Er wurde jedoch nur für die Betriebssysteme
+Sun Solaris, SUSE Linux und Windows Vista Service Pack 1 oder höher getestet.
+
+INHALT DIESER VERSION
+----------------
+Die ausführbare ZIP- bzw. TAR-Datei für Microsoft JDBC Driver 4.0
+für SQL Server entpackt die folgenden Dateien relativ zum ausgewählten
+Installationsverzeichnis in die angegebenen Pfade:
+
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\install.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\release.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\license.txt
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\sqljdbc.jar
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\sqljdbc4.jar
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\auth\x86\sqljdbc_auth.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\auth\x64\sqljdbc_auth.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\default.htm
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\index.htm
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\toc.htm
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\html\<Dokumentationsseiten...>
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\local\<Dokumentationsdateien...>
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\help\samples\<Beispieldateien...>
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\xa_install.sql
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\x86\sqljdbc_xa.dll
+<Installationsverzeichnis>\sqljdbc_<Version>\<Sprache>\xa\x64\sqljdbc_xa.dll
+
+
+LISTE DER ÄNDERUNGEN
+-----------
+Änderungen in Version 4.0 gegenüber Version 3.0:
+
+1765616 "DatabaseMetadata.getTypeInfo" gibt jetzt für Katmai und höhere Versionen neue java.sql.Type-Werte für "date", "time", "datetime2" und
+        "datetimeoffset" zurück.
+
+1764334 Neue Unterstützung für die Ablaufverfolgung bei JDBC XA-Timeouts und XIDs.
+
+1750318 SQLServerDatabaseMetaData-Funktionen werden bei Wiederverwendung einer Poolverbindung jetzt ordnungsgemäß ausgeführt.
+
+1768845 Das Rundungsverhalten von "setTimestamp" und "updateTimestamp" wurde vereinheitlicht. Die Daten werden vom 
+        Treiber zunächst auf 7 Dezimalstellen gerundet, bevor sie an den Server gesendet werden.
+
+1770134 "updateTime" weist bei einem Back-End-Typ "time" mit dem maximalen Wert (23:59:59.999) jetzt ein korrektes Rundungsverhalten auf.
+
+1761042 Beendigungsaufrufe werden ab sofort von booleschen DataSource-Eigenschaften protokolliert.
+
+1750330 Das XA-SQL-Skript wurde aktualisiert, um irreführende Fehler bei der ersten Ausführung zu vermeiden.
+
+1761393 Die Ablaufverfolgung für unwrap-Methoden wurde verbessert.
+
+1945579 "DatabaseMetaData.getSchemas" funktioniert jetzt mit SQL Azure und SQL Server bei allen Sortierungen ordnungsgemäß.
+
+1963089 Die hostNameInCertificate-Verbindungseigenschaft ist nicht mehr zur Überprüfung eines SSL-Zertifikats für SQL Azure erforderlich.
+
+1958531 Falls eine Verbindung mit einem Server, der nicht für die Datenbankspiegelung eingerichtet ist, während der Anmeldung einen Fehler verursacht
+        (weil die Datenbank beispielsweise nicht vorhanden ist), wird der Verbindungsversuch vom Treiber nicht automatisch wiederholt.
+
+1954701 Die beim Einfügen einer doppelten Zeile ausgelöste Ausnahme enthält jetzt "SQLState 23000".
+
+2055259 Die Fehlermeldung, die ausgegeben wird, wenn die integrierte Authentifizierung nach dem Laden von "sqljdbc_auth.dll" fehlschlägt, wurde erweitert.
+
+2083373 Bei umfangreichen parametrisierten Abfragen mit ungültigen Argumenten, die für SQL Azure ausgeführt werden, wird jetzt eine Ausnahme ausgelöst,
+        ohne die Verbindung zu schließen.
+
+2084385 "getDate", "getTimestamp" und "getDateTimeOffset" geben jetzt mit JRE 1.7 für alle Datumsangaben korrekte Werte zurück.
+
+2105115 "getObject" funktioniert für ein aus "DatabaseMetaData.getColumns" abgerufenes Resultset jetzt ordnungsgemäß.
+
+
+BEKANNTE PROBLEME
+------------
+Die folgenden Probleme mit Microsoft JDBC Driver 4.0 für SQL Server sind bekannt:
+
+1) EINSCHRÄNKUNGEN FÜR PARAMETERMETADATEN BEI DER SQL MERGE-ANWEISUNG
+
+"PreparedStatement.getParameterMetadata()" löst bei Verwendung mit einer
+parametrisierten MERGE-Abfrage "SQLException" aus.
+
+
+2) Java Kerberos und IBM VMs
+
+Bei Verwendung einer Windows-Umgebung müssen Sie möglicherweise den Prinzipalnamen in der Konfigurationsdatei angeben, damit Java Kerberos funktioniert. Beispiel: 
+SQLJDBCDriver {
+com.ibm.security.auth.module.Krb5LoginModule required  useDefaultCcache=true credsType=initiator principal=principalname@principaldomain;
+};
+
+
+3) TRENNEN VON VERBINDUNGEN MIT SQL AZURE
+
+Bei der Verbindung mit SQL Azure können Verbindungen im Leerlauf nach einer Phase ohne Aktivität durch eine
+Netzwerkkomponente (z. B. eine Firewall) getrennt werden. Um zu vermeiden, dass Verbindungen im Leerlauf durch eine Netzwerk-
+komponente getrennt werden, sollten die folgenden Registrierungseinstellungen (bzw. deren Nicht-Windows-Äquivalente) für das Betriebssystem festgelegt werden, unter dem der Treiber geladen wurde:
+           
+           Registrierungseinstellung                                                        Empfohlener Wert
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveTime                 30000      
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\KeepAliveInterval             1000
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\TcpMaxDataRetransmission      10
+  
+
+
+

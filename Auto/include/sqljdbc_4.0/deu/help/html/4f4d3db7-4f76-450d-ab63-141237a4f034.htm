@@ -1,0 +1,609 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Grundlegendes zu Cursortypen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Cursortypen" />
+<meta name="Microsoft.Help.Id"
+	content="4f4d3db7-4f76-450d-ab63-141237a4f034" />
+<meta name="Description"
+	content="Vorgänge in einer relationalen Datenbank beziehen sich immer auf eine vollständige Gruppe von Zeilen. Die von einer SELECT-Anweisung zurückgegebene Gruppe von Zeilen besteht aus allen Zeilen, die die Bedingungen der WHERE-Klausel der Anweisung erfüllen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Grundlegendes zu
+						Cursortypen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Vorgänge in einer relationalen Datenbank beziehen sich immer
+					auf eine vollständige Gruppe von Zeilen. Die von einer
+					SELECT-Anweisung zurückgegebene Gruppe von Zeilen besteht aus allen
+					Zeilen, die die Bedingungen der WHERE-Klausel der Anweisung
+					erfüllen. Diese vollständige Gruppe von Zeilen, die von der
+					Anweisung zurückgegeben wird, wird als Resultset bezeichnet.
+					Anwendungen sind nicht immer effektiv, wenn das gesamte Resultset
+					als eine Einheit bearbeitet wird. Diese Anwendungen benötigen einen
+					Mechanismus, um jeweils eine Zeile oder einen kleinen Zeilenblock
+					zu bearbeiten. Cursor sind eine Erweiterung zu Resultsets und
+					stellen diesen Mechanismus bereit.</p>
+				<p>Cursor erweitern die Verarbeitung von Resultsets durch
+					folgende Aktionen:</p>
+				<ul>
+					<li><p>Ermöglichen der Positionierung an bestimmten Zeilen
+							des Resultsets.</p></li>
+					<li><p>Abrufen einer Zeile oder eines Zeilenblocks von der
+							aktuellen Position im Resultset.</p></li>
+					<li><p>Unterstützen von Datenänderungen in der Zeile an
+							der aktuellen Position im Resultset.</p></li>
+					<li><p>Unterstützen von unterschiedlichen
+							Sichtbarkeitsebenen bei Änderungen, die von anderen Benutzern an
+							den Datenbankdaten, die im Resultset dargestellt werden,
+							ausgeführt wurden.</p></li>
+				</ul>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Eine umfassende Beschreibung der SQL Server-Cursortypen
+						finden Sie im Thema zu Cursortypen (Datenbankmodul) in der SQL
+						Server-Onlinedokumentation.</p>
+				</div>
+				<p>
+					Die JDBC-Spezifikation stellt Unterstützung für Vorwärtscursor und
+					scrollfähige Cursor bereit, die Änderungen durch andere Aufträge
+					berücksichtigen oder nicht berücksichtigen können und
+					schreibgeschützt oder aktualisierbar sein können. Diese
+					Funktionalität wird von der <a
+						href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Klasse
+					von Microsoft JDBC Driver für SQL Server bereitgestellt.
+				</p>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Der JDBC-Treiber unterstützt die folgenden Cursortypen:</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Resultset</p>
+								<p>(Cursor) Typ</p></th>
+							<th><p>SQL Server-Cursortyp</p></th>
+							<th><p>Merkmale</p></th>
+							<th><p>select</p>
+								<p>Methode</p></th>
+							<th><p>response</p>
+								<p>Pufferung</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>TYPE_FORWARD_ONLY (CONCUR_READ_ONLY)</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Vorwärtscursor, schreibgeschützt</p></td>
+							<td><p>direct</p></td>
+							<td><p>full</p></td>
+							<td><p>Die Anwendung muss ein Pass-Through (vorwärts)
+									für das Resultset ausführen. Dies ist das Standardverhalten und
+									entspricht einem TYPE_SS_DIRECT_FORWARD_ONLY-Cursor. Der
+									Treiber liest das gesamte Resultset während der Ausführung der
+									Anweisung aus dem Server in einen Speicher.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_FORWARD_ONLY (CONCUR_READ_ONLY)</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Vorwärtscursor, schreibgeschützt</p></td>
+							<td><p>direct</p></td>
+							<td><p>adaptive</p></td>
+							<td><p>Die Anwendung muss ein Pass-Through (vorwärts)
+									für das Resultset ausführen. Das Verhalten entspricht dem
+									Verhalten eines TYPE_SS_DIRECT_FORWARD_ONLY-Cursors. Der
+									Treiber liest Zeilen vom Server, wenn die Anwendung sie
+									anfordert, und minimiert so die Speicherauslastung auf
+									Clientseite.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_FORWARD_ONLY (CONCUR_READ_ONLY)</p></td>
+							<td><p>Schneller Vorwärtscursor</p></td>
+							<td><p>Vorwärtscursor, schreibgeschützt</p></td>
+							<td><p>cursor</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Die Anwendung muss mithilfe eines Servercursors
+									ein Pass-Through (vorwärts) für das Resultset ausführen. Das
+									Verhalten entspricht dem Verhalten eines
+									TYPE_SS_SERVER_CURSOR_FORWARD_ONLY-Cursors.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_FORWARD_ONLY (CONCUR_UPDATABLE)</p></td>
+							<td><p>Dynamisch (Vorwärtscursor)</p></td>
+							<td><p>Vorwärtscursor, aktualisierbar</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Die Anwendung muss ein Pass-Through (vorwärts)
+									für das Resultset ausführen, um eine oder mehrere Zeilen zu
+									aktualisieren.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p>
+								<p>
+									In der Standardeinstellung ist die Abrufgröße festgelegt, wenn
+									die Anwendung die <a
+										href="233bf4f8-4758-42d0-a80b-33e34fa78027.htm">setFetchSize</a>-Methode
+									des <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekts
+									aufruft.
+								</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>Der JDBC-Treiber bietet eine Funktion für adaptive
+										Pufferung, die es erlaubt, Ergebnisse der Anweisungsausführung
+										erst dann von SQL Server abzurufen, wenn sie in der Anwendung
+										benötigt werden, statt alle Ergebnisse auf einmal abrufen zu
+										müssen. Wenn die Anwendung beispielsweise eine große
+										Datenmenge abrufen muss, für die der Anwendungsspeicher nicht
+										ausreicht, kann die Clientanwendung den Wert mithilfe der
+										adaptiven Pufferung als Datenstrom abrufen.</p>
+									<p>
+										Das Standardverhalten des Treibers ist "<span
+											sdata="langKeyword" value="adaptive"><span
+											class="keyword">adaptive</span></span>". Um jedoch die adaptive
+										Pufferung für das aktualisierbare Resultset mit Vorwärtscursor
+										zu aktivieren, muss die Anwendung die <a
+											href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a>-Methode
+										des <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Objekts
+										explizit aufrufen, indem der <span sdata="langKeyword"
+											value="String"><span class="keyword">String</span></span>-Wert
+										<span sdata="langKeyword" value="&quot;adaptive&quot;"><span
+											class="keyword">"adaptive"</span></span> angegeben wird.
+										Beispielcode finden Sie unter <span sdata="link"><a
+											href="76ecc05f-a77d-40a2-bab9-91a7fcf17347.htm">Beispiel
+												zum Aktualisieren umfangreicher Daten</a></span>.
+									</p>
+								</div></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SCROLL_INSENSITIVE</p></td>
+							<td><p>Statisch</p></td>
+							<td><p>Scrollfähig, nicht aktualisierbar</p>
+								<p>Externe Zeilenupdates, -einfügungen und -löschvorgänge
+									sind nicht sichtbar.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Die Anwendung erfordert eine
+									Datenbankmomentaufnahme. Das Resultset kann nicht aktualisiert
+									werden. Nur CONCUR_READ_ONLY wird unterstützt. Alle anderen
+									Parallelitätstypen führen bei Verwendung mit diesem Cursortyp
+									zu einer Ausnahme.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SCROLL_SENSITIVE</p>
+								<p>(CONCUR_READ_ONLY)</p></td>
+							<td><p>Keyset</p></td>
+							<td><p>Scrollfähig, schreibgeschützt Externe
+									Zeilenupdates sind sichtbar, und Löschvorgänge werden als
+									fehlende Daten angezeigt.</p>
+								<p>Externe Zeileneinfügungen sind nicht sichtbar.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Die Anwendung muss geänderte Daten nur für
+									vorhandene Zeilen anzeigen.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SCROLL_SENSITIVE</p>
+								<p>(CONCUR_UPDATABLE, CONCUR_SS_SCROLL_LOCKS,
+									CONCUR_SS_OPTIMISTIC_CC, CONCUR_SS_OPTIMISTIC_CCVAL)</p></td>
+							<td><p>Keyset</p></td>
+							<td><p>Scrollfähig, aktualisierbar</p>
+								<p>Externe und interne Zeilenupdates sind sichtbar,
+									Löschvorgänge werden als fehlende Daten angezeigt, und
+									Einfügungen sind nicht sichtbar.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>
+									Die Anwendung kann Daten in vorhandenen Zeilen mit dem <b>ResultSet</b>-Objekt
+									ändern. Auch Änderungen an Zeilen, die von anderen außerhalb
+									des <b>ResultSet</b>-Objekts vorgenommen werden, müssen für die
+									Anwendung sichtbar sein.
+								</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_DIRECT_FORWARD_ONLY</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Vorwärtscursor, schreibgeschützt</p></td>
+							<td><p>N/V</p></td>
+							<td><p>"full" oder "adaptive"</p></td>
+							<td><p>Ganzzahliger Wert = 2003. Stellt einen
+									schreibgeschützten clientseitigen Cursor bereit, der
+									vollständig gepuffert wird. Es wird kein Servercursor erstellt.</p>
+								<p>Nur der Parallelitätstyp CONCUR_READ_ONLY wird
+									unterstützt. Alle anderen Parallelitätstypen führen bei
+									Verwendung mit diesem Cursortyp zu einer Ausnahme.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SERVER_CURSOR_FORWARD_ONLY</p></td>
+							<td><p>Schneller Vorwärtscursor</p></td>
+							<td><p>Vorwärtscursor</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Ganzzahliger Wert = 2004. Schnell, greift über
+									einen Servercursor auf alle Daten zu. Bei Verwendung mit dem
+									Parallelitätstyp CONCUR_UPDATABLE aktualisierbar.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p>
+								<p>
+									Zum Abrufen der adaptiven Pufferung in diesem Fall muss die
+									Anwendung die <a
+										href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a>-Methode
+									des <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Objekts
+									explizit aufrufen, indem der <span sdata="langKeyword"
+										value="String"><span class="keyword">String</span></span>-Wert
+									<span sdata="langKeyword" value="&quot;adaptive&quot;"><span
+										class="keyword">"adaptive"</span></span> angegeben wird. Beispielcode
+									finden Sie unter <span sdata="link"><a
+										href="76ecc05f-a77d-40a2-bab9-91a7fcf17347.htm">Beispiel
+											zum Aktualisieren umfangreicher Daten</a></span>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SCROLL_STATIC</p></td>
+							<td><p>Statisch</p></td>
+							<td><p>Die Updates von anderen Benutzern werden nicht
+									reflektiert.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Ganzzahliger Wert = 1004. Die Anwendung erfordert
+									einen Datenbanksnapshot. Dies ist das SQL Server-spezifische
+									Synonym für JDBC TYPE_SCROLL_INSENSITIVE und weist das gleiche
+									Verhalten für die Festlegung der Parallelität auf.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SCROLL_KEYSET</p>
+								<p>(CONCUR_READ_ONLY)</p></td>
+							<td><p>Keyset</p></td>
+							<td><p>Scrollfähig, schreibgeschützt Externe
+									Zeilenupdates sind sichtbar, und Löschvorgänge werden als
+									fehlende Daten angezeigt.</p>
+								<p>Externe Zeileneinfügungen sind nicht sichtbar.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Ganzzahliger Wert = 1005. Die Anwendung muss
+									geänderte Daten nur für vorhandene Zeilen anzeigen. Dies ist
+									das SQL Server-spezifische Synonym für JDBC
+									TYPE_SCROLL_SENSITIVE und weist das gleiche Verhalten für die
+									Festlegung der Parallelität auf.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SCROLL_KEYSET</p>
+								<p>(CONCUR_UPDATABLE, CONCUR_SS_SCROLL_LOCKS,
+									CONCUR_SS_OPTIMISTIC_CC, CONCUR_SS_OPTIMISTIC_CCVAL)</p></td>
+							<td><p>Keyset</p></td>
+							<td><p>Scrollfähig, aktualisierbar</p>
+								<p>Externe und interne Zeilenupdates sind sichtbar,
+									Löschvorgänge werden als fehlende Daten angezeigt, und
+									Einfügungen sind nicht sichtbar.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Ganzzahliger Wert = 1005. Die Anwendung muss
+									Daten ändern oder geänderte Daten für vorhandene Zeilen
+									anzeigen. Dies ist das SQL Server-spezifische Synonym für JDBC
+									TYPE_SCROLL_SENSITIVE und weist das gleiche Verhalten für die
+									Festlegung der Parallelität auf.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SCROLL_DYNAMIC</p>
+								<p>(CONCUR_READ_ONLY)</p></td>
+							<td><p>Dynamisch</p></td>
+							<td><p>Scrollfähig, schreibgeschützt</p>
+								<p>Externe Zeilenupdates und -einfügungen werden angezeigt.
+									Löschvorgänge werden als temporäre fehlende Daten im aktuellen
+									Fetchpuffer angezeigt.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>Ganzzahliger Wert = 1006. Die Anwendung muss
+									geänderte Daten für vorhandene Zeilen anzeigen und eingefügte
+									und gelöschte Zeilen während der Lebensdauer des Cursors
+									anzeigen.</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_SS_SCROLL_DYNAMIC</p>
+								<p>(CONCUR_UPDATABLE, CONCUR_SS_SCROLL_LOCKS,
+									CONCUR_SS_OPTIMISTIC_CC, CONCUR_SS_OPTIMISTIC_CCVAL)</p></td>
+							<td><p>Dynamisch</p></td>
+							<td><p>Scrollfähig, aktualisierbar</p>
+								<p>Externe und interne Zeilenupdates und -einfügungen werden
+									angezeigt. Löschvorgänge werden als temporäre fehlende Daten im
+									aktuellen Fetchpuffer angezeigt.</p></td>
+							<td><p>N/V</p></td>
+							<td><p>N/V</p></td>
+							<td><p>
+									Ganzzahliger Wert = 1006. Die Anwendung kann Daten für
+									vorhandene Zeilen ändern oder mit dem <b>ResultSet</b>-Objekt
+									einfügen oder löschen. Auch Änderungen, Einfügungen und
+									Löschvorgänge für Zeilen, die von anderen außerhalb des <b>ResultSet</b>-Objekts
+									vorgenommen werden, müssen für die Anwendung sichtbar sein.
+								</p>
+								<p>Zeilen werden in durch die Abrufgröße angegebene Blöcke
+									vom Server abgerufen.</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Cursorpositionierung</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die Cursor TYPE_FORWARD_ONLY, TYPE_SS_DIRECT_FORWARD_ONLY und
+					TYPE_SS_SERVER_CURSOR_FORWARD_ONLY unterstützen nur die <a
+						href="60248447-6908-4036-a779-a501453cd553.htm">next</a>-Positionierungsmethode.
+				</p>
+				<p>
+					Der TYPE_SS_SCROLL_DYNAMIC-Cursor unterstützt nicht die <a
+						href="638e8148-8ca0-4e1f-9ec2-04a11bc9809b.htm">absolute</a>-Methode
+					und die <a href="a266e3bc-05c2-44e2-9346-125ae6780216.htm">getRow</a>-Methode.
+					Die <b>absolute</b>-Methode kann durch eine Kombination von
+					Aufrufen der <a href="67ed9447-7b10-4c87-98e7-f4c2e2470b3a.htm">first</a>-Methode
+					und der <a href="2bcdbb69-95fd-4ae8-8488-1a75a91fe2e0.htm">relative</a>-Methode
+					für dynamische Cursor angeglichen werden.
+				</p>
+				<p>
+					Die <b>getRow</b>-Methode wird nur von den Cursorn
+					TYPE_FORWARD_ONLY, TYPE_SS_DIRECT_FORWARD_ONLY,
+					TYPE_SS_SERVER_CURSOR_FORWARD_ONLY, TYPE_SS_SCROLL_KEYSET und
+					TYPE_SS_SCROLL_STATIC unterstützt. Die <b>getRow</b>-Methode gibt
+					mit allen Vorwärtscursortypen die Anzahl der bisher über den Cursor
+					gelesenen Zeilen zurück.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn eine Anwendung einen nicht unterstützten
+						Cursorpositionierungsaufruf oder einen nicht unterstützten Aufruf
+						der <b>getRow</b>-Methode ausführt, wird eine Ausnahme mit der
+						folgenden Meldung ausgelöst: "Der angeforderte Vorgang wird für
+						diesen Cursortyp nicht unterstützt."
+					</p>
+				</div>
+				<p>
+					Nur der TYPE_SS_SCROLL_KEYSET-Cursor und der entsprechende
+					TYPE_SCROLL_SENSITIVE-Cursor machen gelöschte Zeilen verfügbar.
+					Wenn der Cursor in einer gelöschten Zeile positioniert wird, sind
+					die Spaltenwerte nicht verfügbar, und die <a
+						href="9c6db315-e614-4604-b020-41af6a214cc1.htm">rowDeleted</a>-Methode
+					gibt "true" zurück. Aufrufe der <b>get&lt;Type&gt;</b>-Methoden
+					lösen eine Ausnahme mit der folgenden Meldung aus: "Wert aus
+					gelöschter Zeile kann nicht abgerufen werden." Gelöschte Zeilen
+					können nicht aktualisiert werden. Wenn Sie versuchen, eine <b>update&lt;Type&gt;</b>-Methode
+					für eine gelöschte Zeile aufzurufen, wird eine Ausnahme mit der
+					folgenden Meldung ausgelöst: "Eine gelöschte Zeile kann nicht
+					aktualisiert werden." Der TYPE_SS_SCROLL_DYNAMIC-Cursor weist
+					dasselbe Verhalten auf, bis der Cursor aus dem aktuellen
+					Fetchpuffer verschoben wird.
+				</p>
+				<p>Vorwärtscursor und dynamische Cursor machen gelöschte Zeilen
+					auf ähnliche Weise verfügbar, jedoch nur, wenn auf die Cursor
+					weiterhin im Fetchpuffer zugegriffen werden kann. Für
+					Vorwärtscursor ist dies relativ einfach. Bei dynamischen Cursorn
+					ist dies komplexer, wenn die Fetchgröße größer als 1 ist. Eine
+					Anwendung kann den Cursor in dem vom Fetchpuffer definierten
+					Fenster vorwärts und rückwärts verschieben, die gelöschte Zeile
+					wird jedoch nicht mehr angezeigt, wenn der ursprüngliche
+					Fetchpuffer, in dem sie aktualisiert wurde, verlassen wird. Wenn
+					eine Anwendung keine temporären gelöschten Zeilen mithilfe von
+					dynamischen Cursorn anzeigen soll, sollte eine Fetchrelative (0)
+					verwendet werden.</p>
+				<p>Wenn die Schlüsselwerte einer
+					TYPE_SS_SCROLL_KEYSET-Cursorzeile oder einer
+					TYPE_SCROLL_SENSITIVE-Cursorzeile mit dem Cursor aktualisiert
+					werden, behält die Zeile die ursprüngliche Position im Resultset
+					bei, unabhängig davon, ob die aktualisierte Zeile die
+					Auswahlkriterien des Cursors erfüllt. Wenn die Zeile außerhalb des
+					Cursors aktualisiert wurde, wird eine gelöschte Zeile an der
+					ursprünglichen Position der Zeile angezeigt, die Zeile wird jedoch
+					nur im Cursor angezeigt, wenn eine andere Zeile mit den neuen
+					Schlüsselwerten im Cursor vorhanden war, aber anschließend gelöscht
+					wurde.</p>
+				<p>Bei dynamischen Cursorn behalten aktualisierte Zeilen ihre
+					Position im Fetchpuffer bei, bis das vom Fetchpuffer definierte
+					Fenster verlassen wird. Aktualisierte Zeilen werden möglicherweise
+					anschließend an anderen Positionen im Resultset erneut angezeigt
+					oder überhaupt nicht mehr angezeigt. In Anwendungen, in denen
+					temporäre Inkonsistenzen im Resultset vermieden werden sollen,
+					sollte eine Fetchgröße von 1 verwendet werden. (Der Standardwert
+					beträgt 8 Zeilen bei CONCUR_SS_SCROLL_LOCKS-Parallelität und 128
+					Zeilen bei anderen Parallelitäten.)</p>
+			</div>
+			<h1 class="heading">Cursorkonvertierung</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>In SQL Server wird in einigen Fällen ein anderer Cursortyp
+					als der angeforderte implementiert. Dies wird als implizite
+					Cursorkonvertierung (oder Cursordegradierung) bezeichnet. Weitere
+					Informationen zur impliziten Cursorkonvertierung finden Sie im
+					Thema "Verwenden impliziter Cursorkonvertierungen" in der SQL
+					Server-Onlinedokumentation.</p>
+				<p>
+					Wenn Sie in SQL Server 2000 die Daten über das <b>ResultSet.TYPE_SCROLL_SENSITIVE</b>-Resultset
+					und das <b>ResultSet.CONCUR_UPDATABLE</b>-Resultset aktualisieren,
+					wird eine Ausnahme mit der folgenden Meldung ausgelöst: "Der Cursor
+					ist schreibgeschützt (READ ONLY)." Diese Ausnahme tritt auf, weil
+					SQL Server 2000 eine implizite Cursorkonvertierung für das
+					Resultset ausgeführt und nicht den angeforderten aktualisierbaren
+					Cursor zurückgegeben hat.
+				</p>
+				<p>Um dieses Problem zu umgehen, können Sie eine der folgenden
+					Lösungen auswählen:</p>
+				<ul>
+					<li><p>Stellen Sie sicher, dass die zugrunde liegende
+							Tabelle einen Primärschlüssel aufweist.</p></li>
+					<li><p>
+							Verwenden Sie beim Erstellen einer Anweisung <a
+								href="d87afd89-3e75-402c-b844-1b434eb258df.htm">SQLServerResultSet.TYPE_SS_SCROLL_DYNAMIC</a>
+							anstelle von <b>ResultSet.TYPE_SCROLL_SENSITIVE</b>.
+						</p></li>
+				</ul>
+			</div>
+			<h1 class="heading">Cursoraktualisierung</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Ersetzungsupdates werden bei Cursorn unterstützt, bei denen
+					Cursortyp und Parallelität Updates unterstützen. Wenn der Cursor
+					nicht in einer aktualisierbaren Zeile im Resultset positioniert ist
+					(es war kein <b>get&lt;Type&gt;</b>-Methodenaufruf erfolgreich),
+					löst ein Aufruf einer <b>update&lt;Type&gt;</b>-Methode eine
+					Ausnahme mit der folgenden Meldung aus: "Das Resultset verfügt über
+					keine aktuelle Zeile." Die JDBC-Spezifikation gibt an, dass eine
+					Ausnahme ausgelöst wird, wenn eine Updatemethode für eine Spalte
+					eines CONCUR_READ_ONLY-Cursors aufgerufen wird. Wenn die Zeile
+					nicht aktualisiert werden kann, beispielsweise aufgrund eines
+					Konflikts der vollständigen Parallelität durch einen
+					konkurrierenden Aktualisierungs- oder Löschvorgang, wird die
+					Ausnahme möglicherweise erst ausgelöst, wenn <a
+						href="363d1008-1396-4fc0-8e27-c9ba2499e7f1.htm">insertRow</a>, <a
+						href="cfced0ca-a281-40dc-8d2f-370d5f0bf12b.htm">updateRow</a> oder
+					<a href="aa04a644-c7c2-4738-8b6e-7fea566d2c16.htm">deleteRow</a>
+					aufgerufen wird
+				</p>
+				<p>
+					Nach einem Aufruf von <b>update&lt;Type&gt;</b> kann auf die
+					betreffende Spalte erst durch <b>get&lt;Type&gt;</b> zugegriffen
+					werden, wenn <b>updateRow</b> oder <a
+						href="2ecacca4-f7bc-4f5d-886a-da7747fdccae.htm">cancelRowUpdates</a>
+					aufgerufen wurde. So werden Probleme vermieden, wenn eine Spalte
+					durch einen anderen Typ als den vom Server zurückgegebenen Typ
+					aktualisiert wird und folgende Abrufaufrufe clientseitige
+					Typkonvertierungen aufrufen könnten, die ungenaue Ergebnisse
+					liefern. Aufrufe von <b>get&lt;Type&gt;</b> lösen eine Ausnahme mit
+					der folgenden Meldung aus: "Der Zugriff auf aktualisierte Spalten
+					kann erst nach dem Aufrufen von updateRow() oder cancelRowUpdates()
+					erfolgen."
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn die <b>updateRow</b>-Methode aufgerufen wird und keine
+						Spalten aktualisiert wurden, löst der JDBC-Treiber eine Ausnahme
+						mit der folgenden Meldung aus: "updateRow() aufgerufen, wenn keine
+						Spalten aktualisiert wurden."
+					</p>
+				</div>
+				<p>
+					Nach dem Aufrufen von <a
+						href="f3c54bfe-d5b7-4f6e-ae6c-3e8954e5b1c9.htm">moveToInsertRow</a>
+					wird eine Ausnahme ausgelöst, wenn eine andere Methode als <b>get&lt;Type&gt;</b>,
+					<b>update&lt;Type&gt;</b>, <b>insertRow,</b> und
+					Cursorpositionierungsmethoden (einschließlich <a
+						href="9a7c754c-2d72-4207-b3bd-2afc6047fb3d.htm">moveToCurrentRow</a>)
+					für das Resultset aufgerufen wird. Die <b>moveToInsertRow</b>-Methode
+					versetzt das Resultset effektiv in den Einfügemodus, und
+					Cursorpositionierungsmethoden beenden den Einfügemodus. Relative
+					Cursorpositionierungsaufrufe verschieben den Cursor relativ zur
+					Position, in der er sich vor dem Aufruf von <b>moveToInsertRow</b>
+					befunden hat. Nach Cursorpositionierungsaufrufen wird die
+					Zielcursorposition die neue Cursorposition.
+				</p>
+				<p>
+					Wenn der Cursorpositionierungsaufruf im Einfügemodus nicht
+					erfolgreich ist, ist die Cursorposition nach dem Aufruf mit Fehler
+					die ursprüngliche Cursorposition vor dem Aufruf von <b>moveToInsetRow</b>.
+					Wenn bei <b>insertRow</b> ein Fehler auftritt, bleibt der Cursor in
+					der Einfügezeile, und der Cursor bleibt im Einfügemodus.
+				</p>
+				<p>
+					Spalten in der Einfügezeile befinden sich anfänglich in einem nicht
+					initialisierten Status. Durch Aufrufe der <b>update&lt;Type&gt;</b>-Methode
+					wird der Spaltenstatus auf initialisiert festgelegt. Ein Aufruf der
+					<b>get&lt;Type&gt;</b>-Methode für eine nicht initialisierte Spalte
+					löst eine Ausnahme aus. Ein Aufruf der <b>insertRow</b>-Methode
+					gibt alle Spalten in der Einfügezeile in einem nicht
+					initialisierten Status zurück.
+				</p>
+				<p>
+					Wenn Spalten beim Aufrufen der <b>insertRow</b>-Methode nicht
+					initialisiert sind, wird der Standardwert für die Spalte eingefügt.
+					Wenn kein Standardwert vorhanden ist, die Spalte jedoch auf NULL
+					festgelegt werden kann, wird NULL eingefügt. Wenn kein Standardwert
+					vorhanden ist und die Spalte nicht auf NULL festgelegt werden kann,
+					gibt der Server einen Fehler zurück, und es wird eine Ausnahme
+					ausgelöst.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p />
+					<p>
+						Aufrufe der <b>getRow</b>-Methode geben im Einfügemodus 0 zurück.
+					</p>
+					<p>
+						Der JDBC-Treiber unterstützt keine positionierten Updates oder
+						Löschvorgänge. Entsprechend der JDBC-Spezifikation hat die <a
+							href="3f3ec4f2-103a-4e16-9206-c5bd8639f946.htm">setCursorName</a>-Methode
+						keine Auswirkungen, und die <a
+							href="e5b3af67-423a-4551-a4c6-a4bc076bd504.htm">getCursorName</a>-Methode
+						löst eine Ausnahme aus, wenn sie aufgerufen wird.
+					</p>
+					<p>Schreibgeschützte und statische Cursor können nie
+						aktualisiert werden.</p>
+					<p>SQL Server schränkt Servercursor auf ein einziges Resultset
+						ein. Wenn ein Batch oder eine gespeicherte Prozedur mehrere
+						Anweisungen enthält, muss ein schreibgeschützter
+						Vorwärtsclientcursor verwendet werden.</p>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="9ed5ad41-22e0-4e4a-8a79-10512db60d50.htm">Verwalten von
+							Resultsets mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

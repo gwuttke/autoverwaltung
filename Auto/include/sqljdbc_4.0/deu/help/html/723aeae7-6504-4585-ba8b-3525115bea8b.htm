@@ -1,0 +1,627 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Ablaufverfolgung für Treibervorgänge</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Ablaufverfolgung" />
+<meta name="Microsoft.Help.Id"
+	content="723aeae7-6504-4585-ba8b-3525115bea8b" />
+<meta name="Description"
+	content="Microsoft JDBC Driver für SQL Server unterstützt Ablaufverfolgung (oder Protokollierung), um die Lösung von Problemen mit dem JDBC-Treiber in der Anwendung zu ermöglichen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Ablaufverfolgung
+						für Treibervorgänge</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Microsoft JDBC Driver für SQL Server unterstützt Ablaufverfolgung
+					(oder Protokollierung), um die Lösung von Problemen mit dem
+					JDBC-Treiber in der Anwendung zu ermöglichen. Für die
+					Ablaufverfolgung verwendet der JDBC-Treiber die
+					Protokollierungs-APIs in "java.util.logging", die eine Reihe von
+					Klassen zum Erstellen von <b>Logger</b>- und <b>LogRecord</b>-Objekten
+					bereitstellen.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Für die im JDBC-Treiber enthaltene systemeigene Komponente
+						("sqljdbc_xa.dll") wird die Ablaufverfolgung durch das
+						BID-Framework (Built-In Diagnostics) ermöglicht. Informationen zu
+						BID finden Sie unter <a
+							href="http://go.microsoft.com/fwlink/?LinkId=70042">Datenzugriffsablaufverfolgung
+							in SQL Server</a>.
+					</p>
+				</div>
+				<p>
+					Bei der Entwicklung der Anwendung können Sie <b>Logger</b>-Objekte
+					aufrufen, die wiederum <b>LogRecord</b>-Objekte erstellen, die zur
+					Verarbeitung anschließend an <b>Handler</b>-Objekte übergeben
+					werden. <b>Logger</b>-Objekte und <b>Handler</b>-Objekte verwenden
+					Protokolliergrade und optional Protokollierungsfilter, um zu
+					steuern, welche <b>LogRecords</b> verarbeitet werden. Nach
+					Abschluss der Protokolliervorgänge können die <b>Handler</b>-Objekte
+					die Protokollinformationen ggf. mit <b>Formatter</b>-Objekten
+					veröffentlichen.
+				</p>
+				<p>Standardmäßig erfolgt die Ausgabe des
+					java.util.logging-Frameworks in eine Datei. Diese
+					Ausgabeprotokolldatei muss Schreibberechtigungen für den Kontext
+					aufweisen, unter dem der JDBC-Treiber ausgeführt wird.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Weitere Informationen zur Verwendung der verschiedenen
+						Protokollierungsobjekte für die Programmablaufverfolgung finden
+						Sie unter Java Logging APIs auf der Sun Microsystems-Website.</p>
+				</div>
+				<p>Die folgenden Abschnitte beschreiben die Protokolliergrade
+					sowie die protokollierbaren Kategorien und enthalten Informationen
+					darüber, wie die Ablaufverfolgung in der Anwendung aktiviert werden
+					kann.</p>
+			</div>
+			<h1 class="heading">Protokolliergrade</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Jeder erstellten Protokollmeldung ist ein Protokolliergrad
+					zugeordnet. Der Protokolliergrad bestimmt die Wichtigkeit der
+					Protokollmeldung, die durch die <span class="label">Level</span>-Klasse
+					in <b>java.util.logging</b> definiert wird. Durch Aktivieren der
+					Protokollierung für einen bestimmten Grad wird auch das
+					Protokollieren für alle höheren Grade aktiviert. In diesem
+					Abschnitt werden die Protokolliergrade für öffentliche und interne
+					Protokollierungskategorien beschrieben. Weitere Informationen zu
+					den Protokollierungskategorien finden Sie in diesem Thema im
+					Abschnitt "Protokollierungskategorien".
+				</p>
+				<p>Die verfügbaren Protokolliergrade für öffentliche
+					Protokollierungskategorien werden in der folgenden Tabelle
+					beschrieben:</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Name</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>SEVERE</p></td>
+							<td><p>Der höchste Protokolliergrad, der schwerwiegende
+									Fehler kennzeichnet. Im JDBC-Treiber wird dieser Grad für
+									Fehler und Ausnahmen verwendet.</p></td>
+						</tr>
+						<tr>
+							<td><p>WARNING</p></td>
+							<td><p>Kennzeichnet ein mögliches Problem.</p></td>
+						</tr>
+						<tr>
+							<td><p>INFO</p></td>
+							<td><p>Stellt informative Meldungen bereit.</p></td>
+						</tr>
+						<tr>
+							<td><p>CONFIG</p></td>
+							<td><p>Stellt Konfigurationsmeldungen bereit. Beachten
+									Sie, dass der JDBC-Treiber derzeit keine
+									Konfigurationsmeldungen bereitstellt.</p></td>
+						</tr>
+						<tr>
+							<td><p>FINE</p></td>
+							<td><p>Stellt grundlegende
+									Ablaufverfolgungsinformationen einschließlich aller von den
+									öffentlichen Methoden ausgelösten Ausnahmen bereit.</p></td>
+						</tr>
+						<tr>
+							<td><p>FINER</p></td>
+							<td><p>Stellt ausführliche
+									Ablaufverfolgungsinformationen einschließlich aller Ein- und
+									Ausstiegspunkte von öffentlichen Methoden mit den zugeordneten
+									Parameterdatentypen und allen öffentlichen Eigenschaften für
+									öffentliche Klassen bereit. Außerdem Eingabeparameter,
+									Ausgabeparameter und Methodenrückgabewerte mit Ausnahme der
+									Rückgabewerttypen CLOB, BLOB, NCLOB, Reader und &lt;stream&gt;.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>FINEST</p></td>
+							<td><p>Stellt sehr ausführliche
+									Ablaufverfolgungsinformationen bereit. Dieser Grad ist der
+									niedrigste Protokolliergrad.</p></td>
+						</tr>
+						<tr>
+							<td><p>OFF</p></td>
+							<td><p>Deaktiviert die Protokollierung.</p></td>
+						</tr>
+						<tr>
+							<td><p>ALL</p></td>
+							<td><p>Aktiviert die Protokollierung aller Meldungen.</p></td>
+						</tr>
+					</table>
+				</div>
+				<p>Die verfügbaren Protokolliergrade für interne
+					Protokollierungskategorien werden in der folgenden Tabelle
+					beschrieben:</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Name</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>SEVERE</p></td>
+							<td><p>Der höchste Protokolliergrad, der schwerwiegende
+									Fehler kennzeichnet. Im JDBC-Treiber wird dieser Grad für
+									Fehler und Ausnahmen verwendet.</p></td>
+						</tr>
+						<tr>
+							<td><p>WARNING</p></td>
+							<td><p>Kennzeichnet ein mögliches Problem.</p></td>
+						</tr>
+						<tr>
+							<td><p>INFO</p></td>
+							<td><p>Stellt informative Meldungen bereit.</p></td>
+						</tr>
+						<tr>
+							<td><p>FINE</p></td>
+							<td><p>Stellt Ablaufverfolgungsinformationen
+									einschließlich grundlegender Informationen zum Erstellen und
+									Löschen von Objekten. Außerdem alle von den öffentlichen
+									Methoden ausgelösten Ausnahmen.</p></td>
+						</tr>
+						<tr>
+							<td><p>FINER</p></td>
+							<td><p>Stellt ausführliche
+									Ablaufverfolgungsinformationen einschließlich aller Ein- und
+									Ausstiegspunkte von öffentlichen Methoden mit den zugeordneten
+									Parameterdatentypen und allen öffentlichen Eigenschaften für
+									öffentliche Klassen bereit. Außerdem Eingabeparameter,
+									Ausgabeparameter und Methodenrückgabewerte mit Ausnahme der
+									Rückgabewerttypen CLOB, BLOB, NCLOB, Reader und &lt;stream&gt;.</p>
+								<p>
+									In Version 1.2 des JDBC-Treibers waren die folgenden
+									Protokollierungskategorien vorhanden, die auch den
+									Protokolliergrad FINE aufweisen: <a
+										href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>,
+									<a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>,
+									XA und <a href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>.
+									Diese wurden ab Version 2.0 auf den Grad FINER hochgestuft.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>FINEST</p></td>
+							<td><p>Stellt sehr ausführliche
+									Ablaufverfolgungsinformationen bereit. Dieser Grad ist der
+									niedrigste Protokolliergrad.</p>
+								<p>In Version 1.2 von JDBC Driver waren die folgenden
+									Protokollierungskategorien vorhanden, die auch den
+									Protokolliergrad FINEST aufweisen: TDS.DATA und TDS.TOKEN.
+									Diese behalten ab Version 2.0 den Protokolliergrad FINEST bei.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>OFF</p></td>
+							<td><p>Deaktiviert die Protokollierung.</p></td>
+						</tr>
+						<tr>
+							<td><p>ALL</p></td>
+							<td><p>Aktiviert die Protokollierung aller Meldungen.</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Protokollierungskategorien</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Wenn Sie ein <b>Logger</b>-Objekt erstellen, müssen Sie an das
+					Objekt die benannte Entität oder Kategorie übergeben, über die
+					Protokollinformationen ermittelt werden sollen. Der JDBC-Treiber
+					unterstützt die folgenden öffentlichen Protokollierungskategorien,
+					die alle im com.microsoft.sqlserver.jdbc-Treiberpaket definiert
+					sind.
+				</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Name</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>Connection</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Statement</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>DataSource</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>ResultSet</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>Driver</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="fbdceae5-7e7b-4edb-8c33-c701ca6b2d53.htm">SQLServerDriver</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+				<p>Ab Version 2.0 von Microsoft JDBC Driver stellt der Treiber
+					auch das com.microsoft.sqlserver.jdbc.internals-Paket bereit, das
+					die Protokollierungsunterstützung für die folgenden internen
+					Protokollierungskategorien enthält.</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Name</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>AuthenticationJNI</p></td>
+							<td><p>
+									Protokolliert Meldungen zu Problemen mit der integrierten
+									Windows-Authentifizierung (wenn die <span sdata="langKeyword"
+										value="authenticationScheme"><span class="keyword">authenticationScheme</span></span>-Verbindungseigenschaft
+									implizit oder explizit auf <span sdata="langKeyword"
+										value="NativeAuthentication"><span class="keyword">NativeAuthentication</span></span>
+									festgelegt ist).
+								</p>
+								<p>Die Anwendungen können den Protokolliergrad auf FINER und
+									FINE festlegen.</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerConnection</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE und FINER
+									festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerDataSource</p></td>
+							<td><p>
+									Protokolliert Meldungen in den <a
+										href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-,
+									<a href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">SQLServerConnectionPoolDataSource</a>-
+									und <a href="4c87e9d3-904a-4b86-90cc-3684034c86ee.htm">SQLServerPooledConnection</a>-Klassen.
+								</p>
+								<p>Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.</p></td>
+						</tr>
+						<tr>
+							<td><p>InputStream</p></td>
+							<td><p>Protokolliert Meldungen zu den folgenden
+									Datentypen: java.io.InputStream, java.io.Reader und Datentypen
+									mit einem max-Spezifizierer wie die Datentypen varchar,
+									nvarchar und varbinary.</p>
+								<p>Die Anwendungen können den Protokolliergrad auf FINER
+									festlegen.</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerException</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerResultSet</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE, FINER und
+									FINEST festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerStatement</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE, FINER und
+									FINEST festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>XA</p></td>
+							<td><p>
+									Protokolliert Meldungen für alle XA-Transaktionen in der <a
+										href="95fc7b07-2498-4a7e-8f7f-ee0d86b598b4.htm">SQLServerXADataSource</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE und FINER
+									festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>KerbAuthentication</p></td>
+							<td><p>
+									Protokolliert Meldungen zur Kerberos-Authentifizierung Typ 4
+									(wenn die <span sdata="langKeyword"
+										value="authenticationScheme"><span class="keyword">authenticationScheme</span></span>-Verbindungseigenschaft
+									auf <span sdata="langKeyword" value="JavaKerberos"><span
+										class="keyword">JavaKerberos</span></span> festgelegt ist). Für die
+									Anwendung kann der Protokolliergrad auf FINE oder FINER
+									festgelegt werden.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.DATA</p></td>
+							<td><p>Protokolliert Meldungen, die Konversationen auf
+									TDS-Protokollebene zwischen Treiber und SQL Server enthalten.
+									Die ausführlichen Inhalte jedes gesendeten und empfangenen
+									TDS-Pakets werden in ASCII und hexadezimal protokolliert. Die
+									Anmeldeinformationen (Benutzernamen und Kennwörter) werden
+									nicht protokolliert. Alle sonstigen Daten werden protokolliert.</p>
+								<p>Diese Kategorie erstellt sehr ausführliche Meldungen. Sie
+									kann nur aktiviert werden, indem der Protokolliergrad auf
+									FINEST festgelegt wird.</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.Channel</p></td>
+							<td><p>Diese Kategorie verfolgt Aktionen der
+									TCP-Kommunikationskanäle mit SQL Server. Die protokollierten
+									Meldungen umfassen das Öffnen und Schließen von Sockets sowie
+									Lese- und Schreibvorgänge. Außerdem werden Meldungen zum
+									Herstellen einer SSL (Secure Sockets Layer)-Verbindung mit SQL
+									Server verfolgt.</p>
+								<p>Diese Kategorie kann nur aktiviert werden, indem der
+									Protokolliergrad auf FINE, FINER oder FINEST festgelegt wird.</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.Writer</p></td>
+							<td><p>Diese Kategorie verfolgt Schreibvorgänge für den
+									TDS-Kanal. Beachten Sie, dass nur die Länge der Schreibvorgänge
+									verfolgt wird, nicht deren Inhalt. Diese Kategorie verfolgt
+									außerdem Probleme, wenn zum Abbrechen der Ausführung einer
+									Anweisung ein Achtungssignal gesendet wird.</p>
+								<p>Diese Kategorie kann nur aktiviert werden, indem der
+									Protokolliergrad auf FINEST festgelegt wird.</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.Reader</p></td>
+							<td><p>Diese Kategorie verfolgt bestimmte Lesevorgänge
+									für den TDS-Kanal mit dem Grad FINEST. Die Nachverfolgung mit
+									dem Grad FINEST ist möglicherweise sehr ausführlich. Mit den
+									Graden WARNING und SEVERE wird in dieser Kategorie verfolgt,
+									wenn der Treiber ein ungültiges TDS-Protokoll von SQL Server
+									empfängt, bevor der Treiber die Verbindung trennt.</p>
+								<p>Diese Kategorie kann nur aktiviert werden, indem der
+									Protokolliergrad auf FINER und FINEST festgelegt wird.</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.Command</p></td>
+							<td><p>Diese Kategorie verfolgt Zustandsübergänge auf
+									niedriger Ebene und sonstige Informationen zur Ausführung von
+									TDS-Befehlen wie der Ausführung von Transact-SQL-Anweisungen,
+									Abrufvorgängen von ResultSet-Cursorn, Commits usw.</p>
+								<p>Diese Kategorie kann nur aktiviert werden, indem der
+									Protokolliergrad auf FINEST festgelegt wird.</p></td>
+						</tr>
+						<tr>
+							<td><p>TDS.TOKEN</p></td>
+							<td><p>Diese Kategorie protokolliert nur die Token im
+									TDS-Paket und ist weniger ausführlich als die
+									TDS.DATA-Kategorie. Sie kann nur aktiviert werden, indem der
+									Protokolliergrad auf FINEST festgelegt wird.</p>
+								<p>Mit dem Grad FINEST verfolgt diese Kategorie TDS-Token
+									bei der Verarbeitung in der Antwort. Mit dem Grad SEVERE
+									verfolgt diese Kategorie das Auftreten ungültiger TDS-Token.</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerDatabaseMetaData</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">SQLServerDatabaseMetaData</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerResultSetMetaData</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="9a36885f-83f3-44af-85f0-2b849dfd20d4.htm">SQLServerResultSetMetaData</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerParameterMetaData</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="546290e0-9411-4a2b-aa36-61251e70e9cf.htm">SQLServerParameterMetaData</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerBlob</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="88bd8623-889d-4b5d-99ff-c85b32f3ff5c.htm">SQLServerBlob</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerClob</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="24170524-e1ab-4e80-8fd1-6688efacfbde.htm">SQLServerClob</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerSQLXML</p></td>
+							<td><p>
+									Protokolliert Meldungen in der internen <b>SQLServerSQLXML</b>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerDriver</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="fbdceae5-7e7b-4edb-8c33-c701ca6b2d53.htm">SQLServerDriver</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>SQLServerNClob</p></td>
+							<td><p>
+									Protokolliert Meldungen in der <a
+										href="3d3883a2-c39c-439f-bbc0-01e73968672b.htm">SQLServerNClob</a>-Klasse.
+									Die Anwendungen können den Protokolliergrad auf FINE festlegen.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<h1 class="heading">Programmgesteuerte Aktivierung der
+				Ablaufverfolgung</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Die Ablaufverfolgung kann programmgesteuert aktiviert werden, indem
+					ein <b>Logger</b>-Objekt erstellt und die zu protokollierende
+					Kategorie angegeben wird. Der folgende Code veranschaulicht
+					beispielsweise, wie die Protokollierung für SQL-Anweisungen
+					aktiviert wird:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc.Statement");
+logger.setLevel(Level.FINER);</pre></span>
+				</div>
+				<p>Die Protokollierung können Sie im Code folgendermaßen
+					deaktivieren:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>logger.setLevel(Level.OFF);</pre></span>
+				</div>
+				<p>Mit dem folgenden Code können Sie alle verfügbaren Kategorien
+					protokollieren:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
+logger.setLevel(Level.FINE);</pre></span>
+				</div>
+				<p>Mit dem folgenden Code können Sie die Protokollierung einer
+					bestimmten Kategorie deaktivieren:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc.Statement");
+logger.setLevel(Level.OFF);</pre></span>
+				</div>
+			</div>
+			<h1 class="heading">Aktivieren der Ablaufverfolgung mit der
+				Datei "Logging.Properties"</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Sie können die Ablaufverfolgung auch mit der Datei<span
+						class="code"> logging.properties </span>aktivieren, die sich im
+					Verzeichnis<span class="code"> lib </span>der JRE-Installation
+					(Java Runtime Environment) befindet. In dieser Datei können Sie die
+					Standardwerte für die Protokollierungund Handler festlegen, die bei
+					Aktivierung der Ablaufverfolgung verwendet werden sollen.
+				</p>
+				<p>
+					Das folgende Beispiel veranschaulicht die Einstellungen, die in <span
+						class="code">logging.properties</span>-Dateien vorgenommen werden
+					können:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre># Specify the handler, the handlers will be installed during VM startup.
+handlers= java.util.logging.FileHandler
+ 
+# Default global logging level.
+.level= OFF
+
+# default file output is in user's home directory.
+java.util.logging.FileHandler.pattern = %h/java%u.log
+java.util.logging.FileHandler.limit = 5000000
+java.util.logging.FileHandler.count = 20
+java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
+java.util.logging.FileHandler.level = FINEST
+
+# Facility specific properties.
+com.microsoft.sqlserver.jdbc.level=FINEST
+</pre></span>
+				</div>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Mit dem <b>LogManager</b>-Objekt, das Bestandteil von
+						"java.util.logging" ist, können Sie die Eigenschaften in der Datei<span
+							class="code"> logging.properties </span>festlegen.
+					</p>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="723e2680-a0c5-4a7d-a319-1e49e41078cf.htm">Diagnostizieren
+							von Problemen mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

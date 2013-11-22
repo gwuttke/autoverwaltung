@@ -1,0 +1,281 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Zwischenspeichern von Resultsetdaten - Beispiel</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords"
+	content="Zwischenspeichern von Resultsets - Beispiel" />
+<meta name="Microsoft.Help.Id"
+	content="13a95ebb-996c-4713-a1bd-5834fe22a334" />
+<meta name="Description"
+	content="Diese Beispielanwendung für Microsoft JDBC Driver für SQL Server veranschaulicht, wie umfangreiche Daten aus einer Datenbank abgerufen werden und mithilfe der setFetchSize-Methode des SQLServerResultSet -Objekts die Anzahl der Datenzeilen gesteuert wird, d" />
+<meta name="Microsoft.Help.ContentType" content="Samples" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Zwischenspeichern
+						von Resultsetdaten - Beispiel</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Diese Beispielanwendung für Microsoft JDBC Driver für SQL Server
+					veranschaulicht, wie umfangreiche Daten aus einer Datenbank
+					abgerufen werden und mithilfe der <a
+						href="233bf4f8-4758-42d0-a80b-33e34fa78027.htm">setFetchSize</a>-Methode
+					des <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>
+					-Objekts die Anzahl der Datenzeilen gesteuert wird, die im Client
+					zwischengespeichert werden.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Die Einschränkung der im Client zwischengespeicherten Zeilen ist
+						nicht mit der Einschränkung der Gesamtanzahl von Zeilen identisch,
+						die ein Resultset enthalten kann. Um die Gesamtanzahl der in einem
+						Resultset enthaltenen Zeilen zu steuern, verwenden Sie die <a
+							href="cccc0667-589b-4655-8ea8-14ae8b2eb9dc.htm">setMaxRows</a>-Methode
+						des <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Objekts,
+						das von <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>-
+						und <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>-Objekten
+						geerbt wird.
+					</p>
+				</div>
+				<p>
+					Um die Anzahl der im Client zwischengespeicherten Zeilen zu
+					beschränken, müssen Sie bei der Erstellung eines der <b>Statement</b>-Objekte
+					zuerst einen serverseitigen Cursor verwenden, indem Sie
+					ausdrücklich den Cursortyp angeben, der beim Erstellen des <b>Statement</b>-Objekts
+					verwendet werden soll. Der JDBC-Treiber enthält beispielsweise den
+					Cursortyp TYPE_SS_SERVER_CURSOR_FORWARD_ONLY (ein schneller
+					schreibgeschützter serverseitiger Vorwärtscursor für SQL
+					Server-Datenbanken).
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Alternativ zum SQL Server-spezifischen Cursortyp kann die
+						selectMethod-Verbindungszeichenfolgeneigenschaft verwendet werden,
+						indem deren Wert auf "cursor" festgelegt wird. Weitere
+						Informationen zu den vom JDBC-Treiber unterstützten Cursortypen
+						finden Sie unter <span sdata="link"><a
+							href="4f4d3db7-4f76-450d-ab63-141237a4f034.htm">Grundlegendes
+								zu Cursortypen</a></span>.
+					</p>
+				</div>
+				<p>
+					Nachdem die im <b>Statement</b>-Objekt enthaltene Abfrage
+					ausgeführt und die Daten als Resultset an den Client zurückgegeben
+					wurden, können Sie die <b>setFetchSize</b>-Methode aufrufen und den
+					aus der Datenbank abgerufenen Umfang der Daten steuern. Wenn eine
+					Tabelle beispielsweise 100 Datenzeilen enthält und die Abrufgröße
+					auf 10 festgelegt wird, werden im Client jeweils nur immer 10
+					Datenzeilen zwischengespeichert. Obwohl dadurch die
+					Verarbeitungsgeschwindigkeit der Daten sinkt, ist auf dem Client
+					weniger Speicher erforderlich, was insbesondere dann von Nutzen
+					sein kann, wenn umfangreiche Daten verarbeitet werden müssen.
+				</p>
+				<p>Die Codedatei für dieses Beispiel heißt "cacheRS.java" und
+					befindet sich im folgenden Pfad:</p>
+				<p>
+					&lt;<i>Installationsverzeichnis</i>&gt;\sqljdbc_&lt;<i>Version</i>&gt;\&lt;<i>Sprache</i>&gt;\help\samples\resultsets
+				</p>
+			</div>
+			<h1 class="heading">Anforderungen</h1>
+			<div id="requirementsTitleSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Wenn Sie diese Beispielanwendung ausführen möchten, müssen Sie die
+					Datei <b>sqljdbc.jar</b> oder <b>sqljdbc4.jar</b> in den
+					Klassenpfad aufnehmen. Wenn im Klassenpfad kein Eintrag für <b>sqljdbc.jar</b>
+					oder <b>sqljdbc4.jar</b> vorhanden ist, löst die Beispielanwendung
+					die allgemeine Ausnahme "Klasse nicht gefunden" aus. Sie benötigen
+					darüber hinaus Zugriff auf die SQL Server 2005
+					AdventureWorks-Beispieldatenbank. Weitere Informationen zum
+					Festlegen des Klassenpfads finden Sie unter <span sdata="link"><a
+						href="6faaf05b-8b70-4ed2-9b44-eee5897f1cd0.htm">Verwenden des
+							JDBC-Treibers</a></span>.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Microsoft JDBC Driver für SQL Server enthält die
+						Klassenbibliotheksdateien "sqljdbc.jar" und "sqljdbc4.jar" für die
+						jeweilige Verwendung mit den bevorzugten JRE (Java Runtime
+						Environment)-Einstellungen. Weitere Informationen zum Auswählen
+						der richtigen JAR-Datei finden Sie unter <span sdata="link"><a
+							href="447792bb-f39b-49b4-9fd0-1ef4154c74ab.htm">Systemanforderungen
+								für den JDBC-Treiber</a></span>.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Beispiel</h1>
+			<div id="exampleSection" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Im folgenden Beispielcode wird eine Verbindung mit der
+					AdventureWorks-Beispieldatenbank hergestellt. Anschließend wird
+					eine SQL-Anweisung mit dem <a
+						href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Objekt
+					verwendet und der serverseitige Cursortyp angegeben. Die
+					SQL-Anweisung wird ausgeführt, und die zurückgegebenen Daten werden
+					in ein <b>SQLServerResultSet</b>-Objekt eingefügt.
+				</p>
+				<p>
+					Danach wird die benutzerdefinierte <b>timerTest</b>-Methode
+					aufgerufen, wobei die zu verwendende Abrufgröße und das Resultset
+					als Argumente übergeben werden. Die <b>timerTest</b>-Methode legt
+					dann die Abrufgröße des Resultsets mithilfe der <b>setFetchSize</b>-Methode
+					sowie die Startzeit des Tests fest. Anschließend wird das Resultset
+					mit einer <span class="code">While</span>-Schleife durchlaufen.
+					Unmittelbar, nachdem die <span class="code">While</span>-Schleife
+					verlassen wurde, wird die Beendigungszeit des Tests festgelegt.
+					Anschließend wird das Testergebnis einschließlich Abrufgröße, der
+					Anzahl verarbeiteter Zeilen und der Zeit für die Testausführung
+					angezeigt.
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>import java.sql.*;
+import com.microsoft.sqlserver.jdbc.SQLServerResultSet;
+
+public class cacheRS {
+
+   public static void main(String[] args) {
+
+      // Create a variable for the connection string.
+      String connectionUrl = "jdbc:sqlserver://localhost:1433;" +
+            "databaseName=AdventureWorks;integratedSecurity=true;";
+
+      // Declare the JDBC objects.
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet rs = null;
+
+      try {
+
+         // Establish the connection.
+         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+         con = DriverManager.getConnection(connectionUrl);
+
+         // Create and execute an SQL statement that returns a large
+         // set of data and then display it.
+         String SQL = "SELECT * FROM Sales.SalesOrderDetail;";
+         stmt = con.createStatement(SQLServerResultSet.TYPE_SS_SERVER_CURSOR_FORWARD_ONLY, +
+               SQLServerResultSet.CONCUR_READ_ONLY);
+
+         // Perform a fetch for every row in the result set.
+         rs = stmt.executeQuery(SQL);
+         timerTest(1, rs);
+         rs.close();
+
+         // Perform a fetch for every tenth row in the result set.
+         rs = stmt.executeQuery(SQL);
+         timerTest(10, rs);
+         rs.close();
+
+         // Perform a fetch for every 100th row in the result set.
+         rs = stmt.executeQuery(SQL);
+         timerTest(100, rs);
+         rs.close();
+
+         // Perform a fetch for every 1000th row in the result set.
+         rs = stmt.executeQuery(SQL);
+         timerTest(1000, rs);
+         rs.close();
+
+         // Perform a fetch for every 128th row (the default) in the result set.
+         rs = stmt.executeQuery(SQL);
+         timerTest(0, rs);
+         rs.close();
+      }
+
+      // Handle any errors that may have occurred.
+      catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      finally {
+         if (rs != null) try { rs.close(); } catch(Exception e) {}
+         if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+         if (con != null) try { con.close(); } catch(Exception e) {}
+      }
+   }
+
+   private static void timerTest(int fetchSize, ResultSet rs) {
+      try {
+
+         // Declare the variables for tracking the row count and elapsed time.
+         int rowCount = 0;
+         long startTime = 0;
+         long stopTime = 0;
+         long runTime = 0;
+
+         // Set the fetch size then iterate through the result set to
+         // cache the data locally.
+         rs.setFetchSize(fetchSize);
+         startTime = System.currentTimeMillis();
+         while (rs.next()) {
+            rowCount++;
+         }
+         stopTime = System.currentTimeMillis();
+         runTime = stopTime - startTime;
+
+         // Display the results of the timer test.
+         System.out.println("FETCH SIZE: " + rs.getFetchSize());
+         System.out.println("ROWS PROCESSED: " + rowCount);
+         System.out.println("TIME TO EXECUTE: " + runTime);
+         System.out.println();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+}</pre></span>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="4fc4b1c6-3075-4ad7-9244-865d9ede7ae6.htm">Arbeiten mit
+							Resultsets</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

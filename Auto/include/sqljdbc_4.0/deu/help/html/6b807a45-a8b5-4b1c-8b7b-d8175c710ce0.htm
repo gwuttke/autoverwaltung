@@ -1,0 +1,140 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verarbeiten komplexer Anweisungen</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="6b807a45-a8b5-4b1c-8b7b-d8175c710ce0" />
+<meta name="Description"
+	content="Bei Verwendung von Microsoft JDBC Driver für SQL Server müssen Sie u. U. komplexe Anweisungen verarbeiten, z. B. Anweisungen, die zur Laufzeit dynamisch generiert werden. Komplexe Anweisungen führen oftmals eine Vielzahl von Tasks aus, wie z. B." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verarbeiten
+						komplexer Anweisungen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Bei Verwendung von Microsoft JDBC Driver für SQL Server
+					müssen Sie u. U. komplexe Anweisungen verarbeiten, z. B.
+					Anweisungen, die zur Laufzeit dynamisch generiert werden. Komplexe
+					Anweisungen führen oftmals eine Vielzahl von Tasks aus, wie z. B.
+					Update-, Insert- und Delete-Operationen. Diese Anweisungstypen
+					können auch mehrere Resultsets und Ausgabeparameter zurückgeben. In
+					diesen Situationen kann es vorkommen, dass der Java-Code, der die
+					Anweisungen ausführt, die Typen und die Anzahl der zurückgegebenen
+					Objekte und Daten zunächst nicht kennt.</p>
+				<p>
+					Um komplexe Anweisungen effizient auszuführen, umfasst der
+					JDBC-Treiber eine Reihe von Methoden, um die zurückgegebenen
+					Objekte und Daten abzufragen, damit sie in der Anwendung
+					ordnungsgemäß verarbeitet werden können. Der Schlüssel für die
+					Verarbeitung komplexer Anweisungen ist die <a
+						href="e1367f39-23d7-4e26-b160-6d988d7e6988.htm">execute</a>-Methode
+					der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse.
+					Diese Methode gibt einen <span sdata="langKeyword" value="boolean"><span
+						class="keyword">boolean</span></span>-Wert zurück. Ist der Wert "true",
+					handelt es sich bei dem ersten zurückgegebenen Ergebnis der
+					Anweisungen um ein Resultset. Ist der Wert "false", handelt es sich
+					bei dem ersten zurückgegebenen Ergebnis um eine Updatezählung.
+				</p>
+				<p>
+					Wenn Sie den Typ der zurückgegebenen Objekte oder Daten kennen,
+					können Sie diese Daten mit der <a
+						href="929a14e2-8e98-4c32-89aa-86733c717ec1.htm">getResultSet</a>-Methode
+					bzw. der <a href="e9570228-4500-44b6-b2f1-84ac050b5112.htm">getUpdateCount</a>-Methode
+					verarbeiten. Um die nächsten Objekte oder Daten zu verarbeiten, die
+					von der komplexen Anweisung zurückgegeben werden, können Sie die <a
+						href="df89db50-0b2f-4094-820a-30be25ad72fe.htm">getMoreResults</a>-Methode
+					aufrufen.
+				</p>
+				<p>
+					Im folgenden Beispiel werden eine offene Verbindung zur SQL Server
+					2005 AdventureWorks-Beispieldatenbank an die Funktion übergeben,
+					eine komplexe Anweisung erstellt, die den Aufruf einer
+					gespeicherten Prozedur mit einer SQL-Anweisung kombiniert, die
+					Anweisungen ausgeführt und dann alle zurückgegebenen Resultsets und
+					Updatezählungen in einer <span class="code">do</span>-Schleife
+					verarbeitet.
+				</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>public static void executeComplexStatement(Connection con) {
+   try {
+      String sqlStringWithUnknownResults = "{call dbo.uspGetEmployeeManagers(50)};SELECT TOP 10 * FROM Person.Contact";
+      Statement stmt = con.createStatement();
+      boolean results = stmt.execute(sqlStringWithUnknownResults);
+      int count = 0;
+      do {
+         if (results) {
+            ResultSet rs = stmt.getResultSet();
+            System.out.println("Result set data displayed here.");
+            rs.close();
+         } else {
+            count = stmt.getUpdateCount();
+            if (count &gt;= 0) {
+               System.out.println("DDL or update data displayed here.");
+            } else {
+               System.out.println("No more results to process.");
+            }
+         }
+         results = stmt.getMoreResults();
+      } while (results || count != -1);
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Verwenden von
+							Anweisungen mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,271 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden der Datenbankspiegelung (JDBC)</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Spiegeln (mirroring)" />
+<meta name="Microsoft.Help.Id"
+	content="4ff59218-0d3b-4274-b647-9839c4955865" />
+<meta name="Description"
+	content="Bei der Datenbankspiegelung handelt es sich im Wesentlichen um eine Softwarelösung, um Datenbankverfügbarkeit und Datenredundanz zu verbessern." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden der
+						Datenbankspiegelung (JDBC)</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Bei der Datenbankspiegelung handelt es sich im Wesentlichen
+					um eine Softwarelösung, um Datenbankverfügbarkeit und
+					Datenredundanz zu verbessern. Microsoft JDBC Driver für SQL Server
+					beinhaltet eine implizite Unterstützung für die
+					Datenbankspiegelung, sodass Entwickler keinen Code schreiben oder
+					andere Aktionen ausführen müssen, wenn die Datenbankspiegelung für
+					die Datenbank konfiguriert wurde.</p>
+				<p>Bei der Datenbankspiegelung, die für Datenbanken einzeln
+					implementiert wird, befindet sich eine Kopie einer SQL
+					Server-Produktionsdatenbank auf einem Standbyserver. Bei diesem
+					Server handelt es sich abhängig von der Konfiguration und vom
+					Status der Datenbank-Spiegelungssitzung um einen unmittelbar
+					betriebsbereiten oder betriebsbereiten Standbyserver. Ein
+					unmittelbar betriebsbereiter Standbyserver unterstützt einen
+					schnellen Failover ohne Verlust von Transaktionen, für die ein
+					Commit ausgeführt wurde. Ein betriebsbereiter Standbyserver sorgt
+					lediglich dafür, dass der Dienst bereitgestellt wird (mit möglichem
+					Datenverlust).</p>
+				<p>
+					Die Produktionsdatenbank wird <span class="term">Prinzipaldatenbank</span>
+					genannt. Die Standbykopie wird <span class="term">Spiegeldatenbank</span>
+					genannt. Prinzipaldatenbank und Spiegeldatenbank müssen sich in
+					getrennten Instanzen von SQL Server (Serverinstanzen) und nach
+					Möglichkeit auf separaten Computern befinden.
+				</p>
+				<p>
+					Die Produktionsserverinstanz (Prinzipalserver) kommuniziert mit der
+					Standbyserverinstanz (Spiegelserver). Prinzipal- und Spiegelserver
+					fungieren in einer Datenbank-Spiegelungssitzung als Partner. Wenn
+					der Prinzipalserver ausfällt, kann der Spiegelserver seine
+					Datenbank über einen so genannten <span class="term">Failover</span>
+					als Prinzipaldatenbank bestimmen. Beispiel: Partner_A und Partner_B
+					sind zwei Partnerserver, wobei sich die Prinzipaldatenbank zunächst
+					auf Partner_A als Prinzipalserver und die Spiegeldatenbank auf
+					Partner_B als Spiegelserver befindet. Wenn Partner_A in den
+					Offlinemodus wechselt, kann die Datenbank auf Partner_B einen
+					Failover ausführen und die aktuelle Prinzipaldatenbank werden. Wenn
+					Partner_A wieder der Spiegelungssitzung beitritt, wird er der
+					Spiegelungsserver und seine Datenbank die Spiegeldatenbank.
+				</p>
+				<p>Falls der Server Partner_A irreparabel beschädigt wird, kann
+					der Server Partner_C in den Onlinemodus versetzt werden und als
+					Spiegelserver für Partner_B fungieren, der jetzt der
+					Prinzipalserver ist. In diesem Szenario muss die Clientanwendung
+					jedoch eine Programmlogik enthalten, die sicherstellt, dass die
+					Verbindungszeichenfolgeneigenschaften mit den neuen Servernamen
+					aktualisiert werden, die in der Datenbankspiegelungskonfiguration
+					verwendet werden, da andernfalls keine Verbindung zu den Servern
+					hergestellt werden kann.</p>
+				<p>Alternative Datenbankspiegelungskonfigurationen bieten andere
+					Leistungsstufen und Datensicherheit und unterstützen andere Formen
+					eines Failovers. Weitere Informationen finden Sie unter "Übersicht
+					über die Datenbankspiegelung" in der SQL
+					Server-Onlinedokumentation.</p>
+			</div>
+			<h1 class="heading">Programmierüberlegungen</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn der Prinzipaldatenbankserver ausfällt, erhält die
+					Clientanwendung nach API-Aufrufen Fehlermeldungen, die darauf
+					hinweisen, dass die Verbindung zur Datenbank unterbrochen wurde. In
+					diesem Fall gehen Änderungen verloren, für die kein Commit
+					ausgeführt wurde, und für die aktuelle Transaktion wird ein
+					Rollback ausgeführt. Die Anwendung muss dann die Verbindung
+					schließen (oder das Datenquellenobjekt freigeben) und versuchen,
+					eine neue Verbindung zu öffnen. Nachdem die Verbindung hergestellt
+					wurde, wird die neue Verbindung transparent an die Spiegeldatenbank
+					umgeleitet, die jetzt als Prinzipalserver fungiert, ohne dass der
+					Client die Verbindungszeichenfolge oder das Datenquellenobjekt
+					ändern muss.</p>
+				<p>
+					Wenn die erste Verbindung hergestellt wird, sendet der
+					Prinzipalserver die Identität seines Failoverpartners, der bei
+					einem Failover verwendet wird, an den Client. Wenn eine Anwendung
+					versucht, die erste Verbindung zu einem ausgefallenen
+					Prinzipalserver herzustellen, kennt der Client die Identität des
+					Failoverpartners nicht. Damit Clients in diesem Szenario eine
+					Verbindung herstellen können, kann der Client mit der
+					failoverPartner-Verbindungszeichenfolgeneigenschaft und optional
+					mit der <a href="5310b7c2-9d10-474f-ad3a-218fe5da694b.htm">setFailoverPartner</a>-Methode
+					des Datenquellenobjekts die Identität des Failoverpartners selbst
+					angeben. Die Clienteigenschaft wird nur in diesem Szenario
+					verwendet. Sie wird nicht verwendet, wenn der Prinzipalserver
+					verfügbar ist.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn in der Verbindungszeichenfolge oder mit einem
+						Datenquellenobjekt ein Failoverpartner angegeben wird, muss auch
+						die databaseName-Eigenschaft festgelegt werden, da sonst eine
+						Ausnahme ausgegeben wird. Wenn failoverPartner und databaseName
+						nicht explizit angegeben werden, versucht die Anwendung kein
+						Failover, wenn beim Prinzipaldatenbankserver ein Fehler auftritt.
+						Anders ausgedrückt funktioniert die transparente Umleitung nur bei
+						Verbindungen, bei denen failoverPartner und databaseName explizit
+						angegeben werden. Weitere Informationen zu "failoverPartner" und
+						anderen Verbindungszeichenfolgeeigenschaften finden Sie unter <span
+							sdata="link"><a
+							href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen von
+								Verbindungseigenschaften</a></span>.
+					</p>
+				</div>
+				<p>
+					Wenn der vom Client angegebene Failoverpartnerserver kein Server
+					ist, der als Failoverpartner für die angegebene Datenbank fungiert
+					und der Server bzw. die Datenbank, auf den bzw. die verwiesen wird,
+					für die Spiegelung konfiguriert wurde, wird die Verbindung vom
+					Server abgelehnt. Obwohl die <a
+						href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse
+					die <a href="885f927f-9c48-42e0-a7fb-fd936d2b8130.htm">getFailoverPartner</a>-Methode
+					enthält, gibt diese Methode nur den Namen des Failoverpartners
+					zurück, der in der Verbindungszeichenfolge oder mit der <b>setFailoverPartner</b>-Methode
+					festgelegt wurde. Mit der folgenden Transact-SQL-Anweisung können
+					Sie den Namen des tatsächlichen Failoverpartners abrufen, der
+					zurzeit verwendet wird:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>SELECT m.mirroring_role_DESC, m.mirroring_state_DESC,
+m.mirroring_partner_instance FROM sys.databases as db,
+sys.database_mirroring AS m WHERE db.name = 'MirroringDBName'
+AND db.database_id = m.database_id</pre></span>
+				</div>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Sie müssen diese Anweisung so ändern, dass der Name der
+						jeweiligen Spiegeldatenbank verwendet wird.</p>
+				</div>
+				<p>Sie sollten erwägen, die Partnerinformationen
+					zwischenzuspeichern, um die Verbindungszeichenfolge zu
+					aktualisieren, oder eine Wiederholungsstrategie entwickeln, falls
+					der erste Versuch, eine Verbindung herzustellen, fehlschlägt.</p>
+			</div>
+			<h1 class="heading">Beispiel</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>Im folgenden Beispiel wird versucht, zuerst eine Verbindung
+					zum Prinzipalserver herzustellen. Wenn keine Verbindung hergestellt
+					werden kann und eine Ausnahme ausgegeben wird, wird versucht, eine
+					Verbindung zum Spiegelserver herzustellen, der zum neuen
+					Prinzipalserver heraufgestuft wurde. Achten Sie auf die Verwendung
+					der failoverPartner-Eigenschaft in der Verbindungszeichenfolge.</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>import java.sql.*;
+
+public class clientFailover {
+
+   public static void main(String[] args) {
+
+      // Create a variable for the connection string.
+      String connectionUrl = "jdbc:sqlserver://serverA:1433;" +
+         "databaseName=AdventureWorks;integratedSecurity=true;" +
+         "failoverPartner=serverB";
+
+      // Declare the JDBC objects.
+      Connection con = null;
+      Statement stmt = null;
+
+      try {
+         // Establish the connection to the principal server.
+         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+         con = DriverManager.getConnection(connectionUrl);
+         System.out.println("Connected to the principal server.");
+
+         // Note that if a failover of serverA occurs here, then an
+         // exception will be thrown and the failover partner will
+         // be used in the first catch block below.
+
+         // Create and execute an SQL statement that inserts some data.
+         stmt = con.createStatement();
+
+         // Note that the following statement assumes that the 
+         // TestTable table has been created in the AdventureWorks
+         // sample database.
+         stmt.executeUpdate("INSERT INTO TestTable (Col2, Col3) VALUES ('a', 10)");
+      }
+
+      // Handle any errors that may have occurred.
+      catch (SQLException se) {
+         try {
+            // The connection to the principal server failed,
+            // try the mirror server which may now be the new
+            // principal server.
+            System.out.println("Connection to principal server failed, " +
+            "trying the mirror server.");
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the new principal server.");
+            stmt = con.createStatement();
+            stmt.executeUpdate("INSERT INTO TestTable (Col2, Col3) VALUES ('a', 10)");
+         }
+         catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
+      catch (Exception e) {
+         e.printStackTrace();
+      }
+      // Close the JDBC objects.
+      finally {
+         if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+         if (con != null) try { con.close(); } catch(Exception e) {}
+      }
+   }
+}</pre></span>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Verbinden von
+							SQL Server mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

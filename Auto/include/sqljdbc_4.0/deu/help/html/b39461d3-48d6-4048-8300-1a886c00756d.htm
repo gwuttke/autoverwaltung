@@ -1,0 +1,407 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von erweiterten Datentypen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Erweiterte Datentypen" />
+<meta name="Microsoft.Help.Id"
+	content="b39461d3-48d6-4048-8300-1a886c00756d" />
+<meta name="Description"
+	content="Microsoft JDBC Driver für SQL Server verwendet die erweiterten JDBC-Datentypen für die Konvertierung der SQL Server-Datentypen in ein Format, das von der Programmiersprache Java verarbeitet werden kann." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						erweiterten Datentypen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Microsoft JDBC Driver für SQL Server verwendet die
+					erweiterten JDBC-Datentypen für die Konvertierung der SQL
+					Server-Datentypen in ein Format, das von der Programmiersprache
+					Java verarbeitet werden kann.</p>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Die folgende Tabelle enthält eine Liste der
+					Standardzuordnungen zwischen den erweiterten SQL Server-Datentypen
+					sowie den JDBC- und Java-Datentypen.</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>SQL Server-Typen</p></th>
+							<th><p>JDBC-Typen (java.sql.Types)</p></th>
+							<th><p>Java-Typen</p></th>
+						</tr>
+						<tr>
+							<td><p>varbinary(max)</p>
+								<p>image</p></td>
+							<td><p>LONGVARBINARY</p></td>
+							<td><p>byte[] (Standard), Blob, InputStream, String</p></td>
+						</tr>
+						<tr>
+							<td><p>text</p>
+								<p>varchar(max)</p></td>
+							<td><p>LONGVARCHAR</p></td>
+							<td><p>String (Standard), Clob, InputStream</p></td>
+						</tr>
+						<tr>
+							<td><p>ntext</p>
+								<p>nvarchar(max)</p></td>
+							<td><p>LONGVARCHAR</p>
+								<p>LONGNVARCHAR (Java SE 6.0)</p></td>
+							<td><p>String (Standard), Clob, NClob (Java SE 6.0)</p></td>
+						</tr>
+						<tr>
+							<td><p>xml</p></td>
+							<td><p>LONGVARCHAR</p>
+								<p>SQLXML (Java SE 6.0)</p></td>
+							<td><p>String (Standard), InputStream, Clob, byte[],
+									Blob, SQLXML (Java SE 6.0)</p></td>
+						</tr>
+						<tr>
+							<td><p>udt</p></td>
+							<td><p>VARBINARY</p></td>
+							<td><p>String (Standard), byte[], InputStream</p></td>
+						</tr>
+					</table>
+				</div>
+				<p>Die folgenden Abschnitte enthalten Beispiele für die
+					Verwendung des JDBC-Treibers und der erweiterten Datentypen.</p>
+			</div>
+			<h1 class="heading">BLOB-, CLOB- und NCLOB-Datentypen</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>Der JDBC-Treiber implementiert alle Methoden der
+					java.sql.Blob-, java.sql.Clob- und java.sql.NClob-Schnittstellen.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						CLOB-Werte können mit SQL Server 2005 (oder höher)-Datentypen mit
+						umfangreichen Werten verwendet werden. Insbesondere können
+						CLOB-Typen mit den Datentypen <span sdata="langKeyword"
+							value="varchar(max)"><span class="keyword">varchar(max)</span></span>
+						und <span sdata="langKeyword" value="nvarchar(max)"><span
+							class="keyword">nvarchar(max)</span></span>, BLOB-Typen mit den
+						Datentypen <span sdata="langKeyword" value="varbinary(max)"><span
+							class="keyword">varbinary(max)</span></span> und <span
+							sdata="langKeyword" value="image"><span class="keyword">image</span></span>
+						sowie NCLOB-Typen mit <span sdata="langKeyword" value="ntext"><span
+							class="keyword">ntext</span></span> und <span sdata="langKeyword"
+							value="nvarchar(max)"><span class="keyword">nvarchar(max)</span></span>
+						verwendet werden.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Datentypen mit umfangreichen Werten</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>
+					In früheren Versionen von SQL Server war bei der Verarbeitung von
+					Datentypen mit umfangreichen Werten eine besondere Behandlung
+					erforderlich. Bei Datentypen mit umfangreichen Werten handelt es
+					sich um Datentypen, die die maximale Zeilengröße von 8 KB
+					übersteigen. SQL Server enthält einen neuen Spezifizierer für <span
+						sdata="langKeyword" value="varchar"><span class="keyword">varchar</span></span>-,
+					<span sdata="langKeyword" value="nvarchar"><span
+						class="keyword">nvarchar</span></span>- und <span sdata="langKeyword"
+						value="varbinary"><span class="keyword">varbinary</span></span>-Datentypen,
+					um die Speicherung von Werten mit einer Größe bis zu 2^31 Byte zu
+					ermöglichen. Tabellenspalten und Transact-SQL-Variablen können <span
+						sdata="langKeyword" value="varchar(max)"><span
+						class="keyword">varchar(max)</span></span>-, <span sdata="langKeyword"
+						value="nvarchar(max)"><span class="keyword">nvarchar(max)</span></span>-
+					oder <span sdata="langKeyword" value="varbinary(max)"><span
+						class="keyword">varbinary(max)</span></span>-Datentypen angeben.
+				</p>
+				<p>Die Verarbeitung von Typen mit umfangreichen Werten umfasst
+					hauptsächlich das Abrufen aus einer Datenbank sowie das Hinzufügen
+					zu einer Datenbank. Die folgenden Abschnitte beschreiben die
+					verschiedenen Verfahren für diese Aufgaben.</p>
+				<h1 class="heading">Abrufen von Typen mit umfangreichen Werten
+					aus einer Datenbank</h1>
+				<div class="subsection">
+					<p>
+						Beim Abrufen eines nicht binären Datentyps mit umfangreichen
+						Werten aus einer Datenbank, wie z. B. dem <span
+							sdata="langKeyword" value="varchar(max)"><span
+							class="keyword">varchar(max)</span></span>-Datentyp, besteht eine
+						Vorgehensweise darin, diese Daten als Zeichendatenstrom zu lesen.
+						Im folgenden Beispiel werden Daten mit der <a
+							href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a>-Methode
+						der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+						aus der Datenbank abgerufen und als Resultset zurückgegeben.
+						Anschließend werden die Daten mit umfangreichen Werten mit der <a
+							href="c70e210f-0288-47cc-9268-a29c45979729.htm">getCharacterStream</a>-Methode
+						der <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Klasse
+						aus dem Resultset gelesen.
+					</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT TOP 1 * FROM Test1");
+rs.next();
+Reader reader = rs.getCharacterStream(2);</pre></span>
+					</div>
+					<div style="margin: .5em 1.5em .5em 1.5em">
+						<b></b>
+						<p>
+							Diese Vorgehensweise kann auch für <span sdata="langKeyword"
+								value="text"><span class="keyword">text</span></span>-, <span
+								sdata="langKeyword" value="ntext"><span class="keyword">ntext</span></span>-
+							und <span sdata="langKeyword" value="nvarchar(max)"><span
+								class="keyword">nvarchar(max)</span></span>-Datentypen verwendet
+							werden.
+						</p>
+					</div>
+					<p>
+						Beim Abrufen eines binären Datentyps mit umfangreichen Werten aus
+						einer Datenbank, wie z. B. dem <span sdata="langKeyword"
+							value="varbinary(max)"><span class="keyword">varbinary(max)</span></span>-Datentyp,
+						gibt es mehrere mögliche Verfahren. Die effizienteste
+						Vorgehensweise besteht darin, die Daten als Binärdatenstrom zu
+						lesen, wie z. B.:
+					</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT photo FROM mypics");
+rs.next();
+InputStream is = rs.getBinaryStream(2);</pre></span>
+					</div>
+					<p>
+						Sie können die Daten auch mit der <a
+							href="d16a0aea-6144-4fcb-bcbc-5d7daa36d327.htm">getBytes</a>-Methode
+						als Bytearray lesen, wie z. B.:
+					</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>ResultSet rs = stmt.executeQuery("SELECT photo FROM mypics");
+rs.next();
+byte [] b = rs.getBytes(2);</pre></span>
+					</div>
+					<div style="margin: .5em 1.5em .5em 1.5em">
+						<b></b>
+						<p>Die Daten können auch als BLOB gelesen werden. Diese
+							Vorgehensweise ist jedoch weniger effizient als die beiden oben
+							erwähnten Methoden.</p>
+					</div>
+				</div>
+				<h1 class="heading">Hinzufügen von Typen mit umfangreichen
+					Werten zu einer Datenbank</h1>
+				<div class="subsection">
+					<p>Das Hochladen von umfangreichen Daten mit dem JDBC-Treiber
+						funktioniert problemlos, wenn die Daten in den Arbeitsspeicher
+						passen. Wenn der Umfang der Daten größer ist als der
+						Arbeitsspeicher, sollte Streaming verwendet werden. Die
+						effizienteste Möglichkeit für das Hochladen von umfangreichen
+						Daten bilden die stream-Schnittstellen.</p>
+					<p>Es besteht auch die Möglichkeit, eine Zeichenfolge oder
+						Bytes zu verwenden, wie z. B.:</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>PreparedStatement pstmt = con.prepareStatement("INSERT INTO test1 (c1_id, c2_vcmax) VALUES (?, ?)");
+pstmt.setInt(1, 1);
+pstmt.setString(2, htmlStr);
+pstmt.executeUpdate();</pre></span>
+					</div>
+					<div style="margin: .5em 1.5em .5em 1.5em">
+						<b></b>
+						<p>
+							Diese Vorgehensweise kann auch für Werte verwendet werden, die in
+							<span sdata="langKeyword" value="text"><span
+								class="keyword">text</span></span>-, <span sdata="langKeyword"
+								value="ntext"><span class="keyword">ntext</span></span>- und <span
+								sdata="langKeyword" value="nvarchar(max)"><span
+								class="keyword">nvarchar(max)</span></span>-Spalten gespeichert sind.
+						</p>
+					</div>
+					<p>
+						Wenn auf dem Server eine Bildbibliothek vorhanden ist und alle
+						binären Bilddateien in eine <span sdata="langKeyword"
+							value="varbinary(max)"><span class="keyword">varbinary(max)</span></span>-Spalte
+						geladen werden müssen, besteht die effizienteste Methode des
+						JDBC-Treibers darin, direkt Datenströme zu verwenden, wie z. B.:
+					</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>PreparedStatement pstmt = con.prepareStatement("INSERT INTO test1 (Col1, Col2) VALUES(?,?)");
+File inputFile = new File("CLOBFile20mb.jpg");
+FileInputStream inStream = new FileInputStream(inputFile);
+int id = 1;
+pstmt.setInt(1,id);
+pstmt.setBinaryStream(2, inStream);
+pstmt.executeUpdate();
+inStream.close();</pre></span>
+					</div>
+					<div style="margin: .5em 1.5em .5em 1.5em">
+						<b></b>
+						<p>Das Hochladen von umfangreichen Daten mit der CLOB- oder
+							BLOB-Methode ist nicht effizient.</p>
+					</div>
+				</div>
+				<h1 class="heading">Ändern von Typen mit umfangreichen Werten
+					in einer Datenbank</h1>
+				<div class="subsection">
+					<p>
+						In den meisten Fällen wird empfohlen, zum Aktualisieren oder
+						Ändern von umfangreichen Werten in der Datenbank mit
+						Transact-SQL-Befehlen wie UPDATE, WRITE und SUBSTRING Parameter
+						über die <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>-
+						und <a href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>-Klassen
+						zu übergeben.
+					</p>
+					<p>
+						Wenn Sie in einer umfangreichen Textdatei ein Wort ersetzen
+						müssen, z. B. in einer archivierten HTML-Datei, können Sie ein <b>Clob</b>-Objekt
+						verwenden, wie z. B.:
+					</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>String SQL = "SELECT * FROM test1;";
+Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+ResultSet rs = stmt.executeQuery(SQL);
+rs.next();
+
+Clob clob = rs.getClob(2);
+long pos = clob.position("dog", 1);
+clob.setString(pos, "cat");
+rs.updateClob(2, clob);
+rs.updateRow();</pre></span>
+					</div>
+					<p>Darüber hinaus besteht die Möglichkeit, die gesamte Arbeit
+						auf dem Server auszuführen und lediglich Parameter an eine
+						vorbereitete UPDATE-Anweisung zu übergeben.</p>
+					<p>Weitere Informationen zu Typen mit umfangreichen Werten
+						finden Sie in der SQL Server-Onlinedokumentation unter "Verwenden
+						von Datentypen mit umfangreichen Werten".</p>
+				</div>
+			</div>
+			<h1 class="heading">XML-Datentyp</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					SQL Server umfasst einen <span sdata="langKeyword" value="xml"><span
+						class="keyword">xml</span></span>-Datentyp, mit dem Sie XML-Dokumente und
+					-Fragmente in einer SQL Server-Datenbank speichern können. Der <span
+						sdata="langKeyword" value="xml"><span class="keyword">xml</span></span>-Datentyp
+					ist ein integrierter Datentyp in SQL Server und ähnelt in gewisser
+					Weise anderen integrierten Typen wie <span sdata="langKeyword"
+						value="int"><span class="keyword">int</span></span> und <span
+						sdata="langKeyword" value="varchar"><span class="keyword">varchar</span></span>.
+					Wie andere integrierte Typen können Sie den <span
+						sdata="langKeyword" value="xml"><span class="keyword">xml</span></span>-Datentyp
+					beim Erstellen einer Tabelle als Spaltentyp, als Variablentyp, als
+					Parametertyp oder als Funktionsrückgabetyp bzw. in Transact-SQL
+					CAST- und CONVERT-Funktionen verwenden.
+				</p>
+				<p>
+					Im JDBC-Treiber kann der <span sdata="langKeyword" value="xml"><span
+						class="keyword">xml</span></span>-Datentyp als Zeichenfolge-, Bytearray-,
+					Datenstrom-, CLOB-, BLOB- oder SQLXML-Objekt zugeordnet werden. Der
+					Standard lautet Zeichenfolge. Ab JDBC Driver, Version 2.0,
+					unterstützt der JDBC-Treiber die JDBC 4.0-API, in der die
+					SQLXML-Schnittstelle eingeführt wurde. Die SQLXML-Schnittstelle
+					definiert Methoden für die Interaktion mit und die Bearbeitung von
+					XML-Daten. Der <span sdata="langKeyword" value="SQLXML"><span
+						class="keyword">SQLXML</span></span>-Typ ist dem SQL Server-Datentyp <span
+						sdata="langKeyword" value="xml"><span class="keyword">xml</span></span>
+					zugeordnet. Weitere Informationen über das Lesen und Schreiben von
+					XML-Daten in bzw. aus einer relationalen Datenbank mit dem <span
+						sdata="langKeyword" value="SQLXML"><span class="keyword">SQLXML</span></span>-Java-Datentyp
+					finden Sie unter <span sdata="link"><a
+						href="32b7217e-1f0c-473d-9a45-176daa81584e.htm">Unterstützen
+							von XML-Daten</a></span>.
+				</p>
+				<p>
+					Die Implementierung des <span sdata="langKeyword" value="xml"><span
+						class="keyword">xml</span></span>-Datentyps im JDBC-Treiber ermöglicht
+					Folgendes:
+				</p>
+				<ul>
+					<li><p>Zugriff auf XML-Daten als normale Java
+							UTF-16-Zeichenfolge bei den gebräuchlichsten Programmierszenarien</p></li>
+					<li><p>Eingabe von UTF-8- und anderen 8-Bit-codierten
+							XML-Daten</p></li>
+					<li><p>Zugriff auf XML-Daten als Bytearray mit führender
+							Bytereihenfolgemarke (Byte Order Mark, BOM) bei Codierung in
+							UTF-16 für den Austausch mit anderen XML-Prozessoren und
+							Datenträgerdateien</p></li>
+				</ul>
+				<p>SQL Server setzt eine führende BOM für UTF-16-codierte
+					XML-Daten voraus. Die Anwendung muss diese Marke bereitstellen,
+					wenn XML-Parameterwerte als Bytearrays übergeben werden. SQL Server
+					gibt XML-Werte immer als UTF-16-Zeichenfolgen ohne BOM oder
+					eingebettete Codierungsdeklaration aus. Wenn XML-Werte als
+					"byte[]", "BinaryStream" oder "Blob" abgerufen werden, steht vor
+					dem Wert ein UTF-16-BOM.</p>
+				<p>
+					Weitere Informationen zum <span sdata="langKeyword" value="xml"><span
+						class="keyword">xml</span></span>-Datentyp finden Sie in der SQL
+					Server-Onlinedokumentation unter "XML-Datentyp".
+				</p>
+			</div>
+			<h1 class="heading">Benutzerdefinierte Datentypen</h1>
+			<div id="sectionSection4" class="section" name="collapseableSection"
+				style="">
+				<p>Das SQL-Typensystem wird durch Einführung von
+					benutzerdefinierten Typen (UDTs, User-defined Types) in SQL Server
+					2005 erweitert, sodass Sie Objekte und benutzerdefinierte
+					Datenstrukturen in einer SQL Server-Datenbank speichern können.
+					UDTs können mehrere Datentypen enthalten und Verhalten aufweisen,
+					die sich von den herkömmlichen Aliasdatentypen unterscheiden, die
+					aus einem einzigen SQL Server-Systemdatentyp bestehen. UDTs werden
+					mit einer der von der Microsoft .NET Common Language Runtime (CLR)
+					unterstützten Sprachen definiert, die überprüfbaren Code erzeugen.
+					Dazu gehören Visual C# und Visual Basic .NET. Die Daten werden als
+					Felder und Eigenschaften einer .NET Framework-basierten Klasse oder
+					Struktur offen gelegt. Die Verhalten werden durch Methoden der
+					Klasse bzw. Struktur definiert.</p>
+				<p>In SQL Server kann ein UDT als Spaltendefinition einer
+					Tabelle, als Variable in einem Transact-SQL-Batch oder als Argument
+					einer Transact-SQL-Funktion oder gespeicherten Prozedur verwendet
+					werden.</p>
+				<p>Weitere Informationen zu benutzerdefinierten Datentypen
+					finden Sie in der SQL Server-Onlinedokumentation unter "Verwenden
+					und Ändern von Instanzen von benutzerdefinierten Typen".</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="7802328d-4d23-4775-9573-4169b127d258.htm">Grundlegendes
+							zu den Datentypen in JDBC Driver</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

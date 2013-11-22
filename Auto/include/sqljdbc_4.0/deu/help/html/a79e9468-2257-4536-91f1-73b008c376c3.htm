@@ -1,0 +1,179 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Zugriff auf Diagnoseinformationen im erweiterten
+	Ereignisprotokoll</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="a79e9468-2257-4536-91f1-73b008c376c3" />
+<meta name="Description"
+	content="In Microsoft JDBC Driver 4.0 für SQL Server wurde die Ablaufverfolgung (Tracing Driver Operation) aktualisiert, damit Clientereignisse einfacher mit Diagnoseinformationen (z. B." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Zugriff auf
+						Diagnoseinformationen im erweiterten Ereignisprotokoll</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					In Microsoft JDBC Driver 4.0 für SQL Server wurde die
+					Ablaufverfolgung (<span sdata="link"><a
+						href="723aeae7-6504-4585-ba8b-3525115bea8b.htm">Ablaufverfolgung
+							für Treibervorgänge</a></span>) aktualisiert, damit Clientereignisse
+					einfacher mit Diagnoseinformationen (z. B. Verbindungsfehlern) aus
+					dem Verbindungsringpuffer des Servers und den anwendungsbezogenen
+					Leistungsinformationen in den erweiterten Ereignisprotokollen
+					korreliert werden können. Informationen zum Auswerten der
+					erweiterten Ereignisprotokolle finden Sie unter <a
+						href="http://msdn.microsoft.com/de-de/library/hh710068(SQL.110).aspx ">Anzeigen
+						von Ereignissitzungsdaten</a>.
+				</p>
+			</div>
+			<h1 class="heading">Details</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Bei Verbindungsvorgängen sendet Microsoft JDBC Driver für SQL
+					Server eine Clientverbindungs-ID. Bei einem Verbindungsfehler haben
+					Sie die Möglichkeit, auf den Verbindungsringpuffer zuzugreifen (<a
+						href="http://go.microsoft.com/fwlink/?LinkId=207752">Behandlung
+						von Verbindungsproblemen in SQL Server 2008 mithilfe des
+						Verbindungsringpuffers</a>) und über das Feld <span
+						sdata="langKeyword" value="ClientConnectionID"><span
+						class="keyword">ClientConnectionID</span></span> Diagnoseinformationen
+					zum jeweiligen Verbindungsfehler abzurufen. Clientverbindungs-IDs
+					werden nur bei einem Fehler im Ringpuffer protokolliert. (Wenn ein
+					Verbindungsfehler vor dem Senden des Voranmeldungspakets auftritt,
+					wird keine Clientverbindungs-ID generiert.) Die
+					Clientverbindungs-ID entspricht einer 16-Byte-GUID. Sie können die
+					Clientverbindungs-ID auch in der Zielausgabe der erweiterten
+					Ereignisse suchen, wenn die <span sdata="langKeyword"
+						value="client_connection_id"><span class="keyword">client_connection_id</span></span>-Aktion
+					Ereignissen in einer erweiterten Ereignissitzung hinzugefügt wird.
+					Wenn Sie weitere Unterstützung zur Clienttreiberdiagnose benötigen,
+					können Sie die Ablaufverfolgung aktivieren und den
+					Verbindungsbefehl erneut ausführen. Beobachten Sie dabei das Feld <span
+						sdata="langKeyword" value="ClientConnectionID"><span
+						class="keyword">ClientConnectionID</span></span> in der Ablaufverfolgung.
+				</p>
+				<p>
+					Sie können die Clientverbindungs-ID programmgesteuert über <span
+						sdata="link"><a
+						href="031c01e2-2c65-4fe4-9700-fdbcc7a39f30.htm">ISQLServerConnection-Schnittstelle</a></span>
+					abrufen. Die Verbindungs-ID ist auch in verbindungsbezogenen
+					Ausnahmen enthalten.
+				</p>
+				<p>
+					Bei einem Verbindungsfehler kann die Clientverbindungs-ID in den
+					BID-Ablaufverfolgungsinformationen des Servers und im
+					Verbindungsringpuffer nützlich sein, um die Clientverbindungen mit
+					Verbindungen auf dem Server zu korrelieren. Weitere Informationen
+					zur BID-Ablaufverfolgung auf dem Server finden Sie unter <a
+						href="http://go.microsoft.com/fwlink/?LinkId=125805">Datenzugriffsablaufverfolgung</a>.
+					Der Artikel zur Datenzugriffsablaufverfolgung enthält auch
+					Informationen zum Ausführen einer Datenzugriffsablaufverfolgung,
+					die sich nicht auf Microsoft JDBC Driver für SQL Server bezieht.
+					Informationen zum Ausführen einer Datenzugriffsablaufverfolgung
+					unter Verwendung von Microsoft JDBC Driver für SQL Server finden
+					Sie unter <span sdata="link"><a
+						href="723aeae7-6504-4585-ba8b-3525115bea8b.htm">Ablaufverfolgung
+							für Treibervorgänge</a></span>.
+				</p>
+				<p>
+					Der JDBC-Treiber sendet außerdem eine threadspezifische
+					Aktivitäts-ID. Die Aktivitäts-ID wird in den erweiterten
+					Ereignissitzungen erfasst, wenn die Sitzungen mit aktivierter
+					TRACK_CAUSAILITY-Option gestartet werden. Bei Leistungsproblemen
+					mit einer aktiven Verbindung können Sie die Aktivitäts-ID aus der
+					Ablaufverfolgung des Clients (Feld <b>ActivityID</b>) abrufen und
+					dann in der Ausgabe der erweiterten Ereignisse nach der
+					Aktivitäts-ID suchen. Die Aktivitäts-ID in erweiterten Ereignissen
+					ist eine 16-Byte-GUID (entspricht nicht der GUID für die
+					Clientverbindungs-ID), an die eine 4-Byte-Sequenznummer angehängt
+					ist. Die Sequenznummer stellt die Reihenfolge einer Anforderung in
+					einem Thread dar. Die ActivityId wird bei SQL-Stapelanweisungen und
+					RPC-Anforderungen gesendet. Zum Aktivieren des Sendens der
+					ActivityId an den Server müssen Sie zunächst das folgende
+					Schlüssel-Wert-Par in der Datei <b>Logging.Properties</b> angeben:
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>com.microsoft.sqlserver.jdbc.traceactivity = on</pre></span>
+				</div>
+				<p>
+					Weitere Informationen finden Sie unter <span sdata="link"><a
+						href="723aeae7-6504-4585-ba8b-3525115bea8b.htm">Ablaufverfolgung
+							für Treibervorgänge</a></span>. Dieses Ablaufverfolgungsflag wird mit den
+					entsprechenden JDBC-Objektprotokollierungen verwendet, um zu
+					bestimmen, ob im JDBC-Treiber eine Ablaufverfolgung der ActivityId
+					ausgeführt und diese gesendet werden soll. Zusätzlich zum
+					Aktualisieren der Datei <b>Logging.Properties</b> muss die
+					Protokollierung <b>com.microsoft.sqlserver.jdbc</b> mit dem Wert
+					FINER oder höher aktiviert werden. Wenn die ActivityId bei
+					Anforderungen an eine bestimmte Klasse an den Server gesendet
+					werden soll, muss die entsprechende Klassenprotokollierung mit dem
+					Wert FINER oder FINEST aktiviert werden. Wenn die Klasse
+					beispielsweise SQLServerStatement lautet, aktivieren Sie die
+					Protokollierung <b>com.microsoft.sqlserver.jdbc.SQLServerStatement</b>.
+				</p>
+				<p>Im folgenden Beispiel wird Transact-SQL verwendet, um eine
+					erweiterte Ereignissitzung zu starten, die in einem Ringpuffer
+					gespeichert wird und die von einem Client bei RPC- und
+					Stapelvorgängen gesendete Aktivitäts-ID aufzeichnet:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>create event session MySession on server
+add event connectivity_ring_buffer_recorded,
+add event sql_statement_starting (action (client_connection_id)),
+add event sql_statement_completed (action (client_connection_id)),
+add event rpc_starting (action (client_connection_id)),
+add event rpc_completed (action (client_connection_id))
+add target ring_buffer with (track_causality=on)</pre></span>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="723e2680-a0c5-4a7d-a319-1e49e41078cf.htm">Diagnostizieren
+							von Problemen mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

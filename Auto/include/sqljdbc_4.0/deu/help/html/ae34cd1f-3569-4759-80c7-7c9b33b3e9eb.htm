@@ -1,0 +1,234 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Konfigurieren des Clients für SSL-Verschlüsselung</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Zertifikat" />
+<meta name="System.Keywords" content="Konfigurieren des SSL-Zertifikats" />
+<meta name="System.Keywords" content="SSL" />
+<meta name="System.Keywords" content="SSL-Zertifikat" />
+<meta name="Microsoft.Help.Id"
+	content="ae34cd1f-3569-4759-80c7-7c9b33b3e9eb" />
+<meta name="Description"
+	content="Der Microsoft JDBC Driver für SQL Server oder Client muss überprüfen, ob es sich bei dem Server um den richtigen Server handelt und das Serverzertifikat von einer Zertifizierungsstelle herausgegeben wurde, der der Client vertraut." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Konfigurieren des
+						Clients für SSL-Verschlüsselung</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Der Microsoft JDBC Driver für SQL Server oder Client muss
+					überprüfen, ob es sich bei dem Server um den richtigen Server
+					handelt und das Serverzertifikat von einer Zertifizierungsstelle
+					herausgegeben wurde, der der Client vertraut. Zum Überprüfen des
+					Serverzertifikats müssen die Informationen zur Vertrauenswürdigkeit
+					zur Verbindungszeit angegeben werden. Außerdem muss der Aussteller
+					des Serverzertifikats eine Zertifizierungsstelle sein, der der
+					Client vertraut.</p>
+				<p>In diesem Thema wird zuerst beschrieben, wie die
+					Vertrauenswürdigkeitsinformationen auf dem Clientcomputer angegeben
+					werden. Anschließend wird das Importieren eines Serverzertifikats
+					in den Vertrauensspeicher des Clientcomputers erläutert, wenn die
+					Instanz des Secure Sockets Layer (SSL)-Zertifikats von SQL Server
+					von einer privaten Zertifizierungsstelle veröffentlicht wird.</p>
+				<p>
+					Weitere Informationen zum Überprüfen des Serverzertifikats finden
+					Sie im Abschnitt zum Überprüfen des SSL-Serverzertifikats unter <span
+						sdata="link"><a
+						href="073f3b9e-8edd-4815-88ea-de0655d0325e.htm">Grundlegendes
+							zur SSL-Unterstützung</a></span>.
+				</p>
+			</div>
+			<h1 class="heading">Konfigurieren des Clientvertrauensspeichers</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Damit das Serverzertifikat überprüft werden kann, müssen die
+					Vertrauensinformationen zur Verbindungszeit explizit mithilfe der <span
+						class="label">trustStore</span>-Verbindungseigenschaft und der <span
+						class="label">trustStorePassword</span>-Verbindungseigenschaft
+					oder implizit mithilfe des Standardvertrauensspeichers der zugrunde
+					liegenden Java Virtual Machine (JVM) übermittelt werden. Weitere
+					Informationen zum Festlegen der <span class="label">trustStore</span>-Eigenschaft
+					und der <span class="label">trustStorePassword</span>-Eigenschaft
+					in einer Verbindungszeichenfolge finden Sie unter <span
+						sdata="link"><a
+						href="ec91fa8a-ab7e-4c1e-a05a-d7951ddf33b1.htm">Herstellen von
+							Verbindungen mit SSL-Verschlüsselung</a></span>.
+				</p>
+				<p>
+					Wenn die <span class="label">trustStore</span>-Eigenschaft nicht
+					angegeben oder auf NULL festgelegt ist, verwendet Microsoft JDBC
+					Driver für SQL Server den Sicherheitsanbieter der zugrunde
+					liegenden JVM, d. h. Java Secure Socket Extension (SunJSSE). Der
+					SunJSSE-Anbieter stellt einen Standard-<b>TrustManager</b> bereit.
+					Hiermit werden die von SQL Server zurückgegebenen X.509-Zertifikate
+					anhand der in einem Vertrauensspeicher bereitgestellten
+					Vertrauensinformationen überprüft.
+				</p>
+				<p>
+					Der <b>TrustManager</b> versucht, den Standard-trustStore in der
+					folgenden Suchreihenfolge zu suchen:
+				</p>
+				<ul>
+					<li><p>
+							Wenn die Systemeigenschaft "javax.net.ssl.trustStore" definiert
+							ist, versucht <b>TrustManager</b>, die Datei <b>trustStore</b>
+							anhand des von der Systemeigenschaft angegebenen Dateinamens zu
+							suchen.
+						</p></li>
+					<li><p>Wenn die Systemeigenschaft
+							"javax.net.ssl.trustStore" nicht angegeben wurde und die Datei
+							"&lt;java-home&gt;/lib/security/jssecacerts" vorhanden ist, wird
+							diese Datei verwendet.</p></li>
+					<li><p>Wenn die Datei
+							"&lt;java-home&gt;/lib/security/cacerts" vorhanden ist, wird
+							diese Datei verwendet.</p></li>
+				</ul>
+				<p>Weitere Informationen finden Sie in der Dokumentation zur
+					SUNX509 TrustManager-Schnittstelle auf der Sun
+					Microsystems-Website.</p>
+				<p>Durch die Java Runtime-Umgebung können Sie die
+					trustStore-Systemeigenschaft und die
+					trustStorePassword-Systemeigenschaft wie folgt festlegen:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>java -Djavax.net.ssl.trustStore=C:\MyCertificates\storeName
+java -Djavax.net.ssl.trustStorePassword=storePassword</pre></span>
+				</div>
+				<p>
+					In diesem Fall verwenden alle Anwendungen, die auf dieser JVM
+					ausgeführt werden, diese Einstellungen als Standard. Zum
+					Überschreiben der Standardeinstellungen in Ihrer Anwendung sollten
+					Sie die <span class="label">trustStore</span>-Verbindungseigenschaft
+					und die <span class="label">trustStorePassword</span>-Verbindungseigenschaft
+					in der Verbindungszeichenfolge oder in der entsprechenden
+					Festlegungsmethode der <a
+						href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Klasse
+					festlegen.
+				</p>
+				<p>Außerdem können Sie die Standardvertrauensspeicherdateien wie
+					"&lt;java-home&gt;/lib/security/jssecacerts" und
+					"&lt;java-home&gt;/lib/security/cacerts" konfigurieren und
+					verwalten. Verwenden Sie hierzu das JAVA-Hilfsprogramm "keytool",
+					das mit der JRE (Java Runtime Environment) installiert wird.
+					Weitere Informationen zum Hilfsprogramm "keytool" finden Sie in der
+					Dokumentation zu keytool auf der Sun Microsystems-Website.</p>
+				<h1 class="heading">Importieren des Serverzertifikats in den
+					Vertrauensspeicher</h1>
+				<div class="subsection">
+					<p>Während des SSL-Handshakes sendet der Server sein Zertifikat
+						für öffentliche Schlüssel an den Client. Der Aussteller eines
+						Zertifikats für öffentliche Schlüssel wird als
+						Zertifizierungsstelle bezeichnet. Der Client muss sicherstellen,
+						dass der Client der Zertifizierungsstelle vertraut. Dies wird
+						erreicht, indem der öffentliche Schlüssel von vertrauenswürdigen
+						Zertifizierungsstellen im Voraus bekannt ist. Normalerweise wird
+						die JVM mit einem vordefinierten Satz vertrauenswürdiger
+						Zertifizierungsstellen geliefert.</p>
+					<p>Wenn die Instanz des Secure Sockets Layer (SSL)-Zertifikats
+						von SQL Server von einer privaten Zertifizierungsstelle
+						veröffentlicht wird, müssen Sie das Zertifikat der
+						Zertifizierungsstelle der Liste der vertrauenswürdigen Zertifikate
+						im Vertrauensspeicher des Clientcomputers hinzufügen.</p>
+					<p>Verwenden Sie hierzu das JAVA-Hilfsprogramm "keytool", das
+						mit der JRE (Java Runtime Environment) installiert wird. Mit der
+						folgenden Eingabeaufforderung wird die Verwendung des
+						Hilfsprogramms "keytool" zum Importieren eines Zertifikats aus
+						einer Datei veranschaulicht:</p>
+					<div class="sampleCode">
+						<span codeLanguage="other"><pre>keytool -import -v -trustcacerts -alias myServer -file caCert.cer -keystore truststore.ks</pre></span>
+					</div>
+					<p>Im Beispiel wird die Datei "caCert.cer" als Zertifikatsdatei
+						verwendet. Sie müssen diese Zertifikatsdatei vom Server abrufen.
+						In den folgenden Schritten wird erläutert, wie das
+						Serverzertifikat in eine Datei exportiert wird:</p>
+					<ol>
+						<li><p>
+								Klicken Sie auf <b>Start</b>, klicken Sie auf <b>Ausführen</b>,
+								und geben Sie <b>MMC</b> ein. (MMC ist die Abkürzung für
+								Microsoft Management Console.)
+							</p></li>
+						<li><p>Öffnen Sie in MMC die Zertifikate.</p></li>
+						<li><p>
+								Erweitern Sie <b>Eigene Zertifikate</b> und dann <b>Zertifikate</b>.
+							</p></li>
+						<li><p>
+								Klicken Sie mit der rechten Maustaste auf das Serverzertifikat,
+								und wählen Sie dann unter <b>Alle Aufgaben</b> die Option <b>Exportieren</b>
+								aus.
+							</p></li>
+						<li><p>
+								Klicken Sie auf <b>Weiter</b>, um das Dialogfeld <b>Willkommen</b>
+								des Zertifikatexport-Assistenten zu überspringen.
+							</p></li>
+						<li><p>
+								Stellen Sie sicher, dass "Nein, privaten Schlüssel nicht
+								exportieren" ausgewählt ist, und klicken Sie dann auf <b>Weiter</b>.
+							</p></li>
+						<li><p>
+								Stellen Sie sicher, dass <b>DER-codiert-binär X.509 (.CER)</b>
+								oder <b>Base-64-codiert X.509 (.CER)</b> ausgewählt ist, und
+								klicken Sie dann auf <b>Weiter</b>.
+							</p></li>
+						<li><p>Geben Sie einen Namen für die Exportdatei ein.</p></li>
+						<li><p>
+								Klicken Sie auf <b>Weiter</b>, und klicken Sie dann auf <b>Fertig
+									stellen</b>, um das Zertifikat zu exportieren.
+							</p></li>
+					</ol>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="8e566243-2f93-4b21-8065-3c8336649309.htm">Verwenden der
+							SSL-Verschlüsselung</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

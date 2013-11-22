@@ -1,0 +1,120 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von SQL-Anweisungen mit Parametern</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="3202b88f-ce13-44dd-982c-c6a3b0260378" />
+<meta name="Description"
+	content="Wenn Sie Daten in einer SQL Server-Datenbank mit einer SQL-Anweisung verarbeiten möchten, die IN-Parameter enthält, können Sie mit der executeQuery-Methode der SQLServerPreparedStatement-Klasse ein SQLServerResultSet zurückgeben, das die angeforderten Date" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						SQL-Anweisungen mit Parametern</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Wenn Sie Daten in einer SQL Server-Datenbank mit einer
+					SQL-Anweisung verarbeiten möchten, die IN-Parameter enthält, können
+					Sie mit der <a href="dfff3358-f391-4af6-84c1-b94c029f506d.htm">executeQuery</a>-Methode
+					der <a href="a8481c06-fbba-432b-8c69-4f4619c20ad4.htm">SQLServerPreparedStatement</a>-Klasse
+					ein <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>
+					zurückgeben, das die angeforderten Daten enthält. Sie müssen dazu
+					zuerst mit der <a href="bd4e4085-f704-4a73-b6a7-7d443d564728.htm">prepareStatement</a>-Methode
+					der <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse
+					ein <b>SQLServerPreparedStatement</b>-Objekt erstellen.
+				</p>
+				<p>
+					Beim Erstellen der SQL-Anweisung werden die IN-Parameter mit dem ?
+					(Fragezeichen) angegeben, das als Platzhalter für die
+					Parameterwerte fungiert, die später an die SQL-Anweisung übergeben
+					werden. Mit den Festlegungsmethoden der <b>SQLServerPreparedStatement</b>-Klasse
+					können Sie für einen Parameter einen Wert angeben. Die verwendete
+					Festlegungsmethode hängt vom Datentyp des Werts ab, der an die
+					SQL-Anweisung übergeben werden soll.
+				</p>
+				<p>Wenn Sie einen Wert an die Festlegungsmethode übergeben,
+					müssen Sie nicht nur den Wert angeben, der in der SQL-Anweisung
+					verwendet werden soll, sondern auch die ordinale Position des
+					Parameters in der SQL-Anweisung. Wenn die SQL-Anweisung
+					beispielsweise einen einzigen Parameter enthält, ist der
+					Ordinalwert 1. Wenn die Anweisung zwei Parameter enthält, ist der
+					erste Ordinalwert 1 und der zweite Ordinalwert 2.</p>
+				<p>Im folgenden Beispiel werden eine offene Verbindung zur SQL
+					Server 2005AdventureWorks-Beispieldatenbank an die Funktion
+					übergeben, eine vorbereitete SQL-Anweisung erstellt und mit einem
+					einzigen String-Parameterwert ausgeführt sowie die Ergebnisse aus
+					dem Resultset gelesen.</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>public static void executeStatement(Connection con) {
+   try {
+      String SQL = "SELECT LastName, FirstName FROM Person.Contact WHERE LastName = ?";
+      PreparedStatement pstmt = con.prepareStatement(SQL);
+      pstmt.setString(1, "Smith");
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+         System.out.println(rs.getString("LastName") + ", " + rs.getString("FirstName"));
+      }
+      rs.close();
+      pstmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="fe28f48a-e1bc-48ff-a5e7-c24cd6e5ecc7.htm">Verwenden von
+							Anweisungen mit SQL</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

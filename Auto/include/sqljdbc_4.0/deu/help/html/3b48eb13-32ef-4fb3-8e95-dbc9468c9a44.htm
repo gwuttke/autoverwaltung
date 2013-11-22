@@ -1,0 +1,137 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von Sicherungspunkten</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Transaktionssicherungspunkte" />
+<meta name="Microsoft.Help.Id"
+	content="3b48eb13-32ef-4fb3-8e95-dbc9468c9a44" />
+<meta name="Description"
+	content="Sicherungspunkte bieten einen Mechanismus, um für Teile einer Transaktion ein Rollback auszuführen. In SQL Server können Sie mit der Anweisung &quot;SAVE TRANSACTION Sicherungspunktname&quot; einen Sicherungspunkt erstellen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						Sicherungspunkten</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Sicherungspunkte bieten einen Mechanismus, um für Teile einer
+					Transaktion ein Rollback auszuführen. In SQL Server können Sie mit
+					der Anweisung "SAVE TRANSACTION Sicherungspunktname" einen
+					Sicherungspunkt erstellen. Später können Sie die Anweisung
+					"ROLLBACK TRANSACTION Sicherungspunktname" ausführen, um ein
+					Rollback bis zum Sicherungspunkt auszuführen, anstatt ein Rollback
+					bis zum Beginn der Transaktion auszuführen.</p>
+				<p>Sicherungspunkte sind in Situationen von Nutzen, wenn die
+					Wahrscheinlichkeit gering ist, dass Fehler auftreten. Die
+					Verwendung eines Sicherungspunkts, um bei einem selten auftretenden
+					Fehler für einen Teil der Transaktion ein Rollback auszuführen, ist
+					u. U. effizienter, als bei jeder Transaktion vor dem Ausführen
+					eines Updates zu ermitteln, ob ein Update zulässig ist. Updates und
+					Rollbacks sind teure Operationen. Sicherungspunkte sind daher nur
+					dann effektiv, wenn die Wahrscheinlichkeit des Fehlers gering ist
+					und die Kosten einer Vorabüberprüfung der Gültigkeit des Updates
+					relativ hoch sind.</p>
+				<p>
+					Microsoft JDBC Driver für SQL Server unterstützt die Verwendung von
+					Sicherungspunkten über die <a
+						href="c39c6b4f-b9e2-423b-94ae-9f82d9e6d08d.htm">setSavepoint</a>-Methode
+					der <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse.
+					Mit der <b>setSavepoint</b>-Methode können Sie in der aktuellen
+					Transaktion einen benannten oder unbenannten Sicherungspunkt
+					erstellen. Die Methode gibt ein <a
+						href="1ae7db7b-959f-4142-8d9f-aa427869c6ac.htm">SQLServerSavepoint</a>-Objekt
+					zurück. In einer Transaktion können mehrere Sicherungspunkte
+					erstellt werden. Um ein Rollback einer Transaktion bis zu einem
+					bestimmten Sicherungspunkt auszuführen, können Sie das <b>SQLServerSavepoint</b>-Objekt
+					an die <a href="d5dbd9ef-194f-4130-bfcc-7901a4fa8ded.htm">rollback</a>-Methode
+					(java.sql.Savepoint) übergeben.
+				</p>
+				<p>
+					Im folgenden Beispiel wird beim Ausführen einer lokalen Transaktion
+					mit zwei getrennten Anweisungen im <span class="code">try</span>-Block
+					ein Sicherungspunkt verwendet. Die Anweisungen werden für die
+					Production.ScrapReason-Tabelle in der SQL Server 2005
+					AdventureWorks-Beispieldatenbank ausgeführt. Für das Rollback der
+					zweiten Anweisung wird ein Sicherungspunkt verwendet. Dies führt
+					dazu, dass nur für die erste Anweisung ein Commit in der Datenbank
+					ausgeführt wird.
+				</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>public static void executeTransaction(Connection con) {
+   try {
+      con.setAutoCommit(false);
+      Statement stmt = con.createStatement();
+      stmt.executeUpdate("INSERT INTO Production.ScrapReason(Name) VALUES('Correct width')");
+      Savepoint save = con.setSavepoint();
+      stmt.executeUpdate("INSERT INTO Production.ScrapReason(Name) VALUES('Wrong width')");
+      con.rollback(save);
+      con.commit();
+      stmt.close();
+      System.out.println("Transaction succeeded.");
+   }
+   catch (SQLException ex) {
+      ex.printStackTrace();
+      try {
+         System.out.println("Transaction failed.");
+         con.rollback();
+      }
+      catch (SQLException se) {
+         se.printStackTrace();
+      }
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="afbb776f-05dc-4e79-bb25-2c340483e401.htm">Ausführen von
+							Transaktionen mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

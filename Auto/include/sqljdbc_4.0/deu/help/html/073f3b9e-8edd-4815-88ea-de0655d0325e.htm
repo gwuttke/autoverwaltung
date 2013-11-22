@@ -1,0 +1,437 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Grundlegendes zur SSL-Unterstützung</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verschlüsselung" />
+<meta name="System.Keywords" content="SSL" />
+<meta name="Microsoft.Help.Id"
+	content="073f3b9e-8edd-4815-88ea-de0655d0325e" />
+<meta name="Description"
+	content="Wenn die Anwendung beim Herstellen einer Verbindung mit SQL Server Verschlüsselung anfordert und die SQL Server-Instanz für die Unterstützung von SSL-Verschlüsselung konfiguriert ist, initialisiert Microsoft JDBC Driver für SQL Server den SSL-Handshake." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Grundlegendes zur
+						SSL-Unterstützung</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Wenn die Anwendung beim Herstellen einer Verbindung mit SQL
+					Server Verschlüsselung anfordert und die SQL Server-Instanz für die
+					Unterstützung von SSL-Verschlüsselung konfiguriert ist,
+					initialisiert Microsoft JDBC Driver für SQL Server den
+					SSL-Handshake. Mithilfe des Handshakes können der Server und der
+					Client die Verschlüsselungs- und Kryptografiealgorithmen
+					aushandeln, mit denen Daten geschützt werden sollen. Nachdem der
+					SSL-Handshake abgeschlossen wurde, können der Client und der Server
+					die verschlüsselten Daten sicher senden. Während des SSL-Handshakes
+					sendet der Server sein Zertifikat für öffentliche Schlüssel an den
+					Client. Der Aussteller eines Zertifikats für öffentliche Schlüssel
+					wird als Zertifizierungsstelle bezeichnet. Der Client ist dafür
+					verantwortlich zu überprüfen, ob der Client der
+					Zertifizierungsstelle vertraut.</p>
+				<p>Wenn die Anwendung keine Verschlüsselung anfordert, wird von
+					Microsoft JDBC Driver für SQL Server keine Unterstützung der
+					SSL-Verschlüsselung von SQL Server erzwungen. Wenn die SQL
+					Server-Instanz nicht für das Erzwingen der SSL-Verschlüsselung
+					konfiguriert ist, wird eine Verbindung ohne jegliche
+					Verschlüsselung hergestellt. Falls die SQL Server-Instanz für das
+					Erzwingen der SSL-Verschlüsselung konfiguriert ist, aktiviert der
+					Treiber automatisch die SSL-Verschlüsselung, wenn er auf einer
+					ordnungsgemäß konfigurierten Java Virtual Machine (JVM) ausgeführt
+					wird. Andernfalls wird die Verbindung getrennt, und der Treiber
+					löst einen Fehler aus.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Stellen Sie sicher, dass der an <span sdata="langKeyword"
+							value="serverName"><span class="keyword">serverName</span></span>
+						übergebene Name für eine erfolgreiche SSL-Verbindung exakt dem CN
+						(Common Name, allgemeiner Name) oder dem DNS-Namen im SAN (Subject
+						Alternate Name, Subjektalternativname) im Serverzertifikat
+						entspricht.
+					</p>
+				</div>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Weitere Informationen zum Konfigurieren von SSL für SQL
+						Server finden Sie im Thema zum Verschlüsseln von SQL
+						Server-Verbindungen in der SQL Server-Onlinedokumentation.</p>
+				</div>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Damit die SSL-Verschlüsselung von Anwendungen verwendet werden
+					kann, wurden mit der Version 1.2 von Microsoft JDBC Driver für SQL
+					Server die folgenden Verbindungseigenschaften eingeführt: <span
+						class="label">encrypt</span>, <span class="label">trustServerCertificate</span>,
+					<span class="label">trustStore</span>, <span class="label">trustStorePassword</span>
+					und <span class="label">hostNameInCertificate</span>. Weitere
+					Informationen finden Sie unter <span sdata="link"><a
+						href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen von
+							Verbindungseigenschaften</a></span>.
+				</p>
+				<p>In der folgenden Tabelle wird das Verhalten der Microsoft
+					JDBC Driver für SQL Server-Version in möglichen
+					SSL-Verbindungsszenarios zusammengefasst. In jedem Szenario wird
+					ein anderer Satz von SSL-Verbindungseigenschaften verwendet. Die
+					Tabelle schließt Folgendes ein:</p>
+				<ul>
+					<li><p>
+							<span sdata="langKeyword" value="blank"><span
+								class="keyword">blank</span></span>: "Die Eigenschaft ist in der
+							Verbindungszeichenfolge nicht enthalten."
+						</p></li>
+					<li><p>
+							<span sdata="langKeyword" value="value"><span
+								class="keyword">value</span></span>: "Die Eigenschaft ist in der
+							Verbindungszeichenfolge vorhanden, und ihr Wert ist gültig."
+						</p></li>
+					<li><p>
+							<span sdata="langKeyword" value="any"><span
+								class="keyword">any</span></span>: "Es ist nicht ausschlaggebend, ob
+							die Eigenschaft in der Verbindungszeichenfolge vorhanden oder ihr
+							Wert gültig ist."
+						</p></li>
+				</ul>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Das gleiche Verhalten trifft auf die SQL
+						Server-Benutzerauthentifizierung und die integrierte
+						Windows-Authentifizierung zu.</p>
+				</div>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>encrypt</p></th>
+							<th><p>trustServerCertificate</p></th>
+							<th><p>hostNameInCertificate</p></th>
+							<th><p>trustStore</p></th>
+							<th><p>trustStorePassword</p></th>
+							<th><p>Verhalten</p></th>
+						</tr>
+						<tr>
+							<td><p>false oder blank</p></td>
+							<td><p>any</p></td>
+							<td><p>any</p></td>
+							<td><p>any</p></td>
+							<td><p>any</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server erzwingt
+									keine Unterstützung der SSL-Verschlüsselung durch SQL Server.
+									Wenn der Server ein selbst signiertes Zertifikat aufweist,
+									initiiert der Treiber den SSL-Zertifikataustausch. Das
+									SSL-Zertifikat wird nicht überprüft, und nur die
+									Anmeldeinformationen (im Anmeldepaket) werden verschlüsselt.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch. Das SSL-Zertifikat wird nicht
+									überprüft, die gesamte Kommunikation wird jedoch verschlüsselt.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>true</p></td>
+							<td><p>any</p></td>
+							<td><p>any</p></td>
+							<td><p>any</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>
+									Wenn der Server erfordert, dass der Client SSL-Verschlüsselung
+									unterstützt oder der Server die Verschlüsselung unterstützt,
+									initiiert der Treiber den SSL-Zertifikataustausch. Wenn die <span
+										class="label">trustServerCertificate</span>-Eigenschaft auf
+									"true" festgelegt ist, überprüft der Treiber das SSL-Zertifikat
+									nicht.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet die in der Verbindungs-URL angegebene <span
+										class="label">serverName</span>-Eigenschaft, um das
+									SSL-Zertifikat des Servers zu überprüfen. Außerdem werden die
+									Suchregeln der Trust-Manager-Factory verwendet, um den zu
+									verwendenden Zertifikatspeicher zu ermitteln.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>value</p></td>
+							<td><p>blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber überprüft den Subject-Wert des SSL-Zertifikats
+									mithilfe des für die <span class="label">hostNameInCertificate</span>-Eigenschaft
+									angegebenen Werts.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>value</p></td>
+							<td><p>value</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStore</span>-Eigenschaftswert
+									zum Ermitteln der Zertifikatdatei <b>trustStore</b> und den <span
+										class="label">trustStorePassword</span>-Eigenschaftswert zum
+									Überprüfen der Integrität der Datei <b>trustStore</b>.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>value</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStorePassword</span>-Eigenschaftswert
+									zum Überprüfen der Integrität der Standarddatei <b>trustStore</b>.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>blank</p></td>
+							<td><p>value</p></td>
+							<td><p>blank</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStore</span>-Eigenschaftswert,
+									um den Speicherort der Datei <b>trustStore</b> zu ermitteln.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>value</p></td>
+							<td><p>blank</p></td>
+							<td><p>value</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStorePassword</span>-Eigenschaftswert
+									zum Überprüfen der Integrität der Standarddatei <b>trustStore</b>.
+									Außerdem verwendet der Treiber den <span class="label">hostNameInCertificate</span>-Eigenschaftswert,
+									um das SSL-Zertifikat zu überprüfen.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>value</p></td>
+							<td><p>value</p></td>
+							<td><p>blank</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStore</span>-Eigenschaftswert,
+									um den Speicherort der Datei <b>trustStore</b> zu ermitteln.
+									Außerdem verwendet der Treiber den <span class="label">hostNameInCertificate</span>-Eigenschaftswert,
+									um das SSL-Zertifikat zu überprüfen.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+						<tr>
+							<td><p>true</p></td>
+							<td><p>false oder blank</p></td>
+							<td><p>value</p></td>
+							<td><p>value</p></td>
+							<td><p>value</p></td>
+							<td><p>Microsoft JDBC Driver für SQL Server fordert die
+									Verwendung der SSL-Verschlüsselung mit SQL Server an.</p>
+								<p>Wenn der Server erfordert, dass der Client
+									SSL-Verschlüsselung unterstützt oder der Server die
+									Verschlüsselung unterstützt, initiiert der Treiber den
+									SSL-Zertifikataustausch.</p>
+								<p>
+									Der Treiber verwendet den <span class="label">trustStore</span>-Eigenschaftswert
+									zum Ermitteln der Zertifikatdatei <b>trustStore</b> und den <span
+										class="label">trustStorePassword</span>-Eigenschaftswert zum
+									Überprüfen der Integrität der Datei <b>trustStore</b>. Außerdem
+									verwendet der Treiber den <span class="label">hostNameInCertificate</span>-Eigenschaftswert,
+									um das SSL-Zertifikat zu überprüfen.
+								</p>
+								<p>Wenn der Server nicht für die Unterstützung der
+									Verschlüsselung konfiguriert ist, löst der Treiber einen Fehler
+									aus und trennt die Verbindung.</p></td>
+						</tr>
+					</table>
+				</div>
+				<p>
+					Wenn die encrypt-Eigenschaft auf <span sdata="langKeyword"
+						value="true"><span class="keyword">true</span></span> festgelegt
+					ist, verwendet Microsoft JDBC Driver für SQL Server den
+					JSSE-Standardsicherheitsanbieter der JVM, um die
+					SSL-Verschlüsselung mit SQL Server auszuhandeln. Der
+					Standardsicherheitsanbieter unterstützt möglicherweise nicht alle
+					erforderlichen Funktionen zum erfolgreichen Aushandeln der
+					SSL-Verschlüsselung. So ist es beispielsweise möglich, dass die im
+					SSL-Zertifikat für SQL Server verwendete Größe des öffentlichen
+					RSA-Schlüssels vom Standardsicherheitsanbieter nicht unterstützt
+					wird. In diesem Fall löst der Standardsicherheitsanbieter
+					möglicherweise einen Fehler aus, wodurch der JDBC-Treiber die
+					Verbindung trennt. Führen Sie zum Beheben dieses Problems eine der
+					folgenden Aktionen aus:
+				</p>
+				<ul>
+					<li><p>Konfigurieren Sie SQL Server mit einem
+							Serverzertifikat mit einem kleineren öffentlichen RSA-Schlüssel.</p></li>
+					<li><p>Konfigurieren Sie die JVM in der
+							Sicherheitseigenschaftendatei
+							"&lt;java-home&gt;/lib/security/java.security" für die Verwendung
+							eines anderen JSSE-Sicherheitsanbieters.</p></li>
+					<li><p>Verwenden Sie eine andere JVM</p></li>
+				</ul>
+			</div>
+			<h1 class="heading">Überprüfen des SSL-Serverzertifikats</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>Während des SSL-Handshakes sendet der Server sein Zertifikat
+					für öffentliche Schlüssel an den Client. Der JDBC-Treiber oder
+					Client muss überprüfen, ob das Serverzertifikat von einer
+					Zertifizierungsstelle herausgegeben wurde, der der Client vertraut.
+					Der Treiber erfordert, dass das Serverzertifikat die folgenden
+					Bedingungen erfüllt:</p>
+				<ul>
+					<li><p>Das Zertifikat wurde von einer vertrauenswürdigen
+							Zertifizierungsstelle ausgegeben.</p></li>
+					<li><p>Das Zertifikat muss für die Serverauthentifizierung
+							vorgesehen sein.</p></li>
+					<li><p>Das Zertifikat ist nicht abgelaufen.</p></li>
+					<li><p>
+							Der CN (Common Name) im Subjekt oder einem DNS-Namen im SAN
+							(Subject Alternate Name, Subjektalternativname) des Zertifikats
+							entspricht genau dem <span sdata="langKeyword" value="serverName"><span
+								class="keyword">serverName</span></span>-Wert, der in der
+							Verbindungszeichenfolge angegeben ist, oder – falls angegeben –
+							dem <span sdata="langKeyword" value="hostNameInCertificate"><span
+								class="keyword">hostNameInCertificate</span></span>-Eigenschaftenwert.
+						</p></li>
+					<li><p>Ein DNS-Name kann Platzhalterzeichen enthalten.
+							Microsoft JDBC Driver für SQL Server unterstützt jedoch keine
+							Suchvorgänge mit Platzhalterzeichen. Das heißt, "abc.com"
+							entspricht nicht "*.com", während "*.com" jedoch "*.com"
+							entspricht.</p></li>
+				</ul>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="8e566243-2f93-4b21-8065-3c8336649309.htm">Verwenden der
+							SSL-Verschlüsselung</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

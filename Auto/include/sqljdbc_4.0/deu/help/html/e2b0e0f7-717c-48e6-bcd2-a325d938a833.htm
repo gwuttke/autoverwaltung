@@ -1,0 +1,490 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>getFunctionColumns-Methode (SQLServerDatabaseMetaData)</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords"
+	content="SQLServerDatabaseMetaData.getFunctionColumns-Methode" />
+<meta name="Microsoft.Help.Id"
+	content="e2b0e0f7-717c-48e6-bcd2-a325d938a833" />
+<meta name="Description"
+	content="Ruft eine Beschreibung der System- oder Benutzerfunktionsparameter des angegebenen Katalogs sowie den Rückgabetyp ab." />
+<meta name="Microsoft.Help.ContentType" content="Reference" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">getFunctionColumns-Methode
+						(SQLServerDatabaseMetaData)</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Ruft eine Beschreibung der System- oder
+					Benutzerfunktionsparameter des angegebenen Katalogs sowie den
+					Rückgabetyp ab.</p>
+			</div>
+			<h1 class="heading">Syntax</h1>
+			<div id="syntaxSection" class="section">
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>
+public ResultSet <b>getFunctionColumns</b>(java.lang.String <span
+								class="parameter" sdata="paramReference">catalog</span>,
+                       java.lang.String <span class="parameter"
+								sdata="paramReference">schemaPattern</span>,
+                       java.lang.String <span class="parameter"
+								sdata="paramReference">functionNamePattern</span>
+                       java.lang.String <span class="parameter"
+								sdata="paramReference">columnNamePattern</span>)</pre></span>
+				</div>
+			</div>
+			<h1 class="heading">Parameter</h1>
+			<div id="parametersSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					<span class="parameter" sdata="paramReference">catalog</span>
+				</p>
+				<p>
+					Ein <span sdata="langKeyword" value="String"><span
+						class="keyword">String</span></span> mit dem Katalognamen. Bei einer
+					leeren Zeichenfolge ("") enthält das Ergebnis die Funktionen ohne
+					einen Katalog. Bei <span sdata="langKeyword" value="null"><span
+						class="keyword">null</span></span> wird der Katalogname nicht für die
+					Suche verwendet.
+				</p>
+				<p>
+					<span class="parameter" sdata="paramReference">schemaPattern</span>
+				</p>
+				<p>
+					Ein <span sdata="langKeyword" value="String"><span
+						class="keyword">String</span></span> mit dem Schemanamenmuster. Bei einer
+					leeren Zeichenfolge ("") enthält das Ergebnis die Funktionen ohne
+					ein Schema. Bei <span sdata="langKeyword" value="null"><span
+						class="keyword">null</span></span> wird der Schemaname nicht für die
+					Suche verwendet.
+				</p>
+				<p>
+					<span class="parameter" sdata="paramReference">functionNamePattern</span>
+				</p>
+				<p>
+					Ein <span sdata="langKeyword" value="String"><span
+						class="keyword">String</span></span> mit dem Namen einer Funktion.
+				</p>
+				<p>
+					<span class="parameter" sdata="paramReference">columnNamePattern</span>
+				</p>
+				<p>
+					Ein <span sdata="langKeyword" value="String"><span
+						class="keyword">String</span></span> mit dem Namen eines Parameters.
+				</p>
+			</div>
+			<h1 class="heading">Rückgabewert</h1>
+			<div id="returnValueSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Ein <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekt.
+				</p>
+			</div>
+			<h1 class="heading">Ausnahmen</h1>
+			<div id="ddueExceptionsSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					<a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+				</p>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="languageReferenceRemarksSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Diese <b>getFunctionColumns</b>-Methode wird von der <b>getFunctionColumns</b>-Methode
+					in der java.sql.DatabaseMetaData-Schnittstelle angegeben.
+				</p>
+				<p>Von dieser Methode werden nur die Funktionen und Parameter
+					zurückgegeben, die dem angegebenen Schema, Funktions- und
+					Parameternamen innerhalb des angegebenen Katalogs entsprechen.</p>
+				<p>Jede Zeile im Resultset enthält die folgenden Spalten für
+					eine Parameterbeschreibung, eine Spaltenbeschreibung oder einen
+					Rückgabetyp:</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Name</p></th>
+							<th><p>Typ</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>FUNCTION_CAT</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name der Datenbank, in der die Funktion
+									gespeichert ist.</p></td>
+						</tr>
+						<tr>
+							<td><p>FUNCTION_SCHEM</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Das Schema für die Funktion.</p></td>
+						</tr>
+						<tr>
+							<td><p>FUNCTION_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name der Funktion.</p></td>
+						</tr>
+						<tr>
+							<td><p>COLUMN_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name eines Parameters oder einer Spalte.</p></td>
+						</tr>
+						<tr>
+							<td><p>COLUMN_TYPE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="short"><span
+										class="keyword">short</span></span>
+								</p></td>
+							<td><p>Der Typ der Spalte. Mögliche Werte:</p>
+								<ul>
+									<li><p>functionColumnUnknown (0): Unbekannter Typ</p></li>
+									<li><p>functionColumnIn (1): Eingabeparameter</p></li>
+									<li><p>functionColumnInOut (2):
+											Eingabe-/Ausgabeparameter</p></li>
+									<li><p>functionColumnOut (3): Ausgabeparameter</p></li>
+									<li><p>functionReturn (4): Funktionsrückgabewert</p></li>
+									<li><p>functionColumnResult (5): Ein Parameter oder
+											eine Spalte ist eine Spalte im Resultset.</p></li>
+								</ul></td>
+						</tr>
+						<tr>
+							<td><p>DATA_TYPE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="smallint"><span
+										class="keyword">smallint</span></span>
+								</p></td>
+							<td><p>
+									Der SQL-Datentypwert aus <b>Java.sql.Types</b>.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>TYPE_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Datentyps.</p></td>
+						</tr>
+						<tr>
+							<td><p>PRECISION</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="int"><span
+										class="keyword">int</span></span>
+								</p></td>
+							<td><p>Die Gesamtanzahl von signifikanten Stellen.</p></td>
+						</tr>
+						<tr>
+							<td><p>LENGTH</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="int"><span
+										class="keyword">int</span></span>
+								</p></td>
+							<td><p>Die Länge der Daten in Bytes.</p></td>
+						</tr>
+						<tr>
+							<td><p>SCALE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="short"><span
+										class="keyword">short</span></span>
+								</p></td>
+							<td><p>Die Anzahl von Stellen rechts des
+									Dezimalzeichens.</p>
+								<p /></td>
+						</tr>
+						<tr>
+							<td><p>RADIX</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="short"><span
+										class="keyword">short</span></span>
+								</p></td>
+							<td><p>Die Basis für numerische Typen.</p></td>
+						</tr>
+						<tr>
+							<td><p>NULLABLE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="short"><span
+										class="keyword">short</span></span>
+								</p></td>
+							<td><p>
+									Gibt an, ob der Parameter- oder Rückgabewert einen <span
+										sdata="langKeyword" value="null"><span class="keyword">null</span></span>-Wert
+									enthalten kann.
+								</p>
+								<p>Mögliche Werte:</p>
+								<ul>
+									<li><p>functionNoNulls (0): NULL-Wert ist nicht
+											zulässig.</p></li>
+									<li><p>functionNullable (1): NULL-Wert ist zulässig.</p></li>
+									<li><p>functionNullableUnknown (2): Unbekannt</p></li>
+								</ul></td>
+						</tr>
+						<tr>
+							<td><p>REMARKS</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Die Kommentare zu einer Spalte oder einem
+									Parameter.</p></td>
+						</tr>
+						<tr>
+							<td><p>COLUMN_DEF</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Standardwert der Spalte.</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>Diese Angabe ist in SQL Server verfügbar und
+										JDBC-Treiber-spezifisch.</p>
+								</div></td>
+						</tr>
+						<tr>
+							<td><p>SQL_DATA_TYPE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="smallint"><span
+										class="keyword">smallint</span></span>
+								</p></td>
+							<td><p>
+									Diese Spalte entspricht (mit Ausnahme der Datentypen <span
+										sdata="langKeyword" value="datetime"><span
+										class="keyword">datetime</span></span> und ISO <span
+										sdata="langKeyword" value="interval"><span
+										class="keyword">interval</span></span>) der <span sdata="langKeyword"
+										value="DATA_TYPE"><span class="keyword">DATA_TYPE</span></span>-Spalte.
+								</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>Diese Angabe ist in SQL Server verfügbar und
+										JDBC-Treiber-spezifisch.</p>
+								</div></td>
+						</tr>
+						<tr>
+							<td><p>SQL_DATETIME_SUB</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="smallint"><span
+										class="keyword">smallint</span></span>
+								</p></td>
+							<td><p>
+									Der Subcode für <span sdata="langKeyword" value="datetime"><span
+										class="keyword">datetime</span></span> ISO <span sdata="langKeyword"
+										value="interval"><span class="keyword">interval</span></span>,
+									wenn der Wert von <span sdata="langKeyword"
+										value="SQL_DATA_TYPE"><span class="keyword">SQL_DATA_TYPE</span></span>
+									dem Wert <span sdata="langKeyword" value="SQL_DATETIME"><span
+										class="keyword">SQL_DATETIME</span></span> oder <span
+										sdata="langKeyword" value="SQL_INTERVAL"><span
+										class="keyword">SQL_INTERVAL</span></span> entspricht. Bei allen
+									anderen Datentypen außer <span sdata="langKeyword"
+										value="datetime"><span class="keyword">datetime</span></span>
+									und ISO <span sdata="langKeyword" value="interval"><span
+										class="keyword">interval</span></span> ist diese Spalte NULL.
+								</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>Diese Angabe ist in SQL Server verfügbar und
+										JDBC-Treiber-spezifisch.</p>
+								</div></td>
+						</tr>
+						<tr>
+							<td><p>CHAR_OCTET_LENGTH</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="int"><span
+										class="keyword">int</span></span>
+								</p></td>
+							<td><p>Die maximale Länge von binären oder
+									zeichenbasierten Parametern oder Spalten. Für andere Datentypen
+									ist der Wert NULL.</p></td>
+						</tr>
+						<tr>
+							<td><p>ORDINAL_POSITION</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="int"><span
+										class="keyword">int</span></span>
+								</p></td>
+							<td><p>Stellt für Eingabe- und Ausgabeparameter die
+									Position (beginnend mit "1") dar.</p>
+								<p>Für Resultsetspalten handelt es sich hierbei um die
+									Position der Spalte im Resultset. Beginn ist der Wert "1".</p>
+								<p>Für den Rückgabewert ist der Wert "0".</p></td>
+						</tr>
+						<tr>
+							<td><p>IS_NULLABLE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Bestimmt die NULL-Zulässigkeit eines Parameters
+									oder einer Spalte.</p>
+								<p>Mögliche Werte:</p>
+								<p>
+									<span sdata="langKeyword" value="YES"><span
+										class="keyword">YES</span></span>: Der Parameter oder die Spalte kann
+									NULL-Werte enthalten.
+								</p>
+								<p>
+									<span sdata="langKeyword" value="NO"><span
+										class="keyword">NO</span></span>: Der Parameter oder die Spalte kann
+									keine NULL-Werte enthalten.
+								</p>
+								<p>Leere Zeichenfolge (""): Unbekannt</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_TYPE_CATALOG_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Katalogs, der den
+									benutzerdefinierten Typ (UDT) enthält.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_TYPE_SCHEMA_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Schemas, der den benutzerdefinierten
+									Typ (UDT) enthält.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_UDT_CATALOG_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der benutzerdefinierte Typ (UDT) für den
+									vollqualifizierten Namen.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_UDT_SCHEMA_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Katalogs, in dem eine
+									XML-Schemaauflistung definiert ist. Wenn der Katalogname nicht
+									gefunden werden kann, enthält diese Variable eine leere
+									Zeichenfolge.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_UDT_ASSEMBLY_TYPE_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Schemas, in dem eine
+									XML-Schemaauflistung definiert ist. Wenn der Schemaname nicht
+									gefunden werden kann, handelt es sich dabei um eine leere
+									Zeichenfolge.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_XML_SCHEMACOLLECTION_CATALOG_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Name der XML-Schemaauflistung. Wenn der
+									Schemaname nicht gefunden werden kann, handelt es sich dabei um
+									eine leere Zeichenfolge.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_XML_SCHEMACOLLECTION_SCHEMA_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Katalogs, der den
+									benutzerdefinierten Typ (UDT) enthält.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_XML_SCHEMACOLLECTION_NAME</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="String"><span
+										class="keyword">String</span></span>
+								</p></td>
+							<td><p>Der Name des Schemas, der den benutzerdefinierten
+									Typ (UDT) enthält.</p></td>
+						</tr>
+						<tr>
+							<td><p>SS_DATA_TYPE</p></td>
+							<td><p>
+									<span sdata="langKeyword" value="tinyint"><span
+										class="keyword">tinyint</span></span>
+								</p></td>
+							<td><p>Der SQL Server-Datentyp, der von erweiterten
+									gespeicherten Prozeduren verwendet wird.</p>
+								<p>
+									<span class="label">Hinweis</span>   Weitere Informationen zu
+									den Datentypen, die von SQL Server zurückgegeben werden, finden
+									Sie in der SQL Server-Onlinedokumentation unter "Datentypen
+									(Transact-SQL)".
+								</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="8b8049d0-8c6d-4476-866b-098709f37eec.htm">SQLServerDatabaseMetaData-Klasse</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="327ba0bc-438a-494c-b119-1cd4a096bb58.htm">SQLServerDatabaseMetaData-Elemente</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

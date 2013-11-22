@@ -1,0 +1,325 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Erstellen der Verbindungs-URL</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verbindungs-URL" />
+<meta name="Microsoft.Help.Id"
+	content="44996746-d373-4f59-9863-a8a20bb8024a" />
+<meta name="Description"
+	content="Die allgemeine Form der Verbindungs-URL lautet:" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Erstellen der
+						Verbindungs-URL</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Die allgemeine Form der Verbindungs-URL lautet:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]</span>
+				</p>
+				<p>wobei:</p>
+				<ul>
+					<li><p>
+							<span class="label">jdbc:sqlserver://</span> (erforderlich) als
+							Subprotokoll bezeichnet wird und konstant ist.
+						</p></li>
+					<li><p>
+							<span class="label">serverName</span> (optional) die Adresse des
+							Servers, darstellt, zu dem eine Verbindung hergestellt werden
+							soll. Dabei kann es sich um eine DNS- oder IP-Adresse bzw.
+							"localhost" oder "127.0.0.1" für den lokalen Computer handeln.
+							Wenn der Servername nicht in der Verbindungs-URL angegeben wird,
+							muss er in der properties-Auflistung angegeben werden.
+						</p></li>
+					<li><p>
+							<span class="label">instanceName</span> (optional) bezeichnet die
+							Instanz auf "serverName", zu der eine Verbindung hergestellt
+							werden soll. Ohne Angabe wird eine Verbindung zur Standardinstanz
+							erstellt.
+						</p></li>
+					<li><p>
+							<span class="label">portNumber</span> (optional) bezeichnet den
+							Port auf "serverName", zu dem eine Verbindung hergestellt werden
+							soll. Der Standardwert ist "1433". Bei Verwendung des
+							Standardwerts müssen der Port und der vorangestellte Doppelpunkt
+							(":") in der URL nicht angegeben werden.
+						</p>
+						<div style="margin: .5em 1.5em .5em 1.5em">
+							<b></b>
+							<p>Um eine optimale Leistung der Verbindung zu gewährleisten,
+								sollten Sie "portNumber" festlegen, wenn Sie eine Verbindung zu
+								einer benannten Instanz herstellen. Dadurch werden Roundtrips
+								zum Server vermieden, um die Portnummer zu ermitteln. Wenn
+								"portNumber" und "instanceName" verwendet werden, hat
+								"portNumber" Vorrang und "instanceName" wird ignoriert.</p>
+						</div></li>
+					<li><p>
+							<span class="label">property</span> (optional) ist mindestens
+							eine optionale Verbindungseigenschaft. Weitere Informationen
+							finden Sie unter <span sdata="link"><a
+								href="f1b62700-f046-488d-bd6b-a5cd8fc345b7.htm">Festlegen
+									von Verbindungseigenschaften</a></span>. Sie können eine beliebige
+							Eigenschaft aus der Liste angeben. Mehrere Eigenschaften müssen
+							durch ein Semikolon (';') getrennt werden und dürfen nicht
+							doppelt vorkommen.
+						</p></li>
+				</ul>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Aus Sicherheitsgründen sollten Sie es vermeiden, die
+						Verbindungs-URLs basierend auf Benutzereingaben zu erstellen. Sie
+						sollten in der URL lediglich Servername und Treiber angeben.
+						Verwenden Sie für Werte von Benutzernamen und Kennwörtern die
+						properties-Auflistungen für Verbindungen. Weitere Informationen
+						zur Sicherheit in JDBC-Anwendungen finden Sie unter <span
+							sdata="link"><a
+							href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+								JDBC-Treiberanwendungen</a></span>.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Verbindungsbeispiele</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Herstellen einer Verbindung zur Standarddatenbank auf dem
+					lokalen Computer mit Benutzername und Kennwort:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost;user=MyUserName;password=*****;</span>
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Obwohl im vorherigen Beispiel in der Verbindungszeichenfolge ein
+						Benutzername und ein Kennwort verwendet werden, sollten Sie
+						aufgrund der höheren Sicherheit die integrierte Sicherheit
+						verwenden, wenn die Anwendung auf einem Windows-Betriebssystem
+						ausgeführt wird. Weitere Informationen finden Sie im Abschnitt <a
+							href="#Connectingintegrated">Herstellen einer Verbindung mit
+							integrierter Authentifizierung</a> weiter unten in diesem Thema.
+					</p>
+				</div>
+				<p>Herstellen einer Verbindung zur Standarddatenbank auf dem
+					lokalen Computer mit integrierter Authentifizierung:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost;integratedSecurity=true;</span>
+				</p>
+				<p>Herstellen einer Verbindung zu einer benannten Datenbank auf
+					einem Remoteserver:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost;databaseName=AdventureWorks;integratedSecurity=true;</span>
+				</p>
+				<p>Herstellen einer Verbindung zum Standardport auf dem
+					Remoteserver:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true;</span>
+				</p>
+				<p>Herstellen einer Verbindung mit Angabe eines angepassten
+					Anwendungsnamens:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost;databaseName=AdventureWorks;integratedSecurity=true;applicationName=MyApp;</span>
+				</p>
+			</div>
+			<h1 class="heading">Benannte und mehrere SQL Server-Instanzen</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>
+					SQL Server lässt die Installation mehrerer Datenbankinstanzen auf
+					einem Server zu. Jede Instanz wird durch einen bestimmten Namen
+					gekennzeichnet. Um eine Verbindung zu einer benannten Instanz von
+					SQL Server herzustellen, können Sie entweder die Portnummer der
+					benannten Instanz angeben (vorzugsweise) oder den Instanznamen als
+					JDBC-URL-Eigenschaft oder <span class="label">datasource</span>-Eigenschaft
+					angeben. Wenn keine Eigenschaft für Instanzname oder Portnummer
+					angegeben wurde, wird eine Verbindung zur Standardinstanz erstellt.
+					Siehe dazu folgende Beispiele:
+				</p>
+				<p>Gehen Sie folgendermaßen vor, wenn eine Portnummer verwendet
+					werden soll:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost:1433;integratedSecurity=true;&lt;more
+						properties as required&gt;;</span>
+				</p>
+				<p>Gehen Sie folgendermaßen vor, wenn eine JDBC-URL-Eigenschaft
+					verwendet werden soll:</p>
+				<p>
+					<span class="code">jdbc:sqlserver://localhost;instanceName=instance1;integratedSecurity=true;&lt;more
+						properties as required&gt;;</span>
+				</p>
+			</div>
+			<h1 class="heading">Maskieren von Werten in der Verbindungs-URL</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>Eventuell müssen Sie bestimmte Teile von Werten der
+					Verbindungs-URL aufgrund enthaltener Sonderzeichen wie Leerzeichen,
+					Semikolons und Anführungszeichen maskieren. Der JDBC-Treiber
+					unterstützt die Maskierung dieser Zeichen, indem sie in geschweifte
+					Klammern gesetzt werden. So maskiert {;} beispielsweise ein
+					Semikolon.</p>
+				<p>Maskierte Werte können Sonderzeichen enthalten (insbesondere
+					'=', ';', '[]' und Leerzeichen), dürfen aber keine geschweiften
+					Klammern enthalten. Werte, die maskiert werden müssen und
+					geschweifte Klammern enthalten, müssen zu einer
+					properties-Auflistung hinzugefügt werden.</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Leerräume innerhalb der Klammern sind literal und werden
+						nicht gekürzt.</p>
+				</div>
+			</div>
+			<a name="Connectingintegrated"> </a>
+			<h1 class="heading">Herstellen einer Verbindung mit integrierter
+				Authentifizierung</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Unter <span sdata="link"><a
+						href="687802dc-042a-4363-89aa-741685d165b3.htm">Herstellen von
+							Verbindungen mit SQL Server mit der integrierten
+							Kerberos-Authentifizierung</a></span> finden Sie die Beschreibung einer in
+					Microsoft JDBC Driver für SQL Server eingeführten Funktion, durch
+					die Anwendungen mithilfe der integrierten Authentifizierung
+					Verbindungen mit einer Datenbank herstellen können.
+				</p>
+				<p>
+					Der JDBC-Treiber unterstützt über die
+					integratedSecurity-Verbindungszeichenfolgeneigenschaft die
+					Verwendung der integrierten Authentifizierung vom Typ 2 auf
+					Windows-Betriebssystemen. Wenn Sie die integrierte
+					Authentifizierung verwenden möchten, müssen Sie die Datei <b>sqljdbc_auth.dll</b>
+					in ein Verzeichnis im Windows-Systempfad des Computers kopieren,
+					auf dem der JDBC-Treiber installiert ist.
+				</p>
+				<p>
+					Die <b>sqljdbc_auth.dll</b>-Dateien werden im folgenden Pfad
+					installiert:
+				</p>
+				<p>
+					&lt;<span class="placeholder">installation directory</span>&gt;\sqljdbc_&lt;<span
+						class="placeholder">version</span>&gt;\&lt;<span
+						class="placeholder">language</span>&gt;\auth\
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn Sie eine 32-Bit-JVM (Java Virtual Machine) ausführen,
+						verwenden Sie die Datei <b>sqljdbc_auth.dll</b> im Ordner <b>x86</b>,
+						auch wenn es sich bei dem Betriebssystem um die x64-Version
+						handelt. Wenn Sie eine 64-Bit-JVM mit einem x64-Prozessor
+						ausführen, verwenden Sie die Datei <b>sqljdbc_auth.dll</b> im
+						Ordner <b>x64</b>.
+					</p>
+				</div>
+				<p>
+					Alternativ können Sie mit der java.libary.path-Systemeigenschaft
+					das Verzeichnis von <b>sqljdbc_auth.dll</b> angeben. Wenn der
+					JDBC-Treiber beispielsweise im Standardverzeichnis installiert ist,
+					können Sie den Speicherort der DLL beim Start der Java-Anwendung
+					mit dem folgenden VM-Argument (Virtual Machine) angeben:
+				</p>
+				<p>
+					<span class="code">-Djava.library.path=C:\Microsoft JDBC
+						Driver 4.0 for SQL Server\sqljdbc_&lt;version&gt;\enu\auth\x86</span>
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Der JDBC-Treiber unterstützt die Verwendung der integrierten
+						Authentifizierung nicht, wenn der Treiber nicht unter einem
+						Windows-Betriebssystem ausgeführt wird. Er bietet beim Herstellen
+						einer Verbindung mit SQL Server von einem Betriebssystem, das kein
+						Windows-Betriebssystem ist, auch keine Funktionen zur
+						Bereitstellung von Anmeldeinformationen für die
+						Windows-Authentifizierung wie Benutzername und Kennwort. In diesen
+						Fällen müssen Anwendungen stattdessen die SQL
+						Server-Authentifizierung verwenden.</p>
+				</div>
+			</div>
+			<h1 class="heading">Herstellen von Verbindungen mit
+				IPv6-Adressen</h1>
+			<div id="sectionSection4" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Der JDBC-Treiber unterstützt die Verwendung von IPv6-Adressen in
+					der properties-Auflistung der Verbindung und in der
+					serverName-Eigenschaft der Verbindungszeichenfolge. Der
+					ursprüngliche serverName-Wert wie "jdbc:<span class="placeholder">sqlserver</span>://<span
+						class="placeholder">serverName</span>" wird in
+					Verbindungszeichenfolgen nicht für IPv6-Adressen unterstützt. Für <span
+						class="placeholder">serverName</span> kann in allen Fällen anstatt
+					einer IPv6-Adresse problemlos ein Name in der Verbindung verwendet
+					werden. Die folgenden Beispiele enthalten weitere Informationen.
+				</p>
+				<p>
+					<span class="label">So verwenden Sie die
+						serverName-Eigenschaft:</span>
+				</p>
+				<p>
+					<span class="code">jdbc:sqlserver://;serverName=3ffe:8311:eeee:f70f:0:5eae:10.203.31.9\\instance1;integratedSecurity=true;</span>
+				</p>
+				<p>
+					<span class="label">So verwenden Sie die
+						properties-Auflistung:</span>
+				</p>
+				<p>
+					<span class="code">Properties pro = new Properties();</span>
+				</p>
+				<p>
+					<span class="code">pro.setProperty("serverName",
+						"serverName=3ffe:8311:eeee:f70f:0:5eae:10.203.31.9\\instance1");</span>
+				</p>
+				<p>
+					<span class="code">Connection con =
+						DriverManager.getConnection("jdbc:sqlserver://;integratedSecurity=true;",
+						pro);</span>
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Verbinden von
+							SQL Server mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

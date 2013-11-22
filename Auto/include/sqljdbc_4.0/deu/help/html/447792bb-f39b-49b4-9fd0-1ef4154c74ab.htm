@@ -1,0 +1,196 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Systemanforderungen für den JDBC-Treiber</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Systemanforderungen" />
+<meta name="Microsoft.Help.Id"
+	content="447792bb-f39b-49b4-9fd0-1ef4154c74ab" />
+<meta name="Description"
+	content="Für den Zugriff auf Daten einer SQL Server-Datenbank mit Microsoft JDBC Driver für SQL Server müssen die folgenden Komponenten auf dem Computer installiert sein:" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Systemanforderungen
+						für den JDBC-Treiber</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Für den Zugriff auf Daten einer SQL Server-Datenbank mit
+					Microsoft JDBC Driver für SQL Server müssen die folgenden
+					Komponenten auf dem Computer installiert sein:</p>
+				<ul>
+					<li><p>Microsoft JDBC Driver für SQL Server</p></li>
+					<li><p>Java Runtime Environment (JRE)</p></li>
+				</ul>
+			</div>
+			<h1 class="heading">JRE-Anforderungen</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Seit der Einführung von Microsoft JDBC Driver für SQL Server
+					wurde die JDBC-Treiberunterstützung für die API der JDBC (Java
+					Database Connectivity)-Spezifikation um die JDBC 4.0-API erweitert.
+					JDBC 4.0 wurde als Bestandteil von Sun JDK (Java SE Development
+					Kit) 6.0 und JRE (Java Runtime Environment) 6.0 eingeführt. JDBC
+					4.0 ist eine Obermenge von JDBC 3.0.</p>
+				<p>Microsoft JDBC Driver für SQL Server unterstützt sowohl JDBC
+					3.0 als auch JDBC 4.0.</p>
+				<p>
+					Wenn Sie Microsoft JDBC Driver für SQL Server auf Windows- und
+					UNIX-Betriebssystemen bereitstellen, müssen Sie die
+					Installationspakete <i>sqljdbc_&lt;Version&gt;_enu.exe</i> bzw. <i>sqljdbc_&lt;Version&gt;_enu.tar.gz</i>
+					verwenden. Weitere Informationen zum Bereitstellen von JDBC Driver
+					finden Sie unter dem Thema <span sdata="link"><a
+						href="3ad3508d-d9b1-47fb-a63b-21cdc3ed44e0.htm">Bereitstellen
+							des JDBC-Treibers</a></span>.
+				</p>
+				<p>
+					Aus Gründen der Abwärtskompatibilität und zur Unterstützung
+					möglicher Upgradeszenarios enthält JDBC Driver in jedem
+					Installationspaket zwei JAR-Klassenbibliotheken: <span
+						sdata="langKeyword" value="sqljdbc.jar"><span
+						class="keyword">sqljdbc.jar</span></span> und <span sdata="langKeyword"
+						value="sqljdbc4.jar"><span class="keyword">sqljdbc4.jar</span></span>.
+				</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>JAR</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>sqljdbc.jar</p></td>
+							<td><p>
+									Die <span sdata="langKeyword" value="sqljdbc.jar"><span
+										class="keyword">sqljdbc.jar</span></span>-Klassenbibliothek stellt
+									die JDBC 3.0-Unterstützung bereit.
+								</p>
+								<p>
+									Die <span sdata="langKeyword" value="sqljdbc.jar"><span
+										class="keyword">sqljdbc.jar</span></span>-Klassenbibliothek erfordert
+									JRE (Java Runtime Environment), Version 5.0. Beim Verwenden von
+									<span sdata="langKeyword" value="sqljdbc.jar"><span
+										class="keyword">sqljdbc.jar</span></span> für JRE 6.0 wird beim
+									Herstellen einer Verbindung mit einer Datenbank eine Ausnahme
+									ausgelöst.
+								</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>Der JDBC-Treiber unterstützt JRE 1.4 nicht. Sie müssen
+										ein Upgrade von JRE 1.4 auf JRE 5.0 oder JRE 6.0 ausführen,
+										wenn Sie den JDBC-Treiber verwenden. In bestimmten Fällen
+										müssen Sie die Anwendung neu kompilieren, da sie
+										möglicherweise nicht mit JDK 5.0 oder höher kompatibel ist.
+										Weitere Informationen finden Sie in der Dokumentation auf der
+										Sun Microsystems-Website.</p>
+								</div></td>
+						</tr>
+						<tr>
+							<td><p>sqljdbc4.jar</p></td>
+							<td><p>
+									Die <span sdata="langKeyword" value="sqljdbc4.jar"><span
+										class="keyword">sqljdbc4.jar</span></span>-Klassenbibliothek stellt
+									die JDBC 4.0-Unterstützung bereit. Sie umfasst alle Funktionen
+									von <span sdata="langKeyword" value="sqljdbc.jar"><span
+										class="keyword">sqljdbc.jar</span></span> sowie die neuen JDBC
+									4.0-Methoden.
+								</p>
+								<p>
+									Die <span sdata="langKeyword" value="sqljdbc4.jar"><span
+										class="keyword">sqljdbc4.jar</span></span>-Klassenbibliothek
+									erfordert JRE (Java Runtime Environment), Version 6.0. Beim
+									Verwenden von <span sdata="langKeyword" value="sqljdbc4.jar"><span
+										class="keyword">sqljdbc4.jar</span></span> für JRE 1.4 oder 5.0 wird
+									eine Ausnahme ausgelöst.
+								</p>
+								<div style="margin: .5em 1.5em .5em 1.5em">
+									<b></b>
+									<p>
+										Verwenden Sie <span sdata="langKeyword" value="sqljdbc4.jar"><span
+											class="keyword">sqljdbc4.jar</span></span>, wenn die Anwendung unter
+										JRE 6.0 ausgeführt werden muss, auch wenn die Anwendung keine
+										JDBC 4.0-Funktionen verwendet.
+									</p>
+								</div></td>
+						</tr>
+					</table>
+				</div>
+				<p>Beachten Sie, dass der JDBC-Treiber zwar für die Verwendung
+					mit und die Unterstützung von allen wichtigen Sun-kompatiblen
+					Java-VMs (Virtual Machines) ausgelegt ist, aber mit Sun JRE 5.0
+					oder höher getestet wird.</p>
+			</div>
+			<h1 class="heading">SQL Server-Anforderungen</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>Der JDBC-Treiber unterstützt Verbindungen mit SQL Server 2005
+					und höheren Versionen.</p>
+			</div>
+			<h1 class="heading">Betriebssystemanforderungen</h1>
+			<div id="sectionSection2" class="section" name="collapseableSection"
+				style="">
+				<p>Der JDBC-Treiber ist für alle Betriebssysteme ausgelegt, die
+					die Verwendung einer JVM (Java Virtual Machine) unterstützen.
+					Allerdings wurden nur die Betriebssysteme Sun Solaris, SUSE Linux,
+					Windows Vista und Windows 7 offiziell getestet.</p>
+			</div>
+			<h1 class="heading">Unterstützte Sprachen</h1>
+			<div id="sectionSection3" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Der JDBC-Treiber unterstützt alle SQL Server-Spaltensortierungen.
+					Weitere Informationen zu den vom JDBC-Treiber unterstützten
+					Sortierungen finden Sie unter <span sdata="link"><a
+						href="bbb74a1d-9278-401f-9530-7b5f45aa79de.htm">Internationale
+							Funktionen des JDBC-Treibers</a></span>.
+				</p>
+				<p>Weitere Informationen zu Sortierungen finden Sie unter
+					"Arbeiten mit Sortierungen" in der SQL Server-Onlinedokumentation.</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="939a8773-2583-49a4-bf00-6b892fbe39dc.htm">Übersicht über
+							den JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von gespeicherten Prozeduren ohne Parameter</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="e9470a6d-a758-4c56-96ec-7b37139e36a7" />
+<meta name="Description"
+	content="Die einfachste Art einer gespeicherten SQL Server-Prozedur, die aufgerufen werden kann, enthält keine Parameter und gibt ein einziges Resultset zurück." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						gespeicherten Prozeduren ohne Parameter</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Die einfachste Art einer gespeicherten SQL Server-Prozedur, die
+					aufgerufen werden kann, enthält keine Parameter und gibt ein
+					einziges Resultset zurück. Microsoft JDBC Driver für SQL Server
+					enthält die <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse,
+					mit der Sie diese Art von gespeicherter Prozedur aufrufen und die
+					zurückgegebenen Daten verarbeiten können. 
+				</p>
+				<p>
+					Wenn Sie mit dem JDBC-Treiber eine gespeicherte Prozedur ohne
+					Parameter aufrufen möchten, müssen Sie die<span class="code">
+						call </span>-SQL-Escapesequenz verwenden. Die Syntax für die<span
+						class="code"> call </span>-Escapesequenz ohne Parameter lautet wie
+					folgt:
+				</p>
+				<p>
+					<span class="code">{call procedure-name}</span>
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Weitere Informationen zu SQL-Escapesequenzen finden Sie unter <span
+							sdata="link"><a
+							href="00f9e25a-088e-4ac6-aa75-43eacace8f03.htm">Verwenden von
+								SQL-Escapesequenzen</a></span>.
+					</p>
+				</div>
+				<p>Erstellen Sie als Beispiel die folgende Prozedur in der SQL
+					Server 2005 AdventureWorks-Beispieldatenbank:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>CREATE PROCEDURE GetContactFormalNames 
+AS
+BEGIN
+   SELECT TOP 10 Title + ' ' + FirstName + ' ' + LastName AS FormalName 
+   FROM Person.Contact
+END</pre></span>
+				</div>
+				<p>Diese gespeicherte Prozedur gibt ein einzelnes Resultset
+					zurück, das eine Datenspalte enthält, bei der es sich um eine
+					Kombination aus Titel, Vorname und Nachname der ersten zehn
+					Kontakte in der Tabelle "Person.Contact" handelt.</p>
+				<p>
+					Im folgenden Beispiel werden eine offene Verbindung zur
+					AdventureWorks-Beispieldatenbank an die Funktion übergeben und die
+					gespeicherte Prozedur "GetContactFormalNames" mit der <a
+						href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a>-Methode
+					aufgerufen.
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>public static void executeSprocNoParams(Connection con) {
+   try {
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery("{call dbo.GetContactFormalNames}");
+
+      while (rs.next()) {
+         System.out.println(rs.getString("FormalName"));
+      }
+      rs.close();
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}</pre></span>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="0041f9e1-09b6-4487-b052-afd636c8e89a.htm">Verwenden von
+							Anweisungen mit gespeicherten Prozeduren</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Beispiel für Datenquellen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Beispiel für Datenquellen" />
+<meta name="Microsoft.Help.Id"
+	content="b4a933ee-f2c6-4e0d-a96d-6dd061abf759" />
+<meta name="Description"
+	content="Diese Beispielanwendung für Microsoft JDBC Driver für SQL Server veranschaulicht, wie unter Verwendung eines Datenquellenobjekts eine Verbindung mit einer SQL Server-Datenbank hergestellt wird." />
+<meta name="Microsoft.Help.ContentType" content="Samples" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Beispiel für
+						Datenquellen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Diese Beispielanwendung für Microsoft JDBC Driver für SQL
+					Server veranschaulicht, wie unter Verwendung eines
+					Datenquellenobjekts eine Verbindung mit einer SQL Server-Datenbank
+					hergestellt wird. Darüber hinaus wird gezeigt, wie Daten mithilfe
+					einer gespeicherten Prozedur aus einer SQL Server-Datenbank
+					abgerufen werden.</p>
+				<p>Die Codedatei für dieses Beispiel heißt "connectDS.java" und
+					befindet sich im folgenden Pfad:</p>
+				<p>
+					&lt;<i>Installationsverzeichnis</i>&gt;\sqljdbc_&lt;<i>Version</i>&gt;\&lt;<i>Sprache</i>&gt;\help\samples\connections
+				</p>
+			</div>
+			<h1 class="heading">Anforderungen</h1>
+			<div id="requirementsTitleSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Wenn Sie diese Beispielanwendung ausführen möchten, müssen Sie die
+					Datei <b>sqljdbc.jar</b> oder <b>sqljdbc4.jar</b> in den
+					Klassenpfad aufnehmen. Wenn im Klassenpfad kein Eintrag für <b>sqljdbc.jar</b>
+					oder <b>sqljdbc4.jar</b> vorhanden ist, löst die Beispielanwendung
+					die allgemeine Ausnahme "Klasse nicht gefunden" aus. Sie benötigen
+					darüber hinaus Zugriff auf die SQL Server 2005
+					AdventureWorks-Beispieldatenbank. Weitere Informationen zum
+					Festlegen des Klassenpfads finden Sie unter <span sdata="link"><a
+						href="6faaf05b-8b70-4ed2-9b44-eee5897f1cd0.htm">Verwenden des
+							JDBC-Treibers</a></span>.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Microsoft JDBC Driver für SQL Server enthält die
+						Klassenbibliotheksdateien "sqljdbc.jar" und "sqljdbc4.jar" für die
+						jeweilige Verwendung mit den bevorzugten JRE (Java Runtime
+						Environment)-Einstellungen. Weitere Informationen zum Auswählen
+						der richtigen JAR-Datei finden Sie unter <span sdata="link"><a
+							href="447792bb-f39b-49b4-9fd0-1ef4154c74ab.htm">Systemanforderungen
+								für den JDBC-Treiber</a></span>.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Beispiel</h1>
+			<div id="exampleSection" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Der folgende Beispielcode legt mit den Festlegungsmethoden des <a
+						href="097434fd-2b74-411c-a5ed-eba04481dde5.htm">SQLServerDataSource</a>-Objekts
+					verschiedene Verbindungseigenschaften fest. Anschließend wird die <a
+						href="a15ee185-f433-4915-9c75-5ebd90c758fd.htm">getConnection</a>-Methode
+					des <b>SQLServerDataSource</b>-Objekts aufgerufen, um ein <a
+						href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Objekt
+					zurückzugeben.
+				</p>
+				<p>
+					Danach wird mithilfe der <a
+						href="265b024c-898a-4bd0-98b5-f06076717b9e.htm">prepareCall</a>-Methode
+					des <b>SQLServerConnection</b>-Objekts ein <a
+						href="30710a63-c05d-47d9-9cf9-c087a1c76373.htm">SQLServerCallableStatement</a>-Objekt
+					erstellt. Anschließend wird die <a
+						href="dfff3358-f391-4af6-84c1-b94c029f506d.htm">executeQuery</a>-Methode
+					aufgerufen, um die gespeicherte Prozedur auszuführen.
+				</p>
+				<p>
+					Abschließend wird das <a
+						href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekt,
+					das von der <b>executeQuery</b>-Methode zurückgegeben wurde,
+					verwendet, um die von der gespeicherten Prozedur zurückgegebenen
+					Ergebnisse zu durchlaufen.
+				</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>import java.sql.*;
+import com.microsoft.sqlserver.jdbc.*;
+
+public class connectDS {
+
+   public static void main(String[] args) {
+
+      // Declare the JDBC objects.
+      Connection con = null;
+      CallableStatement cstmt = null;
+      ResultSet rs = null;
+
+      try {
+         // Establish the connection. 
+         SQLServerDataSource ds = new SQLServerDataSource();
+         ds.setUser("UserName");
+         ds.setPassword("*****");
+         ds.setServerName("localhost");
+         ds.setPortNumber(1433); 
+         ds.setDatabaseName("AdventureWorks");
+         con = ds.getConnection();
+
+         // Execute a stored procedure that returns some data.
+         cstmt = con.prepareCall("{call dbo.uspGetEmployeeManagers(?)}");
+         cstmt.setInt(1, 50);
+         rs = cstmt.executeQuery();
+
+         // Iterate through the data in the result set and display it.
+         while (rs.next()) {
+            System.out.println("EMPLOYEE: " + rs.getString("LastName") + 
+               ", " + rs.getString("FirstName"));
+            System.out.println("MANAGER: " + rs.getString("ManagerLastName") + 
+               ", " + rs.getString("ManagerFirstName"));
+            System.out.println();
+         }
+      }
+
+      // Handle any errors that may have occurred.
+      catch (Exception e) {
+         e.printStackTrace();
+      }
+      finally {
+         if (rs != null) try { rs.close(); } catch(Exception e) {}
+         if (cstmt != null) try { cstmt.close(); } catch(Exception e) {}
+         if (con != null) try { con.close(); } catch(Exception e) {}
+         System.exit(1);
+      }
+   }
+}</pre></span>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="ce43cc20-46a3-42ff-a3fb-75ad1ed10e08.htm">Verbinden und
+							Abrufen von Daten</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

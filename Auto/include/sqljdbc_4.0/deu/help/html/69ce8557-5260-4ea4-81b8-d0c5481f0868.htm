@@ -1,0 +1,102 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Sichern von Verbindungszeichenfolgen</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords"
+	content="Verbindungszeichenfolgen, Sicherheit" />
+<meta name="Microsoft.Help.Id"
+	content="69ce8557-5260-4ea4-81b8-d0c5481f0868" />
+<meta name="Description"
+	content="Beim Schutz des Zugriffs auf die Datenquelle handelt es sich um eine der wichtigsten Aufgaben, um eine Anwendung zu sichern." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Sichern von
+						Verbindungszeichenfolgen</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Beim Schutz des Zugriffs auf die Datenquelle handelt es sich
+					um eine der wichtigsten Aufgaben, um eine Anwendung zu sichern. Um
+					den Zugriff auf die Datenquelle zu beschränken, müssen Sie
+					entsprechenden Vorsichtsmaßnahmen vorsehen, die
+					Verbindungsinformationen wie Benutzer-ID, Kennwort und
+					Datenquellennamen sichern. Das Speichern von Benutzer-ID und
+					Kennwort in unverschlüsselter Form, z. B. im Quellcode, bildet ein
+					schwerwiegendes Sicherheitsproblem. Selbst dann, wenn Sie eine
+					kompilierte Version des Codes bereitstellen, die Benutzer-ID- und
+					Kennwortinformationen in einer externen Quelle enthält, kann der
+					kompilierte Code disassembliert werden, sodass Benutzer-ID und
+					Kennwort offen gelegt werden. Daher dürfen kritische Informationen
+					wie Benutzer-ID und Kennwort keinesfalls im Code vorhanden sein.</p>
+				<p>Sie sollten das Kennwort auf keinen Fall zusammen mit der
+					Verbindungs-URL im Quellcode der Anwendung speichern, sondern das
+					Kennwort in einer getrennten Datei mit eingeschränktem Zugriff
+					speichern. Der Zugriff auf diese Datei kann dem Kontext gewährt
+					werden, in dem die Anwendung ausgeführt wird.</p>
+				<p>Eine andere Möglichkeit besteht darin, das verschlüsselte
+					Kennwort in einer Datei zu speichern. Sie müssen unbedingt eine
+					Verschlüsselungs-API verwenden, die nicht voraussetzt, dass der
+					Schlüssel in irgendeiner Form gespeichert ist und nicht vom
+					Kennwort eines Benutzers abgeleitet wird. Sie können beispielsweise
+					die Verwendung von zertifikatbasierenden öffentlichen/privaten
+					Schlüsselpaaren erwägen oder ein Verfahren verwenden, in dem zwei
+					Beteiligte ein Schlüsselvereinbarungsprotokoll
+					(Diffie-Hellman-Algorithmus) verwenden, das identische geheime
+					Schlüssel für die Verschlüsselung generiert, ohne dass der geheime
+					Schlüssel übertragen werden muss.</p>
+				<p>Wenn die Informationen für die Verbindungszeichenfolge aus
+					einer externen Quelle stammen (z. B. Eingabe von Benutzer-ID und
+					Kennwort durch den Benutzer), müssen Sie alle Eingaben der Quelle
+					überprüfen, um sicherzustellen, dass das richtige Format
+					eingehalten wird und keine zusätzlichen Parameter enthalten sind,
+					die die Verbindung beeinflussen.</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwalten des Transaktionsumfangs</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verwalten von Transaktionen" />
+<meta name="Microsoft.Help.Id"
+	content="82900342-bc80-445f-98a4-468a303aae1e" />
+<meta name="Description"
+	content="Wenn Sie mit Transaktionen arbeiten, ist es wichtig, die Transaktionen so kurz wie möglich zu halten. Der Standardmodus auto-commit, den Sie mithilfe der setAutoCommit-Methode aktivieren und deaktivieren können, führt einen Commit für jede Aktion aus." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwalten des
+						Transaktionsumfangs</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Wenn Sie mit Transaktionen arbeiten, ist es wichtig, die
+					Transaktionen so kurz wie möglich zu halten. Der Standardmodus <b>auto-commit</b>,
+					den Sie mithilfe der <a
+						href="db1e22d2-e53f-474e-8c99-cb1fff7f491a.htm">setAutoCommit</a>-Methode
+					aktivieren und deaktivieren können, führt einen Commit für jede
+					Aktion aus. Dies ist der Modus, mit dem die meisten Entwickler am
+					bequemsten arbeiten können.
+				</p>
+				<p>Wenn Sie manuelle Transaktionen verwenden, stellen Sie
+					sicher, dass im Code so schnell wie möglich ein Commit für die
+					Transaktion ausgeführt wird. Durch das Offenhalten einer
+					Transaktion wird blockiert, dass andere Benutzer auf die Daten
+					zugreifen können. Es ist beispielsweise ein gutes
+					Programmierverfahren, einen rollback-Aufruf im catch-Block und
+					einen commit-Aufruf im finally-Block einzufügen. Dies ist jedoch
+					vom Entwurf der Anwendung abhängig.</p>
+				<p>Wenn der Umfang der Transaktionen klein gehalten wird, führt
+					dies zu einer besseren Parallelität. Wenn Sie beispielsweise eine
+					manuelle Transaktion beginnen und 10.000 Zeilen in einer Tabelle
+					mit 20.000 Zeilen ändern, ist die Hälfte der Tabelle für alle
+					anderen Benutzer blockiert, auch wenn sie die Daten nur lesen.
+					Durch das Reduzieren der Änderungen auf 2.000 Zeilen bleiben 90
+					Prozent der Tabelle verfügbar.</p>
+				<p>
+					Stellen Sie außerdem sicher, dass Sie die Timeouteinstellung für
+					Sperren verwenden, wenn die Anwendung Probleme mit Sperren erwartet
+					und hierfür Timeouts benötigt. Dies kann auf einfache Weise
+					mithilfe der <a href="10dca5aa-1851-4326-9ae9-7a8430d12d11.htm">setLockTimeout</a>-Methode
+					ausgeführt werden. Der Standardwert für das Sperrtimeout ist -1.
+					Dies bedeutet, dass beim Warten auf die Sperre unendlich lang
+					blockiert wird. Sie können das Sperrtimeout auf 30 Sekunden
+					festlegen. So tritt bei der gesperrten Verbindung nach 30 Sekunden
+					ein Timeout auf, wenn eine Blockierung durch eine andere Verbindung
+					vorliegt.
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="e1592499-b87b-45ee-bab8-beaba8fde841.htm">Verbessern von
+							Leistung und Zuverlässigkeit mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

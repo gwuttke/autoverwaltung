@@ -1,0 +1,134 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Anwendungssicherheit</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Anwendungssicherheit" />
+<meta name="Microsoft.Help.Id"
+	content="940879b4-aa0f-41ce-a369-6cfc0e78e01d" />
+<meta name="Description"
+	content="Wenn Sie Microsoft JDBC Driver für SQL Server verwenden, müssen Sie Vorsichtsmaßnahmen ergreifen, um die Sicherheit der Anwendung sicherzustellen." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Anwendungssicherheit</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Wenn Sie Microsoft JDBC Driver für SQL Server verwenden,
+					müssen Sie Vorsichtsmaßnahmen ergreifen, um die Sicherheit der
+					Anwendung sicherzustellen. Die folgenden Abschnitte enthalten
+					Informationen zu den Schritten, die Sie zum Sichern der Anwendung
+					ergreifen können.</p>
+			</div>
+			<h1 class="heading">Verwenden von Java-Richtlinienberechtigungen</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn Sie Microsoft JDBC Driver für SQL Server verwenden,
+					müssen Sie die für den JDBC-Treiber erforderlichen
+					Java-Richtlinienberechtigungen angeben. Die JRE (Java Runtime
+					Environment) stellt ein umfassendes Sicherheitsmodell bereit, mit
+					dem zur Laufzeit ermittelt werden kann, ob ein Thread auf eine
+					Ressource zugreifen kann. Dieser Zugriff kann durch
+					Sicherheitsrichtliniendateien gesteuert werden. Die
+					Richtliniendateien werden vom Entwickler und vom
+					Systemadministrator des Containers verwaltet. Die in diesem Thema
+					aufgeführten Berechtigungen wirken sich jedoch auf die
+					Funktionsweise des JDBC-Treibers aus.</p>
+				<p>Eine normale Berechtigung in der Richtliniendatei sieht
+					folgendermaßen aus:</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>// Example policy file entry.
+grant [signedBy &lt;signer&gt;,] [codeBase &lt;code source&gt;] {
+   permission  &lt;class&gt;  [&lt;name&gt; [, &lt;action list&gt;]];
+};</pre></span>
+				</div>
+				<p>Die folgende Codebasis muss auf die Codebasis des
+					JDBC-Treibers beschränkt werden, damit die minimal erforderlichen
+					Privilegien gewährt werden.</p>
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>grant codeBase "file:/install_dir/lib/-" {
+
+// Grant access to data source.
+permission java.util.PropertyPermission "java.naming.*", "read,write";
+
+// Specify which hosts can be connected to.
+permission java.net.socketPermission "host:port", "connect";
+
+// Logger permission to take advantage of logging.
+permission java.util.logging.LoggingPermission;
+
+// Grant listen/connect/accept permissions to the driver if 
+// connecting to a named instance as the client driver. 
+// This connects to a udp service and listens for a response.
+permission java.net.SocketPermission "*", "listen, connect, accept"; 
+}; </pre></span>
+				</div>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Der Code "file:/install_dir/lib/-" bezieht sich auf das
+						Installationsverzeichnis des JDBC-Treibers.</p>
+				</div>
+			</div>
+			<h1 class="heading">Schützen der Serverkommunikation</h1>
+			<div id="sectionSection1" class="section" name="collapseableSection"
+				style="">
+				<p>Wenn Sie den JDBC-Treiber für die Kommunikation mit einer SQL
+					Server-Datenbank verwenden, können Sie den Kommunikationskanal mit
+					IPSec (Internet Protocol Security) und/oder SSL (Secure Sockets
+					Layer) sichern.</p>
+				<p>
+					Die SSL-Unterstützung kann verwendet werden, um zusätzlich zu IPSEC
+					eine weitere Schutzebene bereitzustellen. Weitere Informationen zum
+					Verwenden von SSL finden Sie unter <span sdata="link"><a
+						href="8e566243-2f93-4b21-8065-3c8336649309.htm">Verwenden der
+							SSL-Verschlüsselung</a></span>.
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="90724ec6-a9cb-43ef-903e-793f89410bc0.htm">Sichern von
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

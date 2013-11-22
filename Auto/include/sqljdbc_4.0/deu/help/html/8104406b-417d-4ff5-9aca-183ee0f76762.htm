@@ -1,0 +1,163 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>getObject-Methode (java.lang.String, java.util.Map)
+	(SQLServerResultSet)</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="8104406b-417d-4ff5-9aca-183ee0f76762" />
+<meta name="Description"
+	content="Ruft unter Verwendung des Map-Objekts den Wert des angegebenen Spaltenamens in der aktuellen Zeile dieses SQLServerResultSet-Objekts als Objekt in der Programmiersprache Java ab." />
+<meta name="Microsoft.Help.ContentType" content="Reference" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">getObject-Methode
+						(java.lang.String, java.util.Map) (SQLServerResultSet)</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Ruft unter Verwendung des <b>Map</b>-Objekts den Wert des
+					angegebenen Spaltenamens in der aktuellen Zeile dieses <a
+						href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekts
+					als Objekt in der Programmiersprache Java ab.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Diese Methode wird von Microsoft JDBC Driver für SQL Server
+						derzeit nicht unterstützt. Bei Verwendung dieser Methode wird
+						immer die Standardzuordnung zurückgegeben.</p>
+				</div>
+			</div>
+			<h1 class="heading">Syntax</h1>
+			<div id="syntaxSection" class="section">
+				<div class="sampleCode">
+					<span codeLanguage="other"><pre>
+public java.lang.Object <b>getObject</b>(java.lang.String <span
+								class="parameter" sdata="paramReference">colName</span>,
+                                  java.util.Map <span class="parameter"
+								sdata="paramReference">map</span>)</pre></span>
+				</div>
+			</div>
+			<h1 class="heading">Parameter</h1>
+			<div id="parametersSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					<span class="parameter" sdata="paramReference">colName</span>
+				</p>
+				<p>
+					Ein <span sdata="langKeyword" value="String"><span
+						class="keyword">String</span></span> mit dem Spaltennamen.
+				</p>
+				<p>
+					<span class="parameter" sdata="paramReference">map</span>
+				</p>
+				<p>
+					Ein <b>Map</b>-Objekt.
+				</p>
+			</div>
+			<h1 class="heading">Rückgabewert</h1>
+			<div id="returnValueSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Ein <span sdata="langKeyword" value="Object"><span
+						class="keyword">Object</span></span>-Wert.
+				</p>
+			</div>
+			<h1 class="heading">Ausnahmen</h1>
+			<div id="ddueExceptionsSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					<a href="af5ef257-7cf6-4db3-b1ee-07d22d82bef1.htm">SQLServerException</a>
+				</p>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="languageReferenceRemarksSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Diese <b>getObject</b>-Methode wird von der <b>getObject</b>-Methode
+					in der java.sql.ResultSet-Schnittstelle angegeben.
+				</p>
+				<p>Von dieser Methode wird der Wert der angegebenen Spalte als
+					Java-Objekt zurückgegeben. Beim Typ des Java-Objekts handelt es
+					sich um den standardmäßigen Java-Objekttyp, der dem SQL-Typ der
+					Spalte entspricht. Die Grundlage hierfür bildet die in der
+					JDBC-Spezifikation angegebene Zuordnung für integrierte Typen. Bei
+					einem SQL-NULL-Wert wird vom Treiber ein Java-NULL-Wert
+					zurückgegeben.</p>
+				<p>
+					Diese Methode kann auch zum Lesen datenbankspezifischer, abstrakter
+					Datentypen verwendet werden. In der JDBC 2.0-API wird das Verhalten
+					der <b>getObject</b>-Methode erweitert, um Daten von
+					benutzerdefinierten SQL-Typen zu materialisieren. Enthält eine
+					Spalte einen strukturierten oder unterschiedlichen Wert, entspricht
+					das Verhalten dieser Methode einem Aufruf von <span class="code">getObject(columnIndex,
+						this.getStatement().getConnection().getTypeMap())</span>.
+				</p>
+				<p>Ab SQL Server JDBC Driver 3.0 wird folgendermaßen verfahren:</p>
+				<ul>
+					<li><p>Ein Date-Wert wird als java.sql.Date-Objekt
+							zurückgegeben.</p></li>
+					<li><p>Ein Time-Wert wird als java.sql.Time-Objekt
+							zurückgegeben.</p></li>
+					<li><p>Ein Datetime2-Wert wird als
+							java.sql.Timestamp-Objekt zurückgegeben.</p></li>
+					<li><p>Ein Datetimeoffset-Wert wird als
+							microsoft.sql.DateTimeOffset-Objekt zurückgegeben.</p></li>
+				</ul>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet-Klasse</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="924df406-14b2-40b8-a7bc-c2fd145d7d7c.htm">getObject-Methode
+							(ISQLServerResultSet)</a></span>
+				</div>
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="2a438d5d-2d6a-46a0-a2ae-f35fbae4a472.htm">ISQLServerResultSet-Elemente</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

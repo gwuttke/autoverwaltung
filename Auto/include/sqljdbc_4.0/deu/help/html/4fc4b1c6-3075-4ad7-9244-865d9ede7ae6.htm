@@ -1,0 +1,137 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Arbeiten mit Resultsets</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Beispiele für Resultsets" />
+<meta name="Microsoft.Help.Id"
+	content="4fc4b1c6-3075-4ad7-9244-865d9ede7ae6" />
+<meta name="Description"
+	content="Bei der Verarbeitung von Daten in einer SQL Server-Datenbank besteht eine Methode zum Bearbeiten der Daten darin, ein Resultset zu verwenden. Microsoft JDBC Driver für SQL Server unterstützt über das SQLServerResultSet-Objekt die Verwendung von Resultsets." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Arbeiten mit
+						Resultsets</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Bei der Verarbeitung von Daten in einer SQL Server-Datenbank
+					besteht eine Methode zum Bearbeiten der Daten darin, ein Resultset
+					zu verwenden. Microsoft JDBC Driver für SQL Server unterstützt über
+					das <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekt
+					die Verwendung von Resultsets. Mithilfe des <b>SQLServerResultSet</b>-Objekts
+					können Sie die von einer SQL-Anweisung oder gespeicherten Prozedur
+					zurückgegebenen Daten abrufen, die Daten bei Bedarf aktualisieren
+					und dann wieder in der Datenbank speichern. 
+				</p>
+				<p>
+					Das <b>SQLServerResultSet</b>-Objekt enthält darüber hinaus
+					Methoden, um in den Datenzeilen zu navigieren, die enthaltenen
+					Daten abzurufen oder festzulegen und die Sensitivität gegenüber
+					Änderungen in der zugrunde liegenden Datenbank einzurichten.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Weitere Informationen zur Verwaltung von Resultsets,
+						einschließlich deren Sensitivität gegenüber Änderungen, finden Sie
+						unter <span sdata="link"><a
+							href="9ed5ad41-22e0-4e4a-8a79-10512db60d50.htm">Verwalten von
+								Resultsets mit dem JDBC-Treiber</a></span>.
+					</p>
+				</div>
+				<p>Die Themen in diesem Abschnitt beschreiben verschiedene
+					Möglichkeiten, wie Sie mithilfe von Resultsets die in einer SQL
+					Server-Datenbank enthaltenen Daten bearbeiten können.</p>
+			</div>
+			<h1 class="heading">In diesem Abschnitt</h1>
+			<div id="inThisSectionSection" class="section"
+				name="collapseableSection" style="">
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Thema</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="1b190c36-3d38-49a2-8599-612329675851.htm">Abrufen
+											von Resultsetdaten - Beispiel</a></span>
+								</p></td>
+							<td><p>Beschreibt die Verwendung eines Resultsets, um
+									Daten aus einer SQL Server-Datenbank abzurufen und anzuzeigen.</p></td>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="b5ae54dc-2a79-4664-bb21-cacdb7d745e1.htm">Ändern von
+											Resultsetdaten - Beispiel</a></span>
+								</p></td>
+							<td><p>Beschreibt die Verwendung eines Resultsets, um
+									Daten in eine SQL Server-Datenbank einzufügen, daraus abzurufen
+									bzw. darin zu ändern.</p></td>
+						</tr>
+						<tr>
+							<td><p>
+									<span sdata="link"><a
+										href="13a95ebb-996c-4713-a1bd-5834fe22a334.htm">Zwischenspeichern
+											von Resultsetdaten - Beispiel</a></span>
+								</p></td>
+							<td><p>Beschreibt die Verwendung eines Resultsets, um
+									umfangreiche Daten aus einer SQL Server-Datenbank abzurufen,
+									und wie die Zwischenspeicherung dieser Daten im Client
+									gesteuert wird.</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="e136b87c-a138-45d6-8c3e-bcef94b7e483.htm">Beispiele für
+							JDBC-Treiberanwendungen</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

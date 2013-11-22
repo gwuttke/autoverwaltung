@@ -1,0 +1,255 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Beispiel zum Aktualisieren umfangreicher Daten</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="adaptive Pufferung" />
+<meta name="System.Keywords" content="Beispiele zur adaptiven Pufferung" />
+<meta name="System.Keywords" content="isWrapperFor" />
+<meta name="System.Keywords" content="Umfangreiche Daten" />
+<meta name="System.Keywords" content="Antwortpufferung" />
+<meta name="System.Keywords" content="unwrap" />
+<meta name="System.Keywords" content="Verwenden der adaptiven Pufferung" />
+<meta name="Microsoft.Help.Id"
+	content="76ecc05f-a77d-40a2-bab9-91a7fcf17347" />
+<meta name="Description"
+	content="Diese Beispielanwendung für Microsoft JDBC Driver für SQL Server veranschaulicht, wie eine umfangreiche Spalte in einer Datenbank aktualisiert wird." />
+<meta name="Microsoft.Help.ContentType" content="Samples" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Beispiel zum
+						Aktualisieren umfangreicher Daten</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Diese Beispielanwendung für Microsoft JDBC Driver für SQL
+					Server veranschaulicht, wie eine umfangreiche Spalte in einer
+					Datenbank aktualisiert wird.</p>
+				<p>Die Codedatei für dieses Beispiel heißt
+					"updateLargeData.java" und befindet sich unter folgendem Pfad:</p>
+				<p>
+					&lt;<i>Installationsverzeichnis</i>&gt;\sqljdbc_&lt;<i>Version</i>&gt;\&lt;<i>Sprache</i>&gt;\help\samples\adaptive
+				</p>
+			</div>
+			<h1 class="heading">Anforderungen</h1>
+			<div id="requirementsTitleSection" class="section"
+				name="collapseableSection" style="">
+				<p>
+					Zum Ausführen dieser Beispielanwendung benötigen Sie Zugriff auf
+					die SQL Server 2005 AdventureWorks-Beispieldatenbank. Außerdem
+					müssen Sie die Datei "sqljdbc4.jar" in den Klassenpfad aufnehmen.
+					Wenn im Klassenpfad kein Eintrag für "sqljdbc4.jar" vorhanden ist,
+					löst die Beispielanwendung die allgemeine Ausnahme "Klasse nicht
+					gefunden" aus. Weitere Informationen zum Festlegen des Klassenpfads
+					finden Sie unter <span sdata="link"><a
+						href="6faaf05b-8b70-4ed2-9b44-eee5897f1cd0.htm">Verwenden des
+							JDBC-Treibers</a></span>.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Microsoft JDBC Driver für SQL Server enthält die
+						Klassenbibliotheksdateien "sqljdbc.jar" und "sqljdbc4.jar" für die
+						jeweilige Verwendung mit den bevorzugten JRE (Java Runtime
+						Environment)-Einstellungen. In diesem Beispiel werden die in der
+						JDBC 4.0-API neu eingeführten Methoden <a
+							href="53f3291f-d43a-476b-a656-d86168dacf6c.htm">isWrapperFor</a>
+						und <a href="ce680176-ef04-4e44-bb6c-ec50bd06e7e6.htm">unwrap</a>
+						für den Zugriff auf die treiberspezifischen Antwortpuffermethoden
+						verwendet. Zum Kompilieren und Ausführen dieses Beispiels
+						benötigen Sie die "sqljdbc4.jar"-Klassenbibliothek, die die
+						Unterstützung für JDBC 4.0 bereitstellt. Weitere Informationen zum
+						Auswählen der richtigen JAR-Datei finden Sie unter <span
+							sdata="link"><a
+							href="447792bb-f39b-49b4-9fd0-1ef4154c74ab.htm">Systemanforderungen
+								für den JDBC-Treiber</a></span>.
+					</p>
+				</div>
+			</div>
+			<h1 class="heading">Beispiel</h1>
+			<div id="exampleSection" class="section" name="collapseableSection"
+				style="">
+				<p>
+					Der folgende Beispielcode stellt eine Verbindung zur SQL Server
+					2005 AdventureWorks-Datenbank her. Danach wird ein Statement-Objekt
+					erstellt und mithilfe der <a
+						href="53f3291f-d43a-476b-a656-d86168dacf6c.htm">isWrapperFor</a>-Methode
+					überprüft, ob das Statement-Objekt ein Wrapper für die angegebene <a
+						href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+					ist. Die <a href="ce680176-ef04-4e44-bb6c-ec50bd06e7e6.htm">unwrap</a>-Methode
+					wird für den Zugriff auf treiberspezifische Antwortpuffermethoden
+					verwendet. 
+				</p>
+				<p>
+					Dann wird der Antwortpuffermodus mithilfe der <a
+						href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a>-Methode
+					der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+					auf "<span sdata="langKeyword" value="adaptive"><span
+						class="keyword">adaptive</span></span>" festgelegt und veranschaulicht,
+					wie der Modus für die adaptive Pufferung abgerufen wird.
+				</p>
+				<p>
+					Anschließend wird die SQL-Anweisung ausgeführt, und die
+					zurückgegebenen Daten werden in ein aktualisierbares <a
+						href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>-Objekt
+					eingefügt.
+				</p>
+				<p>
+					Schließlich werden die Datenzeilen durchlaufen, die im Resultset
+					enthalten sind. Wenn eine leere Dokumentzusammenfassung erkannt
+					wird, wird die Datenzeile mit einer Kombination aus <a
+						href="0cf286c7-9dcd-4b02-a568-ba6b6eb27e82.htm">updateString</a>-Methode
+					und <a href="cfced0ca-a281-40dc-8d2f-370d5f0bf12b.htm">updateRow</a>-Methode
+					aktualisiert und erneut in der Datenbank gespeichert. Wenn bereits
+					Daten vorhanden sind, werden einige der enthaltenen Daten mithilfe
+					der <a href="f81dde01-d328-4b32-8871-1efac645b68e.htm">getString</a>-Methode
+					angezeigt.
+				</p>
+				<p>
+					Das Standardverhalten des Treibers ist auf "<span
+						sdata="langKeyword" value="adaptive."><span class="keyword">adaptive.</span></span>"
+					festgelegt. Für das aktualisierbare Resultset mit Vorwärtscursor
+					und bei Daten, deren Größe die des Anwendungsspeichers übersteigt,
+					muss der Modus für die adaptive Pufferung von der Anwendung jedoch
+					explizit mithilfe der <a
+						href="9f489835-6cda-4c8c-b139-079639a169cf.htm">setResponseBuffering</a>-Methode
+					der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+					festgelegt werden.
+				</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>import java.sql.*;
+import java.io.*;
+import com.microsoft.sqlserver.jdbc.SQLServerStatement;
+
+public class updateLargeData {
+	
+   public static void main(String[] args) {
+
+      // Create a variable for the connection string.
+      String connectionUrl = 
+    	    "jdbc:sqlserver://localhost:1433;" +
+            "databaseName=AdventureWorks;integratedSecurity=true;";
+
+      // Declare the JDBC objects.
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet rs = null;  
+      Reader reader = null;
+
+      try {
+          // Establish the connection.
+          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+          con = DriverManager.getConnection(connectionUrl);
+
+          stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+
+          // Since the summaries could be large, make sure that
+          // the driver reads them incrementally from a database, 
+          // even though a server cursor is used for the updatable result sets.
+
+          // The recommended way to access the Microsoft JDBC Driver for SQL Server 
+          // specific methods is to use the JDBC 4.0 Wrapper functionality. 
+          // The following code statement demonstrates how to use the 
+          // Statement.isWrapperFor and Statement.unwrap methods
+          // to access the driver specific response buffering methods.
+
+          if (stmt.isWrapperFor(com.microsoft.sqlserver.jdbc.SQLServerStatement.class)) {
+              SQLServerStatement SQLstmt = 
+                 stmt.unwrap(com.microsoft.sqlserver.jdbc.SQLServerStatement.class);
+        	  
+              SQLstmt.setResponseBuffering("adaptive");
+              System.out.println("Response buffering mode has been set to " +
+                 SQLstmt.getResponseBuffering());
+          }
+
+          // Select all of the document summaries.
+          rs = stmt.executeQuery("SELECT Title, DocumentSummary FROM Production.Document");
+
+          // Update each document summary.
+          while (rs.next()) {
+
+               // Retrieve the original document summary.
+               reader = rs.getCharacterStream("DocumentSummary");
+
+               if (reader == null)
+               {
+                   // Update the document summary.
+                   System.out.println("Updating " + rs.getString("Title"));
+                   rs.updateString("DocumentSummary", "Work in progress");
+                   rs.updateRow();
+               }
+               else
+               {
+            	   // Do something with the chunk of the data that was                   
+                   // read.
+                   System.out.println("reading " + rs.getString("Title"));
+                   reader.close();
+                   reader = null;
+               }
+          }
+      }
+      // Handle any errors that may have occurred.
+      catch (Exception e) {
+         e.printStackTrace();
+      }
+      finally {
+          if (reader != null) try { reader.close(); } catch(Exception e) {}
+          if (rs != null) try { rs.close(); } catch(Exception e) {}
+          if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+    	  if (con != null) try { con.close(); } catch(Exception e) {}
+      }
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="5b93569f-eceb-4f05-b49c-067564cd3c85.htm">Arbeiten mit
+							umfangreichen Daten</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

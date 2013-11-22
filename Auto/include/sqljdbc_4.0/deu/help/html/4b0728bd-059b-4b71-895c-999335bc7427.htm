@@ -1,0 +1,108 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von SQL-Anweisungen ohne Parameter</title>
+<meta name="Language" content="de-de" />
+<meta name="Microsoft.Help.Id"
+	content="4b0728bd-059b-4b71-895c-999335bc7427" />
+<meta name="Description"
+	content="Wenn Sie Daten in einer SQL Server-Datenbank mit einer SQL-Anweisung ohne Parameter verarbeiten möchten, können Sie mit der executeQuery-Methode der SQLServerStatement-Klasse ein SQLServerResultSet zurückgeben, das die angeforderten Daten enthält." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						SQL-Anweisungen ohne Parameter</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Wenn Sie Daten in einer SQL Server-Datenbank mit einer
+					SQL-Anweisung ohne Parameter verarbeiten möchten, können Sie mit
+					der <a href="599cf463-e19f-4baa-bacb-513cad7c6cd8.htm">executeQuery</a>-Methode
+					der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+					ein <a href="eaffcff1-286c-459f-83da-3150778480c9.htm">SQLServerResultSet</a>
+					zurückgeben, das die angeforderten Daten enthält. Sie müssen dazu
+					zuerst mit der <a href="6d043ba9-b8ec-41d3-bb22-ad2c4aebda6f.htm">createStatement</a>-Methode
+					der <a href="937292a6-1525-423e-a2b2-a18fd34c2893.htm">SQLServerConnection</a>-Klasse
+					ein <b>SQLServerStatement</b>-Objekt erstellen.
+				</p>
+				<p>Im folgenden Beispiel werden eine offene Verbindung zur SQL
+					Server 2005AdventureWorks-Beispieldatenbank an die Funktion
+					übergeben, eine SQL-Anweisung erstellt und ausgeführt sowie die
+					Ergebnisse aus dem Resultset gelesen.</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>public static void executeStatement(Connection con) {
+   try {
+      String SQL = "SELECT LastName, FirstName FROM Person.Contact ORDER BY LastName";
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(SQL);
+
+      while (rs.next()) {
+         System.out.println(rs.getString("LastName") + ", " + rs.getString("FirstName"));
+      }
+      rs.close();
+      stmt.close();
+   }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+				<p>
+					Weitere Informationen zum Verwenden von Resultsets finden Sie unter
+					<span sdata="link"><a
+						href="9ed5ad41-22e0-4e4a-8a79-10512db60d50.htm">Verwalten von
+							Resultsets mit dem JDBC-Treiber</a></span>.
+				</p>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="fe28f48a-e1bc-48ff-a5e7-c24cd6e5ecc7.htm">Verwenden von
+							Anweisungen mit SQL</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

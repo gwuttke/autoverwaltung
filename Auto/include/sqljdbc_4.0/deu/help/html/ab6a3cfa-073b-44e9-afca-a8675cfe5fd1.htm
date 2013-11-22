@@ -1,0 +1,176 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von mehreren Resultsets</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Mehrere Resultsets" />
+<meta name="Microsoft.Help.Id"
+	content="ab6a3cfa-073b-44e9-afca-a8675cfe5fd1" />
+<meta name="Description"
+	content="Bei der Arbeit mit Inline-SQL-Prozeduren oder gespeicherten SQL Server-Prozeduren, die mehrere Resultsets zurückgeben, stellt Microsoft JDBC Driver für SQL Server die getResultSet-Methode der SQLServerStatement-Klasse bereit, um die einzelnen zurückgegeben" />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						mehreren Resultsets</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>
+					Bei der Arbeit mit Inline-SQL-Prozeduren oder gespeicherten SQL
+					Server-Prozeduren, die mehrere Resultsets zurückgeben, stellt
+					Microsoft JDBC Driver für SQL Server die <a
+						href="929a14e2-8e98-4c32-89aa-86733c717ec1.htm">getResultSet</a>-Methode
+					der <a href="ec24963c-8b51-4838-91e9-1fbfa2347451.htm">SQLServerStatement</a>-Klasse
+					bereit, um die einzelnen zurückgegebenen Datensätze abzurufen. Beim
+					Ausführen einer Anweisung, die mehr als ein Resultset zurückgibt,
+					können Sie darüber hinaus die <a
+						href="e1367f39-23d7-4e26-b160-6d988d7e6988.htm">execute</a>-Methode
+					der <b>SQLServerStatement</b>-Klasse verwenden, weil ein <span
+						sdata="langKeyword" value="boolean"><span class="keyword">boolean</span></span>-Wert
+					zurückgegeben wird, der angibt, ob es sich bei dem zurückgegebenen
+					Wert um ein Resultset oder eine Updatezählung handelt.
+				</p>
+				<p>
+					Wenn die <b>execute</b>-Methode <span sdata="langKeyword"
+						value="true"><span class="keyword">true</span></span> zurückgibt,
+					wurde von der ausgeführten Anweisung mindestens ein Resultset
+					zurückgegeben. Sie können die <b>getResultSet</b>-Methode aufrufen,
+					um auf das erste Resultset zuzugreifen. Um zu ermitteln, ob weitere
+					Resultsets verfügbar sind, können Sie die <a
+						href="6b18510a-4d6d-4eeb-a9d0-32e920eb0048.htm">getMoreResults</a>-Methode
+					aufrufen, die den <span sdata="langKeyword" value="boolean"><span
+						class="keyword">boolean</span></span>-Wert <span sdata="langKeyword"
+						value="true"><span class="keyword">true</span></span> zurückgibt,
+					falls weitere Resultsets verfügbar sind. Wenn mehr Resultsets
+					verfügbar sind, können Sie erneut die <b>getResultSet</b>-Methode
+					aufrufen, um darauf zuzugreifen, und den Prozess fortsetzen, bis
+					alle Resultsets verarbeitet wurden. Wenn die <b>getMoreResults</b>-Methode
+					<span sdata="langKeyword" value="false"><span
+						class="keyword">false</span></span> zurückgibt, sind keine weiteren
+					Resultsets mehr vorhanden.
+				</p>
+				<p>
+					Wenn die <b>execute</b>-Methode <span sdata="langKeyword"
+						value="false"><span class="keyword">false</span></span>
+					zurückgibt, wurde von der ausgeführten Anweisung ein Updatezählwert
+					zurückgegeben, der durch Aufruf der <a
+						href="e9570228-4500-44b6-b2f1-84ac050b5112.htm">getUpdateCount</a>-Methode
+					abgerufen werden kann.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Weitere Informationen zu Updatezählungen finden Sie unter <span
+							sdata="link"><a
+							href="64cf4877-5995-4bfc-8865-b7618a5c8d01.htm">Verwenden von
+								gespeicherten Prozeduren mit einer Updatezählung</a></span>.
+					</p>
+				</div>
+				<p>Im folgenden Beispiel werden eine offene Verbindung zur SQL
+					Server 2005 AdventureWorks-Beispieldatenbank an die Funktion
+					übergeben und eine SQL-Anweisung erstellt, die bei ihrer Ausführung
+					zwei Resultsets zurückgibt.</p>
+				<div name="snippetGroup">
+					<div class="sampleCode">
+						<span codeLanguage="Java"><pre>public static void executeStatement(Connection con) {
+   try {
+      String SQL = "SELECT TOP 10 * FROM Person.Contact; " +
+                   "SELECT TOP 20 * FROM Person.Contact";
+      Statement stmt = con.createStatement();
+      boolean results = stmt.execute(SQL);
+      int rsCount = 0;
+
+      //Loop through the available result sets.
+     do {
+        if(results) {
+           ResultSet rs = stmt.getResultSet();
+           rsCount++;
+
+           //Show data from the result set.
+           System.out.println("RESULT SET #" + rsCount);
+           while (rs.next()) {
+              System.out.println(rs.getString("LastName") + ", " + rs.getString("FirstName"));
+           }
+           rs.close();
+        }
+        System.out.println();
+        results = stmt.getMoreResults();
+        } while(results);
+      stmt.close();
+      }
+   catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+
+</pre></span>
+					</div>
+				</div>
+				<p>
+					In diesem Fall ist bekannt, dass zwei Resultsets zurückgegeben
+					werden. Der Code ist jedoch so geschrieben, dass alle Resultsets
+					verarbeitet werden, wenn die Anzahl der zurückgegebenen Resultsets
+					unbekannt ist, wie z. B. beim Aufrufen einer gespeicherten
+					Prozedur. Ein Beispiel für den Aufruf einer gespeicherten Prozedur,
+					die mehrere Resultsets sowie Updatewerte zurückgibt, finden Sie
+					unter <span sdata="link"><a
+						href="6b807a45-a8b5-4b1c-8b7b-d8175c710ce0.htm">Verarbeiten
+							komplexer Anweisungen</a></span>.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>
+						Wenn Sie die <b>getMoreResults</b>-Methode der <b>SQLServerStatement</b>-Klasse
+						aufrufen, wird das zuvor zurückgegebene Resultset implizit
+						geschlossen.
+					</p>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="7f8f3e8f-841e-4449-9154-b5366870121f.htm">Verwenden von
+							Anweisungen mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+﻿<html xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:MSHelp="http://msdn.microsoft.com/mshelp"
+	xmlns:mshelp="http://msdn.microsoft.com/mshelp"
+	xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<META NAME="save" CONTENT="history" />
+<title>Verwenden von Verbindungspools</title>
+<meta name="Language" content="de-de" />
+<meta name="System.Keywords" content="Verbindungspools" />
+<meta name="Microsoft.Help.Id"
+	content="699d4e8a-34bf-4c60-b0d5-4a10dad6084a" />
+<meta name="Description"
+	content="Microsoft JDBC Driver für SQL Server unterstützt Verbindungspoolfunktionen der Java-Plattform, Enterprise Edition (Java EE). Der JDBC-Treiber implementiert die erforderlichen JDBC 3." />
+<meta name="Microsoft.Help.ContentType" content="Concepts" />
+<link rel="stylesheet" type="text/css" href="../local/Classic.css" />
+<script type="text/javascript" src="../scripts/EventUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/SplitScreen.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/Dropdown.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_manifold.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/script_feedBack.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CheckboxMenu.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../scripts/CommonUtilities.js">&amp;nbsp;</script>
+<script type="text/javascript" src="../local/script_main.js">&amp;nbsp;</script>
+</head>
+<body>
+	<div id="header">
+		<table id="bottomTable" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span id="headerBold">Verwenden von
+						Verbindungspools</span></td>
+			</tr>
+		</table>
+		<table id="gradientTable">
+			<tr>
+				<td class="nsrBottom" background="../icons/gradient.gif" />
+			</tr>
+		</table>
+	</div>
+	<div id="mainSection">
+		<div id="mainBody">
+			<div class="introduction">
+				<p>Microsoft JDBC Driver für SQL Server unterstützt
+					Verbindungspoolfunktionen der Java-Plattform, Enterprise Edition
+					(Java EE). Der JDBC-Treiber implementiert die erforderlichen JDBC
+					3.0-Schnittstellen, damit der Treiber
+					Verbindungspoolimplementierungen von Middlewareherstellern nutzen
+					kann. Der JDBC-Treiber ist JDBC 3.0-kompatibel. Middleware wie Java
+					EE-Anwendungsserver bieten häufig kompatible
+					Verbindungspoolfunktionen. Der JDBC-Treiber nutzt in diesen
+					Umgebungen Verbindungspools. </p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Obwohl der JDBC-Treiber Java EE-Verbindungspools
+						unterstützt, stellt er keine eigene Poolimplementierung bereit.
+						Der Treiber benötigt Java-Anwendungsserver eines Drittanbieters
+						zum Verwalten der Verbindungen.</p>
+				</div>
+			</div>
+			<h1 class="heading">Hinweise</h1>
+			<div id="sectionSection0" class="section" name="collapseableSection"
+				style="">
+				<p>Für die Verbindungspoolimplementierung stehen die folgenden
+					Klassen zur Verfügung.</p>
+				<div class="tableSection">
+					<table width="50%" cellspacing="2" cellpadding="5" frame="lhs">
+						<tr>
+							<th><p>Klasse</p></th>
+							<th><p>Implementiert</p></th>
+							<th><p>Beschreibung</p></th>
+						</tr>
+						<tr>
+							<td><p>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</p></td>
+							<td><p>javax.sql.ConnectionPoolDataSource und
+									javax.sql.XADataSource</p></td>
+							<td><p>
+									Sie sollten für alle erforderlichen Java EE-Serverfunktionen
+									die <a href="95fc7b07-2498-4a7e-8f7f-ee0d86b598b4.htm">SQLServerXADataSource</a>-Klasse
+									verwenden, da sie alle JDBC 3.0-Poolfunktionen und
+									XA-Schnittstellen implementiert.
+								</p></td>
+						</tr>
+						<tr>
+							<td><p>com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource</p></td>
+							<td><p>javax.sql.ConnectionPoolDataSource</p></td>
+							<td><p>
+									Bei dieser Klasse handelt es sich um ein Verbindungsfactory,
+									das es dem Java EE-Anwendungsserver ermöglicht, den
+									Verbindungspool mit physischen Verbindungen zu füllen. Wenn die
+									Konfiguration des Java EE-Herstellers eine Klasse erfordert,
+									die javax.sql.ConnectionPoolDataSource implementiert, geben Sie
+									den Klassennamen als <a
+										href="b00e5a90-2af7-4d04-8ef8-256183777dcf.htm">SQLServerConnectionPoolDataSource</a>
+									an. Sie sollten stattdessen im Allgemeinen die <a
+										href="95fc7b07-2498-4a7e-8f7f-ee0d86b598b4.htm">SQLServerXADataSource</a>-Klasse
+									verwenden, da sie sowohl Poolfunktionen als auch
+									XA-Schnittstellen implementiert und in einer größeren Zahl von
+									Java EE-Serverkonfigurationen überprüft wurde.
+								</p></td>
+						</tr>
+					</table>
+				</div>
+				<p>
+					Der JDBC-Anwendungscode sollte die Verbindungen immer explizit
+					schließen, damit die Pools optimal genutzt werden können. Wenn die
+					Anwendung eine Verbindung explizit schließt, kann die
+					Poolimplementierung die Verbindung sofort wiederverwenden kann.
+					Wenn die Verbindung nicht geschlossen wird, kann sie von anderen
+					Anwendungen nicht wiederverwendet werden. Die Anwendungen können im
+					<span class="code"> finally </span>-Konstrukt sicherstellen, dass
+					Poolverbindungen auch beim Auftreten von Fehlern geschlossen
+					werden.
+				</p>
+				<div style="margin: .5em 1.5em .5em 1.5em">
+					<b></b>
+					<p>Der JDBC-Treiber ruft zurzeit nicht die gespeicherte
+						Prozedur "sp_reset_connection" auf, wenn die Verbindung an den
+						Pool zurückgegeben wird. Der Treiber geht stattdessen davon aus,
+						dass die Java-Anwendungsserver der Drittanbieter die Verbindungen
+						wieder in den ursprünglichen Status zurück versetzen.</p>
+				</div>
+			</div>
+			<span id="seeAlsoSpan"><h1 class="heading">Siehe auch</h1></span>
+			<div id="seeAlsoSection" class="section" name="collapseableSection"
+				style="">
+				<div class="seeAlsoStyle">
+					<span sdata="link"><a
+						href="94bcfbe3-f00e-4774-bda8-bb7577518fec.htm">Verbinden von
+							SQL Server mit dem JDBC-Treiber</a></span>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="section">
+			<span id="feedbackarea">Senden Sie Microsoft <a
+				href="javascript:SubmitFeedback('DevDocs@Microsoft.com','','','','8.0.12060.10000','%0\dVielen%20Dank%20für%20Ihr%20Feedback.%20Die%20Autorenteams%20im%20Bereich%20Entwicklung%20nutzen%20Ihr%20Feedback,%20um%20die%20Dokumentation%20zu%20verbessern.%20Im%20Rahmen%20der%20Überprüfung%20Ihres%20Feedbacks%20erhalten%20Sie%20von%20uns%20ggf.%20eine%20E-Mail%20mit%20Rückfragen%20oder%20Feedback%20zur%20möglichen%20Lösung.%20Ihre%20E-Mail-Adresse%20wird%20von%20uns%20nicht%20zu%20anderen%20Zwecken%20verwendet%20und%20wird%20gelöscht,%20sobald%20die%20Überprüfung%20Ihres%20Feedbacks%20abgeschlossen%20ist.%0\AWeitere%20Informationen%20zu%20den%20Datenschutzrichtlinien%20von%20Microsoft%20finden%20Sie%20unter%20http://privacy.microsoft.com/de-de/default.aspx.%0\A%0\d','Kundenfeedback');">Feedback</a>
+				zu diesem Thema.
+			</span><span id="copyrightarea"><p>
+					<a href="9bad553b-9e70-4696-8499-2e35f772a1e0.htm">© 2012
+						Microsoft. Alle Rechte vorbehalten.</a>
+				</p></span>
+		</div>
+	</div>
+</body>
+</html>
