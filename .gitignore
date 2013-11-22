@@ -1,2 +1,6 @@
 .metadata
+
 *.class
+
+*Bin*
+*sqljdbc_4.0*
