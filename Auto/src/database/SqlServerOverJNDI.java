@@ -1,7 +1,9 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -10,6 +12,24 @@ import javax.sql.DataSource;
 public class SqlServerOverJNDI {
 
 	private static Connection con = null;
+	private static Statement stmt = null;
+	private static ResultSet rs = null;
+
+	public static Statement getStmt() {
+		return stmt;
+	}
+
+	public static void setStmt(Statement stmt) {
+		SqlServerOverJNDI.stmt = stmt;
+	}
+
+	public static ResultSet getRs() {
+		return rs;
+	}
+
+	public static void setRs(ResultSet rs) {
+		SqlServerOverJNDI.rs = rs;
+	}
 
 	public static Connection openConnection() {
 		if (hasConnection() == false) {
@@ -44,5 +64,42 @@ public class SqlServerOverJNDI {
 			return true;
 		}
 		return false;
+	}
+
+	public static ResultSet datenAbfragen(String sql) {
+
+		openConnection();
+		try {
+			SqlServerOverJNDI.rs = SqlServerOverJNDI.stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
+
+		return SqlServerOverJNDI.rs;
+
+	}
+
+	public static int updateDaten(String sql) {
+		int rows = 0;
+		try {
+			openConnection();
+			con.setAutoCommit(false);
+			rows = stmt.executeUpdate(sql);
+			con.commit();
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally{
+			closeConnection();
+		}
+		return rows;
 	}
 }
