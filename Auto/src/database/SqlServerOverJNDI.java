@@ -97,7 +97,7 @@ public class SqlServerOverJNDI {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		}finally{
+		} finally {
 			closeConnection();
 		}
 		return rows;
