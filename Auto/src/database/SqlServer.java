@@ -10,28 +10,12 @@ import java.sql.ResultSet;
 public class SqlServer {
 
 	//private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;integratedSecurity=true;";
-	private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=User;passwort=Sommer2013;";
+	private final static String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=User;password=123;";
 
-	private Connection conn = null;
+	private static Connection conn = null;
 	private Statement st = null;
 	private ResultSet rs = null;
 	private PreparedStatement ps = null;
-
-	public Connection getConn() {
-		return conn;
-	}
-
-	private void setConn(Connection conn) {
-		this.conn = conn;
-	}
-
-	public Statement getSt() {
-		return st;
-	}
-
-	public void setSt(Statement st) {
-		this.st = st;
-	}
 
 	public ResultSet getRs() {
 		return rs;
@@ -41,8 +25,25 @@ public class SqlServer {
 		this.rs = rs;
 	}
 
+	public Connection getConn() {
+		return conn;
+	}
+
+	private static void setConn(Connection conn2) {
+		conn = conn2;
+	}
+
+	public Statement getSt() {
+		return this.st;
+	}
+
+	public  void setSt(Statement st1) {
+		this.st = st1;
+	}
+
+	
 	public PreparedStatement getPs() {
-		return ps;
+		return this.ps;
 	}
 
 	public void setPs(PreparedStatement ps, String x) {
@@ -57,35 +58,29 @@ public class SqlServer {
 	}
 
 	public ResultSet retrieveRS(String sql) throws SQLException {
-		if (hasConnection() == false) {
-			try {
-				this.openConnection();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-			this.setSt(this.conn.createStatement());
-			this.setRs(this.st.executeQuery(sql));
+			openConnection();
 			
-			return this.getRs();
+			this.setSt(conn.createStatement());
+			this.rs = this.st.executeQuery(sql);
+			
+			return this.rs;
 	}
 
 	public ResultSet retrievePs(String sp_name, String string, String values)
 			throws SQLException {
 		this.setPs(getConn().prepareStatement("{call " + sp_name + "}"), string);
-		ps.setEscapeProcessing(true);
-		ps.setQueryTimeout(90);
+		this.ps.setEscapeProcessing(true);
+		this.ps.setQueryTimeout(90);
 		// if (values.length - 1 < 0) {
 		// for (int i = 0; i <= values.length - 1; i++) {
-		ps.setString(1, values);
+		this.ps.setString(1, values);
 		// }
 		// } else {
 		// return null;
 		// }
-		this.setRs(ps.executeQuery());
+		this.rs = this.ps.executeQuery();
 
-		return this.getRs();
+		return this.rs;
 
 	}
 
@@ -93,28 +88,28 @@ public class SqlServer {
 			ClassNotFoundException {
 
 		openConnection();
-		this.setSt(conn.createStatement());
-		int count = st.executeUpdate(sql);
+		this.st = conn.createStatement();
+		int count = this.st.executeUpdate(sql);
 		// System.out.println("ROWS AFFECTED: " + count);
-		st.close();
+		this.st.close();
 		return count;
 	}
 
-	public Connection openConnection() throws ClassNotFoundException,
-			SQLException {
+	public static Connection openConnection() {
 		if (hasConnection() == false) {
-			// Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			this.setConn(DriverManager.getConnection(connectionUrl));
-			return this.getConn();
-
-		} else {
-			return this.getConn();
+			try {
+				setConn(DriverManager.getConnection(connectionUrl));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-
+		return conn;
 	}
 
-	public boolean hasConnection() {
-		if ((this.conn != null)) {
+	public static boolean hasConnection() {
+		if (conn != null) {
 			return true;
 		}
 		return false;
@@ -122,17 +117,17 @@ public class SqlServer {
 
 	public void closeResults(Statement st, ResultSet rs, Connection conn) {
 		try {
-			if (this.st != null) {
-				this.st.close();
-				this.setSt(null);
+			if (st != null) {
+				st.close();
+				setSt(null);
 			}
 
-			if (this.rs != null) {
-				this.rs.close();
-				this.setRs(null);
+			if (rs != null) {
+				rs.close();
+				setRs(null);
 			}
-			if (this.conn != null) {
-				this.closeConnection();
+			if (conn != null) {
+				closeConnection();
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -141,10 +136,10 @@ public class SqlServer {
 
 	public void closeConnection() {
 
-		if (this.hasConnection() == true) {
+		if (hasConnection() == true) {
 			try {
-				this.conn.close();
-				this.setConn(null);
+				conn.close();
+				setConn(null);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

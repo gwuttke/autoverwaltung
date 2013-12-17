@@ -5,9 +5,11 @@ import gui.Willkommen;
 import java.sql.Date;
 
 
+
 import database.Procedures;
 import database.SqlServer;
 import domain.Auto;
+import domain.Benzinart;
 
 public class AutoDAO extends Willkommen{
 	SqlServer sqlS = new SqlServer();
@@ -15,7 +17,7 @@ public class AutoDAO extends Willkommen{
 	Auto a = new Auto();
 
 	
-	public int CarIntoDatabase(String kfz, int kaufKm, java.util.Date kaufDatum, java.util.Date erstZulassung, int[] benzinArten){
+	public int CarIntoDatabase(String kfz, int kaufKm, java.util.Date kaufDatum, java.util.Date erstZulassung, Benzinart[] benzinArten){
 	java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
 	java.sql.Date kaufSqlDate = new java.sql.Date(kaufDatum.getTime());
 		
@@ -24,7 +26,7 @@ public class AutoDAO extends Willkommen{
 		return 0;
 	}
 
-	public void updateAutoList(int autoID, int[] benzinarten, Date eZulassung, Date kauf, int anfKm, int aktuKm){
+	public void updateAutoList(int autoID, Benzinart[] benzinarten, Date eZulassung, Date kauf, int anfKm, int aktuKm){
 	for (Auto a : getAutoList()){
 		if (a.getId() == autoID){
 			if (benzinarten != null){

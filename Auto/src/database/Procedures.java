@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import dao.BenzinartDAO;
 import domain.Auto;
 import domain.Benzinart;
 
@@ -20,7 +19,7 @@ public class Procedures extends database.SqlServer {
 		return this.callAuto();
 	}
 
-	public void getAutoUpdate(String kfz, int AktuellKm, int[] BenzinArten) {
+	public void getAutoUpdate(String kfz, int AktuellKm, Benzinart[] BenzinArten) {
 		this.callUpdateAuto(kfz, AktuellKm, BenzinArten);
 	}
 
@@ -60,7 +59,7 @@ public class Procedures extends database.SqlServer {
 	}
 
 	public void setAddAuto(String kfz, int kaufKm, Date kaufDatum,
-		Date erstZulassung, int[] benzinArten) {
+		Date erstZulassung, Benzinart[] benzinArten) {
 		
 		
 		Auto auto = new Auto();
@@ -96,7 +95,7 @@ public class Procedures extends database.SqlServer {
 
 		} finally {
 
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 	}
 
@@ -114,7 +113,7 @@ public class Procedures extends database.SqlServer {
 
 			return rs;
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 	}
 
@@ -153,7 +152,7 @@ public class Procedures extends database.SqlServer {
 			e.getMessage();
 			return null;
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 
 	}
@@ -171,7 +170,7 @@ public class Procedures extends database.SqlServer {
 			e.getMessage();
 			return null;
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 
 	}
@@ -198,7 +197,7 @@ public class Procedures extends database.SqlServer {
 			e.getMessage();
 			return null;
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 		
 	}
@@ -233,7 +232,7 @@ public class Procedures extends database.SqlServer {
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 	}
 
@@ -257,12 +256,12 @@ public class Procedures extends database.SqlServer {
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 
 	}
 
-	private void callUpdateAuto(String kfz, int AktuellKm, int[] BenzinArten) {
+	private void callUpdateAuto(String kfz, int AktuellKm, Benzinart[] BenzinArten) {
 		int autoID = 0;
 		try {
 			openConnection();
@@ -278,16 +277,16 @@ public class Procedures extends database.SqlServer {
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
-			closeResults(getSt(), getRs(), getConn());
+			//closeResults(getSt(), getRs(), getConn());
 		}
 
 	}
 
-	private String benzinArrayToString(int[] a) {
+	private String benzinArrayToString(Benzinart[] a) {
 		String strBenzinArten = "";
 		// Int Array in einen String umwandeln mit kommata getrennt
-		for (int benzin : a) {
-			strBenzinArten += strBenzinArten + benzin + ",";
+		for (Benzinart benzin : a) {
+			strBenzinArten += strBenzinArten + benzin.getId() + ",";
 		}
 		// das letzte komma löschen
 		strBenzinArten = strBenzinArten.substring(0,

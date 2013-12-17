@@ -3,16 +3,17 @@ package gui;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dao.BenzinartDAO;
 import database.SqlServer;
+import domain.Benzinart;
 
 
 
 public class Test extends SqlServer {
-
-	private static SqlServer sqlS = new SqlServer();
-	private static Test t = new Test();
 	
-	private void displayRow(String titel, ResultSet rs) throws SQLException{
+	private BenzinartDAO bDAO = new BenzinartDAO();
+		
+	private static void displayRow(String titel, ResultSet rs) throws SQLException{
 		System.out.println(titel);
 		while (rs.next()){
 			//System.out.println(rs.getString(1)+":" + rs.getString(2));
@@ -20,18 +21,13 @@ public class Test extends SqlServer {
 		}
 	}
 	
-		
-	public static void main (String args[]){
-	
-		try {
-			sqlS.openConnection();
-			t.displayRow("Benzienarten", sqlS.retrieveRS("SELECT * FROM T_BenzinArt"));
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Das Passwort oder die Kennung ist falsch");
-			
-			e.printStackTrace();
-		}
-		
+	public static void main(String[] args) {
+		new Test();
 	}
-	
+		
+	public Test(){
+		for(Benzinart b : bDAO.getBenzinList()){
+			System.out.println(b.getName());
+		}
+	}	
 }

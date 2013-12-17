@@ -8,21 +8,22 @@ import java.util.List;
 import database.*;
 import domain.Benzinart;
 
-public class BenzinartDAO {
+public class BenzinartDAO extends SqlServer{
 	SqlServer sqlS = new SqlServer();
 	Procedures proced = new Procedures();
 
 	private List<Benzinart> benzinList = new ArrayList<Benzinart>();
 	
 
-	public void setBenzinList() throws SQLException {
+	public void setBenzinList() {
 		ResultSet rs = this.BenzinartRS();
 
 		if (rs != null) {
 			try {
 				while (rs.next()) {
-					final Benzinart benzin = new Benzinart();
-					benzin.setName(rs.getString("Benzinart"));
+					Benzinart benzin = new Benzinart();
+					benzin.setName(rs.getString("Benzienart"));
+					benzin.setId(rs.getInt("ID"));
 					benzinList.add(benzin);
 				}
 			} catch (Exception e) {
@@ -30,19 +31,13 @@ public class BenzinartDAO {
 			}
 
 		} else {
-
 			System.out.println("keine Benzinarten zugewiesen");
 		}
 	}
 
 	public List<Benzinart> getBenzinList() {
 		if (benzinList.isEmpty()){
-			try {
-				setBenzinList();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			setBenzinList();
 		}
 		return benzinList;
 	}
@@ -52,11 +47,10 @@ public class BenzinartDAO {
 		ResultSet rsBenzin = null;
 
 		try {
-			sqlS.openConnection();
-			rsBenzin = sqlS
-					.retrieveRS("SELECT Benzienart FROM dbo.T_Benzinart");
+			openConnection();
+			rsBenzin = sqlS.retrieveRS("SELECT Benzienart, ID FROM dbo.T_Benzinart");
 
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 

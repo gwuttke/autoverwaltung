@@ -1,7 +1,6 @@
 package gui;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,24 +33,15 @@ public class Willkommen extends SqlServer {
 	public static void main(String[] args) {
 
 		System.out.println("Datenbank abfrage");
-		try {
-			sqlS.openConnection();
-
-			wk.setBenzinartList();
-			wk.setAutoList();
-			wk.setLandList();
-			wk.setOrtList();
-			wk.setSonstigeAusgabenList();
-			wk.setTankenList();
-			sqlS.closeResults(sqlS.getSt(), sqlS.getRs(), sqlS.getConn());
-
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		openConnection();
+		wk.setBenzinartList();
+		wk.setAutoList();
+		wk.setLandList();
+		wk.setOrtList();
+		wk.setSonstigeAusgabenList();
+		wk.setTankenList();
+		//sqlS.closeResults(sqlS.getSt(), sqlS.getRs(), sqlS.getConn());
 
 		System.out.println("Datenbankabfragen wurden erfolgreich beendet");
 

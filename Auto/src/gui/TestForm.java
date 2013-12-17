@@ -23,19 +23,8 @@ public class TestForm {
 
 	private boolean comboboxFill(String sql, String funktion)
 			throws SQLException {
-		try {
-			sqlS.openConnection();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	//Hier müssen noch die Daten gezogen werden
 		ResultSet rs = null;
-		try {
-			rs = sqlS.retrieveRS(sql);
-		} catch (Exception e) {
-			return false;
-		}
-
 		if (funktion == "Benzinart") {
 			while (rs.next()) {
 				combo1.addItem(rs.getString("Benzienart"));

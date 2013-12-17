@@ -70,10 +70,11 @@ public class SqlServerOverJNDI {
 
 		openConnection();
 		try {
-			SqlServerOverJNDI.rs = SqlServerOverJNDI.stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			e.getSQLState();
 		}
 		closeConnection();
 
@@ -101,5 +102,27 @@ public class SqlServerOverJNDI {
 			closeConnection();
 		}
 		return rows;
+	}
+
+	public static void closeResults() {
+		if (SqlServerOverJNDI.stmt != null) {
+			try {
+				SqlServerOverJNDI.stmt.close();
+				SqlServerOverJNDI.stmt = null;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (SqlServerOverJNDI.rs != null){
+			try {
+				SqlServerOverJNDI.rs.close();
+				SqlServerOverJNDI.rs = null;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }

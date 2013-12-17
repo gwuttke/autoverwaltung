@@ -14,6 +14,19 @@ public class Benzinart {
 		this.id = id;
 	}
 
+	public Benzinart(){
+		
+	}
+
+	public Benzinart(String name, Integer id) {
+		super();
+		if (name.equals(null)){
+			throw new IllegalArgumentException("Der Name ist nicht gueltig");
+		}
+		this.name = name;
+		this.id = id;
+	}
+
 
 	public String getName() {
 		return name;

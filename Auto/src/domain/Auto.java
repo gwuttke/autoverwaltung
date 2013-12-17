@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 public class Auto {
@@ -10,13 +11,28 @@ public class Auto {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	private int[] benzinArten;
+	private Benzinart[] benzinArten;
 	private int kmAktuell;
 	private int kmGefahren;
 	private String autoAlter;
 	private String kaufAlter;
-
 	private static Datum datum = new Datum();
+
+	public Auto(String kfz, int id, int kmKauf, Date kauf, Date erstZulassung,
+			Benzinart[] benzinArten, int kmAktuell) {
+		super();
+		this.kfz = kfz;
+		this.id = id;
+		this.kmKauf = kmKauf;
+		this.kauf = kauf;
+		this.erstZulassung = erstZulassung;
+		this.benzinArten = benzinArten;
+		this.kmAktuell = kmAktuell;
+	}
+
+	public Auto() {
+
+	}
 
 	public String getKfz() {
 		return kfz;
@@ -58,12 +74,12 @@ public class Auto {
 		this.erstZulassung = erstZulassung;
 	}
 
-	public int[] getBenzinArten() {
+	public Benzinart[] getBenzinArten() {
 		return benzinArten;
 	}
 
-	public void setBenzinArten(int[] benzinArten2) {
-		this.benzinArten = benzinArten2;
+	public void setBenzinArten(Benzinart[] benzinArten) {
+		this.benzinArten = benzinArten;
 	}
 
 	public int getKmAktuell() {
@@ -112,6 +128,14 @@ public class Auto {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Auto [kfz=" + kfz + ", id=" + id + ", kmKauf=" + kmKauf
+				+ ", kauf=" + kauf + ", erstZulassung=" + erstZulassung
+				+ ", benzinArten=" + Arrays.toString(benzinArten)
+				+ ", kmAktuell=" + kmAktuell + ", kmGefahren=" + kmGefahren
+				+ ", autoAlter=" + autoAlter + ", kaufAlter=" + kaufAlter + "]";
+	}
 
 	private void berechneAutoAlter() {
 
@@ -124,7 +148,7 @@ public class Auto {
 					.getDifference(new GregorianCalendar(getErstZulassung()
 							.getYear(), getErstZulassung().getMonth(),
 							getErstZulassung().getDay())));
-		}else{
+		} else {
 			setAutoAlter("Keine Angabe Moeglich");
 		}
 	}

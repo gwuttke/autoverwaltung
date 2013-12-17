@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -27,6 +26,7 @@ import javax.swing.SwingConstants;
 
 import dao.AutoDAO;
 import database.Procedures;
+import domain.Benzinart;
 
 public class addAuto extends JFrame {
 
@@ -50,7 +50,7 @@ public class addAuto extends JFrame {
 	final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
 	final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
 
-	int[] benzinArten = new int[]{4,5};
+	Benzinart[] benzinArten = new Benzinart[]{new Benzinart()};
 	
 	private static JSpinner getDateSpinner(final String name) {
 		Calendar cal = Calendar.getInstance();
