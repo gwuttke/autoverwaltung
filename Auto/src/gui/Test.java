@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import dao.BenzinartDAO;
 import database.SqlServer;
 import domain.Benzinart;
+import domain.Settings;
 
 
 
 public class Test extends SqlServer {
-	
+
 	private BenzinartDAO bDAO = new BenzinartDAO();
 		
 	private static void displayRow(String titel, ResultSet rs) throws SQLException{

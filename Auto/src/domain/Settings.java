@@ -1,15 +1,15 @@
 package domain;
 
-public class settings {
+public class Settings {
 	
 	private static Auto  auto = null;
+	private static Benutzer benutzer = null;
 
 	public static Auto getAuto() {
 		return auto;
 	}
 
 	public static void setAuto(Auto auto) {
-		settings.auto = auto;
+		Settings.auto = auto;
 	}
-
 }

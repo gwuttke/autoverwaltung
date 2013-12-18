@@ -8,12 +8,11 @@ import java.util.List;
 import database.*;
 import domain.Benzinart;
 
-public class BenzinartDAO extends SqlServer{
+public class BenzinartDAO extends SqlServer {
 	SqlServer sqlS = new SqlServer();
 	Procedures proced = new Procedures();
 
 	private List<Benzinart> benzinList = new ArrayList<Benzinart>();
-	
 
 	public void setBenzinList() {
 		ResultSet rs = this.BenzinartRS();
@@ -28,15 +27,16 @@ public class BenzinartDAO extends SqlServer{
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				closeResults(getSt(), getRs(), getConn());
 			}
-
 		} else {
 			System.out.println("keine Benzinarten zugewiesen");
 		}
 	}
 
 	public List<Benzinart> getBenzinList() {
-		if (benzinList.isEmpty()){
+		if (benzinList.isEmpty()) {
 			setBenzinList();
 		}
 		return benzinList;
@@ -48,7 +48,7 @@ public class BenzinartDAO extends SqlServer{
 
 		try {
 			openConnection();
-			rsBenzin = sqlS.retrieveRS("SELECT Benzienart, ID FROM dbo.T_Benzinart");
+			return sqlS.retrieveRS(SqlAbfrage.SQL_BENZINART);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
