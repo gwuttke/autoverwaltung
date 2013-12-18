@@ -59,10 +59,8 @@ public class SqlServer {
 
 	public ResultSet retrieveRS(String sql) throws SQLException {
 			openConnection();
-			
 			this.setSt(conn.createStatement());
 			this.rs = this.st.executeQuery(sql);
-			
 			return this.rs;
 	}
 
