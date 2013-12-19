@@ -5,40 +5,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.SqlAbfrage;
 import database.SqlServer;
 import domain.SonstigeAusgaben;
 
-public class SonstigeAusgabenDao {
+public class SonstigeAusgabenDao extends SqlServer {
 
-	private SqlServer sqlS = new SqlServer();
 
-	private List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
-	private ResultSet sonstigeAusgabenRS = null;
+	private static List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
 
-	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
-		if (sonstigeAusgabenList != null) {
-			return sonstigeAusgabenList;
-		} else {
-			this.setSonstigeAusgabenList();
-			this.getSonstigeAusgabenList();
-		}
+
+	public static List<SonstigeAusgaben> getSonstigeAusgabenList() {
 		return sonstigeAusgabenList;
 	}
 
-	public void setSonstigeAusgabenList() {
-
-		ResultSet rs = getSonstigeAusgaben();
+	public static void setSonstigeAusgabenList() throws SQLException {
+		
+		ResultSet rsSonsAusg = retrieveRS(SqlAbfrage.SQL_SONSTIGE_AUSGABEN);
 
 		try {
-			while (rs.next()) {
-				final SonstigeAusgaben sonsAusgaben = new SonstigeAusgaben();
-				sonsAusgaben.setAutoId(rs.getInt("Auto_ID"));
-				sonsAusgaben.setDatum(rs.getDate("Datum"));
-				sonsAusgaben.setKmStand(rs.getInt("KM_Stand"));
-				sonsAusgaben.setKommentar(rs.getString("Kommentar"));
-				sonsAusgaben.setKosten(rs.getBigDecimal("Kosten"));
-				sonstigeAusgabenList.add(sonsAusgaben);
+			while (rsSonsAusg.next()) {
+				SonstigeAusgaben sA = new SonstigeAusgaben();
 
+				sA.setAutoId(rsSonsAusg.getInt("Auto_ID"));
+				sA.setDatum(rsSonsAusg.getDate("Datum"));
+				sA.setKmStand(rsSonsAusg.getInt("Km_Stand"));
+				sA.setKommentar(rsSonsAusg.getString("Komentar"));
+				sA.setKosten(rsSonsAusg.getBigDecimal("Kosten"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -47,25 +40,9 @@ public class SonstigeAusgabenDao {
 
 	}
 
-	private ResultSet getSonstigeAusgaben() {
-
-		String sql = "SELECT ID_Sons_Ausgaben, Datum, Km_Stand, Kommentar, Kosten, Auto_ID FROM T_Land";
-
-		try {
-			sonstigeAusgabenRS = sqlS.retrieveRS(sql);
-			return sonstigeAusgabenRS;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return sonstigeAusgabenRS;
-
-	}
-	
-	public void updateListe(){
-		this.getSonstigeAusgabenList().clear();
-		this.setSonstigeAusgabenList();
+	public void updateListe() throws SQLException{
+		getSonstigeAusgabenList().clear();
+		setSonstigeAusgabenList();
 	}
 
 }

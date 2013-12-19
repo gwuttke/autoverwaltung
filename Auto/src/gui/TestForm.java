@@ -9,7 +9,7 @@ import javax.swing.*;
 import database.SqlServer;
 
 
-public class TestForm {
+public class TestForm extends SqlServer {
 	//Vererbung von Klassen
 	final static JFrame frame = new JFrame();
 	final static Test t = new Test();
@@ -35,7 +35,7 @@ public class TestForm {
 			}
 		}
 
-		sqlS.closeResults(null, rs, sqlS.getConn());
+		sqlS.closeResults(null, rs, getConn());
 
 		return true;
 

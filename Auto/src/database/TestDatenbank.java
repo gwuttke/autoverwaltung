@@ -19,7 +19,7 @@ public class TestDatenbank extends SqlAbfrage {
 
 	private static void ausgabe() {
 
-		giveAuto();
+		//giveAuto();
 		try {
 			while (getRs().next()) {
 				Auto a = new Auto(getRs().getString("Kennzeichen"), getRs()

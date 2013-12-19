@@ -12,10 +12,16 @@ public class BenzinartDAO extends SqlServer {
 	SqlServer sqlS = new SqlServer();
 	Procedures proced = new Procedures();
 
-	private List<Benzinart> benzinList = new ArrayList<Benzinart>();
+	private static List<Benzinart> benzinartList = new ArrayList<Benzinart>();
 
-	public void setBenzinList() {
-		ResultSet rs = this.BenzinartRS();
+	public static List<Benzinart> getBenzinartList() {
+		return benzinartList;
+	}
+
+	public static void setBenzinList() throws SQLException {
+		ResultSet rs = null;
+		
+		rs = retrieveRS(SqlAbfrage.SQL_BENZINART);
 
 		if (rs != null) {
 			try {
@@ -23,7 +29,7 @@ public class BenzinartDAO extends SqlServer {
 					Benzinart benzin = new Benzinart();
 					benzin.setName(rs.getString("Benzienart"));
 					benzin.setId(rs.getInt("ID"));
-					benzinList.add(benzin);
+					benzinartList.add(benzin);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -33,29 +39,6 @@ public class BenzinartDAO extends SqlServer {
 		} else {
 			System.out.println("keine Benzinarten zugewiesen");
 		}
-	}
-
-	public List<Benzinart> getBenzinList() {
-		if (benzinList.isEmpty()) {
-			setBenzinList();
-		}
-		return benzinList;
-	}
-
-	private ResultSet BenzinartRS() {
-
-		ResultSet rsBenzin = null;
-
-		try {
-			openConnection();
-			return sqlS.retrieveRS(SqlAbfrage.SQL_BENZINART);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return rsBenzin;
-
 	}
 
 }

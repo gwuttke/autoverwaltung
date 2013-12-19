@@ -27,7 +27,7 @@ public class Test extends SqlServer {
 	}
 		
 	public Test(){
-		for(Benzinart b : bDAO.getBenzinList()){
+		for(Benzinart b : bDAO.getBenzinartList()){
 			System.out.println(b.getName());
 		}
 	}	

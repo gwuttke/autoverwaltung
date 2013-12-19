@@ -5,87 +5,59 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.SqlAbfrage;
 import database.SqlServer;
-
 import domain.Land;
 import domain.Ort;
 
-public class OrtDao {
+public class OrtDao extends SqlServer{
 
-	private List<Ort> orte = new ArrayList<Ort>();
-	private List<Ort> landOrte = new ArrayList<Ort>();
-	private SqlServer sqlS = new SqlServer();
-	private LandDao l = new LandDao();
-
-	public List<Ort> getOrte() {
+	private static List<Ort> orte = new ArrayList<Ort>();
+	
+	public static List<Ort> getOrtList() {
 		return orte;
 	}
 
-	public void setOrte() {
-		ResultSet rs = getOrt();
+	public static void setOrtList() throws SQLException {
+		ResultSet rsOrt = retrieveRS(SqlAbfrage.SQL_ORT);
 
-		if (rs != null) {
+		if (rsOrt != null) {
 			try {
-				while (rs.next()) {
-					final Ort ort = new Ort();
-					ort.setOrt(rs.getString("Name"));
-					ort.setId(rs.getInt("ID"));
-					ort.setLandId(rs.getInt("LandID"));
+				while (rsOrt.next()) {
+					Ort ort = new Ort();
+					ort.setId(rsOrt.getInt("ID"));
+					ort.setOrt(rsOrt.getString("Name"));
+					ort.setLand(getLand(rsOrt.getInt("LandID")));
+
 					orte.add(ort);
 				}
-			} catch (Exception e) {
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		} else {
-			System.out.println("keine Orte Vorhanden");
+			System.out.println("es gibt kein resultset");
 		}
 
 	}
 
-	public List<Ort> getLandOrte() {
-		return landOrte;
-	}
-
-	public void setLandOrte(List<Ort> landOrte) {
-		this.landOrte = landOrte;
-	}
-
-	public void updateOrte(String land) {
-		int landID = -1;
-		for (Land la : l.getLänder()) {
-			if (la.getName() == land) {
-				landID = la.getId();
-			}
-
-		}
-		if (landID > -1) {
-			for (Ort o : orte) {
-				if (o.getLandId() == landID) {
-					final Ort ort = new Ort();
-					ort.setOrt(o.getOrt());
-					landOrte.add(ort);
-				}
-
+	private static Land getLand(int landId) {
+		for (Land l : LandDao.getLaender()) {
+			if (l.getId() == landId) {
+				return l;
 			}
 		}
+		return null;
 	}
 
-	private ResultSet getOrt() {
-		ResultSet ortRS = null;
+	public List<Ort> getOrteInLand(Land land) {
+		List<Ort> l = null;
 
-		String sql = "SELECT ID, Name, LandID FROM T_Ort";
-
-		try {
-			ortRS = sqlS.retrieveRS(sql);
-			return ortRS;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Es wurden keine Orte geladen");
+		for (Ort o : orte) {
+			if (o.getLand().equals(land)) {
+				l.add(o);
+			}
 		}
-
-		return ortRS;
-
+		return l;
 	}
 }

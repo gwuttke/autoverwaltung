@@ -13,19 +13,19 @@ public class SqlServer {
 	private final static String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=User;password=123;";
 
 	private static Connection conn = null;
-	private Statement st = null;
-	private ResultSet rs = null;
+	private static Statement st = null;
+	private static ResultSet rs = null;
 	private PreparedStatement ps = null;
 
-	public ResultSet getRs() {
+	public static ResultSet getRs() {
 		return rs;
 	}
 
-	public void setRs(ResultSet rs) {
-		this.rs = rs;
+	public void setRs(ResultSet rs2) {
+		rs = rs2;
 	}
 
-	public Connection getConn() {
+	public static Connection getConn() {
 		return conn;
 	}
 
@@ -33,12 +33,12 @@ public class SqlServer {
 		conn = conn2;
 	}
 
-	public Statement getSt() {
-		return this.st;
+	public static Statement getSt() {
+		return st;
 	}
 
 	public  void setSt(Statement st1) {
-		this.st = st1;
+		st = st1;
 	}
 
 	
@@ -57,11 +57,12 @@ public class SqlServer {
 		// }
 	}
 
-	public ResultSet retrieveRS(String sql) throws SQLException {
+	public static ResultSet retrieveRS(String sql) throws SQLException {
 			openConnection();
-			this.setSt(conn.createStatement());
-			this.rs = this.st.executeQuery(sql);
-			return this.rs;
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			return rs;
+			
 	}
 
 	public ResultSet retrievePs(String sp_name, String string, String values)
@@ -76,9 +77,9 @@ public class SqlServer {
 		// } else {
 		// return null;
 		// }
-		this.rs = this.ps.executeQuery();
+		rs = ps.executeQuery();
 
-		return this.rs;
+		return rs;
 
 	}
 
@@ -86,10 +87,10 @@ public class SqlServer {
 			ClassNotFoundException {
 
 		openConnection();
-		this.st = conn.createStatement();
-		int count = this.st.executeUpdate(sql);
+		st = conn.createStatement();
+		int count = st.executeUpdate(sql);
 		// System.out.println("ROWS AFFECTED: " + count);
-		this.st.close();
+		st.close();
 		return count;
 	}
 
@@ -113,16 +114,16 @@ public class SqlServer {
 		return false;
 	}
 
-	public void closeResults(Statement st, ResultSet rs, Connection conn) {
+	public static void closeResults(Statement st, ResultSet rs, Connection conn) {
 		try {
 			if (st != null) {
 				st.close();
-				setSt(null);
+				st = null;
 			}
 
 			if (rs != null) {
 				rs.close();
-				setRs(null);
+				rs = null;
 			}
 			if (conn != null) {
 				closeConnection();
@@ -132,7 +133,7 @@ public class SqlServer {
 		}
 	}
 
-	public void closeConnection() {
+	public static void closeConnection() {
 
 		if (hasConnection() == true) {
 			try {
