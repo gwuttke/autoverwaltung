@@ -17,6 +17,15 @@ public class BenzinartDAO extends SqlServer {
 	public static List<Benzinart> getBenzinartList() {
 		return benzinartList;
 	}
+	
+	public Benzinart getBenzinart(int id){
+		for(Benzinart ba : benzinartList){
+			if(ba.getId().equals(id)){
+				return ba;
+			}
+		}
+		return null;
+	}
 
 	public static void setBenzinList() throws SQLException {
 		ResultSet rs = null;
@@ -40,5 +49,6 @@ public class BenzinartDAO extends SqlServer {
 			System.out.println("keine Benzinarten zugewiesen");
 		}
 	}
+	
 
 }

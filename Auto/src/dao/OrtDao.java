@@ -12,9 +12,11 @@ import domain.Ort;
 
 public class OrtDao extends SqlServer{
 
+	private static LandDao lDao = new LandDao();
 	private static List<Ort> orte = new ArrayList<Ort>();
 	
-	public static List<Ort> getOrtList() {
+	
+	public List<Ort> getOrtList() {
 		return orte;
 	}
 
@@ -27,7 +29,7 @@ public class OrtDao extends SqlServer{
 					Ort ort = new Ort();
 					ort.setId(rsOrt.getInt("ID"));
 					ort.setOrt(rsOrt.getString("Name"));
-					ort.setLand(getLand(rsOrt.getInt("LandID")));
+					ort.setLand(lDao.getLand(rsOrt.getInt("LandID")));
 
 					orte.add(ort);
 				}
@@ -40,9 +42,18 @@ public class OrtDao extends SqlServer{
 		}
 
 	}
+	
+	public Ort getOrt(int id){
+		for(Ort o : orte){
+			if (o.getId() == id){
+				return o;
+			}
+		}
+		return null;
+	}
 
-	private static Land getLand(int landId) {
-		for (Land l : LandDao.getLaender()) {
+	private Land getLand(int landId) {
+		for (Land l : lDao.getLaender()) {
 			if (l.getId() == landId) {
 				return l;
 			}
@@ -51,7 +62,7 @@ public class OrtDao extends SqlServer{
 	}
 
 	public List<Ort> getOrteInLand(Land land) {
-		List<Ort> l = null;
+		List<Ort> l = new ArrayList<Ort>();
 
 		for (Ort o : orte) {
 			if (o.getLand().equals(land)) {

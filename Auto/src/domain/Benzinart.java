@@ -18,6 +18,7 @@ public class Benzinart {
 		
 	}
 
+
 	public Benzinart(String name, Integer id) {
 		super();
 		if (name.equals(null)){

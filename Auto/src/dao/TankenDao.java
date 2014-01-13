@@ -12,6 +12,9 @@ import domain.Tanken;
 
 public class TankenDao extends SqlServer {
 
+	private static OrtDao oDao = new OrtDao();
+	private static LandDao lDao = new LandDao();
+	private static BenzinartDAO bDao = new BenzinartDAO(); 
 	private static List<Tanken> tankenList = new ArrayList<Tanken>();
 
 
@@ -29,12 +32,12 @@ public class TankenDao extends SqlServer {
 				Tanken t = new Tanken();
 
 				t.setAutoId(rsTanken.getInt("Auto_ID"));
-				t.setBenzinArtId(rsTanken.getInt("BenzinartID"));
+				t.setBenzinArt(bDao.getBenzinart(rsTanken.getInt("BenzinartID")));
 				t.setKmStand(rsTanken.getInt("Km_Stand"));
 				t.setKosten((BigDecimal) rsTanken.getBigDecimal("Kosten"));
-				t.setLandId(rsTanken.getInt("Land"));
+				t.setLand(lDao.getLand(rsTanken.getInt("Land")));
 				t.setLiter(rsTanken.getBigDecimal("Liter"));
-				t.setOrtId(rsTanken.getInt("Ort"));
+				t.setOrt(oDao.getOrt(rsTanken.getInt("Ort")));
 				t.setPreisProLiter(rsTanken.getBigDecimal("Preis_p_Liter"));
 				t.setVoll(rsTanken.getInt("Voll"));
 			}

@@ -13,7 +13,7 @@ public class LandDao extends SqlServer {
 
 	private static List<Land> laender = new ArrayList<Land>();
 
-	public static List<Land> getLaender() {
+	public List<Land> getLaender() {
 		return laender;
 	}
 
@@ -31,6 +31,16 @@ public class LandDao extends SqlServer {
 			System.out.println("Leander sind nicht vorhanden");
 			e.printStackTrace();
 		}
+	}
+	
+	public Land getLand(int id){
+		for (Land l : laender){
+			if(l.getId() == id){
+				return l;
+			}
+		}
+		return null;
+		
 	}
 
 }

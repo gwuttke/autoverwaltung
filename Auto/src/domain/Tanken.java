@@ -7,15 +7,15 @@ import java.sql.Date;
 public class Tanken {
 
 	private int kmStand;
-	private int landId;
-	private int ortId;
+	private Land land;
+	private Ort ort;
 	private int voll;
 	private BigDecimal kosten;
 	private int autoId;
 	private Date datum;
 	private BigDecimal liter;
 	private BigDecimal preisProLiter;
-	private int benzinArtId;
+	private Benzinart benzinArt;
 
 	private static Berechnung berechne = new Berechnung();
 
@@ -26,14 +26,6 @@ public class Tanken {
 
 	public void setPreisProLiter(BigDecimal preisProLiter) {
 		this.preisProLiter = preisProLiter;
-	}
-
-	public int getBenzinArtId() {
-		return benzinArtId;
-	}
-
-	public void setBenzinArtId(int benzinArtId) {
-		this.benzinArtId = benzinArtId;
 	}
 
 	public int getVoll() {
@@ -50,22 +42,6 @@ public class Tanken {
 
 	public void setKmStand(int kmStand) {
 		this.kmStand = kmStand;
-	}
-
-	public int getLandId() {
-		return landId;
-	}
-
-	public void setLandId(int landId) {
-		this.landId = landId;
-	}
-
-	public int getOrtId() {
-		return ortId;
-	}
-
-	public void setOrtId(int ortId) {
-		this.ortId = ortId;
 	}
 
 	public String getKosten() {
@@ -100,6 +76,30 @@ public class Tanken {
 
 	public void setLiter(BigDecimal liter) {
 		this.liter = liter;
+	}
+
+	public Benzinart getBenzinArt() {
+		return benzinArt;
+	}
+
+	public void setBenzinArt(Benzinart benzinArt) {
+		this.benzinArt = benzinArt;
+	}
+
+	public Land getLand() {
+		return land;
+	}
+
+	public void setLand(Land land) {
+		this.land = land;
+	}
+
+	public Ort getOrt() {
+		return ort;
+	}
+
+	public void setOrt(Ort ort) {
+		this.ort = ort;
 	}
 
 
