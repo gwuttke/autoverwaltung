@@ -2,7 +2,7 @@ package domain;
 
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Tanken {
 

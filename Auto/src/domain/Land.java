@@ -4,6 +4,15 @@ public class Land {
 	private String name;
 	private int id;
 
+	public Land() {
+
+	}
+
+	public Land(final Land l) {
+		this.name = l.name;
+		this.id = l.id;
+	}
+
 	public String getName() {
 		return name;
 	}
