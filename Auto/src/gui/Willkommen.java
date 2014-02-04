@@ -27,12 +27,10 @@ import dao.OrtDao;
 import dao.SonstigeAusgabenDao;
 import dao.TankenDao;
 import database.SqlServer;
-import domain.Auto;
 import domain.Settings;
 
 public class Willkommen extends SqlServer {
 
-	private static AutoDAO aDAO = new AutoDAO();
 	private static JFrame frame = new JFrame();
 	private static JTextField tfEingabe = new JTextField();
 	private static JButton btnOk = new JButton("OK");
@@ -113,6 +111,7 @@ public class Willkommen extends SqlServer {
 						// sqlS.getConn());
 					}
 				}
+				
 			}
 		});
 
