@@ -83,7 +83,7 @@ public class SqlServer {
 
 	}
 
-	public int executeUpdateStatemant(String sql) throws SQLException,
+	public static int executeUpdateStatemant(String sql) throws SQLException,
 			ClassNotFoundException {
 
 		openConnection();

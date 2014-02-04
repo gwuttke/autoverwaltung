@@ -14,7 +14,7 @@ public class SqlAbfrage extends SqlServer {
 	public final static String SQL_LAENDER = "SELECT ID, Name FROM dbo.T_Land;";
 	public final static String SQL_SONSTIGE_AUSGABEN = "SELECT ID_Sons_Ausgaben, Datum, Km_Stand, Komentar, Kosten, Auto_ID FROM T_Sonstige_Ausgaben WHERE Auto_ID = "
 			+ Settings.getAuto().getId() ;
-	public final static String SQL_TANKEN = "SELECT ID_Tanken, Km_Stand, Land, Ort, Voll, Kosten, Auto_ID, "
+	public final static String SQL_TANKEN = "SELECT ID, Km_Stand, Land, Ort, Voll, Kosten, Auto_ID, "
 	+ "Datum, Liter, Preis_p_Liter, BenzinartID FROM T_Tanken WHERE Auto_ID = " + Settings.getAuto().getId() ;
 //	public static ResultSet giveAuto(){
 //		 return datenAbfragen(sqlAuto); 
