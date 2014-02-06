@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -60,7 +61,9 @@ public class AddTanken extends JFrame {
 		JTextField tfLiter = new JTextField();
 		JTextField tfPreisPLiter = new JTextField();
 		JTextField tfKosten = new JTextField();
-		// JSpinner spKmStand = new
+		
+		//Button
+		JButton Add = new JButton()
 
 		Container con = new Container();
 		con = getContentPane();
@@ -88,6 +91,7 @@ public class AddTanken extends JFrame {
 
 		con.add(jpEingaben, BorderLayout.CENTER);
 		
+		setTitle(Text.ADD_TANKEN);
 		pack();
 		setVisible(true);
 

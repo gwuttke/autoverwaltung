@@ -7,5 +7,6 @@ public static final String TABELLE_SPALTEN_NAME ="es gibt keine Spaltennamen";
 public static final String TABELLE_KEINE_DATEN = "es sind noch keine Daten vorhanden.";
 public static final String LAND = "Land";
 public static final String ORT = "Ort";
+public static final String ADD_TANKEN = "Tanken hinzufügen";
 
 }
