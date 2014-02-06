@@ -39,4 +39,10 @@ public class Benzinart {
 	}
 
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
+
 }

@@ -16,6 +16,9 @@ public class SqlAbfrage extends SqlServer {
 			+ Settings.getAuto().getId() ;
 	public final static String SQL_TANKEN = "SELECT ID, Km_Stand, Land, Ort, Voll, Kosten, Auto_ID, "
 	+ "Datum, Liter, Preis_p_Liter, BenzinartID FROM T_Tanken WHERE Auto_ID = " + Settings.getAuto().getId() ;
+	
+	public final static String SQL_Tankfuellung = "SELECT Id, Beschreibung FROM T_Tank;";
+	
 //	public static ResultSet giveAuto(){
 //		 return datenAbfragen(sqlAuto); 
 //	}
