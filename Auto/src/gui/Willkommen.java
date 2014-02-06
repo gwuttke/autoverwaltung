@@ -32,7 +32,7 @@ import domain.Settings;
 public class Willkommen extends SqlServer {
 
 	private static JFrame frame = new JFrame();
-	private static JTextField tfEingabe = new JTextField();
+	private static JTextField tfEingabe = new JTextField("M - WU 3194");
 	private static JButton btnOk = new JButton("OK");
 	private JLabel lAuto = new JLabel(
 			"Bitte geben Sie das Kennzeichen des Autos ein:");
@@ -111,7 +111,7 @@ public class Willkommen extends SqlServer {
 						// sqlS.getConn());
 					}
 				}
-				
+				new AddTanken();
 			}
 		});
 
