@@ -11,12 +11,19 @@ import database.SqlAbfrage;
 import database.SqlServer;
 import domain.Auto;
 import domain.Benzinart;
+import domain.Settings;
 
 public class AutoDAO extends SqlServer {
-	
+
+	Settings setting;
+
 	Procedures proc = new Procedures();
-	private static List<Auto> autoList = new ArrayList<Auto>();
+	private List<Auto> autoList = new ArrayList<Auto>();
 	Auto a = new Auto();
+
+	public AutoDAO(Settings setting) {
+		this.setting = setting;
+	}
 
 	public int CarIntoDatabase(String kfz, int kaufKm,
 			java.util.Date kaufDatum, java.util.Date erstZulassung,
@@ -29,9 +36,9 @@ public class AutoDAO extends SqlServer {
 		return 0;
 	}
 
-	public static void updateAutoList(int autoID, Benzinart[] benzinarten,
+	public void updateAutoList(int autoID, Benzinart[] benzinarten,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
-		for (Auto a : getAutoList()) {
+		for (Auto a : this.autoList) {
 			if (a.getId() == autoID) {
 				if (benzinarten != null) {
 					a.setBenzinArten(benzinarten);
@@ -54,11 +61,16 @@ public class AutoDAO extends SqlServer {
 		}
 
 	}
-	
-	public static void setAutoList() throws SQLException {
 
-		ResultSet rsAuto = retrieveRS(SqlAbfrage.SQL_AUTO);
+	public void setAutoList(Settings setting) throws SQLException {
+		ResultSet rsAuto = null;
+	
+			SqlAbfrage abfrage = new SqlAbfrage(setting);
+			rsAuto = retrieveRS(abfrage.SQL_AUTO);
 		
+		// wenn Benutzer verwendet wird dann:
+		// SqlAbfrage abfrage = new SqlAbfrage(this.setting);
+
 		try {
 			while (rsAuto.next()) {
 				Auto a = new Auto();
@@ -72,24 +84,34 @@ public class AutoDAO extends SqlServer {
 				}
 				a.setAlter();
 				a.setKmGefahren();
-				autoList.add(a);
+				this.autoList.add(a);
 			}
+			setting.setAuto(a);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
+		} finally {
 			closeResults(getSt(), getRs(), null);
 		}
 
 	}
 
-	public static List<Auto> getAutoList() {
-		return autoList;
+	public List<Auto> getAutoList() {
+		if (autoList.isEmpty()) {
+			try {
+				setAutoList(setting);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			getAutoList();
+		}
+		return this.autoList;
 	}
-	
-	public static Auto getAuto(String kennzeichen){
-		for (Auto a : autoList){
-			if (a.getKfz().equals(kennzeichen)){
+
+	public Auto getAuto(String kennzeichen) {
+		for (Auto a : this.autoList) {
+			if (a.getKfz().equals(kennzeichen)) {
 				return a;
 			}
 		}

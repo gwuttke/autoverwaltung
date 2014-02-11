@@ -27,10 +27,15 @@ import dao.OrtDao;
 import dao.SonstigeAusgabenDao;
 import dao.TankenDao;
 import database.SqlServer;
+import domain.Auto;
 import domain.Settings;
 
 public class Willkommen extends SqlServer {
 
+	private Settings setting = new Settings();
+	AutoDAO aDao = new AutoDAO(setting);
+	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting); 
+	
 	private static JFrame frame = new JFrame();
 	private static JTextField tfEingabe = new JTextField("M - WU 3194");
 	private static JButton btnOk = new JButton("OK");
@@ -57,8 +62,9 @@ public class Willkommen extends SqlServer {
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				inizialsieren();
+				//inizialsieren();
 				lStatus.setText("Bitte geben sie ihr Kennzeichen ein.");
+				tfEingabe.setEnabled(true);
 			}
 
 			@Override
@@ -84,25 +90,33 @@ public class Willkommen extends SqlServer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				do {
-					Settings.setAuto(AutoDAO.getAuto(tfEingabe.getText()));
-				} while (tfEingabe.getText() == null);
+				try {
+					setting.setAuto(tfEingabe.getText());
+					aDao.setAutoList(setting);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setting.setAuto(aDao.getAuto(tfEingabe.getText()));
+				inizialsieren();
 
-				if (Settings.getAuto() == null){
+				if (setting.getAuto() == null){
 					lStatus.setText("Falsche eingabe bitte versuchen sie es Erneut!!");
-					tfEingabe.setText(null);
+					tfEingabe.setText("");
 					tfEingabe.setFocusable(true);
 					return ;
 				}
-				if (Settings.getAuto() != null) {
+				
+				
+				
+				if (setting.getAuto() != null) {
 					try {
 
 						BenzinartDAO.setBenzinList();
 						LandDao.setLaender();
 						OrtDao.setOrtList();
-						SonstigeAusgabenDao.setSonstigeAusgabenList();
-						TankenDao.setTankenList();
+						sADao.setSonstigeAusgabenList(setting);
+						TankenDao.setTankenList(setting);
 						lStatus.setText("Daten wurden geladen");
 					} catch (SQLException ex) {
 						// TODO Auto-generated catch block
@@ -111,7 +125,7 @@ public class Willkommen extends SqlServer {
 						// sqlS.getConn());
 					}
 				}
-				new AddTanken();
+				new AddTanken(setting);
 			}
 		});
 
@@ -135,18 +149,16 @@ public class Willkommen extends SqlServer {
 
 	}
 
-	private static void inizialsieren() {
-		System.out.println("Datenbank abfrage");
-
+	private void inizialsieren() {
 		openConnection();
 
 		try {
-			AutoDAO.setAutoList();
+			aDao.setAutoList(setting);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if (AutoDAO.getAutoList() != null) {
+		if (aDao.getAutoList() != null) {
 			tfEingabe.setEnabled(true);
 			lStatus.setText("Bitte geben sie Ihr kennzeichen ein");
 

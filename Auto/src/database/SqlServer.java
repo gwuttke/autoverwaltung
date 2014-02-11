@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class SqlServer {
+	
 
 	//private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;integratedSecurity=true;";
 	private final static String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Auto;user=User;password=123;";

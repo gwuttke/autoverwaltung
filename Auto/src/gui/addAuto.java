@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import dao.AutoDAO;
 import database.Procedures;
 import domain.Benzinart;
+import domain.Settings;
 
 public class addAuto extends JFrame {
 
@@ -35,8 +36,9 @@ public class addAuto extends JFrame {
 	 * Hier fehlt noch der Befehl Hinzufügen in die Datenbank
 	 */
 
+	private Settings setting;
 	// Klassen
-	final static AutoDAO autoDao = new AutoDAO();
+	final AutoDAO autoDao = new AutoDAO(setting );
 	final static Procedures proc = new Procedures();
 	// Komponenten
 	final static JList<String> ALL_AUTO_LIST = new JList<String>();
@@ -93,14 +95,7 @@ public class addAuto extends JFrame {
 		return spinner;
 	}
 
-	public static void main(String[] args) {
-	
-		new addAuto();
-			
-
-	}
-
-	public addAuto() {
+	public addAuto(Settings setting) {
 		super();
 		
 		Container con = new Container();
@@ -139,9 +134,7 @@ public class addAuto extends JFrame {
 						(java.util.Date) KFZ_KAUF_SPINNER.getValue(), benzinArten);
 				
 			}
-		});
-		
-		
+		});		
 		pack();
 		setVisible(true);
 		

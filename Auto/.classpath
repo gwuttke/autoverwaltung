@@ -2,8 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/dev/Git_Repositorys/AutoVerwaltung/Auto/jndi_Datenanbindung.zip"/>
+	<classpathentry kind="lib" path="C:/dev_old/Git_Repositorys/AutoVerwaltung/Auto/jndi_Datenanbindung.zip"/>
 	<classpathentry kind="lib" path="C:/Users/georg.wuttke/Downloads/jndiDatenanbindung/simple-jndi-0.11.4.1/simple-jndi-0.11.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/dev/SqlServer_Datenanbindung/newSqlTraiber/sqljdbc_4.0/deu/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="C:/dev_old/SqlServer_Datenanbindung/sqljdbc_4.0/deu/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="extern Components/microba DatePicker/microba-0.4.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

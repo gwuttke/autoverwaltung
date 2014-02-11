@@ -8,6 +8,7 @@ import java.util.List;
 
 import database.SqlAbfrage;
 import database.SqlServer;
+import domain.Settings;
 import domain.Tanken;
 
 public class TankenDao extends SqlServer {
@@ -23,9 +24,10 @@ public class TankenDao extends SqlServer {
 	}
 
 	
-	public static void setTankenList() throws SQLException {
+	public static void setTankenList(Settings setting) throws SQLException {
+		SqlAbfrage abfrage = new SqlAbfrage(setting);
 		
-		ResultSet rsTanken = retrieveRS(SqlAbfrage.SQL_TANKEN);
+		ResultSet rsTanken = retrieveRS(abfrage.getTanken());
 
 		try {
 			while (rsTanken.next()) {

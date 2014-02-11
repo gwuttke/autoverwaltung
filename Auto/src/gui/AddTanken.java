@@ -1,12 +1,17 @@
 package gui;
 
+import Exception.AllException;
 import Model.Spinner;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
+import gui.Button.Funktionen;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Vector;
 
@@ -17,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
@@ -25,6 +31,7 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 import domain.Benzinart;
 import domain.Land;
 import domain.Ort;
+import domain.Settings;
 import domain.Tank;
 import domain.Text;
 import dao.BenzinartDAO;
@@ -32,14 +39,17 @@ import dao.LandDao;
 import dao.OrtDao;
 import dao.TankDAO;
 
-public class AddTanken extends JFrame {
+public class AddTanken extends Funktionen {
+
+	JFrame frame = new JFrame();
 
 	LandModel lModel = new LandModel();
 	OrtModel oModel = new OrtModel();
 	BenzinartModel bModel = new BenzinartModel();
 	TankModel tModel = new TankModel();
+	
 
-	public AddTanken() {
+	public AddTanken(final Settings set) {
 		// Label
 		JLabel lDatum = new JLabel(Text.DATUM);
 		JLabel lLand = new JLabel(Text.LAND);
@@ -52,21 +62,22 @@ public class AddTanken extends JFrame {
 		JLabel lKmStand = new JLabel("Km Stand");
 
 		// Eingaben
-		DatePicker datepicker = new DatePicker(new Date());
-		JSpinner spKmStand = new Spinner(20000, 0, 999999, 100).getSpinner();
-		JComboBox cbLand = lModel.getCombobox();
-		JComboBox cbOrt = oModel.getCombobox();
-		JComboBox cbBenzinart = bModel.getCombobox();
-		JComboBox cbTank = tModel.getCombobox();
+		final DatePicker datepicker = new DatePicker(new Date());
+		final JSpinner spKmStand = new Spinner(20000, 0, 999999, 100).getSpinner();
+		final JComboBox cbLand = lModel.getCombobox();
+		final JComboBox cbOrt = oModel.getCombobox();
+		final JComboBox cbBenzinart = bModel.getCombobox();
+		final JComboBox cbTank = tModel.getCombobox();
 		JTextField tfLiter = new JTextField();
 		JTextField tfPreisPLiter = new JTextField();
 		JTextField tfKosten = new JTextField();
-		
-		//Button
-		JButton Add = new JButton()
+
+		// Button
+		JButton btnAdd = new JButton(Text.BUTTON_HINZUFUEGEN);
+		JButton btnCancel = new JButton(Text.BUTTON_ABBRUCH);
 
 		Container con = new Container();
-		con = getContentPane();
+		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
 		JPanel jpEingaben = new JPanel(new GridLayout(9, 2));
@@ -89,12 +100,67 @@ public class AddTanken extends JFrame {
 		jpEingaben.add(lKosten);
 		jpEingaben.add(tfKosten);
 
-		con.add(jpEingaben, BorderLayout.CENTER);
-		
-		setTitle(Text.ADD_TANKEN);
-		pack();
-		setVisible(true);
+		JPanel jpButton = new JPanel();
+		jpButton.add(btnAdd);
+		jpButton.add(btnCancel);
 
+		con.add(jpEingaben, BorderLayout.CENTER);
+		con.add(jpButton, BorderLayout.SOUTH);
+
+		btnCancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cancel(frame);
+
+			}
+		});
+
+		btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (cbLand.getModel().getSelectedItem() == Text.BITTE_AUSWAELEN) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie ein Land aus");
+					return;
+				}
+				if (cbOrt.getSelectedIndex() == 0) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie einen Ort aus");
+					return;
+				}
+
+				if (cbBenzinart.getSelectedIndex() == 0) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie eine Benzinart aus");
+					return;
+				}
+
+				if (cbTank.getSelectedIndex() == 0) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie einen Ort aus");
+					return;
+				}
+				
+				if ((int)spKmStand.getValue() <= set.getAuto().getKmAktuell()) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie einen Ort aus");
+					return;
+				}
+				if (cbOrt.getSelectedIndex() == 0) {
+					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+							"Bitte wählen sie einen Ort aus");
+					return;
+				}
+				
+
+			}
+		});
+
+		frame.setTitle(Text.ADD_TANKEN);
+		frame.pack();
+		frame.setVisible(true);
 	}
 
 	private class LandModel extends DefaultComboBoxModel<Land> {
@@ -124,7 +190,7 @@ public class AddTanken extends JFrame {
 		OrtDao oDao = new OrtDao();
 		Vector<Ort> vOrt = new Vector<Ort>();
 		JComboBox cb;
-		DefaultComboBoxModel model = new DefaultComboBoxModel (vOrt);
+		DefaultComboBoxModel model = new DefaultComboBoxModel(vOrt);
 
 		public JComboBox getCombobox() {
 
@@ -181,7 +247,7 @@ public class AddTanken extends JFrame {
 			model.addElement(t.BITTE_AUSWAELEN);
 
 			for (Tank t : tDao.getTankList()) {
-				model.addElement(new Tank(t.getId(), t.getBeschreibung()) );
+				model.addElement(new Tank(t.getId(), t.getBeschreibung()));
 			}
 
 			return cb;
