@@ -1,5 +1,7 @@
 package domain;
 
+import gui.Button.Funktionen;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

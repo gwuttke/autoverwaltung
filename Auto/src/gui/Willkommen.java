@@ -125,7 +125,8 @@ public class Willkommen extends SqlServer {
 						// sqlS.getConn());
 					}
 				}
-				new AddTanken(setting);
+				System.out.println(setting.getAuto().getId());
+				new AddSonstigeAusgaben(setting);
 			}
 		});
 

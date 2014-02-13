@@ -84,15 +84,15 @@ public class SqlServer {
 
 	}
 
-	public static int executeUpdateStatemant(String sql) throws SQLException,
+	public static void executeUpdateStatemant(String sql) throws SQLException,
 			ClassNotFoundException {
 
 		openConnection();
 		st = conn.createStatement();
-		int count = st.executeUpdate(sql);
+		st.executeUpdate(sql);
 		// System.out.println("ROWS AFFECTED: " + count);
 		st.close();
-		return count;
+		
 	}
 
 	public static Connection openConnection() {

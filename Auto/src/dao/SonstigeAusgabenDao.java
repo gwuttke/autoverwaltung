@@ -7,30 +7,31 @@ import java.util.List;
 
 import database.SqlAbfrage;
 import database.SqlServer;
+import database.SqlUpdate;
 import domain.Settings;
 import domain.SonstigeAusgaben;
 
 public class SonstigeAusgabenDao extends SqlServer {
 
 	private Settings setting;
-	
-	
+
 	public SonstigeAusgabenDao(Settings setting) {
 		super();
 		this.setting = setting;
 	}
 
-
+	public void intoDatabase(SonstigeAusgaben sa) {
+		SqlUpdate.callInsertSonstigeAusgaben(sa);
+	}
 
 	private List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
-
 
 	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
 		return sonstigeAusgabenList;
 	}
 
 	public void setSonstigeAusgabenList(Settings setting) throws SQLException {
-	 SqlAbfrage abfrage = new SqlAbfrage(setting);
+		SqlAbfrage abfrage = new SqlAbfrage(setting);
 		ResultSet rsSonsAusg = retrieveRS(abfrage.getSonstigeAusgaben(setting));
 
 		try {
@@ -50,9 +51,7 @@ public class SonstigeAusgabenDao extends SqlServer {
 
 	}
 
-
-
-	public void updateListe() throws SQLException{
+	public void updateListe() throws SQLException {
 		getSonstigeAusgabenList().clear();
 		setSonstigeAusgabenList(setting);
 	}

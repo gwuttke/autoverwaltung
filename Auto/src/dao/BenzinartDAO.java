@@ -7,6 +7,7 @@ import java.util.List;
 
 import database.*;
 import domain.Benzinart;
+import domain.SonstigeAusgaben;
 
 public class BenzinartDAO extends SqlServer {
 	SqlServer sqlS = new SqlServer();
@@ -16,6 +17,10 @@ public class BenzinartDAO extends SqlServer {
 
 	public static List<Benzinart> getBenzinartList() {
 		return benzinartList;
+	}
+	
+	public void intoDatabase(SonstigeAusgaben sa){
+		
 	}
 	
 	public Benzinart getBenzinart(int id){

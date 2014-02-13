@@ -45,13 +45,11 @@ public class Spinner {
 		SpinnerNumberModel spnm = new SpinnerNumberModel(this.dValue,
 				this.dMinimum, this.dMaximum, this.dStepSize);
 		sp = new JSpinner(spnm);
-
 	}
 
 	private void getIntNummberSpinner() {
 		SpinnerNumberModel spnm = new SpinnerNumberModel(this.iValue,
 				this.iMinimum, this.iMaximum, this.iStepSize);
 		sp = new JSpinner(spnm);
-
 	}
 }
