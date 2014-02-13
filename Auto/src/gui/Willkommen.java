@@ -1,12 +1,12 @@
 package gui;
 
+import gui.Button.Funktionen;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -27,7 +27,6 @@ import dao.OrtDao;
 import dao.SonstigeAusgabenDao;
 import dao.TankenDao;
 import database.SqlServer;
-import domain.Auto;
 import domain.Settings;
 
 public class Willkommen extends SqlServer {
@@ -53,39 +52,11 @@ public class Willkommen extends SqlServer {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				frame.dispose();
-				System.exit(0);
+				Funktionen funk = new Funktionen();
+				funk.exit(frame);
 			}
 		});
 		
-		frame.addComponentListener(new ComponentListener() {
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-				//inizialsieren();
-				lStatus.setText("Bitte geben sie ihr Kennzeichen ein.");
-				tfEingabe.setEnabled(true);
-			}
-
-			@Override
-			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		btnOk.addActionListener(new ActionListener() {
 
 			@Override
@@ -106,8 +77,6 @@ public class Willkommen extends SqlServer {
 					tfEingabe.setFocusable(true);
 					return ;
 				}
-				
-				
 				
 				if (setting.getAuto() != null) {
 					try {
@@ -147,7 +116,6 @@ public class Willkommen extends SqlServer {
 
 		frame.pack();
 		frame.setVisible(true);
-
 	}
 
 	private void inizialsieren() {

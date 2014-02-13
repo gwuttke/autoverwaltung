@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -70,28 +69,6 @@ public class addAuto extends JFrame {
 		Dimension d = spinner.getPreferredSize();
 		d.width = 85;
 		spinner.setPreferredSize(d);
-		return spinner;
-	}
-
-	private static JSpinner getKmSpinner(final String name) {
-		double min = 0;
-		double value = 10000;
-		double max = 999999;
-		double stepSize = 10;
-		SpinnerNumberModel model = new SpinnerNumberModel(value, min, max,
-				stepSize);
-		JSpinner spinner = new JSpinner(model);
-		spinner.setName(name);
-		JSpinner.NumberEditor editor = (JSpinner.NumberEditor) spinner
-				.getEditor();
-		DecimalFormat format = editor.getFormat();
-		format.setMinimumFractionDigits(0);
-		editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
-		Dimension d = spinner.getPreferredSize();
-		d.width = 85;
-		spinner.setPreferredSize(d);
-		JPanel panel = new JPanel();
-		panel.add(spinner);
 		return spinner;
 	}
 
