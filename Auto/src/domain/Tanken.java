@@ -9,7 +9,7 @@ public class Tanken {
 	private int kmStand;
 	private Land land;
 	private Ort ort;
-	private int voll;
+	private Tank tank;
 	private BigDecimal kosten;
 	private int autoId;
 	private Date datum;
@@ -28,12 +28,14 @@ public class Tanken {
 		this.preisProLiter = preisProLiter;
 	}
 
-	public int getVoll() {
-		return voll;
+	
+
+	public Tank getTank() {
+		return tank;
 	}
 
-	public void setVoll(int b) {
-		this.voll = b;
+	public void setTank(Tank tank) {
+		this.tank = tank;
 	}
 
 	public int getKmStand() {

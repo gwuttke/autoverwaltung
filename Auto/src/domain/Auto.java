@@ -139,8 +139,8 @@ public class Auto {
 
 	private void berechneAutoAlter() {
 
-		if ((this.getKauf().getYear() > 0) && (this.getErstZulassung() != null)) {
-
+		if ((this.getKauf().getTime() > 0) && (this.getErstZulassung() != null)) {
+			
 			setKaufAlter(datum.getDifference(new GregorianCalendar(getKauf()
 					.getYear(), getKauf().getMonth(), getKauf().getDay())));
 

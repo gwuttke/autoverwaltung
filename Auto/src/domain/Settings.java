@@ -39,7 +39,7 @@ public class Settings {
 		}
 
 		if (a.equals(null)) {
-			AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+			AllException.messageBox(Texte.Error.Titel.FALSCHE_EINGABE,
 					"Das Kennzeichen ist falsch");
 		}
 		return a;

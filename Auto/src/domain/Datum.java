@@ -15,7 +15,7 @@ public class Datum {
 		GregorianCalendar today = new GregorianCalendar();
 
 		long difference = today.getTimeInMillis() - past.getTimeInMillis();
-		// ms into Secunden
+		// ms into secents
 		int dYears = -1;
 		int dMonths = -1;
 
