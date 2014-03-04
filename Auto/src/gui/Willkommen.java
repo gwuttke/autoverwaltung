@@ -1,7 +1,5 @@
 package gui;
 
-import gui.Button.Funktionen;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -20,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import gui.Button.Funktionen;
 import dao.AutoDAO;
 import dao.BenzinartDAO;
 import dao.LandDao;
@@ -33,8 +32,9 @@ public class Willkommen extends SqlServer {
 
 	private Settings setting = new Settings();
 	AutoDAO aDao = new AutoDAO(setting);
-	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting); 
-	
+	TankenDao tDao = new TankenDao();
+	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
+
 	private static JFrame frame = new JFrame();
 	private static JTextField tfEingabe = new JTextField("M - WU 3194");
 	private static JButton btnOk = new JButton("OK");
@@ -56,7 +56,7 @@ public class Willkommen extends SqlServer {
 				funk.exit(frame);
 			}
 		});
-		
+
 		btnOk.addActionListener(new ActionListener() {
 
 			@Override
@@ -71,13 +71,13 @@ public class Willkommen extends SqlServer {
 				setting.setAuto(aDao.getAuto(tfEingabe.getText()));
 				inizialsieren();
 
-				if (setting.getAuto() == null){
+				if (setting.getAuto() == null) {
 					lStatus.setText("Falsche eingabe bitte versuchen sie es Erneut!!");
 					tfEingabe.setText("");
 					tfEingabe.setFocusable(true);
-					return ;
+					return;
 				}
-				
+
 				if (setting.getAuto() != null) {
 					try {
 
@@ -85,7 +85,7 @@ public class Willkommen extends SqlServer {
 						LandDao.setLaender();
 						OrtDao.setOrtList();
 						sADao.setSonstigeAusgabenList(setting);
-						TankenDao.setTankenList(setting);
+						tDao.setTankenList(setting);
 						lStatus.setText("Daten wurden geladen");
 					} catch (SQLException ex) {
 						// TODO Auto-generated catch block
@@ -144,8 +144,6 @@ public class Willkommen extends SqlServer {
 		} catch (IOException e) {
 			throw new IllegalArgumentException("falsche eingabe!!");
 		}
-
 		return s;
 	}
-
 }
