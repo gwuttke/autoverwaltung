@@ -1,25 +1,27 @@
 package Model;
 
+import java.util.Vector;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import domain.Text;
+import domain.Texte;
 import Exception.AllException;
 
 public class Tabelle implements TableModel {
 
-	private AllException allExc = new AllException();
-	private Text t = new Text();
+	private Vector<TableModelListener> listener = new Vector<TableModelListener>();
+	private Texte.Tabelle textTabelle = new Texte.Tabelle();
 	private String[] columns;
 	private Object[][] data;
 
 	public Tabelle(String[] columnNames, Object[][] obj) {
 		if (columnNames.length == 0) {
-			allExc.messageBox("keine Spalten Namen",
+			AllException.messageBox("keine Spalten Namen",
 					"Wenden sie sich bitte an den Entwickler");
 		}
 		if (obj.length == 0) {
-			data[0][1] = t.TABELLE_KEINE_DATEN;
+			data[0][1] = textTabelle.KEINE_DATEN;
 		}
 
 		this.columns = columnNames;
@@ -63,14 +65,13 @@ public class Tabelle implements TableModel {
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
+		listener.add(l);
 
 	}
 
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
+		listener.remove(l);
 
 	}
-
 }
