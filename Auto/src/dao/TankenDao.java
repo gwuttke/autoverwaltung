@@ -15,16 +15,20 @@ public class TankenDao extends SqlServer {
 
 	private static OrtDao oDao = new OrtDao();
 	private static LandDao lDao = new LandDao();
-	private static BenzinartDAO bDao = new BenzinartDAO(); 
-	private static List<Tanken> tankenList = new ArrayList<Tanken>();
+	private static BenzinartDAO bDao = new BenzinartDAO();
+	private static TankDAO tDao = new TankDAO();
+	private List<Tanken> tankenList = new ArrayList<Tanken>();
 
 
-	public static List<Tanken> getTankenList() {
+	public List<Tanken> getTankenList() {
+		if (this.tankenList.isEmpty()){
+			return null;
+		}
 		return tankenList;
 	}
 
 	
-	public static void setTankenList(Settings setting) throws SQLException {
+	public void setTankenList(Settings setting) throws SQLException {
 		SqlAbfrage abfrage = new SqlAbfrage(setting);
 		
 		ResultSet rsTanken = retrieveRS(abfrage.getTanken());
@@ -41,7 +45,8 @@ public class TankenDao extends SqlServer {
 				t.setLiter(rsTanken.getBigDecimal("Liter"));
 				t.setOrt(oDao.getOrt(rsTanken.getInt("Ort")));
 				t.setPreisProLiter(rsTanken.getBigDecimal("Preis_p_Liter"));
-				t.setVoll(rsTanken.getInt("Voll"));
+				t.setTank(tDao.getTank(rsTanken.getInt("Voll")));
+				this.tankenList.add(t);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

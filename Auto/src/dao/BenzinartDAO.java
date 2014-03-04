@@ -15,7 +15,7 @@ public class BenzinartDAO extends SqlServer {
 
 	private static List<Benzinart> benzinartList = new ArrayList<Benzinart>();
 
-	public static List<Benzinart> getBenzinartList() {
+	public List<Benzinart> getBenzinartList() {
 		return benzinartList;
 	}
 	
