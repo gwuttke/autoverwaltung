@@ -24,7 +24,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
 import dao.SonstigeAusgabenDao;
 import domain.Settings;
 import domain.SonstigeAusgaben;
-import domain.Text;
+import domain.Texte;
 
 public class AddSonstigeAusgaben extends Funktionen {
 
@@ -32,7 +32,7 @@ public class AddSonstigeAusgaben extends Funktionen {
 
 	public AddSonstigeAusgaben(final Settings setting) {
 		// Lable
-		JLabel lDatum = new JLabel(Text.DATUM);
+		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
 		JLabel lBezeichnung = new JLabel("Bezeichnung");
 		JLabel lKmStand = new JLabel("Km Stand");
 		JLabel lKosten = new JLabel("Kosten");

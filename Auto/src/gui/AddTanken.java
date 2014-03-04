@@ -15,45 +15,41 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.event.ListDataListener;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import domain.Benzinart;
 import domain.Land;
 import domain.Ort;
 import domain.Settings;
 import domain.Tank;
-import domain.Text;
+import domain.Texte;
 import dao.BenzinartDAO;
 import dao.LandDao;
 import dao.OrtDao;
 import dao.TankDAO;
 
 public class AddTanken extends Funktionen {
-
+	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
+	private static final Texte.Error.Titel textError = new Texte.Error.Titel();
 	JFrame frame = new JFrame();
 
 	LandModel lModel = new LandModel();
 	OrtModel oModel = new OrtModel();
 	BenzinartModel bModel = new BenzinartModel();
 	TankModel tModel = new TankModel();
-	
 
 	public AddTanken(final Settings set) {
 		// Label
-		JLabel lDatum = new JLabel(Text.DATUM);
-		JLabel lLand = new JLabel(Text.LAND);
-		JLabel lOrt = new JLabel(Text.ORT);
+		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
+		JLabel lLand = new JLabel(Texte.Form.Label.LAND);
+		JLabel lOrt = new JLabel(Texte.Form.Label.ORT);
 		JLabel lBenzinart = new JLabel("Benzinart");
 		JLabel lLiter = new JLabel("Liter");
 		JLabel lPreisPLiter = new JLabel("Preis pro Liter");
@@ -63,7 +59,8 @@ public class AddTanken extends Funktionen {
 
 		// Eingaben
 		final DatePicker datepicker = new DatePicker(new Date());
-		final JSpinner spKmStand = new Spinner(20000, 0, 999999, 100).getSpinner();
+		final JSpinner spKmStand = new Spinner(20000, 0, 999999, 100)
+				.getSpinner();
 		final JComboBox cbLand = lModel.getCombobox();
 		final JComboBox cbOrt = oModel.getCombobox();
 		final JComboBox cbBenzinart = bModel.getCombobox();
@@ -73,8 +70,8 @@ public class AddTanken extends Funktionen {
 		JTextField tfKosten = new JTextField();
 
 		// Button
-		JButton btnAdd = new JButton(Text.BUTTON_HINZUFUEGEN);
-		JButton btnCancel = new JButton(Text.BUTTON_ABBRUCH);
+		JButton btnAdd = new JButton(Texte.Form.Button.BUTTON_HINZUFUEGEN);
+		JButton btnCancel = new JButton(Texte.Form.Button.BUTTON_ABBRUCH);
 
 		Container con = new Container();
 		con = frame.getContentPane();
@@ -120,51 +117,51 @@ public class AddTanken extends Funktionen {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (cbLand.getModel().getSelectedItem() == Text.BITTE_AUSWAELEN) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+				if (cbLand.getModel().getSelectedItem() == textFormAK.BITTE_AUSWAELEN) {
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie ein Land aus");
 					return;
 				}
+				
 				if (cbOrt.getSelectedIndex() == 0) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
 				}
 
 				if (cbBenzinart.getSelectedIndex() == 0) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie eine Benzinart aus");
 					return;
 				}
 
 				if (cbTank.getSelectedIndex() == 0) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
 				}
-				
-				if ((int)spKmStand.getValue() <= set.getAuto().getKmAktuell()) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+
+				if ((int) spKmStand.getValue() <= set.getAuto().getKmAktuell()) {
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
 				}
 				if (cbOrt.getSelectedIndex() == 0) {
-					AllException.messageBox(Text.ERROR_FALSCHE_EINGABE,
+					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
 				}
-				
 
 			}
 		});
 
-		frame.setTitle(Text.ADD_TANKEN);
+		frame.setTitle(Texte.Form.FensterTitel.ADD_TANKEN);
 		frame.pack();
 		frame.setVisible(true);
 	}
 
 	private class LandModel extends DefaultComboBoxModel<Land> {
-		final Text t = new Text();
+		final Texte t = new Texte();
 		LandDao lDao = new LandDao();
 		Vector<Land> vLand = new Vector<Land>();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vLand);
@@ -173,7 +170,7 @@ public class AddTanken extends Funktionen {
 
 			JComboBox cb = new JComboBox(model);
 
-			model.addElement(t.BITTE_AUSWAELEN);
+			model.addElement(textFormAK.BITTE_AUSWAELEN);
 
 			for (Land l : lDao.getLaender()) {
 				model.addElement(new Land(l));
@@ -186,7 +183,7 @@ public class AddTanken extends Funktionen {
 	}
 
 	private class OrtModel extends DefaultComboBoxModel<Ort> {
-		final Text t = new Text();
+
 		OrtDao oDao = new OrtDao();
 		Vector<Ort> vOrt = new Vector<Ort>();
 		JComboBox cb;
@@ -205,10 +202,10 @@ public class AddTanken extends Funktionen {
 		public void updateItems(Land l) {
 			model.removeAllElements();
 
-			if (lModel.getSelectedItem() == t.BITTE_AUSWAELEN) {
+			if (lModel.getSelectedItem() == textFormAK.BITTE_AUSWAELEN) {
 				cb.setEditable(false);
 			} else {
-				model.addElement(t.BITTE_AUSWAELEN);
+				model.addElement(textFormAK.BITTE_AUSWAELEN);
 				for (Ort o : oDao.getOrteInLand(l)) {
 					model.addElement(o);
 				}
@@ -217,14 +214,14 @@ public class AddTanken extends Funktionen {
 	}
 
 	private class BenzinartModel extends DefaultComboBoxModel<Benzinart> {
-		final Text t = new Text();
+
 		BenzinartDAO bDao = new BenzinartDAO();
 		Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
 
 		JComboBox<Land> getCombobox() {
 			JComboBox cb = new JComboBox(model);
-			model.addElement(t.BITTE_AUSWAELEN);
+			model.addElement(textFormAK.BITTE_AUSWAELEN);
 			for (Benzinart b : bDao.getBenzinartList()) {
 				model.addElement(new Benzinart(b.getName(), b.getId()));
 			}
@@ -235,7 +232,6 @@ public class AddTanken extends Funktionen {
 	}
 
 	private class TankModel extends DefaultComboBoxModel<Benzinart> {
-		final Text t = new Text();
 		TankDAO tDao = new TankDAO();
 		Vector<Tank> vTank = new Vector<Tank>();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vTank);
@@ -244,7 +240,7 @@ public class AddTanken extends Funktionen {
 
 			JComboBox cb = new JComboBox<Tank>(model);
 
-			model.addElement(t.BITTE_AUSWAELEN);
+			model.addElement(Texte.Form.AndereKomponennte.BITTE_AUSWAELEN);
 
 			for (Tank t : tDao.getTankList()) {
 				model.addElement(new Tank(t.getId(), t.getBeschreibung()));
