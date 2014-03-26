@@ -63,36 +63,9 @@ public class AutoDAO extends SqlServer {
 	}
 
 	public void setAutoList(Settings setting) throws SQLException {
-		ResultSet rsAuto = null;
-	
-			SqlAbfrage abfrage = new SqlAbfrage(setting);
-			rsAuto = retrieveRS(abfrage.SQL_AUTO);
 		
-		// wenn Benutzer verwendet wird dann:
-		// SqlAbfrage abfrage = new SqlAbfrage(this.setting);
-
-		try {
-			while (rsAuto.next()) {
-				Auto a = new Auto();
-				a.setId(rsAuto.getInt("Auto_ID"));
-				a.setKfz(rsAuto.getString("Kennzeichen"));
-				a.setKmKauf(rsAuto.getInt("Anfangs_Km"));
-				a.setKmAktuell(rsAuto.getInt("Aktuell_Km"));
-				a.setKauf(rsAuto.getDate("Kauf_Datum"));
-				if (rsAuto.getDate("ErstZulassung") != null) {
-					a.setErstZulassung(rsAuto.getDate("ErstZulassung"));
-				}
-				a.setAlter();
-				a.setKmGefahren();
-				this.autoList.add(a);
-			}
-			setting.setAuto(a);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeResults(getSt(), getRs(), null);
-		}
+				
+				autoList.add(a);
 
 	}
 

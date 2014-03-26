@@ -14,7 +14,7 @@ public class TankDAO extends SqlServer {
 	
 	
 
-	private List<Tank> tankfuellungList = new ArrayList<Tank>();
+	private static List<Tank> tankfuellungList = new ArrayList<Tank>();
 
 	public List<Tank> getTankList() {
 		if (tankfuellungList.isEmpty() == true){
@@ -39,7 +39,7 @@ public class TankDAO extends SqlServer {
 		return null;
 	}
 
-	public void setTankList() throws SQLException {
+	public static void setTankList() throws SQLException {
 		ResultSet rs = null;
 		
 		rs = retrieveRS(SqlAbfrage.SQL_Tankfuellung);
