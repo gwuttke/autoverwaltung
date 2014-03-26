@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Vector;
 
+import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -15,17 +16,25 @@ public class Tabelle implements TableModel {
 	private String[] columns;
 	private Object[][] data;
 
-	public Tabelle(String[] columnNames, Object[][] obj) {
+	public Tabelle(String[] columnNames, Object[][] data) {
 		if (columnNames.length == 0) {
 			AllException.messageBox("keine Spalten Namen",
 					"Wenden sie sich bitte an den Entwickler");
 		}
-		if (obj.length == 0) {
+		if (data.length == 0) {
 			data[0][1] = textTabelle.KEINE_DATEN;
 		}
 
 		this.columns = columnNames;
-		this.data = obj;
+		this.data = data;
+		
+	}
+	
+	public JTable getJTable(){
+		JTable jT = new JTable(this);
+		
+		
+		return jT;
 	}
 
 	@Override
@@ -45,7 +54,7 @@ public class Tabelle implements TableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return data[columnIndex][0].getClass();
+		return this.data[columnIndex][0].getClass();
 	}
 
 	@Override
@@ -55,7 +64,7 @@ public class Tabelle implements TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+		return this.data[rowIndex][columnIndex];
 	}
 
 	@Override

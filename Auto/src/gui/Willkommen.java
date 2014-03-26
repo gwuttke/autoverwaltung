@@ -24,6 +24,7 @@ import dao.BenzinartDAO;
 import dao.LandDao;
 import dao.OrtDao;
 import dao.SonstigeAusgabenDao;
+import dao.TankDAO;
 import dao.TankenDao;
 import database.SqlServer;
 import domain.Settings;
@@ -62,14 +63,15 @@ public class Willkommen extends SqlServer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
 					setting.setAuto(tfEingabe.getText());
 					aDao.setAutoList(setting);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				setting.setAuto(aDao.getAuto(tfEingabe.getText()));
-				inizialsieren();
+				//setting.setAuto(aDao.getAuto(tfEingabe.getText()));
+				//inizialsieren();
 
 				if (setting.getAuto() == null) {
 					lStatus.setText("Falsche eingabe bitte versuchen sie es Erneut!!");
@@ -82,6 +84,7 @@ public class Willkommen extends SqlServer {
 					try {
 
 						BenzinartDAO.setBenzinList();
+						TankDAO.setTankList();
 						LandDao.setLaender();
 						OrtDao.setOrtList();
 						sADao.setSonstigeAusgabenList(setting);
@@ -95,7 +98,8 @@ public class Willkommen extends SqlServer {
 					}
 				}
 				System.out.println(setting.getAuto().getId());
-				new AddSonstigeAusgaben(setting);
+				
+				new ShowTanken(setting);
 			}
 		});
 
@@ -121,12 +125,12 @@ public class Willkommen extends SqlServer {
 	private void inizialsieren() {
 		openConnection();
 
-		try {
-			aDao.setAutoList(setting);
+		/*try {
+			//aDao.setAutoList(setting);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		if (aDao.getAutoList() != null) {
 			tfEingabe.setEnabled(true);
 			lStatus.setText("Bitte geben sie Ihr kennzeichen ein");

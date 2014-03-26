@@ -20,7 +20,7 @@ public class Settings {
 		return auto;
 	}
 
-	public Auto setAuto(String kfz) throws SQLException {
+	public void setAuto(String kfz) throws SQLException {
 		SqlAbfrage abfrage = new SqlAbfrage();
 		ResultSet rs = SqlServer.retrieveRS(abfrage.SQL_AUTO);
 		Auto a = null;
@@ -29,12 +29,13 @@ public class Settings {
 			if (dbKfz.equals(kfz)) {
 				a = new Auto();
 				a.setId(rs.getInt("Auto_ID"));
-				a.setKfz(rs.getString("Kennzeichen"));
+				a.setKfz(dbKfz);
 				a.setKmKauf(rs.getInt("Anfangs_Km"));
 				a.setKauf(rs.getDate("Kauf_Datum"));
 				a.setErstZulassung(rs.getDate("ErstZulassung"));
 				a.setKmAktuell(rs.getInt("Aktuell_Km"));
-				return a;
+				auto = a;
+				return;
 			}
 		}
 
@@ -42,7 +43,6 @@ public class Settings {
 			AllException.messageBox(Texte.Error.Titel.FALSCHE_EINGABE,
 					"Das Kennzeichen ist falsch");
 		}
-		return a;
 	}
 
 	public void setAuto(Auto auto) {

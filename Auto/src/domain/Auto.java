@@ -29,6 +29,16 @@ public class Auto {
 		this.benzinArten = benzinArten;
 		this.kmAktuell = kmAktuell;
 	}
+	
+	public Auto(Settings setting){
+		this.kfz = setting.getAuto().getKfz();
+		this.id = setting.getAuto().getId();
+		this.kmKauf = setting.getAuto().getKmKauf();
+		this.kauf = setting.getAuto().getKauf();
+		this.erstZulassung = setting.getAuto().getErstZulassung();
+		this.benzinArten = setting.getAuto().getBenzinArten();
+		this.kmAktuell = setting.getAuto().getKmAktuell();
+	}
 
 	public Auto() {
 

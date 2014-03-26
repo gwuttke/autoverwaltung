@@ -15,7 +15,7 @@ import domain.Settings;
 import domain.Tanken;
 import domain.Texte;
 
-public class showTanken {
+public class GuiShowTanken {
 	TankenDao tDao = new TankenDao();
 
 	String[] columnNames = new String[] { "Datum", "Benzinart", "Km Stand",
@@ -23,18 +23,18 @@ public class showTanken {
 			"Kosten" };
 	Object[][] obj;
 
-	public showTanken(Settings setting) {
+	public GuiShowTanken(Settings setting) {
 		obj = loadData(setting);
-		Tabelle t = new Tabelle(columnNames, obj);
-		JTable jT = new JTable(t);
+		//Tabelle t = new Tabelle(columnNames, obj);
+		JTable jT = new Tabelle(columnNames, new Object[1][1]).getJTable();
 		JFrame frame = new JFrame("Tanken");
 		Container con = new Container();
 
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());		
 		
-		JPanel jpTable = new JPanel();
-		jpTable.add(jT);
+		JPanel jpTable = new JPanel(new BorderLayout());
+		jpTable.add(jT, BorderLayout.CENTER);
 		
 		con.add(jpTable, BorderLayout.CENTER);
 		
@@ -46,7 +46,7 @@ public class showTanken {
 
 	private Object[][] loadData(Settings setting) {
 		int index = 0;
-		Object[][] o = null;
+		Object[][] o;
 
 		if (tDao.getTankenList() == null) {
 			try {
@@ -58,16 +58,17 @@ public class showTanken {
 			}
 		}
 
+		o = new Object[tDao.getTankenList().size()][8];
 		for (Tanken t : tDao.getTankenList()) {
-			o[index][0] = t.getDatum();
-			o[index][1] = t.getBenzinArt();
-			o[index][2] = t.getKmStand();
-			o[index][3] = t.getOrt().getOrt();
-			o[index][4] = t.getLand().getName();
-			o[index][5] = t.getTank().getBeschreibung();
-			o[index][6] = t.getLiter();
-			o[index][7] = t.getPreisProLiter();
-			o[index][8] = t.getKosten();
+			o[0][index] = t.getDatum();
+			o[1][index] = t.getBenzinArt();
+			o[2][index] = t.getKmStand();
+			o[3][index] = t.getOrt().getOrt();
+			o[4][index] = t.getLand().getName();
+			o[5][index] = t.getTank().getBeschreibung();
+			o[6][index] = t.getLiter();
+			o[7][index] = t.getPreisProLiter();
+			o[8][index] = t.getKosten();
 		}
 		return o;
 
