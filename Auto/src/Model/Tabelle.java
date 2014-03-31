@@ -27,13 +27,12 @@ public class Tabelle implements TableModel {
 
 		this.columns = columnNames;
 		this.data = data;
-		
+
 	}
-	
-	public JTable getJTable(){
+
+	public JTable getJTable() {
 		JTable jT = new JTable(this);
-		
-		
+
 		return jT;
 	}
 
@@ -54,7 +53,17 @@ public class Tabelle implements TableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return this.data[columnIndex][0].getClass();
+		try {
+			if (getRowCount() == 0) {
+				return Object.class;
+			} else {
+				Object cellValue = getValueAt(0, columnIndex);
+				return cellValue.getClass();
+			}
+		} catch (Exception e) {
+			return Object.class;
+		}
+
 	}
 
 	@Override

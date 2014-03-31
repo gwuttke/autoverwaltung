@@ -99,7 +99,7 @@ public class Willkommen extends SqlServer {
 				}
 				System.out.println(setting.getAuto().getId());
 				
-				new ShowTanken(setting);
+				new GuiShowTanken(setting, tDao);
 			}
 		});
 
