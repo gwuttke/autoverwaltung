@@ -6,5 +6,8 @@
 	<classpathentry kind="lib" path="C:/Users/georg.wuttke/Downloads/jndiDatenanbindung/simple-jndi-0.11.4.1/simple-jndi-0.11.4.1.jar"/>
 	<classpathentry kind="lib" path="C:/dev_old/SqlServer_Datenanbindung/sqljdbc_4.0/deu/sqljdbc4.jar"/>
 	<classpathentry kind="lib" path="extern Components/microba DatePicker/microba-0.4.4.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
+	<classpathentry kind="lib" path="C:/Program Files/Datenbank/Connector/mysql/mysql-connector-java-5.0.8/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="extern Components/JodaTime/joda-time-2.3/joda-time-2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

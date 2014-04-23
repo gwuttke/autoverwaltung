@@ -4,11 +4,31 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.hibernate.type.YesNoType;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Months;
+
 public class Datum {
 	// private GregorianCalendar past = new GregorianCalendar(this.getPYear(),
 	// this.getPMonth(), this.getPDay());
 	private Calendar now = new GregorianCalendar();
 	private Calendar date;
+
+	public Datum() {
+	}
+
+	public Datum(Date datum) {
+		date.setTime(datum);
+	}
+
+	public Datum(Calendar date) {
+		this.date = date;
+	}
+
+	public Datum(int year, int month, int day) {
+		date.set(year, month, day);
+	}
 
 	public Calendar getDate() {
 		return date;
@@ -17,6 +37,7 @@ public class Datum {
 	public void setDate(Calendar date) {
 		this.date = date;
 	}
+
 	public void setDate(Date datum) {
 		date.setTime(datum);
 	}
@@ -32,19 +53,24 @@ public class Datum {
 	private String velueOfDiff(GregorianCalendar past) {
 		GregorianCalendar today = new GregorianCalendar();
 
+		Months months = Months.monthsBetween(new DateTime(past), new DateTime(today));
+		
+		
+
+		int jahre = months.getMonths() / 12;
+		int monate = months.getMonths() % 12;
+
 		long difference = today.getTimeInMillis() - past.getTimeInMillis();
 		// ms into secents
 		int dYears = -1;
 		int dMonths = -1;
+		final GregorianCalendar diff = new GregorianCalendar();
+		diff.setTimeInMillis(difference);
 
-		dYears = (int) (difference / (1000 * 60 * 60) % 365.25);
-		dMonths = (int) (difference / (1000 * 60 * 60) % 12);
-
-		String strDiff = dYears + " Jahre und " + dMonths + " Monate.";
+		String strDiff = jahre + " Jahre und "
+				+ monate + " Monate.";
 
 		return strDiff;
 	}
-
-	
 
 }

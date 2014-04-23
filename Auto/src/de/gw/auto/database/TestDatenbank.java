@@ -12,7 +12,7 @@ public class TestDatenbank extends SqlAbfrage {
 
 	private static void testDB() {
 		openConnection();
-		ausgabe();
+		//ausgabe();
 		closeConnection();
 
 	}
@@ -21,15 +21,16 @@ public class TestDatenbank extends SqlAbfrage {
 
 		//giveAuto();
 		try {
-			while (getRs().next()) {
+	/*		while (getRs().next()) {
 				Auto a = new Auto(getRs().getString("Kennzeichen"), getRs()
 						.getInt("Auto_ID"), getRs().getInt("Anfangs_Km"),
 						getRs().getDate("Kauf_Datum"), getRs().getDate(
 								"ErstZulassung"), null, getRs().getInt(
 								"Aktuell_Km"));
-				a.toString();
-			}
-		} catch (SQLException e) {
+								
+				a.toString(); }*/
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
