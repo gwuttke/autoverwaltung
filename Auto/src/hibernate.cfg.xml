@@ -26,5 +26,7 @@
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<mapping class="de.gw.auto.domain.Auto" />
 		<mapping class="de.gw.auto.domain.Benzinart" />
+		<mapping class="de.gw.auto.domain.Land" />
+		<mapping class="de.gw.auto.domain.Ort />
 	</session-factory>
 </hibernate-configuration>

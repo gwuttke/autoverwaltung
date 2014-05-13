@@ -1,14 +1,31 @@
 package de.gw.auto.domain;
 
-public class Land {
-	private String name;
+import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+@SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
+public class Land implements Serializable {
+	@Id
+	@SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 	private int id;
+	private String name;
+	@OneToMany(mappedBy="land")
+	private Set<Ort> orte;
+	
 
 	public Land() {
 
 	}
 
-	public Land(final Land l) {
+	public Land(final Land l, final Set<Ort> orte) {
+		this.orte = orte;
 		this.name = l.name;
 		this.id = l.id;
 	}
@@ -31,7 +48,8 @@ public class Land {
 
 	@Override
 	public String toString() {
-		return  name;
+	
+		return MessageFormat.format("{0}: {1} : {2}", new Object[] {id, name});
 	}
 	
 }
