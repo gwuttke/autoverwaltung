@@ -3,6 +3,7 @@ package de.gw.auto.domain;
 import java.io.Serializable;
 import java.text.MessageFormat;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,9 +19,21 @@ public class Ort implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ort_gen")
 	private int id;
 	private String ort;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn
 	private Land land;
+	
+	
+
+	public Ort(String ort) {
+		super();
+		this.ort = ort;
+	}
+
+	public Ort() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Land getLand() {
 		return land;

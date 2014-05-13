@@ -1,29 +1,69 @@
 package de.gw.auto.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Date;
 
-public class Tanken {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
+@Entity
+@SequenceGenerator(name = "tanken_gen", sequenceName = "tanken_id_seq")
+public class Tanken implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tanken_gen")
+	private int id;
 	private int kmStand;
+	@ManyToOne
+	@JoinColumn
 	private Land land;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
 	private Ort ort;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
 	private Tank tank;
 	private BigDecimal kosten;
+	@ManyToOne
+	@JoinColumn
 	private Auto auto;
 	private Date datum;
 	private BigDecimal liter;
 	private BigDecimal preisProLiter;
+	@OneToOne
+	@JoinColumn
 	private Benzinart benzinArt;
-	private int gefahreneKm;
 
 	private static Berechnung berechne = new Berechnung();
 
-	public int getGefahreneKm() {
-		return gefahreneKm;
+	public Tanken() {
+		super();
 	}
-		
-	
+
+	public Tanken(int kmStand, Land land, Ort ort, Tank tank,
+			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
+			BigDecimal preisProLiter, Benzinart benzinArt) {
+		super();
+		this.kmStand = kmStand;
+		this.land = land;
+		this.ort = ort;
+		this.tank = tank;
+		this.kosten = kosten;
+		this.auto = auto;
+		this.datum = datum;
+		this.liter = liter;
+		this.preisProLiter = preisProLiter;
+		this.benzinArt = benzinArt;
+	}
+
 	public String getPreisProLiter() {
 
 		return berechne.getRound(preisProLiter, 3);
@@ -45,16 +85,6 @@ public class Tanken {
 		return kmStand;
 	}
 
-	public void setKmStand(int kmStand) {
-		
-		
-		this.kmStand = kmStand;
-		int akt = auto.getKmAktuell();
-	this.gefahreneKm = this.kmStand - akt;
-	
-		
-	}
-
 	public BigDecimal getKosten() {
 		return kosten;
 
@@ -68,14 +98,9 @@ public class Tanken {
 		return auto;
 	}
 
-
-	public void setAuto(int autoId) {
-		int id = autoId;
-		
-		
-		
+	public void setAuto(Auto auto) {
+		this.auto = auto;
 	}
-
 
 	public Date getDatum() {
 		return datum;
@@ -88,7 +113,7 @@ public class Tanken {
 	public BigDecimal getLiter() {
 		return liter;
 	}
-	
+
 	public String getLiterString() {
 		return berechne.getRound(liter, 2);
 	}
@@ -124,6 +149,17 @@ public class Tanken {
 	public String getKostenString() {
 		return berechne.getRound(kosten, 3);
 
+	}
+
+	@Override
+	public String toString() {
+		return MessageFormat
+				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7} : {8} : {9} : {10} : {11} : {12}",
+						new Object[] { getClass().getSimpleName(), id, 
+						kmStand,land.getName(), ort.getOrt(),tank.getBeschreibung(), kosten.toString(),
+						auto,
+						datum.toString(), liter.toString(), preisProLiter.toString(),
+						benzinArt.toString() });
 	}
 
 }

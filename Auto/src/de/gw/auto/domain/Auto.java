@@ -3,16 +3,18 @@ package de.gw.auto.domain;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.MessageFormat;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @SequenceGenerator(name = "auto_seq", sequenceName = "auto_id_seq")
@@ -25,13 +27,10 @@ public class Auto implements Serializable {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "auto", cascade=CascadeType.ALL)
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
-	private int kmAktuell;
-	private int kmGefahren;
-	private String autoAlter;
-	private String kaufAlter;
-	private static Datum datum = new Datum();
+	private int kmAktuell; 
+
 
 	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
 			Set<Benzinart> benzinarten, int kmAktuell) {
@@ -42,8 +41,6 @@ public class Auto implements Serializable {
 		this.erstZulassung = erstZulassung;
 		this.benzinarten = benzinarten;
 		this.kmAktuell = kmAktuell;
-		berechneGefahreneKm();
-		berechneAutoAlter();
 	}
 
 	public Auto(Settings setting) {
@@ -117,68 +114,13 @@ public class Auto implements Serializable {
 		this.kmAktuell = kmAktuell;
 	}
 
-	public int getKmGefahren() {
-		return kmGefahren;
-	}
-
-	public void setKmGefahren() {
-		this.kmGefahren = berechneGefahreneKm();
-	}
-
-	public String getAutoAlter() {
-		return autoAlter;
-	}
-
-	public void setAutoAlter(String autoAlter) {
-		this.autoAlter = autoAlter;
-	}
-
-	public String getKaufAlter() {
-		return kaufAlter;
-	}
-
-	public void setKaufAlter(String kaufAlter) {
-		this.kaufAlter = kaufAlter;
-	}
-
-	public void setAlter() {
-		berechneAutoAlter();
-	}
-
-	private int berechneGefahreneKm() {
-
-		if (getKmAktuell() > getKmKauf()) {
-			return getKmAktuell() - getKmKauf();
-		} else {
-			return -1;
-		}
-
-	}
-
+	
 	@Override
 	public String toString() {
 		return MessageFormat
-				.format("Auto: {0} : {1} : {2} : {3} : {4} : {5} : {6} : {7} : {8} : {9}",
-						new Object[] { id, kfz, kmKauf, kauf, erstZulassung,
-								benzinarten, kmAktuell, kmGefahren, autoAlter,
-								kaufAlter });
+				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}",
+						new Object[] {getClass().getSimpleName(), id, kfz, kmKauf, kauf, erstZulassung,
+								benzinarten, kmAktuell });
 
-	}
-
-	private void berechneAutoAlter() {
-
-		if ((this.getKauf().getTime() > 0) && (this.getErstZulassung() != null)) {
-
-			GregorianCalendar seitKauf = new GregorianCalendar();
-			GregorianCalendar seitErstZulassung = new GregorianCalendar();
-
-			seitErstZulassung.setTimeInMillis(this.erstZulassung.getTime());
-			seitKauf.setTimeInMillis(this.kauf.getTime());
-
-			setKaufAlter(datum.getDifference(seitKauf));
-			setAutoAlter(datum.getDifference(seitErstZulassung));
-		} else {
-			setAutoAlter("Keine Angabe Moeglich");
-		}
 	}
 }

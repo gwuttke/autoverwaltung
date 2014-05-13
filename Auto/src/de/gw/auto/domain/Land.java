@@ -24,10 +24,9 @@ public class Land implements Serializable {
 
 	}
 
-	public Land(final Land l, final Set<Ort> orte) {
+	public Land(final String name, final Set<Ort> orte) {
 		this.orte = orte;
-		this.name = l.name;
-		this.id = l.id;
+		this.name = name;
 	}
 
 	public String getName() {

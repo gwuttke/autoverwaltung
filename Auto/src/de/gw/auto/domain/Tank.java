@@ -1,25 +1,37 @@
 package de.gw.auto.domain;
 
-public class Tank {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+@SequenceGenerator(name = "tank_gen", sequenceName = "tank_id_seq")
+public class Tank implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tank_gen")
 	private int id;
 	private String beschreibung;
+	@OneToOne
+	@JoinColumn
+	private Tanken tanken;
 
 	public Tank() {
 
 	}
 
-	public Tank(String beschreibung, int id) {
+	public Tank(String beschreibung) {
 		super();
 		if (beschreibung == null || beschreibung == "") {
-
+			this.beschreibung = beschreibung;
 		}
-
-		this.beschreibung = beschreibung;
-		this.id = id;
 	}
-
-
 
 	public Tank(int id, String beschreibung) {
 		super();
@@ -44,8 +56,8 @@ public class Tank {
 		return beschreibung;
 	}
 
-public void setId(int id) {
-	this.id = id;
-}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 }
