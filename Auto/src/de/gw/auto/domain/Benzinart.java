@@ -1,12 +1,16 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -19,9 +23,9 @@ public class Benzinart implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "benzinart_gen")
 	private Integer id;
 	private String name;
-	@ManyToOne
-	@JoinColumn
-	private Auto auto;
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "Auto_Benzinart", joinColumns = { @JoinColumn(name = "auto") }, inverseJoinColumns = { @JoinColumn(name = "benzinart") })
+	private Set<Auto> autos;
 
 	public Integer getId() {
 		return id;
@@ -42,20 +46,20 @@ public class Benzinart implements Serializable {
 		this.name = name;
 	}
 
-	public Auto getAuto() {
-		return auto;
-	}
-
-	public void setAuto(Auto auto) {
-		this.auto = auto;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Auto> getAutos() {
+		return autos;
+	}
+
+	public void addAuto(Auto auto) {
+		autos.add(auto);
 	}
 
 	@Override

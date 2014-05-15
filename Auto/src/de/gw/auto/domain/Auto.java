@@ -11,10 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @SequenceGenerator(name = "auto_seq", sequenceName = "auto_id_seq")
@@ -27,7 +26,7 @@ public class Auto implements Serializable {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	@OneToMany(mappedBy = "auto", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="autos")
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell; 
 
