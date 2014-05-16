@@ -11,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-
 
 @Entity
 @SequenceGenerator(name = "auto_seq", sequenceName = "auto_id_seq")
@@ -26,10 +28,10 @@ public class Auto implements Serializable {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	@ManyToMany(mappedBy="autos")
+	@ManyToMany
+	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
-	private int kmAktuell; 
-
+	private int kmAktuell;
 
 	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
 			Set<Benzinart> benzinarten, int kmAktuell) {
@@ -49,7 +51,7 @@ public class Auto implements Serializable {
 		this.kmKauf = setting.getAuto().getKmKauf();
 		this.kauf = setting.getAuto().getKauf();
 		this.erstZulassung = setting.getAuto().getErstZulassung();
-		this.benzinarten = setting.getAuto().getBenzinArten();
+		this.benzinarten = setting.getAuto().getBenzinarten();
 		this.kmAktuell = setting.getAuto().getKmAktuell();
 	}
 
@@ -97,11 +99,11 @@ public class Auto implements Serializable {
 		this.erstZulassung = erstZulassung;
 	}
 
-	public Set<Benzinart> getBenzinArten() {
+	public Set<Benzinart> getBenzinarten() {
 		return benzinarten;
 	}
 
-	public void setBenzinArten(Set<Benzinart> benzinarten) {
+	public void setBenzinarten(Set<Benzinart> benzinarten) {
 		this.benzinarten = benzinarten;
 	}
 
@@ -113,13 +115,16 @@ public class Auto implements Serializable {
 		this.kmAktuell = kmAktuell;
 	}
 
-	
+	public void addBenzinart(Benzinart benzinart) {
+		benzinarten.add(benzinart);
+	}
+
 	@Override
 	public String toString() {
-		return MessageFormat
-				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}",
-						new Object[] {getClass().getSimpleName(), id, kfz, kmKauf, kauf, erstZulassung,
-								benzinarten, kmAktuell });
+		return MessageFormat.format(
+				"{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}", new Object[] {
+						getClass().getSimpleName(), id, kfz, kmKauf, kauf,
+						erstZulassung, benzinarten, kmAktuell });
 
 	}
 }

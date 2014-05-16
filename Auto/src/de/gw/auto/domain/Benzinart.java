@@ -23,9 +23,10 @@ public class Benzinart implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "benzinart_gen")
 	private Integer id;
 	private String name;
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	/*@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "Auto_Benzinart", joinColumns = { @JoinColumn(name = "auto") }, inverseJoinColumns = { @JoinColumn(name = "benzinart") })
-	private Set<Auto> autos;
+	*/
+	//private Set<Auto> autos;
 
 	public Integer getId() {
 		return id;
@@ -54,14 +55,14 @@ public class Benzinart implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Auto> getAutos() {
+	/*public Set<Auto> getAutos() {
 		return autos;
 	}
 
 	public void addAuto(Auto auto) {
 		autos.add(auto);
 	}
-
+*/
 	@Override
 	public String toString() {
 		return name;

@@ -165,8 +165,8 @@ public class Copy_AutoExample {
 		session.save(benzinart2);
 		/* Wir setzen die Beziehung auf BEIDEN Seiten */
 		benzinart.setAuto(car);
-		car.getBenzinArten().add(benzinart);
-		car.getBenzinArten().add(benzinart2);
+		car.getBenzinarten().add(benzinart);
+		car.getBenzinarten().add(benzinart2);
 		tx.commit();
 	}
 
