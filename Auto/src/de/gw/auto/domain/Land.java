@@ -5,7 +5,12 @@ import java.text.MessageFormat;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -16,7 +21,9 @@ public class Land implements Serializable {
 	@SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 	private int id;
 	private String name;
-	@OneToMany(mappedBy="land")
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idLand") }, inverseJoinColumns = { @JoinColumn(name = "idOrt") })
 	private Set<Ort> orte;
 	
 

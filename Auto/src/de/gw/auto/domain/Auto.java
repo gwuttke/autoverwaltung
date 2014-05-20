@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,8 @@ public class Auto implements Serializable {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	@ManyToMany
+	//Wissen Notieren n:m Beziehung 
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;

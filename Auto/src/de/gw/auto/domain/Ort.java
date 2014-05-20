@@ -19,22 +19,18 @@ public class Ort implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ort_gen")
 	private int id;
 	private String ort;
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn
-	private Land land;
-	
-	
+
 
 	public Ort(String ort) {
 		super();
 		this.ort = ort;
 	}
-
+	
 	public Ort() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+/*
 	public Land getLand() {
 		return land;
 	}
@@ -42,7 +38,7 @@ public class Ort implements Serializable {
 	public void setLand(Land land) {
 		this.land = land;
 	}
-
+*/
 	public String getOrt() {
 		return ort;
 	}
