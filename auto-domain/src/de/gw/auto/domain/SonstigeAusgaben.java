@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+
+import de.gw.auto.dao.Berechnung;
 @Entity
 @SequenceGenerator(name = "sonstigeAusgaben_gen", sequenceName = "sonstigeAusgaben_id_seq")
 public class SonstigeAusgaben implements Serializable {
@@ -26,7 +28,6 @@ public class SonstigeAusgaben implements Serializable {
 	@JoinColumn
 	private Auto auto;
 
-	private static Berechnung berechne = new Berechnung();
 	
 	public Date getDatum() {
 		return datum;
@@ -52,8 +53,8 @@ public class SonstigeAusgaben implements Serializable {
 		this.kommentar = kommentar;
 	}
 
-	public String getKosten() {
-		return berechne.getRound(kosten, 2);
+	public BigDecimal getKosten() {
+		return kosten;
 	}
 
 	public void setKosten(BigDecimal kosten) {
@@ -63,7 +64,7 @@ public class SonstigeAusgaben implements Serializable {
 	public int getId() {
 		return Id;
 	}
-
+	
 	public void setId(int id) {
 		Id = id;
 	}

@@ -14,13 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
-import de.gw.auto.domain.Berechnung;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
-import de.gw.auto.model.Tabelle;
+import de.gw.auto.gui.model.Tabelle;
 
 public class GuiShowTanken {
 

@@ -1,4 +1,4 @@
-package de.gw.auto.model;
+package de.gw.auto.gui.model;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;

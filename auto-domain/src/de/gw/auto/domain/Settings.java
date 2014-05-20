@@ -9,6 +9,7 @@ import de.gw.auto.database.SqlAbfrage;
 import de.gw.auto.database.SqlServer;
 import de.gw.auto.exception.AllException;
 
+
 public class Settings {
 
 	// SqlAbfrage abfrage = new SqlAbfrage();
@@ -43,7 +44,7 @@ public class Settings {
 		}
 
 		if (a.equals(null)) {
-			AllException.messageBox(Texte.Error.Titel.FALSCHE_EINGABE,
+		AllException.messageBox(Texte.Error.Titel.FALSCHE_EINGABE,
 					"Das Kennzeichen ist falsch");
 		}
 	}

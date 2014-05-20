@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import de.gw.auto.dao.Berechnung;
+
 @Entity
 @SequenceGenerator(name = "tanken_gen", sequenceName = "tanken_id_seq")
 public class Tanken implements Serializable {
@@ -42,8 +44,7 @@ public class Tanken implements Serializable {
 	@JoinColumn
 	private Benzinart benzinArt;
 
-	private static Berechnung berechne = new Berechnung();
-
+	
 	public Tanken() {
 		super();
 	}
@@ -64,9 +65,9 @@ public class Tanken implements Serializable {
 		this.benzinArt = benzinArt;
 	}
 
-	public String getPreisProLiter() {
+	public BigDecimal getPreisProLiter() {
 
-		return berechne.getRound(preisProLiter, 3);
+		return preisProLiter;
 	}
 
 	public void setPreisProLiter(BigDecimal preisProLiter) {
@@ -114,8 +115,8 @@ public class Tanken implements Serializable {
 		return liter;
 	}
 
-	public String getLiterString() {
-		return berechne.getRound(liter, 2);
+	public BigDecimal getLiterString() {
+		return liter;
 	}
 
 	public void setLiter(BigDecimal liter) {
@@ -146,8 +147,8 @@ public class Tanken implements Serializable {
 		this.ort = ort;
 	}
 
-	public String getKostenString() {
-		return berechne.getRound(kosten, 3);
+	public BigDecimal getKostenString() {
+		return kosten;
 
 	}
 

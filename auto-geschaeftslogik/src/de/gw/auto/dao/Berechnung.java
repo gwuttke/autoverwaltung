@@ -1,4 +1,4 @@
-package de.gw.auto.domain;
+package de.gw.auto.dao;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -7,7 +7,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.gw.auto.dao.TankenDao;
+import de.gw.auto.domain.Datum;
+import de.gw.auto.domain.Tanken;
+import de.gw.auto.domain.TankenInfo;
+import de.gw.auto.domain.Vergleich;
 
 public class Berechnung {
 	private double b;
@@ -66,30 +69,30 @@ public class Berechnung {
 
 			// Gesammt berechnung
 			tiKosten.setGesammt(tiKosten.getGesammt().add(t.getKosten()));
-			tiMaxPreisProLiter.setGesammt(new Vergleich(new BigDecimal(t
-					.getPreisProLiter())).max());
-			tiMinPreisProLiter.setGesammt(new Vergleich(new BigDecimal(t
-					.getPreisProLiter())).min());
+			tiMaxPreisProLiter.setGesammt(new Vergleich(t
+					.getPreisProLiter()).max());
+			tiMinPreisProLiter.setGesammt(new Vergleich(t
+					.getPreisProLiter()).min());
 			tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 					t.getLiter()));
 
 			if (nowJahr == jahr) {
 				tiKosten.setDiesesJahr(tiKosten.getDiesesJahr().add(
 						t.getKosten()));
-				tiMaxPreisProLiter.setDiesesJahr(new Vergleich(new BigDecimal(t
-						.getPreisProLiter())).max());
-				tiMinPreisProLiter.setDiesesJahr(new Vergleich(new BigDecimal(t
-						.getPreisProLiter())).min());
+				tiMaxPreisProLiter.setDiesesJahr(new Vergleich(t
+						.getPreisProLiter()).max());
+				tiMinPreisProLiter.setDiesesJahr(new Vergleich(t
+						.getPreisProLiter()).min());
 				tiAnzahlLiter.setDiesesJahr(tiAnzahlLiter.getDiesesJahr().add(
 						t.getLiter()));
 
 			} else if (nowJahr - 1 == jahr) {
 
 				tiKosten.setVorjahr(tiKosten.getVorjahr().add(t.getKosten()));
-				tiMaxPreisProLiter.setVorjahr(new Vergleich(new BigDecimal(t
-						.getPreisProLiter())).max());
-				tiMinPreisProLiter.setVorjahr(new Vergleich(new BigDecimal(t
-						.getPreisProLiter())).min());
+				tiMaxPreisProLiter.setVorjahr(new Vergleich(t
+						.getPreisProLiter()).max());
+				tiMinPreisProLiter.setVorjahr(new Vergleich(t
+						.getPreisProLiter()).min());
 				tiAnzahlLiter.setVorjahr(tiAnzahlLiter.getVorjahr().add(
 						t.getLiter()));
 			}

@@ -1,14 +1,9 @@
 package de.gw.auto.dao;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gw.auto.database.Procedures;
-import de.gw.auto.database.SqlAbfrage;
-import de.gw.auto.database.SqlServer;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;

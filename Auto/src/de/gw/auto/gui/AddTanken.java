@@ -31,7 +31,7 @@ import de.gw.auto.domain.Tank;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
-import de.gw.auto.model.Spinner;
+import de.gw.auto.gui.model.Spinner;
 
 public class AddTanken extends Funktionen {
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();

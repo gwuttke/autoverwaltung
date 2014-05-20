@@ -1,4 +1,4 @@
-package de.gw.auto.model;
+package de.gw.auto.gui.model;
 
 import java.util.Vector;
 
