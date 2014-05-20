@@ -41,7 +41,7 @@ public class AutoDAO extends SqlServer {
 		for (Auto a : this.autoList) {
 			if (a.getId() == autoID) {
 				if (benzinarten != null) {
-					a.setBenzinArten(benzinarten);
+					a.setBenzinarten(benzinarten);
 				}
 				if (eZulassung != null) {
 					a.setErstZulassung((java.sql.Date) eZulassung);

@@ -67,7 +67,7 @@ public class Procedures extends de.gw.auto.database.SqlServer {
 		auto.setKmKauf(kaufKm);
 		auto.setKauf(kaufDatum);
 		auto.setErstZulassung(erstZulassung);
-		auto.setBenzinArten(benzinArten);
+		auto.setBenzinarten(benzinArten);
 		
 
 		callAddAuto(auto.getKfz(), auto.getKmKauf(), auto.getKauf(),
