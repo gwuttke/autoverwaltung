@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.transaction.Synchronization;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.engine.transaction.spi.LocalStatus;
 
 import de.gw.auto.domain.GenericClass;
 
