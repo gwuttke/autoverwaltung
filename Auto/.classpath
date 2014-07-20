@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/auto-domain"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/auto-geschaeftslogik"/>
-	<classpathentry kind="lib" path="extern Components/microba DatePicker/microba-0.4.4.3.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
