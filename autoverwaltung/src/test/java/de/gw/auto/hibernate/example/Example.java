@@ -97,10 +97,10 @@ public class Example {
 	}
 
 	private class ExampleAuto extends DatenbankZugriff {
-		private GenericClass<?> instanceOfBenzinart = new GenericClass<Benzinart>(Benzinart.class);
+		private GenericClass<Benzinart> instanceOfBenzinart = new GenericClass<Benzinart>(Benzinart.class);
 		private GenericClass<?> instanceOfAuto = new GenericClass<Auto>(Auto.class);
 
-		private List<Benzinart> benzinarten = (List<Benzinart>) this.selectTable(instanceOfBenzinart);
+		private List<Benzinart> benzinarten = (List<Benzinart>) selectTable(instanceOfBenzinart);
 
 		
 		private Auto create() {
