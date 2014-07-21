@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-
-
-
-
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,6 +13,7 @@ import de.gw.auto.domain.GenericClass;
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
+	public static final  String FROM = "FROM "; 
 
 	protected Session startSession() {
 		try {
@@ -54,11 +49,10 @@ public class DatenbankZugriff {
 		return obj;
 	}
 
-	protected List<?> selectTable(GenericClass tablename) throws Exception {
+	protected List<?> selectTable(Class<?> tablename) throws Exception {
 		startSession();
 		startTransaction();
-		String classSimpleName = tablename.getType().getSimpleName().toString()
-				.trim();
+		String classSimpleName = tablename.getSimpleName().toString().trim();
 		List<?> obj = new ArrayList<Object>();
 		obj = select("FROM " + classSimpleName);
 		return obj;
@@ -111,30 +105,13 @@ public class DatenbankZugriff {
 		}
 		return deleteObject;
 	}
-
-	private static String[] clean(List tablenames) {
-		Session session = InitSessionFactory.getInstance().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		tablenames.iterator();
-		String[] names = new String[] {};
-		for (Iterator<String> iterator = tablenames.iterator(); iterator
-				.hasNext();) {
-			String name = iterator.next();
-			session.createQuery("delete from " + name).executeUpdate();
-			names[names.length + 1] = name;
-
-		}
-		session.flush();
-		session.clear();
-		tx.commit();
-		return names;
-	}
-
+	
 	private String[] clean(String[] tabenames) {
 		this.startSession();
 		this.startTransaction();
-		for (String table : tabenames)
+		for (String table : tabenames){
 			session.createQuery("delete from " + table).executeUpdate();
+		}
 		session.flush();
 		session.clear();
 		tx.commit();
