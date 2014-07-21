@@ -12,6 +12,7 @@ public class Settings {
 
 	private List<Auto> autos = new ArrayList<Auto>();
 	private Benutzer benutzer = null;
+	private Auto aktuellAuto;
 
 	public Settings(Benutzer benutzer) {
 		this.benutzer = benutzer;
@@ -19,6 +20,14 @@ public class Settings {
 
 	public Benutzer getBenutzer() {
 		return benutzer;
+	}
+	
+	public Auto getAktuellAuto() {
+		return aktuellAuto;
+	}
+
+	public void setAktuellAuto(Auto aktuellAuto) {
+		this.aktuellAuto = aktuellAuto;
 	}
 
 	public void setBenutzer(Benutzer benutzer) {

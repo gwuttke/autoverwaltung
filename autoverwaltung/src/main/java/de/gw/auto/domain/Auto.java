@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -49,13 +47,13 @@ public class Auto implements Serializable {
 
 	public Auto(Settings setting) {
 		super();
-		this.kfz = setting.getAuto().getKfz();
-		this.id = setting.getAuto().getId();
-		this.kmKauf = setting.getAuto().getKmKauf();
-		this.kauf = setting.getAuto().getKauf();
-		this.erstZulassung = setting.getAuto().getErstZulassung();
-		this.benzinarten = setting.getAuto().getBenzinarten();
-		this.kmAktuell = setting.getAuto().getKmAktuell();
+		this.kfz = setting.getAktuellAuto().getKfz();
+		this.id = setting.getAktuellAuto().getId();
+		this.kmKauf = setting.getAktuellAuto().getKmKauf();
+		this.kauf = setting.getAktuellAuto().getKauf();
+		this.erstZulassung = setting.getAktuellAuto().getErstZulassung();
+		this.benzinarten = setting.getAktuellAuto().getBenzinarten();
+		this.kmAktuell = setting.getAktuellAuto().getKmAktuell();
 	}
 	
 	public Benutzer getBenutzer() {
