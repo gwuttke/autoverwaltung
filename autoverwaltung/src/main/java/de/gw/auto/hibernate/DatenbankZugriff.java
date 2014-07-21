@@ -13,7 +13,6 @@ import de.gw.auto.domain.GenericClass;
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
-	public static final  String FROM = "FROM "; 
 
 	protected Session startSession() {
 		try {

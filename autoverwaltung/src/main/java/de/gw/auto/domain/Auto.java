@@ -34,6 +34,7 @@ public class Auto implements Serializable {
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;
+	private Benutzer benutzer;
 
 	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
 			Set<Benzinart> benzinarten, int kmAktuell) {
@@ -55,6 +56,14 @@ public class Auto implements Serializable {
 		this.erstZulassung = setting.getAuto().getErstZulassung();
 		this.benzinarten = setting.getAuto().getBenzinarten();
 		this.kmAktuell = setting.getAuto().getKmAktuell();
+	}
+	
+	public Benutzer getBenutzer() {
+		return benutzer;
+	}
+
+	public void setBenutzer(Benutzer benutzer) {
+		this.benutzer = benutzer;
 	}
 
 	public Auto() {

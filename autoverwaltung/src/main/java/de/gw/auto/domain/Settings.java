@@ -1,53 +1,46 @@
 package de.gw.auto.domain;
 
-
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import de.gw.auto.exception.AllException;
-
+import de.gw.auto.hibernate.DatenAbrufen;
 
 public class Settings {
 
-	// SqlAbfrage abfrage = new SqlAbfrage();
+	DatenAbrufen da = new DatenAbrufen();
 
-	private Auto auto = null;
-	private static Benutzer benutzer = null;
-	
-	
-	public Auto getAuto() {
-		return auto;
+	private List<Auto> autos = new ArrayList<Auto>();
+	private Benutzer benutzer = null;
+
+	public Settings(Benutzer benutzer) {
+		this.benutzer = benutzer;
 	}
-	
-	
 
-	public void setAuto(String kfz) throws SQLException {
-		SqlAbfrage abfrage = new SqlAbfrage();
-		ResultSet rs = SqlServer.retrieveRS(abfrage.SQL_AUTO);
-		Auto a = null;
-		while (rs.next()) {
-			String dbKfz = rs.getString("Kennzeichen");
-			if (dbKfz.equals(kfz)) {
-				a = new Auto();
-				a.setId(rs.getInt("Auto_ID"));
-				a.setKfz(dbKfz);
-				a.setKmKauf(rs.getInt("Anfangs_Km"));
-				a.setKauf(rs.getDate("Kauf_Datum"));
-				a.setErstZulassung(rs.getDate("ErstZulassung"));
-				a.setKmAktuell(rs.getInt("Aktuell_Km"));
-				this.auto = a;
-				return;
+	public Benutzer getBenutzer() {
+		return benutzer;
+	}
+
+	public void setBenutzer(Benutzer benutzer) {
+		this.benutzer = benutzer;
+	}
+
+	public void setAutos() throws SQLException {
+
+		autos = da.getAutos(benutzer);
+
+	}
+
+	public List<Auto> getAutos() throws SQLException {
+		for (Auto a : autos) {
+			if (a.getBenutzer() == benutzer) {
+				return autos;
+			} else {
+				setAutos();
+				getAutos();
 			}
 		}
-
-		if (a.equals(null)) {
-		AllException.messageBox(Texte.Error.Titel.FALSCHE_EINGABE,
-					"Das Kennzeichen ist falsch");
-		}
+		return autos;
 	}
 
-	public void setAuto(Auto auto) {
-		this.auto = auto;
-	}
 }
