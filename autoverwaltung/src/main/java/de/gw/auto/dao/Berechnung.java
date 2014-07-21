@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.TankenInfo;
@@ -26,6 +26,10 @@ public class Berechnung {
 
 	public void setB(double b) {
 		this.b = b;
+	}
+	
+	public static int getInsgGefahreneKm(Auto auto){
+		return auto.getKmAktuell() - auto.getKmKauf();
 	}
 
 	private String round(BigDecimal value, int nachkommaStelle) {

@@ -3,16 +3,20 @@ package de.gw.auto.dao;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.hibernate.UpdateDaten;
 
-public class AutoDAO extends SqlServer {
+public class AutoDAO extends DatenAbrufen {
 
 	Settings setting;
 
-	Procedures proc = new Procedures();
+	UpdateDaten update = new UpdateDaten();
+
 	private List<Auto> autoList = new ArrayList<Auto>();
 	Auto a = new Auto();
 
@@ -22,39 +26,39 @@ public class AutoDAO extends SqlServer {
 
 	public int CarIntoDatabase(String kfz, int kaufKm,
 			java.util.Date kaufDatum, java.util.Date erstZulassung,
-			Benzinart[] benzinArten) {
+			Set<Benzinart> benzinarten, int kmAktuell) {
 		java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
 		java.sql.Date kaufSqlDate = new java.sql.Date(kaufDatum.getTime());
 
-		proc.setAddAuto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinArten);
+		Auto a = new Auto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinarten,
+				kmAktuell);
+
+		update.addAuto(a);
 
 		return 0;
 	}
 
-	public void updateAutoList(int autoID, Benzinart[] benzinarten,
+	public void updateAuto(int autoID, Set<Benzinart> benzinarten,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
-		for (Auto a : this.autoList) {
-			if (a.getId() == autoID) {
-				if (benzinarten != null) {
-					a.setBenzinarten(benzinarten);
-				}
-				if (eZulassung != null) {
-					a.setErstZulassung((java.sql.Date) eZulassung);
-				}
-				if (kauf != null) {
-					a.setKauf((java.sql.Date) kauf);
-				}
-				if (anfKm > 0) {
-					a.setKmKauf(anfKm);
-				}
-				if (aktuKm > 0 && aktuKm > a.getKmKauf()) {
-					a.setKmAktuell(aktuKm);
-					a.setKmGefahren();
-				}
-
+		Auto a = findById(autoID);
+		if (a != null) {
+			if (benzinarten != null) {
+				a.setBenzinarten(benzinarten);
 			}
-		}
+			if (eZulassung != null) {
+				a.setErstZulassung((java.sql.Date) eZulassung);
+			}
+			if (kauf != null) {
+				a.setKauf((java.sql.Date) kauf);
+			}
+			if (anfKm > 0) {
+				a.setKmKauf(anfKm);
+			}
+			if (aktuKm > 0 && aktuKm > a.getKmKauf()) {
+				a.setKmAktuell(aktuKm);
+			}
 
+		}
 	}
 
 	public void setAutoList(Settings setting) {
@@ -78,8 +82,8 @@ public class AutoDAO extends SqlServer {
 		}
 		return null;
 	}
-	
-	public Auto findById(int id){
+
+	public Auto findById(int id) {
 		for (Auto a : this.autoList) {
 			if (a.getId() == id) {
 				return a;
