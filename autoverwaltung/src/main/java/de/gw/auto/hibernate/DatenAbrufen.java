@@ -8,22 +8,27 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
+import de.gw.auto.domain.Settings;
+import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.domain.Tanken;
 
 public class DatenAbrufen extends DatenbankZugriff {
 
 	private List<Benzinart> benzinarten = new ArrayList<Benzinart>();
-	private List<Land> laender = new ArrayList<Land>();	
+	private List<Land> laender = new ArrayList<Land>();
 	private List<Ort> orte = new ArrayList<Ort>();
 	private List<Auto> autos = new ArrayList<Auto>();
-	
-	private static final String FROM = "FROM "; 
-	private static final String WHERE =" WHERE ";
-	
+	private List<SonstigeAusgaben> sontigeAusgaben = new ArrayList<SonstigeAusgaben>();
+	private List<Tanken> tankfuellungen = new ArrayList<Tanken>();
+
+	private static final String FROM = "FROM ";
+	private static final String WHERE = " WHERE ";
+
 	public DatenAbrufen() {
 		super();
 		load();
 	}
-	
+
 	public List<Land> getLaender() {
 		try {
 			giveLaender();
@@ -37,7 +42,6 @@ public class DatenAbrufen extends DatenbankZugriff {
 		try {
 			giveOrte();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return orte;
@@ -47,13 +51,12 @@ public class DatenAbrufen extends DatenbankZugriff {
 		try {
 			giveAutosByBenutzer(benutzer);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return autos;
 	}
 
-	private void load(){
+	private void load() {
 		try {
 			giveLaender();
 			giveBenzinarten();
@@ -62,12 +65,12 @@ public class DatenAbrufen extends DatenbankZugriff {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void giveLaender() throws Exception {
-		laender = (List<Land>) this.select(FROM + "Land"); 
+		laender = (List<Land>) this.select(FROM + "Land");
 
 	}
-	
+
 	private void giveOrte() throws Exception {
 		orte = (List<Ort>) this.select(FROM + "Ort");
 
@@ -76,9 +79,10 @@ public class DatenAbrufen extends DatenbankZugriff {
 	private void giveBenzinarten() throws Exception {
 		benzinarten = (List<Benzinart>) this.select(FROM + "Benzinart");
 	}
-	
-	private void giveAutosByBenutzer(Benutzer benutzer) throws Exception{
-		autos = (List<Auto>) this.select(FROM + "Auto" + WHERE + "benutzer =" + benutzer);
+
+	private void giveAutosByBenutzer(Benutzer benutzer) throws Exception {
+		autos = (List<Auto>) this.select(FROM + "Auto" + WHERE + "benutzer ="
+				+ benutzer);
 	}
 
 	public List<Benzinart> getBenzinarten() {
@@ -88,6 +92,35 @@ public class DatenAbrufen extends DatenbankZugriff {
 			e.printStackTrace();
 		}
 		return benzinarten;
-	}	
+	}
 
+	public void giveSonstigeAusgabenByAuto(Auto auto) throws Exception {
+		sontigeAusgaben = (List<SonstigeAusgaben>) this.select(FROM
+				+ "SonstigeAusgaben" + WHERE + "auto = " + auto);
+	}
+
+	public List<SonstigeAusgaben> getSonstigeAusgabens(Settings settings) {
+
+		try {
+			giveSonstigeAusgabenByAuto(settings.getAktuellAuto());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sontigeAusgaben;
+	}
+
+	public void giveTankfuellungByAuto(Auto auto) throws Exception {
+		tankfuellungen = (List<Tanken>) this.select(FROM + "Tanken" + WHERE
+				+ "auto = " + auto);
+	}
+
+	public List<Tanken> getTankfuellungen(Settings settings) {
+		try {
+			giveTankfuellungByAuto(settings.getAktuellAuto());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return tankfuellungen;
+	}
 }

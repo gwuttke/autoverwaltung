@@ -1,29 +1,20 @@
 package de.gw.auto.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gw.auto.database.*;
 import de.gw.auto.domain.Benzinart;
-import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.hibernate.DatenAbrufen;
 
-public class BenzinartDAO extends SqlServer {
-	SqlServer sqlS = new SqlServer();
-	Procedures proced = new Procedures();
+public class BenzinartDAO {
 
-	private static List<Benzinart> benzinartList = new ArrayList<Benzinart>();
+	private List<Benzinart> benzinartList = new ArrayList<Benzinart>();
 
 	public List<Benzinart> getBenzinartList() {
 		return benzinartList;
 	}
 	
-	public void intoDatabase(SonstigeAusgaben sa){
-		
-	}
-	
-	public Benzinart getBenzinart(int id){
+	public Benzinart searchBenzinartById(int id){
 		for(Benzinart ba : benzinartList){
 			if(ba.getId().equals(id)){
 				return ba;
@@ -32,27 +23,8 @@ public class BenzinartDAO extends SqlServer {
 		return null;
 	}
 
-	public static void setBenzinList() throws SQLException {
-		ResultSet rs = null;
-		
-		rs = retrieveRS(SqlAbfrage.SQL_BENZINART);
-
-		if (rs != null) {
-			try {
-				while (rs.next()) {
-					Benzinart benzin = new Benzinart();
-					benzin.setName(rs.getString("Benzienart"));
-					benzin.setId(rs.getInt("ID"));
-					benzinartList.add(benzin);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				closeResults(getSt(), getRs(), getConn());
-			}
-		} else {
-			System.out.println("keine Benzinarten zugewiesen");
-		}
+	public void setBenzinList(){
+		this.benzinartList =  new DatenAbrufen().getBenzinarten();
 	}
 	
 

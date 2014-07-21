@@ -1,54 +1,36 @@
 package de.gw.auto.dao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gw.auto.database.SqlAbfrage;
-import de.gw.auto.database.SqlServer;
-import de.gw.auto.database.SqlUpdate;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.hibernate.UpdateDaten;
 
-public class SonstigeAusgabenDao extends SqlServer {
+public class SonstigeAusgabenDao{
 
 	private Settings setting;
-
+	private List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
+	private UpdateDaten update = new UpdateDaten();
+	
 	public SonstigeAusgabenDao(Settings setting) {
 		super();
 		this.setting = setting;
 	}
 
 	public void intoDatabase(SonstigeAusgaben sa) {
-		SqlUpdate.callInsertSonstigeAusgaben(sa);
+		update.addSonstigeAusgaben(sa);
 	}
-
-	private List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
-
+	
 	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
 		return sonstigeAusgabenList;
 	}
 
 	public void setSonstigeAusgabenList(Settings setting) throws SQLException {
-		SqlAbfrage abfrage = new SqlAbfrage(setting);
-		ResultSet rsSonsAusg = retrieveRS(abfrage.getSonstigeAusgaben(setting));
-
-		try {
-			while (rsSonsAusg.next()) {
-				SonstigeAusgaben sA = new SonstigeAusgaben();
-
-				sA.setAutoId(rsSonsAusg.getInt("Auto_ID"));
-				sA.setDatum(rsSonsAusg.getDate("Datum"));
-				sA.setKmStand(rsSonsAusg.getInt("Km_Stand"));
-				sA.setKommentar(rsSonsAusg.getString("Komentar"));
-				sA.setKosten(rsSonsAusg.getBigDecimal("Kosten"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		sonstigeAusgabenList = new DatenAbrufen().getSonstigeAusgabens(setting);
+		
 	}
 
 	public void updateListe() throws SQLException {

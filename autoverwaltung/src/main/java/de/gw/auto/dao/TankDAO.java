@@ -7,14 +7,22 @@ import java.util.List;
 
 import de.gw.auto.database.SqlAbfrage;
 import de.gw.auto.database.SqlServer;
+import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tank;
 import de.gw.auto.exception.AllException;
+import de.gw.auto.hibernate.DatenAbrufen;
 
-public class TankDAO extends SqlServer {
+public class TankDAO {
 	
-	
+	private Settings settins;
 
-	private static List<Tank> tankfuellungList = new ArrayList<Tank>();
+	private List<Tank> tankfuellungList = new ArrayList<Tank>();
+
+	public TankDAO(Settings settins) {
+		super();
+		this.settins = settins;
+	}
+
 
 	public List<Tank> getTankList() {
 		if (tankfuellungList.isEmpty() == true){
@@ -39,7 +47,9 @@ public class TankDAO extends SqlServer {
 		return null;
 	}
 
-	public static void setTankList() throws SQLException {
+	public void setTankList() throws SQLException {
+		tankfuellungList = new DatenAbrufen()
+		
 		ResultSet rs = null;
 		
 		rs = retrieveRS(SqlAbfrage.SQL_Tankfuellung);

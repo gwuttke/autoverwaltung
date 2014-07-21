@@ -30,15 +30,7 @@ public class Ort implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-/*
-	public Land getLand() {
-		return land;
-	}
 
-	public void setLand(Land land) {
-		this.land = land;
-	}
-*/
 	public String getOrt() {
 		return ort;
 	}
