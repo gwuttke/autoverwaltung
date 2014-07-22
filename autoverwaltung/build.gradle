@@ -11,6 +11,9 @@ jar {
 
 repositories {
     mavenCentral()
+    maven{
+        url "https://maven.atlassian.com/content/repositories/atlassian-public/"
+    }
 }
 
 dependencies {
