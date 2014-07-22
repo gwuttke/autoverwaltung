@@ -22,6 +22,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 	private List<SonstigeAusgaben> sontigeAusgaben = new ArrayList<SonstigeAusgaben>();
 	private List<Tanken> tankfuellungen = new ArrayList<Tanken>();
 	private List<Tank> befuellung = new ArrayList<Tank>();
+	private Benutzer benutzer = null;
 
 	private static final String FROM = "FROM ";
 	private static final String WHERE = " WHERE ";
@@ -137,5 +138,18 @@ public class DatenAbrufen extends DatenbankZugriff {
 		}
 
 		return tankfuellungen;
+	}
+	
+	private void giveBenutzer(Benutzer benutzer) throws Exception{
+		this.benutzer = (Benutzer) this.select(FROM + "Benutzer" + WHERE + "benutzer = " + benutzer); 
+	}
+	
+	public Benutzer getBenutzer(Benutzer benutzer) {
+		try {
+			giveBenutzer(benutzer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return benutzer;
 	}
 }

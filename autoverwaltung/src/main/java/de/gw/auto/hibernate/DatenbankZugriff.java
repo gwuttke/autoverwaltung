@@ -1,27 +1,21 @@
 package de.gw.auto.hibernate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import de.gw.auto.domain.GenericClass;
-
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
 
 	protected Session startSession() {
-		try {
 			session = InitSessionFactory.getInstance().getCurrentSession();
 			tx = session.getTransaction();
 
-		} catch (HibernateException ex) {
-			throw ex;
-		}
+		
 		return session;
 	}
 

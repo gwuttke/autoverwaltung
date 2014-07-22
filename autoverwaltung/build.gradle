@@ -36,3 +36,8 @@ uploadArchives {
        }
     }
 }
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
