@@ -18,9 +18,6 @@ public class Tank implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tank_gen")
 	private int id;
 	private String beschreibung;
-	@OneToOne
-	@JoinColumn
-	private Tanken tanken;
 
 	public Tank() {
 

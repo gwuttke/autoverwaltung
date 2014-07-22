@@ -10,6 +10,7 @@ import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.domain.Tank;
 import de.gw.auto.domain.Tanken;
 
 public class DatenAbrufen extends DatenbankZugriff {
@@ -20,6 +21,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 	private List<Auto> autos = new ArrayList<Auto>();
 	private List<SonstigeAusgaben> sontigeAusgaben = new ArrayList<SonstigeAusgaben>();
 	private List<Tanken> tankfuellungen = new ArrayList<Tanken>();
+	private List<Tank> befuellung = new ArrayList<Tank>();
 
 	private static final String FROM = "FROM ";
 	private static final String WHERE = " WHERE ";
@@ -80,9 +82,22 @@ public class DatenAbrufen extends DatenbankZugriff {
 		benzinarten = (List<Benzinart>) this.select(FROM + "Benzinart");
 	}
 
+	private void giveTankbefuellung() throws Exception {
+		befuellung = (List<Tank>) this.select(FROM + "Tank");
+	}
+
 	private void giveAutosByBenutzer(Benutzer benutzer) throws Exception {
 		autos = (List<Auto>) this.select(FROM + "Auto" + WHERE + "benutzer ="
 				+ benutzer);
+	}
+
+	public List<Tank> getBefuellung() {
+		try {
+			giveTankbefuellung();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+return befuellung;
 	}
 
 	public List<Benzinart> getBenzinarten() {
