@@ -45,10 +45,11 @@ public class Willkommen {
 	private static JLabel lStatus = new JLabel("Daten werden geladen");
 
 	public static void main(String[] args) {
-		new Willkommen();
+		//new Willkommen();
 	}
 
-	public Willkommen() {
+	public Willkommen(Benutzer benutzer) {
+		setting.setBenutzer(benutzer);
 		frame = new JFrame();
 		frame.setTitle("Willkommen");
 		frame.addWindowListener(new WindowAdapter() {

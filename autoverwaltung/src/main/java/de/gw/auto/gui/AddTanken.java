@@ -70,8 +70,8 @@ public class AddTanken extends Funktionen {
 		JTextField tfKosten = new JTextField();
 
 		// Button
-		JButton btnAdd = new JButton(Texte.Form.Button.BUTTON_HINZUFUEGEN);
-		JButton btnCancel = new JButton(Texte.Form.Button.BUTTON_ABBRUCH);
+		JButton btnAdd = new JButton(Texte.Form.Button.HINZUFUEGEN);
+		JButton btnCancel = new JButton(Texte.Form.Button.ABBRUCH);
 
 		Container con = new Container();
 		con = frame.getContentPane();

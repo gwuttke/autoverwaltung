@@ -9,11 +9,14 @@ public class Texte {
 			public final static String TANKEN_KOSTEN_GES = "Kosten Gesammt:";
 			public final static String TANKEN_KOSTEN_AKT_JAHR = "Kosten dieses Jahr:";
 			public final static String TANKEN_KOSTEN_LET_JAHR = "Kosten letztes Jahr:";
+			public final static String BENUTZER = "Benutzer";
+			public static final String PASSWORT = "Passwort";
 		}
 
 		public static class Button {
-			public final static String BUTTON_HINZUFUEGEN = "Hinzufügen";
-			public final static String BUTTON_ABBRUCH = "Abbruch";
+			public final static String HINZUFUEGEN = "Hinzufügen";
+			public final static String ABBRUCH = "Abbruch";
+			public final static String BEENDEN = "Beenden";
 		}
 
 		public static class FensterTitel {
