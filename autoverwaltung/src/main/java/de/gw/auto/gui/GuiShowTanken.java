@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import de.gw.auto.Connstans;
+import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Info;
@@ -35,7 +35,7 @@ public class GuiShowTanken {
 		obj = loadData(setting, tankenDao);
 		Berechnung berechnung = new Berechnung();
 		Info tankInfoKosten = berechnung.getAusgabenBerechnungen().get(
-				Connstans.KOSTEN);
+				Constans.KOSTEN);
 
 		JLabel lKGes = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_GES + " "
 				+ tankInfoKosten.getGesammt());

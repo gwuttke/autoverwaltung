@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.gw.auto.Connstans;
+import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Tanken;
@@ -72,10 +72,10 @@ public class Berechnung {
 		Set<Info> setTInfo = new HashSet<Info>();
 		Datum datum = new Datum();
 
-		tiKosten.setName(Connstans.KOSTEN);
-		tiMaxPreisProLiter.setName(Connstans.MAX_PREIS);
-		tiMinPreisProLiter.setName(Connstans.MIN_PREIS);
-		tiAnzahlLiter.setName(Connstans.ANZAHL_LITER);
+		tiKosten.setName(Constans.KOSTEN);
+		tiMaxPreisProLiter.setName(Constans.MAX_PREIS);
+		tiMinPreisProLiter.setName(Constans.MIN_PREIS);
+		tiAnzahlLiter.setName(Constans.ANZAHL_LITER);
 
 		for (Tanken t : tDao.getTankenList()) {
 

@@ -1,6 +1,6 @@
 package de.gw.auto;
 
-public class Connstans {
+public class Constans {
 
 	private static final String MAX = "Maximal";
 	private static final String MIN = "Minimal";
