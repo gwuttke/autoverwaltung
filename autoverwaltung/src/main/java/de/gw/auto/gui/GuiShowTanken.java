@@ -14,8 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import de.gw.auto.Connstans;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
+import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Texte;
@@ -31,13 +33,17 @@ public class GuiShowTanken {
 
 	public GuiShowTanken(Settings setting, TankenDao tankenDao) {
 		obj = loadData(setting, tankenDao);
+		Berechnung berechnung = new Berechnung();
+		Info tankInfoKosten = berechnung.getAusgabenBerechnungen().get(
+				Connstans.KOSTEN);
 
 		JLabel lKGes = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_GES + " "
-				+ tankenDao.getSums().get("SumKosten"));
+				+ tankInfoKosten.getGesammt());
+		
 		JLabel lKLetJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_LET_JAHR
-				+ " " + tankenDao.getSums().get("VorjahrSumKosten"));
+				+ " " + tankInfoKosten.getVorjahr());
 		JLabel lKDiesJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_AKT_JAHR
-				+ " " + tankenDao.getSums().get("JahrSumKosten"));
+				+ " " + tankInfoKosten.getDiesesJahr());
 
 		JTable jT = new Tabelle(columnNames, obj).getJTable();
 		JFrame frame = new JFrame("Tanken");
@@ -53,7 +59,7 @@ public class GuiShowTanken {
 
 		JPanel jpAusgabe = new JPanel(new BorderLayout());
 		JPanel jpEinrückung = new JPanel(new GridLayout(1, 3));
-		jpEinrückung.add (new Label());
+		jpEinrückung.add(new Label());
 		jpEinrückung.add(lKDiesJahr);
 		jpEinrückung.add(new Label());
 

@@ -5,11 +5,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Vector;
-
-import javafx.scene.control.DatePicker;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,6 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
+import org.joda.time.LocalDate;
+
+import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.BenzinartDAO;
 import de.gw.auto.dao.LandDao;
@@ -57,13 +58,13 @@ public class AddTanken extends Funktionen {
 		JLabel lKmStand = new JLabel("Km Stand");
 
 		// Eingaben
-		final DatePicker datepicker = new DatePicker(LocalDate.now());
+		final DatePicker datepicker = new DatePicker(new Date());
 		final JSpinner spKmStand = new Spinner(20000, 0, 999999, 100)
 				.getSpinner();
-		final JComboBox cbLand = lModel.getCombobox();
-		final JComboBox cbOrt = oModel.getCombobox();
-		final JComboBox cbBenzinart = bModel.getCombobox();
-		final JComboBox cbTank = tModel.getCombobox();
+		final JComboBox<Land> cbLand = lModel.getCombobox();
+		final JComboBox<Ort> cbOrt = oModel.getCombobox();
+		final JComboBox<Benzinart> cbBenzinart = bModel.getCombobox();
+		final JComboBox<Tank> cbTank = tModel.getCombobox();
 		JTextField tfLiter = new JTextField();
 		JTextField tfPreisPLiter = new JTextField();
 		JTextField tfKosten = new JTextField();
@@ -138,7 +139,7 @@ public class AddTanken extends Funktionen {
 					return;
 				}
 
-				if ((int) spKmStand.getValue() <= set.getAuto().getKmAktuell()) {
+				if (Integer.parseInt(spKmStand.getValue().toString()) <= set.getAktuellAuto().getKmAktuell()) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
@@ -165,12 +166,12 @@ public class AddTanken extends Funktionen {
 
 		JComboBox<Land> getCombobox() {
 
-			JComboBox cb = new JComboBox(model);
+			JComboBox<Land> cb = new JComboBox<Land>(model);
 
 			model.addElement(textFormAK.BITTE_AUSWAELEN);
 
 			for (Land l : lDao.getLaender()) {
-				model.addElement(new Land(l));
+				model.addElement(l);
 			}
 
 			return cb;
@@ -180,10 +181,10 @@ public class AddTanken extends Funktionen {
 	}
 
 	private class OrtModel extends DefaultComboBoxModel<Ort> {
-
+		LandDao lDao = new LandDao();
 		OrtDao oDao = new OrtDao();
 		Vector<Ort> vOrt = new Vector<Ort>();
-		JComboBox cb;
+		JComboBox<Ort> cb;
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vOrt);
 
 		public JComboBox getCombobox() {
@@ -203,7 +204,7 @@ public class AddTanken extends Funktionen {
 				cb.setEditable(false);
 			} else {
 				model.addElement(textFormAK.BITTE_AUSWAELEN);
-				for (Ort o : oDao.getOrteInLand(l)) {
+				for (Ort o : lDao.getOrteByLand(l)) {
 					model.addElement(o);
 				}
 			}
@@ -216,11 +217,11 @@ public class AddTanken extends Funktionen {
 		Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
 
-		JComboBox<Land> getCombobox() {
+		JComboBox<Benzinart> getCombobox() {
 			JComboBox cb = new JComboBox(model);
 			model.addElement(textFormAK.BITTE_AUSWAELEN);
 			for (Benzinart b : bDao.getBenzinartList()) {
-				model.addElement(new Benzinart(b.getName(), b.getId()));
+				model.addElement(b);
 			}
 			return cb;
 

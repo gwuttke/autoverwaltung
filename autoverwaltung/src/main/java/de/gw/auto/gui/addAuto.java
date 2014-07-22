@@ -10,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.swing.JButton;
@@ -37,7 +39,6 @@ public class addAuto extends JFrame {
 	private Settings setting;
 	// Klassen
 	final AutoDAO autoDao = new AutoDAO(setting );
-	final static Procedures proc = new Procedures();
 	// Komponenten
 	final static JList<String> ALL_AUTO_LIST = new JList<String>();
 	final static JTextField KFZ_ZEICHEN_TEXT_FIELD = new JTextField();
@@ -50,7 +51,7 @@ public class addAuto extends JFrame {
 	final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
 	final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
 
-	Benzinart[] benzinArten = new Benzinart[]{new Benzinart()};
+	Set<Benzinart> benzinArten = new HashSet<Benzinart>();
 	
 	private static JSpinner getDateSpinner(final String name) {
 		Calendar cal = Calendar.getInstance();
@@ -103,11 +104,10 @@ public class addAuto extends JFrame {
 		
 		BTN_NEW_AUTO.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				 
-				autoDao.CarIntoDatabase(KFZ_ZEICHEN_TEXT_FIELD.getText(), (int) KM_STAND_SPINNER.getValue(), (java.util.Date) KFZ_ERSTDATUM_SPINNER.getValue(),
-						(java.util.Date) KFZ_KAUF_SPINNER.getValue(), benzinArten);
+				autoDao.CarIntoDatabase(KFZ_ZEICHEN_TEXT_FIELD.getText(), Integer.parseInt(KM_STAND_SPINNER.getValue().toString()), (java.util.Date) KFZ_ERSTDATUM_SPINNER.getValue(),
+						(java.util.Date) KFZ_KAUF_SPINNER.getValue(), benzinArten, Integer.parseInt(KM_STAND_SPINNER.getValue().toString()));
 				
 			}
 		});		

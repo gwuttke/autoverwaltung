@@ -3,17 +3,31 @@ package de.gw.auto.dao;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import de.gw.auto.Connstans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Tanken;
-import de.gw.auto.domain.TankenInfo;
+import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Vergleich;
 
 public class Berechnung {
 	private double b;
+	private Map<String, Info> ausgabenBerechnungen = new HashMap<String, Info>();
+	
+	
+
+	public Map<String, Info> getAusgabenBerechnungen() {
+		return ausgabenBerechnungen;
+	}
+	
+	public void addAusgabenBerechnungen(String bezeichnung, Info info){
+		this.ausgabenBerechnungen.put(bezeichnung, info);
+	}
 
 	public String getRound(BigDecimal value, int nachkommata) {
 		return round(value, nachkommata);
@@ -48,20 +62,20 @@ public class Berechnung {
 
 	}
 
-	public Set<TankenInfo> tankenAusgabe(TankenDao tDao) {
+	public Set<Info> tankenAusgabe(TankenDao tDao) {
 
-		TankenInfo tiKosten = new TankenInfo();
-		TankenInfo tiMaxPreisProLiter = new TankenInfo();
-		TankenInfo tiMinPreisProLiter = new TankenInfo();
-		TankenInfo tiAnzahlLiter = new TankenInfo();
+		Info tiKosten = new Info();
+		Info tiMaxPreisProLiter = new Info();
+		Info tiMinPreisProLiter = new Info();
+		Info tiAnzahlLiter = new Info();
 
-		Set<TankenInfo> setTInfo = new HashSet<TankenInfo>();
+		Set<Info> setTInfo = new HashSet<Info>();
 		Datum datum = new Datum();
 
-		tiKosten.setName("Kosten");
-		tiMaxPreisProLiter.setName("MaxPreis");
-		tiMinPreisProLiter.setName("MinPreis");
-		tiAnzahlLiter.setName("AnzahlLiter");
+		tiKosten.setName(Connstans.KOSTEN);
+		tiMaxPreisProLiter.setName(Connstans.MAX_PREIS);
+		tiMinPreisProLiter.setName(Connstans.MIN_PREIS);
+		tiAnzahlLiter.setName(Connstans.ANZAHL_LITER);
 
 		for (Tanken t : tDao.getTankenList()) {
 
@@ -108,4 +122,5 @@ public class Berechnung {
 		
 		return setTInfo;
 	}
+	
 }

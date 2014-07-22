@@ -25,12 +25,14 @@ import de.gw.auto.dao.OrtDao;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankDAO;
 import de.gw.auto.dao.TankenDao;
+import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.Button.Funktionen;
 
-public class Willkommen extends SqlServer {
+public class Willkommen {
 
-	private Settings setting = new Settings();
+	private Benutzer benutzer = new Benutzer();
+	private Settings setting = new Settings(benutzer);
 	AutoDAO aDao = new AutoDAO(setting);
 	TankenDao tDao = new TankenDao();
 	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
@@ -58,32 +60,23 @@ public class Willkommen extends SqlServer {
 		});
 
 		btnOk.addActionListener(new ActionListener() {
-
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					setting.setAuto(tfEingabe.getText());
-					aDao.setAutoList(setting);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//setting.setAuto(aDao.getAuto(tfEingabe.getText()));
-				//inizialsieren();
+				setting.setAktuellAuto(aDao.find(tfEingabe.getText()));
+				aDao.setAutoList(setting);
 
-				if (setting.getAuto() == null) {
+				if (setting.getAktuellAuto() == null) {
 					lStatus.setText("Falsche eingabe bitte versuchen sie es Erneut!!");
 					tfEingabe.setText("");
 					tfEingabe.setFocusable(true);
 					return;
 				}
 
-				if (setting.getAuto() != null) {
+				if (setting.getAktuellAuto() != null) {
 					try {
 
-						BenzinartDAO.setBenzinList();
-						TankDAO.setTankList();
+						new BenzinartDAO().setBenzinList();
+						new TankDAO().setTankList();
 						LandDao.setLaender();
 						OrtDao.setOrtList();
 						sADao.setSonstigeAusgabenList(setting);
@@ -96,7 +89,7 @@ public class Willkommen extends SqlServer {
 						// sqlS.getConn());
 					}
 				}
-				System.out.println(setting.getAuto().getId());
+				System.out.println(setting.getAktuellAuto().getId());
 				
 				new GuiShowTanken(setting, tDao);
 			}
@@ -122,14 +115,6 @@ public class Willkommen extends SqlServer {
 	}
 
 	private void inizialsieren() {
-		openConnection();
-
-		/*try {
-			//aDao.setAutoList(setting);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		if (aDao.getAutoList() != null) {
 			tfEingabe.setEnabled(true);
 			lStatus.setText("Bitte geben sie Ihr kennzeichen ein");

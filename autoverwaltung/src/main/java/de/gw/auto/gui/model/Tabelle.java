@@ -36,7 +36,6 @@ public class Tabelle implements TableModel {
 		return jT;
 	}
 
-	@Override
 	public int getRowCount() {
 		return data.length;
 	}
@@ -51,7 +50,6 @@ public class Tabelle implements TableModel {
 		return columns[columnIndex];
 	}
 
-	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		try {
 			if (getRowCount() == 0) {

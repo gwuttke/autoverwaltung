@@ -1,8 +1,8 @@
 package de.gw.auto.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
@@ -16,17 +16,23 @@ public class LandDao {
 		return laender;
 	}
 
-	public static void setLaender() throws SQLException {
+	public static void setLaender() {
 		laender = new DatenAbrufen().getLaender();
 	}
-	
-	public Land searchLand(int id){
-		for (Land l : laender){
-			if(l.getId() == id){
+
+	public Land searchLand(int id) {
+		for (Land l : laender) {
+			if (l.getId() == id) {
 				return l;
 			}
 		}
 		return null;
-		
+	}
+
+	public Set<Ort> getOrteByLand(Land land) {
+		if (laender.isEmpty()) {
+			setLaender();
+		}
+		return searchLand(land.getId()).getOrte();
 	}
 }

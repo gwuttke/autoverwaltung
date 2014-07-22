@@ -10,15 +10,7 @@ import de.gw.auto.hibernate.DatenAbrufen;
 
 public class TankDAO {
 	
-	private Settings settins;
-
 	private List<Tank> tankfuellungList = new ArrayList<Tank>();
-
-	public TankDAO(Settings settins) {
-		super();
-		this.settins = settins;
-	}
-
 
 	public List<Tank> getTankList() {
 		if (tankfuellungList.isEmpty() == true){
@@ -34,7 +26,7 @@ public class TankDAO {
 	}
 	
 	
-	public Tank getTank(int id){
+	public Tank searchTank(int id){
 		for(Tank ta : tankfuellungList){
 			if(ta.getId() == id){
 				return ta;

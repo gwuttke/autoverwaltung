@@ -2,7 +2,7 @@ package de.gw.auto.domain;
 
 import java.math.BigDecimal;
 
-public class TankenInfo {
+public class Info {
 
 	private String name;
 	private BigDecimal gesammt;

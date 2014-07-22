@@ -20,12 +20,15 @@ public class Land implements Serializable {
 	@Id
 	@SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 	private int id;
-	private String name;
-	
+	private String name;	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idLand") }, inverseJoinColumns = { @JoinColumn(name = "idOrt") })
 	private Set<Ort> orte;
 	
+
+	public Set<Ort> getOrte() {
+		return orte;
+	}
 
 	public Land() {
 

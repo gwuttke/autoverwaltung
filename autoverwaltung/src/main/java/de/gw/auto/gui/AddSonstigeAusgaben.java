@@ -8,14 +8,14 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import javafx.scene.control.DatePicker;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
+import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.domain.Settings;
@@ -38,7 +38,7 @@ public class AddSonstigeAusgaben extends Funktionen {
 		// Eingaben
 		final DatePicker dp = new DatePicker();
 		final JTextField tfBezeichnung = new JTextField();
-		final JSpinner spKmStand = new Spinner(50000, setting.getAuto()
+		final JSpinner spKmStand = new Spinner(50000, setting.getAktuellAuto()
 				.getKmAktuell(), 999999, 1000).getSpinner();
 		final JSpinner spKosten = new Spinner(0d, 0d, 99999.99, 100d)
 				.getSpinner();
@@ -76,7 +76,7 @@ public class AddSonstigeAusgaben extends Funktionen {
 				
 				SonstigeAusgabenDao saD = new SonstigeAusgabenDao(setting);
 				SonstigeAusgaben sa = new SonstigeAusgaben();
-				sa.setAutoId(setting.getAuto().getId());
+				sa.setAuto(setting.getAktuellAuto());
 				sa.setDatum(new Date(dp.getDate().getTime()));
 				sa.setKmStand(Integer.valueOf(spKmStand.getValue().toString()));
 				sa.setKommentar(tfBezeichnung.getText());
