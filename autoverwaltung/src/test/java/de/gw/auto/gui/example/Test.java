@@ -1,4 +1,4 @@
-package de.gw.auto.gui;
+package de.gw.auto.gui.example;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

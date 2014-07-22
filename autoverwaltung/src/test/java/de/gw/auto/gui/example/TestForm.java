@@ -1,4 +1,4 @@
-package de.gw.auto.gui;
+package de.gw.auto.gui.example;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
