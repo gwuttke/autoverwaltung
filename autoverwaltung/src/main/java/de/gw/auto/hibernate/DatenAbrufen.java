@@ -1,7 +1,27 @@
 package de.gw.auto.hibernate;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
+import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
+import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.type.Type;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
@@ -26,6 +46,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 
 	private static final String FROM = "FROM ";
 	private static final String WHERE = " WHERE ";
+	private static final String AND = " AND ";
 
 	public DatenAbrufen() {
 		super();
@@ -127,7 +148,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 
 	public void giveTankfuellungByAuto(Auto auto) throws Exception {
 		tankfuellungen = (List<Tanken>) this.select(FROM + "Tanken" + WHERE
-				+ "auto = " + auto);
+				+ "auto = :auto");
 	}
 
 	public List<Tanken> getTankfuellungen(Settings settings) {
@@ -139,17 +160,18 @@ public class DatenAbrufen extends DatenbankZugriff {
 
 		return tankfuellungen;
 	}
-	
-	private void giveBenutzer(Benutzer benutzer) throws Exception{
-		this.benutzer = (Benutzer) this.select(FROM + "Benutzer" + WHERE + "benutzer = " + benutzer); 
+
+	private void giveBenutzer(Benutzer benutzer) throws Exception {
+		String query = FROM + "Benutzer" + WHERE + "name = '"+ benutzer.getName() + "'" + AND 
+								+ "passwort = '" + benutzer.getPasswort() + "'";
+		
+		this.benutzer = (Benutzer) this.select(query);
+		
 	}
-	
-	public Benutzer getBenutzer(Benutzer benutzer) {
-		try {
-			giveBenutzer(benutzer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+	public Benutzer getBenutzer(Benutzer benutzer) throws Exception {
+		giveBenutzer(benutzer);
+
 		return benutzer;
 	}
 }

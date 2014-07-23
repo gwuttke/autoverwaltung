@@ -1,21 +1,29 @@
 package de.gw.auto.hibernate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import de.gw.auto.domain.Benutzer;
 
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
 
-	protected Session startSession() {
-			session = InitSessionFactory.getInstance().getCurrentSession();
-			tx = session.getTransaction();
+	private static final String FROM = "FROM ";
+	private static final String WHERE = " WHERE ";
+	private static final String AND = " AND ";
 
-		
+	protected Session startSession() {
+		session = InitSessionFactory.getInstance().getCurrentSession();
+		tx = session.getTransaction();
+
 		return session;
 	}
 
@@ -26,12 +34,16 @@ public class DatenbankZugriff {
 		return tx;
 	}
 
-	protected List<?> select(String hqsQuerry) throws Exception {
+	protected List<?> select(String hqsQuerry)
+			throws Exception {
 		List<?> obj = new ArrayList<Object>();
+
 		try {
 			startSession();
 			startTransaction();
+			System.out.println(hqsQuerry);
 			List entrys = session.createQuery(hqsQuerry).list();
+
 			obj.addAll(entrys);
 			tx.commit();
 		} catch (Exception ex) {
@@ -98,11 +110,11 @@ public class DatenbankZugriff {
 		}
 		return deleteObject;
 	}
-	
+
 	private String[] clean(String[] tabenames) {
 		this.startSession();
 		this.startTransaction();
-		for (String table : tabenames){
+		for (String table : tabenames) {
 			session.createQuery("delete from " + table).executeUpdate();
 		}
 		session.flush();

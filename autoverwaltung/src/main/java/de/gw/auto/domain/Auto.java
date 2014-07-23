@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -28,13 +29,16 @@ public class Auto implements Serializable {
 	private int kmKauf;
 	private Date kauf;
 	private Date erstZulassung;
-	//Wissen Notieren n:m Beziehung 
+	// Wissen Notieren n:m Beziehung
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;
 	@ManyToOne
-	private Benutzer benutzer;
+	private Set<SonstigeAusgaben> sonstigeAusgaben;
+	private Set<Tanken> tankfuellungen;
+	
+	
 
 	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
 			Set<Benzinart> benzinarten, int kmAktuell) {
@@ -48,7 +52,7 @@ public class Auto implements Serializable {
 	}
 
 	public Auto(Settings setting) {
-		super();
+		this();
 		this.kfz = setting.getAktuellAuto().getKfz();
 		this.id = setting.getAktuellAuto().getId();
 		this.kmKauf = setting.getAktuellAuto().getKmKauf();
@@ -57,17 +61,25 @@ public class Auto implements Serializable {
 		this.benzinarten = setting.getAktuellAuto().getBenzinarten();
 		this.kmAktuell = setting.getAktuellAuto().getKmAktuell();
 	}
-	
-	public Benutzer getBenutzer() {
-		return benutzer;
-	}
-
-	public void setBenutzer(Benutzer benutzer) {
-		this.benutzer = benutzer;
-	}
 
 	public Auto() {
+		super();
+	}
+		
+	public Set<Tanken> getTankfuellungen() {
+		return tankfuellungen;
+	}
 
+	public void setTankfuellungen(Set<Tanken> tankfuellungen) {
+		this.tankfuellungen = tankfuellungen;
+	}
+
+	public Set<SonstigeAusgaben> getSonstigeAusgaben() {
+		return sonstigeAusgaben;
+	}
+
+	public void setSonstigeAusgaben(Set<SonstigeAusgaben> sonstigeAusgaben) {
+		this.sonstigeAusgaben = sonstigeAusgaben;
 	}
 
 	public String getKfz() {

@@ -12,7 +12,7 @@ public class LogIn {
 		Benutzer benutzer = new Benutzer(benutzerName, passwort);
 		
 		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		benutzerDAO.setBenutzer(benutzer);
+		BenutzerDAO.setBenutzer(benutzer);
 		
 		benutzer = benutzerDAO.getBenutzer();
 		
