@@ -34,8 +34,9 @@ public class Auto implements Serializable {
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;
-	@ManyToOne
+	@OneToMany
 	private Set<SonstigeAusgaben> sonstigeAusgaben;
+	@OneToMany
 	private Set<Tanken> tankfuellungen;
 	
 	

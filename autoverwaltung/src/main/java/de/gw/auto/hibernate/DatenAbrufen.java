@@ -43,6 +43,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 	private List<Tanken> tankfuellungen = new ArrayList<Tanken>();
 	private List<Tank> befuellung = new ArrayList<Tank>();
 	private Benutzer benutzer = null;
+	private List<Benutzer> allBenutzer = new ArrayList<Benutzer>();
 
 	private static final String FROM = "FROM ";
 	private static final String WHERE = " WHERE ";
@@ -172,6 +173,19 @@ public class DatenAbrufen extends DatenbankZugriff {
 	public Benutzer getBenutzer(Benutzer benutzer) throws Exception {
 		giveBenutzer(benutzer);
 
-		return benutzer;
+		return this.benutzer;
+	}
+	
+	private void giveBenutzer() throws Exception {
+		String query = FROM + "Benutzer";
+		
+		this.allBenutzer =  (List<Benutzer>) this.select(query);
+		
+	}
+
+	public List<Benutzer> getBenutzer() throws Exception {
+		giveBenutzer();
+
+		return this.allBenutzer;
 	}
 }
