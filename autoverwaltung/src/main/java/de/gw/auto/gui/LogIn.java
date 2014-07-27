@@ -63,15 +63,17 @@ public class LogIn {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Benutzer benutzer = new Benutzer(tfBenutzer.getText(), new String(tfPasswort.getPassword()));
+				Benutzer benutzer = null;
 				try {
-					settings = new de.gw.auto.service.LogIn().LogIn(tfBenutzer.getText(), new String(tfPasswort.getPassword()));
+					settings = new de.gw.auto.service.LogIn().Login(tfBenutzer.getText(), new String(tfPasswort.getPassword()));
+					benutzer = settings.getBenutzer();
 				} catch (Exception e) {
 					AllException.messageBox("Falscher Benutzer", e.getMessage());
 					return;
 				}
 				if(settings.getBenutzer() != null){
 					new Willkommen(benutzer);
+					frame.dispose();
 				}else{
 					AllException.messageBox("Falscher Benutzer", "Fasche eingabe bitte versuchen sie es noch einmal");
 					return;	

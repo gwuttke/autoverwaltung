@@ -8,6 +8,10 @@ public class Info {
 	private BigDecimal gesammt;
 	private BigDecimal diesesJahr;
 	private BigDecimal vorjahr;
+	
+	public Info(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;

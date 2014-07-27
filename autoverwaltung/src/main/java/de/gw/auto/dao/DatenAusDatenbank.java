@@ -12,8 +12,8 @@ public class DatenAusDatenbank extends DatenbankZugriff{
 	Autoverwaltung autoverwaltung = new Autoverwaltung();
 	DatenAbrufen datenAbrufen = new DatenAbrufen();
 	
-	private List<Benutzer> giveBenutzer(){
-		datenAbrufen.get
+	private List<Benutzer> giveBenutzer() throws Exception{
+		return datenAbrufen.getBenutzer();
 	}
 	
 

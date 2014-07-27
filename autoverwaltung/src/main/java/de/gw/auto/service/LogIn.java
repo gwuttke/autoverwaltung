@@ -7,14 +7,12 @@ import de.gw.auto.exception.AllException;
 
 public class LogIn {
 
-	public Settings LogIn(String benutzerName, String passwort) throws Exception{
-		
+	public Settings Login(String benutzerName, String passwort) throws Exception{
+		BenutzerDAO benutzerDao = new BenutzerDAO();
 		Benutzer benutzer = new Benutzer(benutzerName, passwort);
+		benutzerDao.setBenutzer(benutzer);
 		
-		BenutzerDAO benutzerDAO = new BenutzerDAO();
-		BenutzerDAO.setBenutzer(benutzer);
-		
-		benutzer = benutzerDAO.getBenutzer();
+		benutzer = benutzerDao.getBenutzer();
 		
 		if (benutzer == null){
 			AllException.error("Benutzername oder Passwort ist Falsch, "
@@ -22,6 +20,7 @@ public class LogIn {
 			return null;
 		}
 		Settings settings = new Settings(benutzer);
+		System.out.println("LogIn!!");
 		return settings;
 		
 	}

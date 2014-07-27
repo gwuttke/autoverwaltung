@@ -34,7 +34,7 @@ public class Willkommen {
 	private Benutzer benutzer = new Benutzer();
 	private Settings setting = new Settings(benutzer);
 	AutoDAO aDao = new AutoDAO(setting);
-	TankenDao tDao = new TankenDao();
+	TankenDao tDao = new TankenDao(setting);
 	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
 
 	private static JFrame frame = new JFrame();

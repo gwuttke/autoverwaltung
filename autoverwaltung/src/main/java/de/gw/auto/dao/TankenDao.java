@@ -1,9 +1,9 @@
 package de.gw.auto.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.hibernate.DatenAbrufen;
@@ -18,9 +18,21 @@ public class TankenDao {
 		}
 		return tankenList;
 	}
+	
+	public TankenDao(Settings setting) {
+		setTankenList(setting);
+	}
 
-	public void setTankenList(Settings setting) throws SQLException {
+	public void setTankenList(Settings setting) {
 		tankenList = new DatenAbrufen().getTankfuellungen(setting);
 	}
+	
+	public Auto getAuto(){
+		return tankenList.get(0).getAuto();
+	}
+	
+	
+	
+	
 
 }

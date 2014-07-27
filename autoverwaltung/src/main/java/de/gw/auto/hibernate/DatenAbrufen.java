@@ -3,6 +3,7 @@ package de.gw.auto.hibernate;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.security.auth.login.AccountException;
 
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
@@ -85,6 +88,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 		try {
 			giveLaender();
 			giveBenzinarten();
+			giveBenutzer();
 		} catch (Exception e) {
 			System.err.println("Daten konten nicht geladen werden");
 			e.printStackTrace();
@@ -162,29 +166,36 @@ public class DatenAbrufen extends DatenbankZugriff {
 		return tankfuellungen;
 	}
 
-	private void giveBenutzer(Benutzer benutzer) throws Exception {
-		String query = FROM + "Benutzer" + WHERE + "name = '"+ benutzer.getName() + "'" + AND 
-								+ "passwort = '" + benutzer.getPasswort() + "'";
-		
-		this.benutzer = (Benutzer) this.select(query);
-		
+	private Benutzer giveBenutzer(Benutzer benutzer)  {
+		for (Benutzer b : getBenutzer()) {
+			if (b.getName().equals(benutzer.getName())
+					&& b.getPasswort().equals(benutzer.getPasswort())) {
+				return b;
+			}
+		}
+
+		return null;
 	}
 
-	public Benutzer getBenutzer(Benutzer benutzer) throws Exception {
-		giveBenutzer(benutzer);
-
-		return this.benutzer;
+	public Benutzer getBenutzer(Benutzer benutzer) {
+		return giveBenutzer(benutzer);
 	}
-	
+
 	private void giveBenutzer() throws Exception {
 		String query = FROM + "Benutzer";
-		
-		this.allBenutzer =  (List<Benutzer>) this.select(query);
-		
+
+		this.allBenutzer = (List<Benutzer>) this.select(query);
+
 	}
 
-	public List<Benutzer> getBenutzer() throws Exception {
-		giveBenutzer();
+	public List<Benutzer> getBenutzer() {
+		if (this.allBenutzer.isEmpty()) {
+			try {
+				giveBenutzer();
+			} catch (Exception e) {
+				System.out.println("Datenbank nicht erreichbar");
+			}
+		}
 
 		return this.allBenutzer;
 	}

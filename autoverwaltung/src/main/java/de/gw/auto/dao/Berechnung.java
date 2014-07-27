@@ -11,8 +11,8 @@ import java.util.Set;
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Datum;
-import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Info;
+import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Vergleich;
 
 public class Berechnung {
@@ -64,20 +64,26 @@ public class Berechnung {
 
 	public Set<Info> tankenAusgabe(TankenDao tDao) {
 
-		Info tiKosten = new Info();
-		Info tiMaxPreisProLiter = new Info();
-		Info tiMinPreisProLiter = new Info();
-		Info tiAnzahlLiter = new Info();
+		Info tiKosten = new Info(Constans.KOSTEN);
+		Info tiMaxPreisProLiter = new Info(Constans.MAX_PREIS);
+		Info tiMinPreisProLiter = new Info(Constans.MIN_PREIS);
+		Info tiAnzahlLiter = new Info(Constans.ANZAHL_LITER);
+		Info tiAvgPreisProLiter = new Info(Constans.AVG_Preis);
+		Info tiSummeKm = new Info(Constans.GEFAHRENE_KM);
 
 		Set<Info> setTInfo = new HashSet<Info>();
+		Set<BigDecimal> preiseGesamt = new HashSet<BigDecimal>();
+		Set<BigDecimal> preiseDiesesJahr = new HashSet<BigDecimal>();
+		Set<BigDecimal> preiseLetztesJahr = new HashSet<BigDecimal>();
 		Datum datum = new Datum();
 
-		tiKosten.setName(Constans.KOSTEN);
-		tiMaxPreisProLiter.setName(Constans.MAX_PREIS);
-		tiMinPreisProLiter.setName(Constans.MIN_PREIS);
-		tiAnzahlLiter.setName(Constans.ANZAHL_LITER);
-
+		int index = 0;
 		for (Tanken t : tDao.getTankenList()) {
+			Tanken tVorher = null;;
+			if(index<0){
+				tVorher = t;
+			}
+			
 
 			datum.setDate(t.getDatum());
 			// Jahr, wo getankt wurde
@@ -93,7 +99,9 @@ public class Berechnung {
 					.getPreisProLiter()).min());
 			tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 					t.getLiter()));
-
+			tiSummeKm.setGesammt(new BigDecimal(tDao.getAuto().getKmAktuell() - tDao.getAuto().getKmKauf()));
+			preiseGesamt.add(t.getPreisProLiter());
+			
 			if (nowJahr == jahr) {
 				tiKosten.setDiesesJahr(tiKosten.getDiesesJahr().add(
 						t.getKosten()));
@@ -103,6 +111,8 @@ public class Berechnung {
 						.getPreisProLiter()).min());
 				tiAnzahlLiter.setDiesesJahr(tiAnzahlLiter.getDiesesJahr().add(
 						t.getLiter()));
+				tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(new BigDecimal(t.getKmStand())));
+				preiseDiesesJahr.add(t.getPreisProLiter());
 
 			} else if (nowJahr - 1 == jahr) {
 
@@ -113,14 +123,33 @@ public class Berechnung {
 						.getPreisProLiter()).min());
 				tiAnzahlLiter.setVorjahr(tiAnzahlLiter.getVorjahr().add(
 						t.getLiter()));
+				tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(new BigDecimal(t.getKmStand())));
+				preiseLetztesJahr.add(t.getPreisProLiter());
 			}
+			
+			tiAvgPreisProLiter.setGesammt(findAverage(preiseGesamt));
+			tiAvgPreisProLiter.setDiesesJahr(findAverage(preiseDiesesJahr));
+			tiAvgPreisProLiter.setVorjahr(findAverage(preiseLetztesJahr));
+			setTInfo.add(tiKosten);
+			setTInfo.add(tiMinPreisProLiter);
+			setTInfo.add(tiMaxPreisProLiter);
+			setTInfo.add(tiAnzahlLiter);	
 		}
-		setTInfo.add(tiKosten);
-		setTInfo.add(tiMinPreisProLiter);
-		setTInfo.add(tiMaxPreisProLiter);
-		setTInfo.add(tiAnzahlLiter);
+		
 		
 		return setTInfo;
 	}
+	
+	private BigDecimal findAverage(Set<BigDecimal> bigDecimals){
+		BigDecimal summe = BigDecimal.ZERO;
+		
+		for(BigDecimal bd : bigDecimals){
+			summe.add(bd);
+		}
+		return summe.divide(new BigDecimal(bigDecimals.size()));
+	}
+	private int kmDifferenz(Tanken tVorher, Tanken tAktuell){
+		return tAktuell.getKmStand() - tVorher.getKmStand();
+	} 
 	
 }

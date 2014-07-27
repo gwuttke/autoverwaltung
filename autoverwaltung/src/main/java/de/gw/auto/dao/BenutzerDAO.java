@@ -12,17 +12,17 @@ public class BenutzerDAO {
 	
 	Benutzer benutzer = null;
 	
-	public static void setBenutzer(Benutzer benutzer){
+	public void setBenutzer(Benutzer loginBenutzer){
 		
 		try {
-			benutzer = new DatenAbrufen().getBenutzer(benutzer);
+			 this.benutzer = new DatenAbrufen().getBenutzer(loginBenutzer);
 		} catch (Exception e) {
 			AllException.messageBox("Falscher Benutzer", "Dieser Benutzer ist nicht vorhanden");
 		}
 	}
 	
 	public Benutzer getBenutzer() {
-		return benutzer;
+		return this.benutzer;
 	}
 	
 	
