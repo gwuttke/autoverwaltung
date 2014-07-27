@@ -72,10 +72,15 @@ public class LogIn {
 					return;
 				}
 				if(settings.getBenutzer() != null){
-					new Willkommen(benutzer);
+					if(settings.getAutos().isEmpty()){ 
+						new AddAuto(settings);
+						
+					}else{
+						new Willkommen(settings);
+					}					
 					frame.dispose();
 				}else{
-					AllException.messageBox("Falscher Benutzer", "Fasche eingabe bitte versuchen sie es noch einmal");
+					AllException.messageBox("Falscher Benutzer", "Falsche eingabe bitte versuchen sie es noch einmal");
 					return;	
 				}
 			}

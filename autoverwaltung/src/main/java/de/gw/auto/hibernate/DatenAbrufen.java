@@ -178,7 +178,9 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	public Benutzer getBenutzer(Benutzer benutzer) {
+		
 		return giveBenutzer(benutzer);
+		
 	}
 
 	private void giveBenutzer() throws Exception {

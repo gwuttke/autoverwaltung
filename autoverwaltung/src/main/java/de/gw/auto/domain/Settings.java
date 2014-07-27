@@ -34,21 +34,13 @@ public class Settings {
 		this.benutzer = benutzer;
 	}
 
-	public void setAutos() throws SQLException {
+	public void setAutos() {
 
 		autos = da.getAutos(benutzer);
 
 	}
 
-	public List<Auto> getAutos() throws SQLException {
-		for (Auto a : autos) {
-			if (a.getBenutzer() == benutzer) {
-				return autos;
-			} else {
-				setAutos();
-				getAutos();
-			}
-		}
+	public List<Auto> getAutos() {
 		return autos;
 	}
 

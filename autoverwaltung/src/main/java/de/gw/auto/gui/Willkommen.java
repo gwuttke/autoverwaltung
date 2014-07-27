@@ -48,10 +48,32 @@ public class Willkommen {
 		//new Willkommen();
 	}
 
-	public Willkommen(Benutzer benutzer) {
-		setting.setBenutzer(benutzer);
+	public Willkommen(Settings settings) {
+		setting = settings;
 		frame = new JFrame();
 		frame.setTitle("Willkommen");
+		setListeners();
+
+		Container con = new Container();
+		con = frame.getContentPane();
+		con.setLayout(new BorderLayout());
+
+		JPanel jpEingabe = new JPanel();
+		jpEingabe.setLayout(new GridLayout(3, 1));
+
+		tfEingabe.setEnabled(false);
+		jpEingabe.add(lAuto);
+		jpEingabe.add(tfEingabe);
+		jpEingabe.add(btnOk);
+
+		con.add(jpEingabe, BorderLayout.CENTER);
+		con.add(lStatus, BorderLayout.SOUTH);
+
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	private void setListeners() {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -95,24 +117,6 @@ public class Willkommen {
 				new GuiShowTanken(setting, tDao);
 			}
 		});
-
-		Container con = new Container();
-		con = frame.getContentPane();
-		con.setLayout(new BorderLayout());
-
-		JPanel jpEingabe = new JPanel();
-		jpEingabe.setLayout(new GridLayout(3, 1));
-
-		tfEingabe.setEnabled(false);
-		jpEingabe.add(lAuto);
-		jpEingabe.add(tfEingabe);
-		jpEingabe.add(btnOk);
-
-		con.add(jpEingabe, BorderLayout.CENTER);
-		con.add(lStatus, BorderLayout.SOUTH);
-
-		frame.pack();
-		frame.setVisible(true);
 	}
 
 	private void inizialsieren() {

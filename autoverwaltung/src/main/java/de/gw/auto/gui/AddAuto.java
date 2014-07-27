@@ -29,12 +29,8 @@ import de.gw.auto.dao.AutoDAO;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
 
-public class addAuto extends JFrame {
+public class AddAuto extends JFrame {
 
-	/*
-	 * 
-	 * Hier fehlt noch der Befehl Hinzufügen in die Datenbank
-	 */
 
 	private Settings setting;
 	// Klassen
@@ -72,7 +68,7 @@ public class addAuto extends JFrame {
 		return spinner;
 	}
 
-	public addAuto(Settings setting) {
+	public AddAuto(Settings setting) {
 		super();
 		
 		Container con = new Container();

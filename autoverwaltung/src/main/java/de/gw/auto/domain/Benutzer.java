@@ -1,6 +1,7 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Benutzer implements Serializable {
 	private String name;
 	private String passwort;
 	@ManyToMany
-	private Set<Auto> autos;
+	private List<Auto> autos;
 	
 	public Benutzer() {
 		// for Hibernate
@@ -45,16 +46,17 @@ public class Benutzer implements Serializable {
 		this.passwort = passwort;
 	}
 
-	public Set<Auto> getAutos() {
+	
+	public List<Auto> getAutos() {
 		return autos;
 	}
 
 
-	public void setAutos(Set<Auto> autos) {
+	public void setAutos(List<Auto> autos) {
 		this.autos = autos;
 	}
 
-	
+
 	public String getName() {
 		return name;
 	}
