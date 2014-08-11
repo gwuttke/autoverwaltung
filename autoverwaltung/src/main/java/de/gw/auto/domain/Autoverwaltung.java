@@ -1,6 +1,7 @@
 package de.gw.auto.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Autoverwaltung {
@@ -87,7 +88,7 @@ public class Autoverwaltung {
 		return null;
 	}
 
-	public Set<Auto> getAutos(Benutzer benutzer) {
+	public List<Auto> getAutos(Benutzer benutzer) {
 
 		return searchBenutzer(benutzer).getAutos();
 	}

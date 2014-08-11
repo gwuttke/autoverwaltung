@@ -80,13 +80,7 @@ public class GuiShowTanken {
 		Object[][] o;
 
 		if (tankenDao.getTankenList() == null) {
-			try {
-				tankenDao.setTankenList(setting);
-			} catch (SQLException e) {
-				AllException.messageBox(Texte.Error.Titel.CONNECTION,
-						Texte.Error.Text.CONNECTION_TEXT);
-				return null;
-			}
+			tankenDao.setTankenList(setting);
 		}
 
 		o = new Object[tankenDao.getTankenList().size()][9];
