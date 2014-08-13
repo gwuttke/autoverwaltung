@@ -1,15 +1,21 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,8 +30,9 @@ public class Benutzer implements Serializable {
 	private int id;
 	private String name;
 	private String passwort;
-	@ManyToMany
-	private List<Auto> autos;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idBenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idAuto") })
+	private List<Auto> autos = new ArrayList<>();
 	
 	public Benutzer() {
 		// for Hibernate
@@ -54,6 +61,10 @@ public class Benutzer implements Serializable {
 
 	public void setAutos(List<Auto> autos) {
 		this.autos = autos;
+	}
+	
+	public void addAuto(Auto auto){
+		autos.add(auto);
 	}
 
 

@@ -85,7 +85,7 @@ public class DatenbankZugriff {
 		return saveObject;
 	}
 
-	protected Object update(Object updateObject) throws Exception {
+	protected Object update(Object updateObject) {
 		try {
 			startSession();
 			startTransaction();

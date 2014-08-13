@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.gw.auto.domain.Auto;
+import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.hibernate.DatenAbrufen;
@@ -24,7 +25,7 @@ public class AutoDAO extends DatenAbrufen {
 		this.setting = setting;
 	}
 
-	public int CarIntoDatabase(String kfz, int kaufKm,
+	public int CarIntoDatabase(Benutzer benutzer, String kfz, int kaufKm,
 			java.util.Date kaufDatum, java.util.Date erstZulassung,
 			Set<Benzinart> benzinarten, int kmAktuell) {
 		java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
@@ -32,8 +33,10 @@ public class AutoDAO extends DatenAbrufen {
 
 		Auto a = new Auto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinarten,
 				kmAktuell);
-
+		
 		update.addAuto(a);
+		benutzer.addAuto(a);
+		update.updateBenutzer(benutzer);
 
 		return 0;
 	}
