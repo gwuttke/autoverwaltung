@@ -10,11 +10,15 @@ public class BenzinartDAO {
 
 	private List<Benzinart> benzinartList = new ArrayList<Benzinart>();
 
+	public BenzinartDAO() {
+		setBenzinList();
+	}
+	
 	public List<Benzinart> getBenzinartList() {
 		return benzinartList;
 	}
 	
-	public Benzinart searchBenzinartById(int id){
+	public  Benzinart searchBenzinartById(int id){
 		for(Benzinart ba : benzinartList){
 			if(ba.getId().equals(id)){
 				return ba;
@@ -24,7 +28,7 @@ public class BenzinartDAO {
 	}
 
 	public void setBenzinList(){
-		this.benzinartList =  new DatenAbrufen().getBenzinarten();
+		benzinartList =  new DatenAbrufen().getBenzinarten();
 	}
 	
 
