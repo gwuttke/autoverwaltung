@@ -114,8 +114,8 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	private void giveAutosByBenutzer(Benutzer benutzer) throws Exception {
-		autos = (List<Auto>) this.select(FROM + "Auto" + WHERE + "benutzer ="
-				+ benutzer);
+		benutzer = (Benutzer) this.select(FROM + "Benutzer " + WHERE + "id = " + benutzer.getId()).get(0);
+		autos =  benutzer.getAutos();
 	}
 
 	public List<Tank> getBefuellung() {
@@ -153,7 +153,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 
 	public void giveTankfuellungByAuto(Auto auto) throws Exception {
 		tankfuellungen = (List<Tanken>) this.select(FROM + "Tanken" + WHERE
-				+ "auto = :auto");
+				+ "auto_id = " + auto.getId());
 	}
 
 	public List<Tanken> getTankfuellungen(Settings settings) {

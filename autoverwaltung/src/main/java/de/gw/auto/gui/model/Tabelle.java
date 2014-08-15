@@ -22,7 +22,10 @@ public class Tabelle implements TableModel {
 					"Wenden sie sich bitte an den Entwickler");
 		}
 		if (data.length == 0) {
-			data[0][1] = textTabelle.KEINE_DATEN;
+			data = new  Object[1][1];
+			data[0][0] = textTabelle.KEINE_DATEN;
+			columnNames = new String[1];
+			columnNames[0] = "Keine Daten";
 		}
 
 		this.columns = columnNames;

@@ -16,6 +16,7 @@ public class Settings {
 
 	public Settings(Benutzer benutzer) {
 		this.benutzer = benutzer;
+		load();
 	}
 
 	public Benutzer getBenutzer() {
@@ -39,9 +40,25 @@ public class Settings {
 		autos = da.getAutos(benutzer);
 
 	}
+	
+	public void addAuto(Auto auto){
+		autos.add(auto);
+		 setAktuellAuto(autos.get(autos.size() -1));
+	}
 
 	public List<Auto> getAutos() {
 		return autos;
+	}
+	
+	public void set(Settings setting){
+		this.aktuellAuto = setting.aktuellAuto;
+		this.autos = setting.autos;
+		this.benutzer = setting.benutzer;
+	}
+	
+	public void load(){
+		autos = da.getAutos(benutzer);
+		aktuellAuto = autos.get(autos.size() -1);
 	}
 
 }

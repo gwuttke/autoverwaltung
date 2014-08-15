@@ -26,6 +26,9 @@ public class DatenbankZugriff {
 
 		return session;
 	}
+	public static void main(String[] args) {
+		new DatenbankZugriff().clean();
+	}
 
 	protected Transaction startTransaction() {
 		if (tx.isActive() == false) {
@@ -64,8 +67,8 @@ public class DatenbankZugriff {
 	}
 
 	public void clean() {
-		String[] tablenames = new String[] { /* "auto_benzinart", */"Benzinart",
-				"Ort", "Land", "Tank", "Tanken", "Auto", "SonstigeAusgaben" };
+		String[] tablenames = new String[] {"auto_benzinart", "auto_sonstigeausgaben", "auto_tanken", "laenderorte",
+				"sonstigeausgaben", "tanken", "tank", "ort", "land", "benzinart", "auto", "benutzer"};
 
 		clean(tablenames);
 

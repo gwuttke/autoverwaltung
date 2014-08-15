@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 public class Info {
 
 	private String name;
-	private BigDecimal gesammt;
-	private BigDecimal diesesJahr;
-	private BigDecimal vorjahr;
+	private BigDecimal gesammt = BigDecimal.ZERO;
+	private BigDecimal diesesJahr = BigDecimal.ZERO;
+	private BigDecimal vorjahr = BigDecimal.ZERO;
 	
 	public Info(String name) {
 		this.name = name;
