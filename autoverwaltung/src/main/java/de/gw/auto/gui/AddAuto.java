@@ -140,6 +140,7 @@ public class AddAuto extends JFrame {
 								.getValue().toString())));
 				
 				new GuiShowTanken(setting, new TankenDao(setting));
+				dispose();
 
 			}
 		});

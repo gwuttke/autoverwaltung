@@ -58,6 +58,9 @@ public class Settings {
 	
 	public void load(){
 		autos = da.getAutos(benutzer);
+		if(autos.isEmpty()){
+			return;
+		}
 		aktuellAuto = autos.get(autos.size() -1);
 	}
 
