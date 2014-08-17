@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,7 +20,7 @@ import javax.persistence.SequenceGenerator;
 @SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 public class Land implements Serializable {
 	@Id
-	@SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "land_seq")
 	private int id;
 	private String name;	
 	@OneToMany(fetch = FetchType.EAGER)

@@ -145,10 +145,11 @@ public class Auto implements Serializable {
 
 	@Override
 	public String toString() {
-		return MessageFormat.format(
+		/* return MessageFormat.format(
 				"{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}", new Object[] {
 						getClass().getSimpleName(), id, kfz, kmKauf, kauf,
 						erstZulassung, benzinarten, kmAktuell });
-
+		*/
+		return kfz;
 	}
 }

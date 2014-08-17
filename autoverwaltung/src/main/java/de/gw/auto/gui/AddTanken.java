@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-import org.joda.time.LocalDate;
-
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.BenzinartDAO;
@@ -40,12 +38,14 @@ public class AddTanken extends Funktionen {
 	private static final Texte.Error.Titel textError = new Texte.Error.Titel();
 	JFrame frame = new JFrame();
 
+	Settings setting;
 	LandModel lModel = new LandModel();
 	OrtModel oModel = new OrtModel();
 	BenzinartModel bModel = new BenzinartModel();
 	TankModel tModel = new TankModel();
 
 	public AddTanken(final Settings set) {
+		this.setting = set;
 		// Label
 		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
 		JLabel lLand = new JLabel(Texte.Form.Label.LAND);
@@ -120,7 +120,7 @@ public class AddTanken extends Funktionen {
 							"Bitte wählen sie ein Land aus");
 					return;
 				}
-				
+
 				if (cbOrt.getSelectedIndex() == 0) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
@@ -139,7 +139,8 @@ public class AddTanken extends Funktionen {
 					return;
 				}
 
-				if (Integer.parseInt(spKmStand.getValue().toString()) <= set.getAktuellAuto().getKmAktuell()) {
+				if (Integer.parseInt(spKmStand.getValue().toString()) <= set
+						.getAktuellAuto().getKmAktuell()) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen Ort aus");
 					return;
@@ -169,7 +170,9 @@ public class AddTanken extends Funktionen {
 			JComboBox<Land> cb = new JComboBox<Land>(model);
 
 			model.addElement(textFormAK.BITTE_AUSWAELEN);
-
+			if (lDao.getLaender().isEmpty()) {
+				return cb;
+			}
 			for (Land l : lDao.getLaender()) {
 				model.addElement(l);
 			}
@@ -204,8 +207,12 @@ public class AddTanken extends Funktionen {
 				cb.setEditable(false);
 			} else {
 				model.addElement(textFormAK.BITTE_AUSWAELEN);
-				for (Ort o : lDao.getOrteByLand(l)) {
-					model.addElement(o);
+				try {
+					for (Ort o : lDao.getOrteByLand(l)) {
+						model.addElement(o);
+					}
+				} catch (NullPointerException npe) {
+					model.addElement("keine Orte zu diesem Land");
 				}
 			}
 		}
@@ -220,7 +227,7 @@ public class AddTanken extends Funktionen {
 		JComboBox<Benzinart> getCombobox() {
 			JComboBox cb = new JComboBox(model);
 			model.addElement(textFormAK.BITTE_AUSWAELEN);
-			for (Benzinart b : bDao.getBenzinartList()) {
+			for (Benzinart b : setting.getAktuellAuto().getBenzinarten()) {
 				model.addElement(b);
 			}
 			return cb;
@@ -241,7 +248,7 @@ public class AddTanken extends Funktionen {
 			model.addElement(Texte.Form.AndereKomponennte.BITTE_AUSWAELEN);
 
 			for (Tank t : tDao.getTankList()) {
-				model.addElement(new Tank(t.getId(), t.getBeschreibung()));
+				model.addElement(t);
 			}
 
 			return cb;

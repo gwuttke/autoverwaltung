@@ -32,6 +32,9 @@ public class LandDao {
 	public Set<Ort> getOrteByLand(Land land) {
 		if (laender.isEmpty()) {
 			setLaender();
+			if (laender.isEmpty()){
+				return null;
+			}
 		}
 		return searchLand(land.getId()).getOrte();
 	}

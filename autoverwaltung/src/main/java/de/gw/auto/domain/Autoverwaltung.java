@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Autoverwaltung {
+import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.hibernate.DatenbankZugriff;
+
+public class Autoverwaltung extends DatenAbrufen{
 
 	private Set<Benutzer> benutzer;
+	private Benutzer aktellBenutzer;
 	private Set<Auto> autos;
 	private Set<Benzinart> benzinarten;
 	private Set<Land> laender;
@@ -14,8 +18,13 @@ public class Autoverwaltung {
 	private Set<SonstigeAusgaben> sonstigeAusgaben;
 	private Set<Tank> betankungen;
 	private Set<Tanken> tankfuellungen;
+	
 
 	public Autoverwaltung() {
+	}
+	
+	public Autoverwaltung(Benutzer benutzer){
+		aktellBenutzer = benutzer;
 	}
 
 	public synchronized int nextWeinId() {
@@ -101,24 +110,8 @@ public class Autoverwaltung {
 		return searchAuto(auto).getTankfuellungen();
 	}
 
-	public Set<Benutzer> getBenutzer() {
-		return benutzer;
-	}
-
 	public Set<Auto> getAutos() {
 		return autos;
-	}
-
-	public Set<Benzinart> getBenzinarten() {
-		return benzinarten;
-	}
-
-	public Set<Land> getLaender() {
-		return laender;
-	}
-
-	public Set<Ort> getOrte() {
-		return orte;
 	}
 
 	public Set<SonstigeAusgaben> getSonstigeAusgaben() {
@@ -164,5 +157,13 @@ public class Autoverwaltung {
 	public void setTankfuellungen(Set<Tanken> tankfuellungen) {
 		this.tankfuellungen = tankfuellungen;
 	}
+	
+	private void load(){
+		List<Auto> lAuto = this.getAutos(aktellBenutzer);
+		List<Benzinart> lBenzinarten = this.getBenzinarten();
+		List<Land> lLand = this.getLaender();
+		
+	}
+	
 
 }

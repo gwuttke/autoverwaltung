@@ -3,12 +3,13 @@ package de.gw.auto.domain;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.gw.auto.hibernate.DatenAbrufen;
 
 public class Settings {
 
-	DatenAbrufen da = new DatenAbrufen();
+	private DatenAbrufen da = new DatenAbrufen();
 
 	private List<Auto> autos = new ArrayList<Auto>();
 	private Benutzer benutzer = null;
@@ -17,6 +18,10 @@ public class Settings {
 	public Settings(Benutzer benutzer) {
 		this.benutzer = benutzer;
 		load();
+	}
+	
+	public DatenAbrufen getDaten(){
+		return da;
 	}
 
 	public Benutzer getBenutzer() {
@@ -50,10 +55,24 @@ public class Settings {
 		return autos;
 	}
 	
+	public Auto[] getAutosArray(){
+		Auto[] autos = new Auto[this.autos.size()];
+		int i = 0;
+		for (Auto a : this.autos){
+			autos[i] = a;
+			i++;
+		}
+		return autos;
+	}
+	
 	public void set(Settings setting){
 		this.aktuellAuto = setting.aktuellAuto;
 		this.autos = setting.autos;
 		this.benutzer = setting.benutzer;
+	}
+	
+	public Set<Benzinart> getAutoBenzinarten(){
+		return aktuellAuto.getBenzinarten();
 	}
 	
 	public void load(){

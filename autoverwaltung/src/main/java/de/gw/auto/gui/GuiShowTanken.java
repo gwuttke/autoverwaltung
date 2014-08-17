@@ -5,9 +5,14 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +22,7 @@ import javax.swing.JTable;
 import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
@@ -26,13 +32,18 @@ import de.gw.auto.gui.model.Tabelle;
 
 public class GuiShowTanken {
 
-	String[] columnNames = new String[] { "Datum", "Benzinart", "Km Stand",
+	private String[] columnNames = new String[] { "Datum", "Benzinart", "Km Stand",
 			"Ort", "Land", "inhalt getankt", "Liter", "Preis p. Liter",
 			"Kosten" };
-	Object[][] obj = new Object[1][1];;
+	private Object[][] obj = new Object[1][1];
+	
+	private JButton btnTanken = new JButton("Tanken hinzufügen");
+	private JButton btnSonstigeAusgaben = new JButton("Sonstige Ausgaben hinzufügen");
 
 	public GuiShowTanken(Settings setting, TankenDao tankenDao) {
 		obj = loadData(setting, tankenDao);
+		JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>(setting
+				.getAutosArray());
 		Berechnung berechnung = new Berechnung();
 		Info tankInfoKosten = berechnung.getAusgabenBerechnungen().get(
 				Constans.KOSTEN);
@@ -41,6 +52,10 @@ public class GuiShowTanken {
 				+ " ");
 		JLabel lKDiesJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_AKT_JAHR
 				+ " ");
+		
+
+		comboBoxAutos.getModel().setSelectedItem(setting.getAktuellAuto());
+		setActions(setting);
 
 		if (obj.length == 0) {
 			lKGes.setText(lKGes.getText() + 0);
@@ -54,28 +69,38 @@ public class GuiShowTanken {
 			lKDiesJahr.setText(lKDiesJahr.getText()
 					+ tankInfoKosten.getDiesesJahr());
 		}
-		JTable jT = new Tabelle(columnNames, obj).getJTable();
+		JTable jTableTanken = new Tabelle(columnNames, obj).getJTable();
 		JFrame frame = new JFrame("Tanken");
 		Container con = new Container();
 
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		JScrollPane sp = new JScrollPane(jT);
+		JScrollPane sp = new JScrollPane(jTableTanken);
 
 		JPanel jpTable = new JPanel(new BorderLayout());
 		jpTable.add(sp, BorderLayout.CENTER);
 
-		JPanel jpAusgabe = new JPanel(new BorderLayout());
+		JPanel jpEingaben = new JPanel(new BorderLayout());
 		JPanel jpEinrueckung = new JPanel(new GridLayout(1, 3));
+		JPanel jpAusgabe = new JPanel(new BorderLayout());
+		JPanel jpBtn = new JPanel(new GridLayout(1,2));
+		
+		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
+
 		jpEinrueckung.add(new Label());
 		jpEinrueckung.add(lKDiesJahr);
 		jpEinrueckung.add(new Label());
+		
+		jpBtn.add(btnTanken);
+		jpBtn.add(btnSonstigeAusgaben);
 
 		jpAusgabe.add(lKLetJahr, BorderLayout.WEST);
 		jpAusgabe.add(jpEinrueckung, BorderLayout.CENTER);
 		jpAusgabe.add(lKGes, BorderLayout.EAST);
+		jpAusgabe.add(jpBtn, BorderLayout.SOUTH);
 
+		con.add(jpEingaben, BorderLayout.NORTH);
 		con.add(jpTable, BorderLayout.CENTER);
 		con.add(jpAusgabe, BorderLayout.SOUTH);
 
@@ -113,6 +138,25 @@ public class GuiShowTanken {
 		}
 		return o;
 
+	}
+	
+	private void setActions(final Settings setting){
+		btnTanken.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new AddTanken(setting);
+				
+			}
+		});
+		btnSonstigeAusgaben.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new AddSonstigeAusgaben(setting);
+				
+			}
+		});
 	}
 
 }
