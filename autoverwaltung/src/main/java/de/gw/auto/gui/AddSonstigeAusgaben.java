@@ -38,8 +38,8 @@ public class AddSonstigeAusgaben extends Funktionen {
 		// Eingaben
 		final DatePicker dp = new DatePicker();
 		final JTextField tfBezeichnung = new JTextField();
-		final JSpinner spKmStand = new Spinner(50000, setting.getAktuellAuto()
-				.getKmAktuell(), 999999, 1000).getSpinner();
+		final JSpinner spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 200, setting.getAktuellAuto()
+				.getKmAktuell(), 999999, 100).getSpinner();
 		final JSpinner spKosten = new Spinner(0d, 0d, 99999.99, 100d)
 				.getSpinner();
 
