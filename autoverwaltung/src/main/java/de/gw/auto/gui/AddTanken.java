@@ -28,6 +28,7 @@ import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tank;
+import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
@@ -59,8 +60,8 @@ public class AddTanken extends Funktionen {
 
 		// Eingaben
 		final DatePicker datepicker = new DatePicker(new Date());
-		final JSpinner spKmStand = new Spinner(20000, 0, 999999, 100)
-				.getSpinner();
+		final JSpinner spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 200, setting.getAktuellAuto()
+				.getKmAktuell(), 999999, 100).getSpinner();
 		final JComboBox<Land> cbLand = lModel.getCombobox();
 		final JComboBox<Ort> cbOrt = oModel.getCombobox();
 		final JComboBox<Benzinart> cbBenzinart = bModel.getCombobox();
@@ -135,14 +136,15 @@ public class AddTanken extends Funktionen {
 
 				if (cbTank.getSelectedIndex() == 0) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
-							"Bitte wählen sie einen Ort aus");
+							"Bitte wählen sie einen Tankfüllstand aus");
 					return;
 				}
 
 				if (Integer.parseInt(spKmStand.getValue().toString()) <= set
 						.getAktuellAuto().getKmAktuell()) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
-							"Bitte wählen sie einen Ort aus");
+							"Bitte wählen sie einen KM Stand der größer als "+ set
+							.getAktuellAuto().getKmAktuell() + "Km ist.");
 					return;
 				}
 				if (cbOrt.getSelectedIndex() == 0) {
@@ -150,7 +152,15 @@ public class AddTanken extends Funktionen {
 							"Bitte wählen sie einen Ort aus");
 					return;
 				}
-
+				
+				/*
+				 * TODO Daten  überprüfen ob in Datenbank vorhanden und Daten aktuallisieren
+				 */
+				
+				int kmStand = Integer.parseInt(spKmStand.getValue().toString());
+				
+				
+				Tanken new Tanken(kmStand, land, ort, tank, kosten, auto, datum, liter, preisProLiter, benzinArt)
 			}
 		});
 

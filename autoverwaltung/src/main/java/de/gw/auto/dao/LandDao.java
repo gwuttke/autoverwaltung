@@ -13,6 +13,9 @@ public class LandDao {
 	private static List<Land> laender = new ArrayList<Land>();
 
 	public List<Land> getLaender() {
+		if (laender.isEmpty()){
+			setLaender();
+		}
 		return laender;
 	}
 

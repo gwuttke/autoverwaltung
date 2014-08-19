@@ -60,7 +60,7 @@ public class Land implements Serializable {
 	@Override
 	public String toString() {
 	
-		return MessageFormat.format("{0}: {1} : {2}", new Object[] {id, name});
+		return name;
 	}
 	
 }
