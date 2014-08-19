@@ -220,7 +220,7 @@ public class AddTanken extends Funktionen {
 
 	private class BenzinartModel extends DefaultComboBoxModel<Benzinart> {
 
-		BenzinartDAO bDao = new BenzinartDAO();
+		//BenzinartDAO bDao = new BenzinartDAO();
 		Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
 

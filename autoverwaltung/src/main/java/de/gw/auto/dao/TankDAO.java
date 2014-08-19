@@ -37,6 +37,9 @@ public class TankDAO {
 
 	public void setTankList() throws SQLException {
 		tankfuellungList = new DatenAbrufen().getBefuellung();
+		if (tankfuellungList.isEmpty()){
+			tankfuellungList.add(new Tank("noch keine Angaben"))
+		}
 	}
 	
 
