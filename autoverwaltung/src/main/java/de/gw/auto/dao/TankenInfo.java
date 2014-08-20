@@ -41,11 +41,15 @@ public class TankenInfo {
 			Set<BigDecimal> preiseLetztesJahr = new HashSet<BigDecimal>();
 			Datum datum = new Datum();
 
+			Vergleich v = new Vergleich();
 			int index = 0;
 			for (Tanken t : tDao.getTankenList()) {
-				Tanken tVorher = null;;
-				if(index<0){
+				
+				Tanken tVorher = null;
+				if(index > 0){
 					tVorher = t;
+				}else{
+					v = new Vergleich(t.getPreisProLiter());
 				}
 				
 
@@ -57,10 +61,8 @@ public class TankenInfo {
 
 				// Gesammt berechnung
 				tiKosten.setGesammt(tiKosten.getGesammt().add(t.getKosten()));
-				tiMaxPreisProLiter.setGesammt(new Vergleich(t
-						.getPreisProLiter()).max());
-				tiMinPreisProLiter.setGesammt(new Vergleich(t
-						.getPreisProLiter()).min());
+				tiMaxPreisProLiter.setGesammt(v.max());
+				tiMinPreisProLiter.setGesammt(v.min());
 				tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 						t.getLiter()));
 				tiSummeKm.setGesammt(new BigDecimal(setting.getAktuellAuto().getKmAktuell() - setting.getAktuellAuto().getKmKauf()));
@@ -69,10 +71,8 @@ public class TankenInfo {
 				if (nowJahr == jahr) {
 					tiKosten.setDiesesJahr(tiKosten.getDiesesJahr().add(
 							t.getKosten()));
-					tiMaxPreisProLiter.setDiesesJahr(new Vergleich(t
-							.getPreisProLiter()).max());
-					tiMinPreisProLiter.setDiesesJahr(new Vergleich(t
-							.getPreisProLiter()).min());
+					tiMaxPreisProLiter.setDiesesJahr(v.max());
+					tiMinPreisProLiter.setDiesesJahr(v.min());
 					tiAnzahlLiter.setDiesesJahr(tiAnzahlLiter.getDiesesJahr().add(
 							t.getLiter()));
 					tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(new BigDecimal(t.getKmStand())));
@@ -81,10 +81,8 @@ public class TankenInfo {
 				} else if (nowJahr - 1 == jahr) {
 
 					tiKosten.setVorjahr(tiKosten.getVorjahr().add(t.getKosten()));
-					tiMaxPreisProLiter.setVorjahr(new Vergleich(t
-							.getPreisProLiter()).max());
-					tiMinPreisProLiter.setVorjahr(new Vergleich(t
-							.getPreisProLiter()).min());
+					tiMaxPreisProLiter.setVorjahr(v.max());
+					tiMinPreisProLiter.setVorjahr(v.min());
 					tiAnzahlLiter.setVorjahr(tiAnzahlLiter.getVorjahr().add(
 							t.getLiter()));
 					tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(new BigDecimal(t.getKmStand())));
@@ -94,6 +92,7 @@ public class TankenInfo {
 				tiAvgPreisProLiter.setGesammt(Berechnung.findAverage(preiseGesamt));
 				tiAvgPreisProLiter.setDiesesJahr(Berechnung.findAverage(preiseDiesesJahr));
 				tiAvgPreisProLiter.setVorjahr(Berechnung.findAverage(preiseLetztesJahr));
+				index++;
 			}
 			tankenInfos.add(tiKosten);
 			tankenInfos.add(tiMinPreisProLiter);

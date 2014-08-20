@@ -11,10 +11,10 @@ public class Vergleich {
 	
 	
 	public Vergleich(BigDecimal zahl) {
-		super();
+		this();
 		this.zahl = zahl;
 		this.max = this.zahl;
-		this.min = this.zahl;
+		this.min = this.max;
 	}
 
 
