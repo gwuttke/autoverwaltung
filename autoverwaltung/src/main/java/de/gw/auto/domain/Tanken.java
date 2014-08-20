@@ -25,10 +25,10 @@ public class Tanken implements Serializable {
 	@ManyToOne
 	@JoinColumn
 	private Land land;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn
 	private Ort ort;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn
 	private Tank tank;
 	private BigDecimal kosten;

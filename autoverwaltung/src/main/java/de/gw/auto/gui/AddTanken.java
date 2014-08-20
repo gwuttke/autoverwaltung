@@ -199,6 +199,7 @@ public class AddTanken extends Funktionen {
 						datum, liter, preisProLiter, benzinArt);
 				tankenDao = new TankenDao(setting).tankenIntoDatabase(t,
 						setting);
+				setting.getAktuellAuto().setKmAktuell(kmStand);
 			}
 		});
 
