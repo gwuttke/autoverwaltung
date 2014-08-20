@@ -2,8 +2,8 @@ package de.gw.auto;
 
 public class Constans {
 
-	private static final String MAX = "Maximal";
-	private static final String MIN = "Minimal";
+	private static final String MAX = "Maximal ";
+	private static final String MIN = "Minimal ";
 	private static final String DURCHSCHNITT = "Durchschnitt";
 	private static final String PREIS = "Preis";
 	private static final String ANZAHL = "Anzahl";

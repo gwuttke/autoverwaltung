@@ -11,13 +11,13 @@ public class Datum {
 	// private GregorianCalendar past = new GregorianCalendar(this.getPYear(),
 	// this.getPMonth(), this.getPDay());
 	private Calendar now = new GregorianCalendar();
-	private Calendar date;
+	private Calendar date = new GregorianCalendar();
 
 	public Datum() {
 	}
 
 	public Datum(Date datum) {
-		date.setTime(datum);
+		date.setTimeInMillis(datum.getTime());
 	}
 
 	public Datum(Calendar date) {
@@ -37,7 +37,7 @@ public class Datum {
 	}
 
 	public void setDate(Date datum) {
-		date.setTime(datum);
+		date.setTimeInMillis(datum.getTime());
 	}
 
 	public Calendar getNow() {

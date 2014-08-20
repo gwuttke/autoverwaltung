@@ -3,8 +3,8 @@ package de.gw.auto.domain;
 import java.math.BigDecimal;
 
 public class Vergleich {
-	private BigDecimal min;
-	private BigDecimal max;
+	private BigDecimal min = BigDecimal.ZERO;
+	private BigDecimal max = BigDecimal.ZERO;
 	private BigDecimal zahl;
 
 	
@@ -13,6 +13,7 @@ public class Vergleich {
 	public Vergleich(BigDecimal zahl) {
 		super();
 		this.zahl = zahl;
+		this.max = this.zahl;
 	}
 
 
