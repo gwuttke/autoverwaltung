@@ -14,6 +14,7 @@ public class Vergleich {
 		super();
 		this.zahl = zahl;
 		this.max = this.zahl;
+		this.min = this.zahl;
 	}
 
 
@@ -39,7 +40,7 @@ public class Vergleich {
 	
 	
 	public BigDecimal min() {
-		min=  min.min(max);
+		min=  min.min(this.max);
 		return min;
 	}
 
