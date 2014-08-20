@@ -32,17 +32,21 @@ public class Tanken implements Serializable {
 	@JoinColumn
 	private Tank tank;
 	private BigDecimal kosten;
-	@ManyToOne
-	@JoinColumn
-	private Auto auto;
 	private Date datum;
 	private BigDecimal liter;
 	private BigDecimal preisProLiter;
 	@OneToOne
 	@JoinColumn
 	private Benzinart benzinArt;
+	@ManyToOne
+	@JoinColumn(name = "auto_id")
+	private Auto auto;
 
-	
+
+	public int getId() {
+		return id;
+	}
+
 	public Tanken() {
 		super();
 	}
@@ -93,14 +97,6 @@ public class Tanken implements Serializable {
 		this.kosten = kosten;
 	}
 
-	public Auto getAuto() {
-		return auto;
-	}
-
-	public void setAuto(Auto auto) {
-		this.auto = auto;
-	}
-
 	public Date getDatum() {
 		return datum;
 	}
@@ -149,14 +145,21 @@ public class Tanken implements Serializable {
 		return kosten;
 
 	}
+	
+	public Auto getAuto() {
+		return auto;
+	}
+
+	public void setAuto(Auto auto) {
+		this.auto = auto;
+	}
 
 	@Override
 	public String toString() {
 		return MessageFormat
-				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7} : {8} : {9} : {10} : {11} : {12}",
+				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7} : {8} : {9} : {10} : {11}",
 						new Object[] { getClass().getSimpleName(), id, 
 						kmStand,land.getName(), ort.getOrt(),tank.getBeschreibung(), kosten.toString(),
-						auto,
 						datum.toString(), liter.toString(), preisProLiter.toString(),
 						benzinArt.toString() });
 	}

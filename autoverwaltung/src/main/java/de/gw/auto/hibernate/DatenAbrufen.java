@@ -9,10 +9,12 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.security.auth.login.AccountException;
 
@@ -152,8 +154,13 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	public void giveTankfuellungByAuto(Auto auto) throws Exception {
-		tankfuellungen = (List<Tanken>) this.select(FROM + "Tanken" + WHERE
-				+ "auto_id = " + auto.getId());
+		tankfuellungen.clear();
+		Set<Tanken> tankungen = ((List<Auto>) this.select(FROM + "Auto" + WHERE
+				+ "id = " + auto.getId())).get(0).getTankfuellungen();
+		 
+		for (Tanken t : tankungen){
+			tankfuellungen.add(t);
+		}
 	}
 
 	public List<Tanken> getTankfuellungen(Settings settings) {

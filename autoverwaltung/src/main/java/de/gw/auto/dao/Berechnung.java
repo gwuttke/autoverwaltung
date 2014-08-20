@@ -12,20 +12,23 @@ import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
+import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Vergleich;
 
 public class Berechnung {
 	private double b;
-	private Map<String, Info> ausgabenBerechnungen = new HashMap<String, Info>();
+	private Map<String, Set<Info>> ausgabenBerechnungen = new HashMap<String, Set<Info>>();
 	
 	
-
-	public Map<String, Info> getAusgabenBerechnungen() {
+	public Map<String, Set<Info>> getTankenInfos(TankenDao tDao, Settings setting) {
+		if (ausgabenBerechnungen.size() == 0){
+			addAusgabenBerechnungen(Constans.Tanken, tankenAusgabe(tDao, setting));
+		}
 		return ausgabenBerechnungen;
 	}
 	
-	public void addAusgabenBerechnungen(String bezeichnung, Info info){
+	public void addAusgabenBerechnungen(String bezeichnung, Set<Info> info){
 		this.ausgabenBerechnungen.put(bezeichnung, info);
 	}
 
@@ -62,7 +65,7 @@ public class Berechnung {
 
 	}
 
-	public Set<Info> tankenAusgabe(TankenDao tDao) {
+	public Set<Info> tankenAusgabe(TankenDao tDao, Settings setting) {
 
 		Info tiKosten = new Info(Constans.KOSTEN);
 		Info tiMaxPreisProLiter = new Info(Constans.MAX_PREIS);
@@ -99,7 +102,7 @@ public class Berechnung {
 					.getPreisProLiter()).min());
 			tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 					t.getLiter()));
-			tiSummeKm.setGesammt(new BigDecimal(tDao.getAuto().getKmAktuell() - tDao.getAuto().getKmKauf()));
+			tiSummeKm.setGesammt(new BigDecimal(setting.getAktuellAuto().getKmAktuell() - setting.getAktuellAuto().getKmKauf()));
 			preiseGesamt.add(t.getPreisProLiter());
 			
 			if (nowJahr == jahr) {

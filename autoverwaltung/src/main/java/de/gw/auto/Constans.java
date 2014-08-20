@@ -14,5 +14,6 @@ public class Constans {
 	public static final String ANZAHL_LITER = ANZAHL + LITER;
 	public static final String AVG_Preis = DURCHSCHNITT + PREIS;
 	public static final String GEFAHRENE_KM = "Gefahrene Km";
+	public static final String Tanken = "Tankungen";
 
 }

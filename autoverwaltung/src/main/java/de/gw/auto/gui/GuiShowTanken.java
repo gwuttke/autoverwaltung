@@ -9,6 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
@@ -18,6 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+
+
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
@@ -45,8 +53,8 @@ public class GuiShowTanken {
 		JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>(setting
 				.getAutosArray());
 		Berechnung berechnung = new Berechnung();
-		Info tankInfoKosten = berechnung.getAusgabenBerechnungen().get(
-				Constans.KOSTEN);
+		Info tankInfoKosten = berechnung.getAusgabenBerechnungen(tankenDao, setting).get(
+				Constans.Tanken);
 		JLabel lKGes = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_GES + " ");
 		JLabel lKLetJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_LET_JAHR
 				+ " ");
@@ -62,7 +70,6 @@ public class GuiShowTanken {
 			lKLetJahr.setText(lKLetJahr.getText() + 0);
 			lKDiesJahr.setText(lKDiesJahr.getText() + 0);
 		} else {
-
 			lKGes.setText(lKGes.getText() + tankInfoKosten.getGesammt());
 			lKLetJahr
 					.setText(lKLetJahr.getText() + tankInfoKosten.getVorjahr());
@@ -109,8 +116,8 @@ public class GuiShowTanken {
 
 	}
 
-	private Object[][] loadData(Settings setting, TankenDao tankenDao) {
-		int index = 0;
+	private List<Object[][]> loadData(Settings setting, TankenDao tankenDao) {
+		List<Object[][]> lObjects = new ArrayList<Object[][]>();
 		Object[][] o = new Object[0][0];
 
 		if (tankenDao.getTankenList() == null) {
@@ -119,26 +126,68 @@ public class GuiShowTanken {
 
 		Berechnung berechnung = new Berechnung();
 		if (tankenDao.getTankenList() == null) {
-			return o;
+			return new ArrayList<Object[][]>();
 		} else {
-			o = new Object[tankenDao.getTankenList().size()][9];
-			for (Tanken t : tankenDao.getTankenList()) {
-
-				o[index][0] = t.getDatum();
-				o[index][1] = t.getBenzinArt();
-				o[index][2] = t.getKmStand();
-				o[index][3] = t.getOrt().getOrt();
-				o[index][4] = t.getLand().getName();
-				o[index][5] = t.getTank().getBeschreibung();
-				o[index][6] = t.getLiter();
-				o[index][7] = t.getPreisProLiter();
-				o[index][8] = berechnung.getRound(t.getKosten(), 2);
-				index++;
-			}
+			o = loadTankungen(tankenDao, berechnung);
+			lObjects.add(o);
+			
 		}
 		return o;
 
 	}
+
+	private Object[][] loadTankungen(TankenDao tankenDao, Berechnung berechnung) {
+		Object[][] o;
+		int index = 0;
+		o = new Object[tankenDao.getTankenList().size()][9];
+		for (Tanken t : tankenDao.getTankenList()) {
+
+			o[index][0] = t.getDatum();
+			o[index][1] = t.getBenzinArt();
+			o[index][2] = t.getKmStand();
+			o[index][3] = t.getOrt().getOrt();
+			o[index][4] = t.getLand().getName();
+			o[index][5] = t.getTank().getBeschreibung();
+			o[index][6] = t.getLiter();
+			o[index][7] = t.getPreisProLiter();
+			o[index][8] = berechnung.getRound(t.getKosten(), 2);
+			index++;
+		}
+		return o;
+	}
+	
+	private Object[][] loadTankungenInfos(TankenDao tankenDao, Berechnung berechnung, Settings setting) {
+		Object[][] o;
+		int index = 0;
+		o = new Object[tankenDao.getTankenList().size()][9];
+		
+		Map<String, Set<Info>> infos = berechnung.getTankenInfos(tankenDao, setting);
+		
+		//GUI Tabelle laden
+		
+		for (Entry<String, Set<Info>> e :  infos.entrySet()){
+			o[index][0] = e.getKey();
+			for(Info info : e.getValue()){
+				info.getName() == o[][]
+			}
+		}
+		
+		for (String s : infos.keySet()){
+			
+			for (Tanken t : tankenDao.getTankenList()) {
+	 
+				o[index][1] = 
+				o[index][2] = 
+				o[index][3] = 
+				index++;
+			}
+		}
+		return o;
+	}
+	
+	
+	
+	
 	
 	private void setActions(final Settings setting){
 		btnTanken.addActionListener(new ActionListener() {
@@ -158,5 +207,4 @@ public class GuiShowTanken {
 			}
 		});
 	}
-
 }

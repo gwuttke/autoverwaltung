@@ -1,6 +1,5 @@
 package de.gw.auto.domain;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -12,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+
 @Entity
 @SequenceGenerator(name = "sonstigeAusgaben_gen", sequenceName = "sonstigeAusgaben_id_seq")
 public class SonstigeAusgaben implements Serializable {
@@ -23,7 +23,7 @@ public class SonstigeAusgaben implements Serializable {
 	private String kommentar;
 	private BigDecimal kosten;
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name="auto_id")
 	private Auto auto;
 
 	
@@ -65,14 +65,6 @@ public class SonstigeAusgaben implements Serializable {
 	
 	public void setId(int id) {
 		Id = id;
-	}
-
-	public Auto getAuto() {
-		return auto;
-	}
-
-	public void setAuto(Auto auto) {
-		this.auto = auto;
 	}
 
 }

@@ -30,6 +30,7 @@ public class AutoDAO extends DatenAbrufen {
 			Set<Benzinart> benzinarten, int kmAktuell) {
 		java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
 		java.sql.Date kaufSqlDate = new java.sql.Date(kaufDatum.getTime());
+		
 		Benutzer benutzer = setting.getBenutzer();
 		Auto a = new Auto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinarten,
 				kmAktuell);
@@ -40,7 +41,7 @@ public class AutoDAO extends DatenAbrufen {
 		setting.addAuto(a);
 		this.setting = setting;
 
-		return setting;
+		return this.setting;
 	}
 
 	public void updateAuto(int autoID, Set<Benzinart> benzinarten,

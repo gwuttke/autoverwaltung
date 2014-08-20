@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,10 +35,10 @@ public class Auto implements Serializable {
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;
-	@OneToMany
+	@OneToMany(mappedBy="Id")
 	private Set<SonstigeAusgaben> sonstigeAusgaben;
-	@OneToMany
-	private Set<Tanken> tankfuellungen;
+	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Tanken> tankfuellungen = new HashSet<Tanken>();
 	
 	
 
@@ -141,6 +142,10 @@ public class Auto implements Serializable {
 
 	public void addBenzinart(Benzinart benzinart) {
 		benzinarten.add(benzinart);
+	}
+	
+	public void addTanken(Tanken tanken){
+		tankfuellungen.add(tanken);
 	}
 
 	@Override

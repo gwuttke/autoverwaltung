@@ -3,10 +3,14 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.sql.Update;
+
 import de.gw.auto.domain.Auto;
+import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.hibernate.UpdateDaten;
 
 public class TankenDao {
 
@@ -26,13 +30,19 @@ public class TankenDao {
 	public void setTankenList(Settings setting) {
 		tankenList = new DatenAbrufen().getTankfuellungen(setting);
 	}
-	
-	public Auto getAuto(){
-		return tankenList.get(0).getAuto();
+
+	public TankenDao tankenIntoDatabase(Tanken tanken, Settings setting){
+		UpdateDaten update = new UpdateDaten();
+		Auto auto = setting.getAktuellAuto();
+		
+		//update.addTanken(tanken);
+		auto.addTanken(tanken); 
+		 setting.setAktuellAuto(auto);
+		 update.updateAuto(auto);
+		 setTankenList(setting);
+		 return this;
+		 
 	}
-	
-	
-	
 	
 
 }
