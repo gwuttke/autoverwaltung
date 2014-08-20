@@ -94,12 +94,11 @@ public class TankenInfo {
 				tiAvgPreisProLiter.setGesammt(Berechnung.findAverage(preiseGesamt));
 				tiAvgPreisProLiter.setDiesesJahr(Berechnung.findAverage(preiseDiesesJahr));
 				tiAvgPreisProLiter.setVorjahr(Berechnung.findAverage(preiseLetztesJahr));
-				
-				tankenInfos.add(tiKosten);
-				tankenInfos.add(tiMinPreisProLiter);
-				tankenInfos.add(tiMaxPreisProLiter);
-				tankenInfos.add(tiAnzahlLiter);	
 			}
+			tankenInfos.add(tiKosten);
+			tankenInfos.add(tiMinPreisProLiter);
+			tankenInfos.add(tiMaxPreisProLiter);
+			tankenInfos.add(tiAnzahlLiter);	
 	}
 
 }
