@@ -2,6 +2,8 @@ package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.ScrollPane;
@@ -23,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+
 
 
 
@@ -64,16 +68,7 @@ public class GuiShowTanken {
 		JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>(setting
 				.getAutosArray());
 		Berechnung berechnung = new Berechnung();
-
 		
-		
-		JLabel lKGes = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_GES + " ");
-		JLabel lKLetJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_LET_JAHR
-				+ " ");
-		JLabel lKDiesJahr = new JLabel(Texte.Form.Label.TANKEN_KOSTEN_AKT_JAHR
-				+ " ");
-		
-
 		comboBoxAutos.getModel().setSelectedItem(setting.getAktuellAuto());
 		setActions(setting);
 
@@ -85,29 +80,24 @@ public class GuiShowTanken {
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		JScrollPane sp = new JScrollPane(jTableTanken);
-
-		JPanel jpTable = new JPanel(new GridLayout(2, 1));
-		jpTable.add(sp);
-		jpTable.add(jTableTankenInfo);
+		JScrollPane spTanken = new JScrollPane(jTableTanken);
+		JScrollPane spTankenInfo = new JScrollPane(jTableTankenInfo);
+		spTankenInfo.setPreferredSize(new Dimension(100, 100));
+		
+		JPanel jpTable = new JPanel(new GridLayout(1, 1));
+		jpTable.add(spTanken);
 
 		JPanel jpEingaben = new JPanel(new BorderLayout());
-		JPanel jpEinrueckung = new JPanel(new GridLayout(1, 3));
 		JPanel jpAusgabe = new JPanel(new BorderLayout());
 		JPanel jpBtn = new JPanel(new GridLayout(1,2));
 		
 		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
-
-		jpEinrueckung.add(new Label());
-		jpEinrueckung.add(lKDiesJahr);
-		jpEinrueckung.add(new Label());
 		
 		jpBtn.add(btnTanken);
 		jpBtn.add(btnSonstigeAusgaben);
 
-		jpAusgabe.add(lKLetJahr, BorderLayout.WEST);
-		jpAusgabe.add(jpEinrueckung, BorderLayout.CENTER);
-		jpAusgabe.add(lKGes, BorderLayout.EAST);
+		
+		jpAusgabe.add(spTankenInfo, BorderLayout.CENTER);
 		jpAusgabe.add(jpBtn, BorderLayout.SOUTH);
 
 		con.add(jpEingaben, BorderLayout.NORTH);
