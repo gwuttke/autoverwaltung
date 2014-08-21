@@ -57,7 +57,7 @@ public class GuiShowTanken {
 		con.setLayout(new BorderLayout());
 
 		JScrollPane spTankenInfo = new JScrollPane(jTableTankenInfo);
-		spTankenInfo.setPreferredSize(new Dimension(100, 100));
+		spTankenInfo.setPreferredSize(new Dimension(100, 135));
 
 		JTabbedPane tab = new JTabbedPane();
 		tab.addTab(Constans.TANKEN,
