@@ -49,5 +49,12 @@ public class Info {
 		Vergleich v = new Vergleich(zahl);
 		return v;
 	}
+	
+	public Info add(Info info){
+		this.gesammt.add(info.gesammt);
+		this.diesesJahr.add(info.diesesJahr);
+		this.vorjahr.add(info.vorjahr);
+		return this;
+	}
 
 }

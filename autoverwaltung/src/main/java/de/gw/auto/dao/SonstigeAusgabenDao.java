@@ -26,6 +26,9 @@ public class SonstigeAusgabenDao{
 	}
 	
 	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
+		if (this.sonstigeAusgabenList.isEmpty()) {
+			return null;
+		}
 		return sonstigeAusgabenList;
 	}
 

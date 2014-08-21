@@ -28,7 +28,7 @@ public class TankenInfo {
 	private void load(TankenDao tDao, Settings setting) {
 
 		List<Tanken> tankungen = tDao.getTankenList();
-		Info tiKosten = new Info(Constans.KOSTEN);
+		Info tiKosten = new Info(Constans.TANKEN_KOSTEN);
 		Info tiMaxPreisProLiter = new Info(Constans.MAX_PREIS);
 		Info tiMinPreisProLiter = new Info(Constans.MIN_PREIS);
 		Info tiAnzahlLiter = new Info(Constans.ANZAHL_LITER);
@@ -66,9 +66,7 @@ public class TankenInfo {
 				tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 						t.getLiter()));
 				tiSummeKm
-						.setGesammt(new BigDecimal(setting.getAktuellAuto()
-								.getKmAktuell()
-								- setting.getAktuellAuto().getKmKauf()));
+						.setGesammt(new BigDecimal(Berechnung.getInsgGefahreneKm(setting.getAktuellAuto())));
 				preiseGesamt.add(t.getPreisProLiter());
 
 				if (nowJahr == jahr) {
@@ -105,10 +103,20 @@ public class TankenInfo {
 			}
 		}
 
-		tankenInfos.add(tiKosten);
 		tankenInfos.add(tiMinPreisProLiter);
 		tankenInfos.add(tiMaxPreisProLiter);
 		tankenInfos.add(tiAnzahlLiter);
+		tankenInfos.add(tiSummeKm);
+		tankenInfos.add(tiKosten);
+	}
+	
+	public Info searchInfo(String name){
+		for (Info info : tankenInfos){
+			if (name == info.getName()){
+				return info;
+			}
+		}
+		return null;
 	}
 
 }

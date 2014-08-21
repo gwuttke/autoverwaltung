@@ -24,9 +24,9 @@ public class Berechnung {
 	
 	public List<Info> getTankenInfos(TankenDao tDao, Settings setting) {
 		if (ausgabenBerechnungen.size() == 0){
-			addAusgabenBerechnungen(Constans.Tanken, new TankenInfo(tDao, setting).getTankenInfos());
+			addAusgabenBerechnungen(Constans.TANKEN, new TankenInfo(tDao, setting).getTankenInfos());
 		}
-		return ausgabenBerechnungen.get(Constans.Tanken);
+		return ausgabenBerechnungen.get(Constans.TANKEN);
 	}
 	
 	public void addAusgabenBerechnungen(String bezeichnung, List<Info> info){
