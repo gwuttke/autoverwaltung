@@ -51,10 +51,11 @@ public class Info {
 	}
 	
 	public Info add(Info info){
-		this.gesammt.add(info.gesammt);
-		this.diesesJahr.add(info.diesesJahr);
-		this.vorjahr.add(info.vorjahr);
-		return this;
+		Info result = new Info("result");
+		result.gesammt = this.gesammt.add(info.gesammt); 
+		result.diesesJahr = this.diesesJahr.add(info.diesesJahr);
+		result.vorjahr = this.vorjahr.add(info.vorjahr);
+		return result;
 	}
 
 }
