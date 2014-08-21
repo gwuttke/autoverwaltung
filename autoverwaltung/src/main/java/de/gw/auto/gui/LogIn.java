@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
@@ -77,7 +78,7 @@ public class LogIn {
 						new AddAuto(settings);
 						
 					}else{
-						new GuiShowTanken(settings, new TankenDao(settings));
+						new GuiShowTanken(settings);
 					}					
 					frame.dispose();
 				}else{

@@ -140,7 +140,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 
 	public void giveSonstigeAusgabenByAuto(Auto auto) throws Exception {
 		sontigeAusgaben = (List<SonstigeAusgaben>) this.select(FROM
-				+ "SonstigeAusgaben" + WHERE + "auto = " + auto);
+				+ "SonstigeAusgaben" + WHERE + "auto_id = " + auto.getId());
 	}
 
 	public List<SonstigeAusgaben> getSonstigeAusgabens(Settings settings) {

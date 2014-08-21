@@ -15,5 +15,6 @@ public class Constans {
 	public static final String AVG_Preis = DURCHSCHNITT + PREIS;
 	public static final String GEFAHRENE_KM = "Gefahrene Km";
 	public static final String Tanken = "Tankungen";
+	public static final String SONSTIGE_AUSGABEN = "Sonstige Ausgaben";
 
 }

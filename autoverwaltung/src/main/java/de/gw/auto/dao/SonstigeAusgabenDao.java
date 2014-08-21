@@ -18,6 +18,7 @@ public class SonstigeAusgabenDao{
 	public SonstigeAusgabenDao(Settings setting) {
 		super();
 		this.setting = setting;
+		setSonstigeAusgabenList(this.setting);
 	}
 
 	public void intoDatabase(SonstigeAusgaben sa) {
@@ -28,7 +29,7 @@ public class SonstigeAusgabenDao{
 		return sonstigeAusgabenList;
 	}
 
-	public void setSonstigeAusgabenList(Settings setting) throws SQLException {
+	public void setSonstigeAusgabenList(Settings setting) {
 		sonstigeAusgabenList = new DatenAbrufen().getSonstigeAusgabens(setting);
 		
 	}

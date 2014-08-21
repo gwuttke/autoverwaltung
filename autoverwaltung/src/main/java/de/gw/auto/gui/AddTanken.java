@@ -25,6 +25,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
 import de.gw.auto.dao.BenzinartDAO;
 import de.gw.auto.dao.LandDao;
 import de.gw.auto.dao.OrtDao;
+import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankDAO;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
@@ -129,7 +130,7 @@ public class AddTanken extends Funktionen {
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				new GuiShowTanken(setting, tankenDao);
+				new GuiShowTanken(setting);
 				cancel(frame);
 
 			}

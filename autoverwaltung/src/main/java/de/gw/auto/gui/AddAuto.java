@@ -35,6 +35,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.AutoDAO;
 import de.gw.auto.dao.BenzinartDAO;
+import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
@@ -139,7 +140,7 @@ public class AddAuto extends JFrame {
 						benzinArten, Integer.parseInt(KM_STAND_SPINNER
 								.getValue().toString())));
 				
-				new GuiShowTanken(setting, new TankenDao(setting));
+				new GuiShowTanken(setting);
 				dispose();
 
 			}

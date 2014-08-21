@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 public class SonstigeAusgaben implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "sonstigeAusgaben_gen")
-	private int Id;
+	private int id;
 	private Date datum;
 	private int kmStand;
 	private String kommentar;
@@ -27,6 +27,18 @@ public class SonstigeAusgaben implements Serializable {
 	private Auto auto;
 
 	
+	public int getId() {
+		return id;
+	}
+	
+	public Auto getAuto() {
+		return auto;
+	}
+
+	public void setAuto(Auto auto) {
+		this.auto = auto;
+	}
+
 	public Date getDatum() {
 		return datum;
 	}
@@ -58,13 +70,4 @@ public class SonstigeAusgaben implements Serializable {
 	public void setKosten(BigDecimal kosten) {
 		this.kosten = kosten;
 	}
-
-	public int getId() {
-		return Id;
-	}
-	
-	public void setId(int id) {
-		Id = id;
-	}
-
 }

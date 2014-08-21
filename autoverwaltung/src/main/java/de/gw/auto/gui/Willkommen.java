@@ -114,7 +114,7 @@ public class Willkommen {
 				}
 				System.out.println(setting.getAktuellAuto().getId());
 				
-				new GuiShowTanken(setting, tDao);
+				new GuiShowTanken(setting);
 			}
 		});
 	}

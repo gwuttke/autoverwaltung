@@ -2,7 +2,6 @@ package de.gw.auto.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -35,7 +33,7 @@ public class Auto implements Serializable {
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
 	private int kmAktuell;
-	@OneToMany(mappedBy="Id")
+	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<SonstigeAusgaben> sonstigeAusgaben;
 	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Tanken> tankfuellungen = new HashSet<Tanken>();
