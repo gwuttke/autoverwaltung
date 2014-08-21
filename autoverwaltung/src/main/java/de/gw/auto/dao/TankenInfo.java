@@ -48,6 +48,7 @@ public class TankenInfo {
 				Tanken tVorher = null;
 				if(index > 0){
 					tVorher = t;
+					v.setZahl(t.getPreisProLiter());
 				}else{
 					v = new Vergleich(t.getPreisProLiter());
 				}

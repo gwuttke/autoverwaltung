@@ -8,7 +8,10 @@ public class Vergleich {
 	private BigDecimal zahl;
 
 	
-	
+	public Vergleich() {
+		super();
+		
+	}
 	
 	public Vergleich(BigDecimal zahl) {
 		this();
@@ -16,7 +19,6 @@ public class Vergleich {
 		this.max = this.zahl;
 		this.min = this.max;
 	}
-
 
 	public BigDecimal getZahl() {
 		return zahl;
@@ -30,22 +32,15 @@ public class Vergleich {
 
 	public BigDecimal getMax() {
 		return max;
-	}
-
-
-	public Vergleich() {
-		super();
-		
-	}
-	
+	}	
 	
 	public BigDecimal min() {
-		min=  min.min(this.max);
+		min=  min.min(zahl);
 		return min;
 	}
 
 	public BigDecimal max() {
-		max = max.max(min);
+		max = max.max(zahl);
 		return max;
 	}
 

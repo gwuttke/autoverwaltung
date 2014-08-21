@@ -176,10 +176,9 @@ public class AddTanken extends Funktionen {
 							"Bitte wählen sie Kosten die größer als 0 sind.");
 					return;
 				}
-
+				
 				/*
-				 * TODO Daten überprüfen ob in Datenbank vorhanden und Daten
-				 * aktuallisieren
+				 * Daten werden überprüft
 				 */
 
 				int kmStand = Integer.parseInt(spKmStand.getValue().toString());

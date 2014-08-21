@@ -30,7 +30,7 @@ CREATE TABLE `auto` (
   `kmAktuell` int(11) NOT NULL,
   `kmKauf` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,6 @@ CREATE TABLE `auto` (
 
 LOCK TABLES `auto` WRITE;
 /*!40000 ALTER TABLE `auto` DISABLE KEYS */;
-INSERT INTO `auto` VALUES (1,'2010-12-14','2000-07-11','M - WU 3194',62062,62062);
 /*!40000 ALTER TABLE `auto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +65,6 @@ CREATE TABLE `auto_benutzer` (
 
 LOCK TABLES `auto_benutzer` WRITE;
 /*!40000 ALTER TABLE `auto_benutzer` DISABLE KEYS */;
-INSERT INTO `auto_benutzer` VALUES (1,1);
 /*!40000 ALTER TABLE `auto_benutzer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,60 +91,7 @@ CREATE TABLE `auto_benzinart` (
 
 LOCK TABLES `auto_benzinart` WRITE;
 /*!40000 ALTER TABLE `auto_benzinart` DISABLE KEYS */;
-INSERT INTO `auto_benzinart` VALUES (1,1),(1,2);
 /*!40000 ALTER TABLE `auto_benzinart` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auto_sonstigeausgaben`
---
-
-DROP TABLE IF EXISTS `auto_sonstigeausgaben`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auto_sonstigeausgaben` (
-  `Auto_id` int(11) NOT NULL,
-  `sonstigeAusgaben_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Auto_id`,`sonstigeAusgaben_Id`),
-  UNIQUE KEY `UK_h30cmboh3uvoqdcfkbufxgsma` (`sonstigeAusgaben_Id`),
-  CONSTRAINT `FK_6twel6009f2ihrgf5j9f2yfek` FOREIGN KEY (`Auto_id`) REFERENCES `auto` (`id`),
-  CONSTRAINT `FK_h30cmboh3uvoqdcfkbufxgsma` FOREIGN KEY (`sonstigeAusgaben_Id`) REFERENCES `sonstigeausgaben` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auto_sonstigeausgaben`
---
-
-LOCK TABLES `auto_sonstigeausgaben` WRITE;
-/*!40000 ALTER TABLE `auto_sonstigeausgaben` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auto_sonstigeausgaben` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auto_tanken`
---
-
-DROP TABLE IF EXISTS `auto_tanken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auto_tanken` (
-  `Auto_id` int(11) NOT NULL,
-  `tankfuellungen_id` int(11) NOT NULL,
-  PRIMARY KEY (`Auto_id`,`tankfuellungen_id`),
-  UNIQUE KEY `UK_ne4b1doqxgwrc6ka4lufjmk1r` (`tankfuellungen_id`),
-  CONSTRAINT `FK_h8sn0ot9lnouxkjfbhedxvdhv` FOREIGN KEY (`Auto_id`) REFERENCES `auto` (`id`),
-  CONSTRAINT `FK_ne4b1doqxgwrc6ka4lufjmk1r` FOREIGN KEY (`tankfuellungen_id`) REFERENCES `tanken` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auto_tanken`
---
-
-LOCK TABLES `auto_tanken` WRITE;
-/*!40000 ALTER TABLE `auto_tanken` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auto_tanken` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -162,7 +107,7 @@ CREATE TABLE `benutzer` (
   `passwort` varchar(255) COLLATE latin1_german1_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_r41gjsqbn8sl31wvqnj6y5678` (`name`,`passwort`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +140,7 @@ CREATE TABLE `benzinart` (
 
 LOCK TABLES `benzinart` WRITE;
 /*!40000 ALTER TABLE `benzinart` DISABLE KEYS */;
-INSERT INTO `benzinart` VALUES (1,'Super'),(2,'Sper E10'),(3,'Diesel');
+INSERT INTO `benzinart` VALUES (1,'Super'),(2,'Super E10'),(3,'Diesel');
 /*!40000 ALTER TABLE `benzinart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +167,7 @@ CREATE TABLE `laenderorte` (
 
 LOCK TABLES `laenderorte` WRITE;
 /*!40000 ALTER TABLE `laenderorte` DISABLE KEYS */;
-INSERT INTO `laenderorte` VALUES (1,1);
+INSERT INTO `laenderorte` VALUES (1,1),(1,2);
 /*!40000 ALTER TABLE `laenderorte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +206,7 @@ CREATE TABLE `ort` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ort` varchar(255) COLLATE latin1_german1_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +215,7 @@ CREATE TABLE `ort` (
 
 LOCK TABLES `ort` WRITE;
 /*!40000 ALTER TABLE `ort` DISABLE KEYS */;
-INSERT INTO `ort` VALUES (1,'keine Angabe');
+INSERT INTO `ort` VALUES (1,'München'),(2,'Neuried');
 /*!40000 ALTER TABLE `ort` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,6 +235,7 @@ CREATE TABLE `sonstigeausgaben` (
   `auto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_g41s6hfaebmw0itevbb5bgrso` (`auto_id`),
+  CONSTRAINT `FK_937bupwxucp5ltjmxplv5mjbo` FOREIGN KEY (`Id`) REFERENCES `auto` (`id`),
   CONSTRAINT `FK_g41s6hfaebmw0itevbb5bgrso` FOREIGN KEY (`auto_id`) REFERENCES `auto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -378,4 +324,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-08-19 10:21:45
+-- Dump completed on 2014-08-21  8:38:49
