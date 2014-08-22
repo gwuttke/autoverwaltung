@@ -65,8 +65,8 @@ public class TankenInfo {
 				tiMinPreisProLiter.setGesammt(v.min());
 				tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 						t.getLiter()));
-				tiSummeKm
-						.setGesammt(new BigDecimal(Berechnung.getInsgGefahreneKm(setting.getAktuellAuto())));
+				tiSummeKm.setGesammt(new BigDecimal(Berechnung
+						.getInsgGefahreneKm(setting.getAktuellAuto())));
 				preiseGesamt.add(t.getPreisProLiter());
 
 				if (nowJahr == jahr) {
@@ -76,8 +76,16 @@ public class TankenInfo {
 					tiMinPreisProLiter.setDiesesJahr(v.min());
 					tiAnzahlLiter.setDiesesJahr(tiAnzahlLiter.getDiesesJahr()
 							.add(t.getLiter()));
-					tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
-							new BigDecimal(t.getKmStand())));
+					if (index > 0) {
+						tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
+								new BigDecimal(t.getKmStand())));
+					} else {
+						tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
+								new BigDecimal(t.getKmStand()
+										- setting.getAktuellAuto()
+												.getKmAktuell())));
+					}
+
 					preiseDiesesJahr.add(t.getPreisProLiter());
 
 				} else if (nowJahr - 1 == jahr) {
@@ -88,6 +96,17 @@ public class TankenInfo {
 					tiMinPreisProLiter.setVorjahr(v.min());
 					tiAnzahlLiter.setVorjahr(tiAnzahlLiter.getVorjahr().add(
 							t.getLiter()));
+					if (index > 0) {
+						tiSummeKm.setVorjahr(tiSummeKm.getDiesesJahr().add(
+								new BigDecimal(t.getKmStand())));
+					} else {
+						tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
+								new BigDecimal(t.getKmStand()
+										- setting.getAktuellAuto()
+												.getKmAktuell())));
+					}
+					
+					
 					tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
 							new BigDecimal(t.getKmStand())));
 					preiseLetztesJahr.add(t.getPreisProLiter());
@@ -109,10 +128,10 @@ public class TankenInfo {
 		tankenInfos.add(tiSummeKm);
 		tankenInfos.add(tiKosten);
 	}
-	
-	public Info searchInfo(String name){
-		for (Info info : tankenInfos){
-			if (name == info.getName()){
+
+	public Info searchInfo(String name) {
+		for (Info info : tankenInfos) {
+			if (name == info.getName()) {
 				return info;
 			}
 		}
