@@ -130,7 +130,7 @@ public class GuiShowTanken {
 		}
 		return o;
 	}
-
+	
 	private void setActions(final Settings setting) {
 		btnTanken.addActionListener(new ActionListener() {
 
