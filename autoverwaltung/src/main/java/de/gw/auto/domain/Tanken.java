@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,7 @@ public class Tanken implements Serializable {
 	private BigDecimal kosten;
 	private Date datum;
 	private BigDecimal liter;
+	@Column(precision=10, scale=3)
 	private BigDecimal preisProLiter;
 	@OneToOne
 	@JoinColumn
