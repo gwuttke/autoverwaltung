@@ -1,13 +1,16 @@
 package de.gw.auto.gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
 import org.dom4j.io.SAXWriter;
 
@@ -19,6 +22,7 @@ import de.gw.auto.dao.TankenDao;
 import de.gw.auto.dao.TankenInfo;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 
 public class ShowInfos {
@@ -33,25 +37,36 @@ public class ShowInfos {
 	public ShowInfos(TankenDao tankenDao, Settings setting,
 			SonstigeAusgabenDao sADao) {
 
-		if (tankenDao.getTankenList() != null && sADao.getSonstigeAusgabenList() != null){
-		infosData = loadTankungenInfos(tankenDao, setting, sADao);
+		if (tankenDao.getTankenList() != null
+				&& sADao.getSonstigeAusgabenList() != null) {
+			infosData = loadTankungenInfos(tankenDao, setting, sADao);
 		}
 
 		jTableInfos = new Tabelle(columnNamesTankenInfos, infosData)
 				.getJTable();
 		
+		for (int column = 1; column < jTableInfos.getColumnCount(); column++) {
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(), 1, column);
+		}
+
 		JScrollPane spInfos = new JScrollPane(jTableInfos);
 		spInfos.setPreferredSize(new Dimension(100, 135));
 
 		jpInfosTable.add(spInfos);
 
 	}
-	
+
 	public JPanel getJpInfosTable() {
 		return jpInfosTable;
 	}
 
-
+	private JComponent prepareRenderer(TableCellRenderer renderer, int row,
+			int column) {
+		Component c = jTableInfos.prepareRenderer(renderer, row, column);
+		jTableInfos.setValueAt(c, row, column);
+		JComponent jc = (JComponent) c;
+		return jc;
+	}
 
 	private Object[][] loadTankungenInfos(TankenDao tankenDao,
 			Settings setting, SonstigeAusgabenDao sADao) {
