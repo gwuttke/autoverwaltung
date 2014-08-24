@@ -17,7 +17,7 @@ public class NumberRenderer extends FormatRenderer {
 
 	public static NumberRenderer getKilometerRenderer(){
 		DecimalFormat integerFormat = (DecimalFormat) NumberFormat.getIntegerInstance();
-		integerFormat.applyPattern("000000 Km");
+		integerFormat.applyPattern("000000' Km'");
 		return new NumberRenderer(integerFormat);
 	}	
 	
@@ -33,6 +33,12 @@ public class NumberRenderer extends FormatRenderer {
 	 */
 	public static NumberRenderer getIntegerRenderer() {
 		return new NumberRenderer(NumberFormat.getIntegerInstance());
+	}
+	
+	public static NumberRenderer getLiterRenderer(){
+		DecimalFormat numberFormat = (DecimalFormat) NumberFormat.getInstance();
+		numberFormat.applyPattern("###.00' L'");
+		return new NumberRenderer(numberFormat);
 	}
 
 	/*

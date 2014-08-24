@@ -4,6 +4,7 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.DateFormat;
 import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.NumberFormatter;
@@ -39,7 +40,7 @@ public class FormatRenderer extends DefaultTableCellRenderer {
 	 * Use the default date formatter for the default locale
 	 */
 	public static FormatRenderer getDateRenderer() {
-		return new FormatRenderer(DateFormat.getDateInstance());
+		return new FormatRenderer(new SimpleDateFormat("EEE, dd MMM yyyy"));
 	}
 	
 	

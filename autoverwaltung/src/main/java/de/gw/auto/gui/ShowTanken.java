@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.TableView.TableRow;
 
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
@@ -45,10 +46,11 @@ public class ShowTanken {
 		}
 		
 		jTableTanken = new Tabelle(columnNamesTanken, tankungenData).getJTable();
-		setTableStyle();
+		
 		
 		JScrollPane spTanken = new JScrollPane(jTableTanken);
-			
+		setTableStyle();
+		
 		jpTankenTable.add(spTanken);		
 
 	}
@@ -60,7 +62,11 @@ public class ShowTanken {
 	private void setTableStyle(){
 		TableColumnModel m = jTableTanken.getColumnModel();
 		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
-		m.getColumn(1).setCellRenderer(NumberRenderer.getKilometerRenderer());
+		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
+		m.getColumn(6).setCellRenderer(NumberRenderer.getLiterRenderer());
+		m.getColumn(7).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+		m.getColumn(8).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+		jTableTanken.setColumnModel(m);
 	}
 	
 	private Object[][] loadTankungen(TankenDao tankenDao, Berechnung berechnung) {
@@ -77,7 +83,7 @@ public class ShowTanken {
 			o[index][5] = t.getTank().getBeschreibung();
 			o[index][6] = t.getLiter();
 			o[index][7] = t.getPreisProLiter();
-			o[index][8] = berechnung.getRound(t.getKosten(), 2);
+			o[index][8] = t.getKosten();
 			index++;
 		}
 		return o;
