@@ -1,15 +1,20 @@
 package de.gw.auto.gui.model;
 
+import java.awt.Component;
 import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+
+import org.hibernate.cfg.annotations.reflection.XMLContext.Default;
 
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 
-public class Tabelle implements TableModel {
+public class Tabelle extends DefaultTableCellRenderer  implements TableModel {
 
 	private Vector<TableModelListener> listener = new Vector<TableModelListener>();
 	private Texte.Tabelle textTabelle = new Texte.Tabelle();

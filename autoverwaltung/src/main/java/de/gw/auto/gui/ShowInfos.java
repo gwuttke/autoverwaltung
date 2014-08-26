@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +26,7 @@ import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 
-public class ShowInfos {
+public class ShowInfos extends Tabelle {
 
 	private String[] columnNamesTankenInfos = new String[] { "Bezeichnung",
 			"Dieses Jahr", "letztes Jahr", "Gesammt" };
@@ -36,6 +37,7 @@ public class ShowInfos {
 
 	public ShowInfos(TankenDao tankenDao, Settings setting,
 			SonstigeAusgabenDao sADao) {
+		super(new String[1], new Object[0][0]);
 
 		if (tankenDao.getTankenList() != null
 				&& sADao.getSonstigeAusgabenList() != null) {
@@ -44,9 +46,9 @@ public class ShowInfos {
 
 		jTableInfos = new Tabelle(columnNamesTankenInfos, infosData)
 				.getJTable();
-		
+
 		for (int column = 1; column < jTableInfos.getColumnCount(); column++) {
-			prepareRenderer(NumberRenderer.getCurrencyRenderer(), 1, column);
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(3), 1, column);
 		}
 
 		JScrollPane spInfos = new JScrollPane(jTableInfos);
@@ -58,6 +60,22 @@ public class ShowInfos {
 
 	public JPanel getJpInfosTable() {
 		return jpInfosTable;
+	}
+
+	@Override
+	public Component getTableCellRendererComponent(JTable jTable, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+		Component c = super.getTableCellRendererComponent(jTable, value,
+				isSelected, hasFocus, row, column);
+		if (c instanceof JLabel && value instanceof Number) {
+			JLabel label = (JLabel) c;
+			label.setHorizontalAlignment(JLabel.CENTER);
+			Number num = (Number) value;
+			String text = NumberRenderer.getCurrencyRenderer(3, num);
+			
+			label.setText(text);
+		}
+		return c;
 	}
 
 	private JComponent prepareRenderer(TableCellRenderer renderer, int row,

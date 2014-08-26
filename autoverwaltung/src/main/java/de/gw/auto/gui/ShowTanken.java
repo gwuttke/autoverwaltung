@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class ShowTanken {
 		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
 		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
 		m.getColumn(6).setCellRenderer(NumberRenderer.getLiterRenderer());
-		m.getColumn(7).setCellRenderer(NumberRenderer.getCurrencyRenderer());
-		m.getColumn(8).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+		m.getColumn(7).setCellRenderer(NumberRenderer.getCurrencyRenderer(3));
+		m.getColumn(8).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
 		jTableTanken.setColumnModel(m);
 	}
 	
