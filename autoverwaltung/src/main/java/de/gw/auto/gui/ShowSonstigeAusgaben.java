@@ -34,7 +34,10 @@ public class ShowSonstigeAusgaben {
 		jTableSonstigeAusgaben = new Tabelle(columnNamesTanken, sonstigeAusgabenData)
 				.getJTable();
 		
-		setTableStyle();
+		if (jTableSonstigeAusgaben.getColumnCount() > 1){
+			setTableStyle();
+		}
+		
 
 		JScrollPane spSonstigeAusgaben = new JScrollPane(jTableSonstigeAusgaben);
 

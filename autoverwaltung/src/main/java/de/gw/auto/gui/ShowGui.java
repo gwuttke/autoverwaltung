@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,48 +22,38 @@ import de.gw.auto.domain.Settings;
 
 public class ShowGui {
 
-
 	private JButton btnTanken = new JButton("Tanken hinzufügen");
 	private JButton btnSonstigeAusgaben = new JButton(
 			"Sonstige Ausgaben hinzufügen");
+	private JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>();
+	private JPanel jpAusgabe = new JPanel(new BorderLayout());
+	JFrame frame = new JFrame("Tanken");
+
+	private ShowTanken showTanken = null;
+	private TankenDao tankenDao = null;
+	private SonstigeAusgabenDao sADao = null;
+	private ShowInfos showInfos = null;
+	private JTabbedPane tab = new JTabbedPane();
 
 	public ShowGui(Settings setting) {
-		TankenDao tankenDao = new TankenDao(setting);
-		SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
-		
+		loadDaten(setting);
 
-		JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>(
-				setting.getAutosArray());
+		comboBoxAutos = new JComboBox<Auto>(setting.getAutosArray());
 
 		comboBoxAutos.getModel().setSelectedItem(setting.getAktuellAuto());
 		setActions(setting);
-		
-		//tabelle Inizaliesieren
 
-		JFrame frame = new JFrame("Tanken");
+		// tabelle Inizaliesieren
+		
 		Container con = new Container();
 
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		
-		JTabbedPane tab = new JTabbedPane();
-		tab.addTab(Constans.TANKEN,
-				new ShowTanken(tankenDao).getJpTankenTable());
-		tab.addTab(Constans.SONSTIGE_AUSGABEN,
-				new ShowSonstigeAusgaben(sADao).getJpSonstigeAusgabenTable());
-
 		JPanel jpEingaben = new JPanel(new BorderLayout());
-		JPanel jpAusgabe = new JPanel(new BorderLayout());
-		JPanel jpBtn = new JPanel(new GridLayout(1, 2));
+
 
 		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
-
-		jpBtn.add(btnTanken);
-		jpBtn.add(btnSonstigeAusgaben);
-
-		jpAusgabe.add(new ShowInfos(tankenDao, setting, sADao).getJpInfosTable(), BorderLayout.CENTER);
-		jpAusgabe.add(jpBtn, BorderLayout.SOUTH);
 
 		con.add(jpEingaben, BorderLayout.NORTH);
 		con.add(tab, BorderLayout.CENTER);
@@ -72,13 +64,52 @@ public class ShowGui {
 
 	}
 	
+	private JPanel loadButtons(){
+		JPanel jpBtn = new JPanel(new GridLayout(1, 2));
+		jpBtn.add(btnTanken);
+		jpBtn.add(btnSonstigeAusgaben);
+		return jpBtn;
+	}
+
+	private void loadAusgaben() {
+		jpAusgabe.removeAll();
+
+		jpAusgabe.add(showInfos.getJpInfosTable(), BorderLayout.CENTER);
+		jpAusgabe.add(loadButtons(), BorderLayout.SOUTH);
+
+	}
+
+	private void loadDaten(Settings setting) {
+		this.tankenDao = new TankenDao(setting);
+		sADao = new SonstigeAusgabenDao(setting);
+		showTanken = new ShowTanken(this.tankenDao);
+		tab.removeAll();
+		tab.addTab(Constans.TANKEN, showTanken.getJpTankenTable());
+		tab.addTab(Constans.SONSTIGE_AUSGABEN,
+				new ShowSonstigeAusgaben(sADao).getJpSonstigeAusgabenTable());
+
+		showInfos = new ShowInfos(tankenDao, setting, sADao);
+		loadAusgaben();
+	}
+
 	private void setActions(final Settings setting) {
+
+		comboBoxAutos.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				Auto auto = (Auto) e.getItem();
+				setting.setAktuellAuto(auto);
+				loadDaten(setting);
+			}
+		});
+
 		btnTanken.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new AddTanken(setting);
-
+				frame.dispose();
 			}
 		});
 		btnSonstigeAusgaben.addActionListener(new ActionListener() {
@@ -86,7 +117,7 @@ public class ShowGui {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new AddSonstigeAusgaben(setting);
-
+				frame.dispose();
 			}
 		});
 	}
