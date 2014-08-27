@@ -3,6 +3,7 @@ package de.gw.auto.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "tanken_gen", sequenceName = "tanken_id_seq")
-public class Tanken implements Serializable {
+public class Tanken implements Serializable, Comparator<Tanken> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tanken_gen")
 	private int id;
@@ -163,6 +164,93 @@ public class Tanken implements Serializable {
 						kmStand,land.getName(), ort.getOrt(),tank.getBeschreibung(), kosten.toString(),
 						datum.toString(), liter.toString(), preisProLiter.toString(),
 						benzinArt.toString() });
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((auto == null) ? 0 : auto.hashCode());
+		result = prime * result
+				+ ((benzinArt == null) ? 0 : benzinArt.hashCode());
+		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
+		result = prime * result + id;
+		result = prime * result + kmStand;
+		result = prime * result + ((kosten == null) ? 0 : kosten.hashCode());
+		result = prime * result + ((land == null) ? 0 : land.hashCode());
+		result = prime * result + ((liter == null) ? 0 : liter.hashCode());
+		result = prime * result + ((ort == null) ? 0 : ort.hashCode());
+		result = prime * result
+				+ ((preisProLiter == null) ? 0 : preisProLiter.hashCode());
+		result = prime * result + ((tank == null) ? 0 : tank.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tanken other = (Tanken) obj;
+		if (auto == null) {
+			if (other.auto != null)
+				return false;
+		} else if (!auto.equals(other.auto))
+			return false;
+		if (benzinArt == null) {
+			if (other.benzinArt != null)
+				return false;
+		} else if (!benzinArt.equals(other.benzinArt))
+			return false;
+		if (datum == null) {
+			if (other.datum != null)
+				return false;
+		} else if (!datum.equals(other.datum))
+			return false;
+		if (id != other.id)
+			return false;
+		if (kmStand != other.kmStand)
+			return false;
+		if (kosten == null) {
+			if (other.kosten != null)
+				return false;
+		} else if (!kosten.equals(other.kosten))
+			return false;
+		if (land == null) {
+			if (other.land != null)
+				return false;
+		} else if (!land.equals(other.land))
+			return false;
+		if (liter == null) {
+			if (other.liter != null)
+				return false;
+		} else if (!liter.equals(other.liter))
+			return false;
+		if (ort == null) {
+			if (other.ort != null)
+				return false;
+		} else if (!ort.equals(other.ort))
+			return false;
+		if (preisProLiter == null) {
+			if (other.preisProLiter != null)
+				return false;
+		} else if (!preisProLiter.equals(other.preisProLiter))
+			return false;
+		if (tank == null) {
+			if (other.tank != null)
+				return false;
+		} else if (!tank.equals(other.tank))
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public int compare(Tanken t1, Tanken t2) {
+		return t1.kmStand + t2.kmStand;
 	}
 
 }
