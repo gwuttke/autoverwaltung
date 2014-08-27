@@ -5,10 +5,13 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.gui.model.FormatRenderer;
+import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 
 public class ShowSonstigeAusgaben {
@@ -17,6 +20,7 @@ public class ShowSonstigeAusgaben {
 			"Bezeichnung", "Km Stand", "Kosten" };
 
 	private JPanel jpSonstigeAusgabenTable = new JPanel(new GridLayout(1, 1));
+	private JTable jTableSonstigeAusgaben = null;
 
 	public ShowSonstigeAusgaben(SonstigeAusgabenDao sADao) {
 		Object[][] sonstigeAusgabenData = new Object[0][0];
@@ -28,12 +32,22 @@ public class ShowSonstigeAusgaben {
 			sonstigeAusgabenData = loadSonstigeAusgaben(sADao);
 		}
 
-		JTable jTableSonstigeAusgaben = new Tabelle(columnNamesTanken, sonstigeAusgabenData)
+		jTableSonstigeAusgaben = new Tabelle(columnNamesTanken, sonstigeAusgabenData)
 				.getJTable();
+		
+		setTableStyle();
 
 		JScrollPane spSonstigeAusgaben = new JScrollPane(jTableSonstigeAusgaben);
 
 		jpSonstigeAusgabenTable.add(spSonstigeAusgaben);
+	}
+	
+	private void setTableStyle(){
+		TableColumnModel m = jTableSonstigeAusgaben.getColumnModel();
+		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
+		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
+		m.getColumn(3).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
+		jTableSonstigeAusgaben.setColumnModel(m);
 	}
 
 	public JPanel getJpSonstigeAusgabenTable() {
@@ -50,7 +64,7 @@ public class ShowSonstigeAusgaben {
 			o[index][0] = sa.getDatum();
 			o[index][1] = sa.getKommentar();
 			o[index][2] = sa.getKmStand();
-			o[index][3] = berechnung.getRound(sa.getKosten(), 2);
+			o[index][3] = sa.getKosten();
 			index++;
 		}
 		return o;
