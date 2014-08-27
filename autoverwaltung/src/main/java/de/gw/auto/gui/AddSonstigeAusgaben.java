@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.SonstigeAusgabenDao;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Texte;

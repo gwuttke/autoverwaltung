@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
-import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.gui.model.FormatRenderer;
@@ -55,7 +54,6 @@ public class ShowSonstigeAusgaben {
 	}
 
 	private Object[][] loadSonstigeAusgaben(SonstigeAusgabenDao sADao) {
-		Berechnung berechnung = new Berechnung();
 		Object[][] o;
 		int index = 0;
 		o = new Object[sADao.getSonstigeAusgabenList().size()][columnNamesTanken.length];

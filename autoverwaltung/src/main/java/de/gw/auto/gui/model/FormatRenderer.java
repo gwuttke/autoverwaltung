@@ -1,13 +1,10 @@
 package de.gw.auto.gui.model;
 
-import java.text.FieldPosition;
-import java.text.Format;
 import java.text.DateFormat;
-import java.text.ParsePosition;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.text.NumberFormatter;
 
 /*
  * Code From: http://tips4java.wordpress.com/2008/10/11/table-format-renderers/  

@@ -106,7 +106,6 @@ public class Willkommen {
 						tDao.setTankenList(setting);
 						lStatus.setText("Daten wurden geladen");
 					} catch (SQLException ex) {
-						// TODO Auto-generated catch block
 						ex.printStackTrace();
 						// sqlS.closeResults(sqlS.getSt(), sqlS.getRs(),
 						// sqlS.getConn());

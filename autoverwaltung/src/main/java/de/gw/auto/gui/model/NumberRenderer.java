@@ -1,11 +1,8 @@
 package de.gw.auto.gui.model;
 
-import java.awt.Component;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 public class NumberRenderer extends FormatRenderer {

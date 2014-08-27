@@ -2,14 +2,11 @@ package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -26,17 +23,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.text.DateFormatter;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.AutoDAO;
 import de.gw.auto.dao.BenzinartDAO;
-import de.gw.auto.dao.SonstigeAusgabenDao;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
 

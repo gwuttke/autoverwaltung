@@ -3,10 +3,7 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.sql.Update;
-
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.hibernate.DatenAbrufen;

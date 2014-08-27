@@ -1,8 +1,5 @@
 package de.gw.auto.dao;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.hibernate.DatenAbrufen;

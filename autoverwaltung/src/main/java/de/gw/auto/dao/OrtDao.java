@@ -8,7 +8,6 @@ import de.gw.auto.hibernate.DatenAbrufen;
 
 public class OrtDao {
 
-	private static LandDao lDao = new LandDao();
 	private static List<Ort> orte = new ArrayList<Ort>();
 	
 	

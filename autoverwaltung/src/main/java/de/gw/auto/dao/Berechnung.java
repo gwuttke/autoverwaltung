@@ -2,20 +2,16 @@ package de.gw.auto.dao;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
-import de.gw.auto.domain.Vergleich;
 
 public class Berechnung {
 	private double b;

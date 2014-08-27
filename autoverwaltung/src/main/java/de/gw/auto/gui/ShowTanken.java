@@ -1,26 +1,14 @@
 package de.gw.auto.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.TableView.TableRow;
 
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
-import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;

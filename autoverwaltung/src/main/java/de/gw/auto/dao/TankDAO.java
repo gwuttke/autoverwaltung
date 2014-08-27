@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tank;
 import de.gw.auto.hibernate.DatenAbrufen;
 

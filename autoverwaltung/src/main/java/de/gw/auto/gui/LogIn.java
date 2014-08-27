@@ -1,7 +1,6 @@
 package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import de.gw.auto.dao.SonstigeAusgabenDao;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Texte;

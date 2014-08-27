@@ -1,24 +1,15 @@
 package de.gw.auto.hibernate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import de.gw.auto.domain.Benutzer;
 
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
-
-	private static final String FROM = "FROM ";
-	private static final String WHERE = " WHERE ";
-	private static final String AND = " AND ";
 
 	protected Session startSession() {
 		session = InitSessionFactory.getInstance().getCurrentSession();

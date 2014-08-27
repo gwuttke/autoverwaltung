@@ -59,9 +59,6 @@ public class Datum {
 		int monate = months.getMonths() % 12;
 
 		long difference = today.getTimeInMillis() - past.getTimeInMillis();
-		// ms into secents
-		int dYears = -1;
-		int dMonths = -1;
 		final GregorianCalendar diff = new GregorianCalendar();
 		diff.setTimeInMillis(difference);
 

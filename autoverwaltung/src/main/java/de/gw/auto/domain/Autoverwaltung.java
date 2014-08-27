@@ -1,11 +1,9 @@
 package de.gw.auto.domain;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import de.gw.auto.hibernate.DatenAbrufen;
-import de.gw.auto.hibernate.DatenbankZugriff;
 
 public class Autoverwaltung extends DatenAbrufen{
 
