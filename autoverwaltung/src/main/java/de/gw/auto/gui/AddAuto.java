@@ -132,7 +132,7 @@ public class AddAuto extends JFrame {
 						benzinArten, Integer.parseInt(KM_STAND_SPINNER
 								.getValue().toString())));
 				
-				new GuiShowTanken(setting);
+				new ShowGui(setting);
 				dispose();
 
 			}

@@ -89,7 +89,7 @@ public class AddSonstigeAusgaben extends Funktionen {
 		btnCancel.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				new GuiShowTanken(setting);
+				new ShowGui(setting);
 				cancel(frame);
 				
 			}

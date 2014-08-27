@@ -128,7 +128,7 @@ public class AddTanken extends Funktionen {
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				new GuiShowTanken(setting);
+				new ShowGui(setting);
 				cancel(frame);
 
 			}
@@ -166,7 +166,7 @@ public class AddTanken extends Funktionen {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie einen KM Stand der größer als "
 									+ setting.getAktuellAuto().getKmAktuell()
-									+ "Km ist.");
+									+ " Km ist.");
 					return;
 				}
 

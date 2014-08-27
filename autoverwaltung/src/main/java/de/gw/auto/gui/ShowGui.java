@@ -18,14 +18,14 @@ import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 
-public class GuiShowTanken {
+public class ShowGui {
 
 
 	private JButton btnTanken = new JButton("Tanken hinzufügen");
 	private JButton btnSonstigeAusgaben = new JButton(
 			"Sonstige Ausgaben hinzufügen");
 
-	public GuiShowTanken(Settings setting) {
+	public ShowGui(Settings setting) {
 		TankenDao tankenDao = new TankenDao(setting);
 		SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
 		

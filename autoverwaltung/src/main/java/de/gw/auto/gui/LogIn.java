@@ -75,7 +75,7 @@ public class LogIn {
 						new AddAuto(settings);
 						
 					}else{
-						new GuiShowTanken(settings);
+						new ShowGui(settings);
 					}					
 					frame.dispose();
 				}else{

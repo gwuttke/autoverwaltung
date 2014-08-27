@@ -113,7 +113,7 @@ public class Willkommen {
 				}
 				System.out.println(setting.getAktuellAuto().getId());
 				
-				new GuiShowTanken(setting);
+				new ShowGui(setting);
 			}
 		});
 	}
