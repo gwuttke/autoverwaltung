@@ -1,15 +1,12 @@
 package de.gw.auto.gui.model;
 
-import java.awt.Component;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-
-import org.hibernate.cfg.annotations.reflection.XMLContext.Default;
 
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
@@ -40,6 +37,9 @@ public class Tabelle extends DefaultTableCellRenderer  implements TableModel {
 
 	public JTable getJTable() {
 		JTable jT = new JTable(this);
+	DefaultTableCellRenderer dtcr =	new DefaultTableCellRenderer();
+	dtcr.setHorizontalAlignment(JLabel.CENTER);
+		jT.setDefaultRenderer(Object.class, dtcr);
 
 		return jT;
 	}
@@ -84,7 +84,7 @@ public class Tabelle extends DefaultTableCellRenderer  implements TableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
+		data[rowIndex][columnIndex] = aValue;
 	}
 
 	@Override
@@ -97,5 +97,5 @@ public class Tabelle extends DefaultTableCellRenderer  implements TableModel {
 	public void removeTableModelListener(TableModelListener l) {
 		listener.remove(l);
 
-	}
+	}	
 }

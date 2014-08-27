@@ -13,10 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import org.dom4j.io.SAXWriter;
-
 import de.gw.auto.Constans;
-import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.SonstigeAusgabenInfo;
 import de.gw.auto.dao.TankenDao;
@@ -26,7 +23,7 @@ import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 
-public class ShowInfos extends Tabelle {
+public class ShowInfos {
 
 	private String[] columnNamesTankenInfos = new String[] { "Bezeichnung",
 			"Dieses Jahr", "letztes Jahr", "Gesammt" };
@@ -37,7 +34,7 @@ public class ShowInfos extends Tabelle {
 
 	public ShowInfos(TankenDao tankenDao, Settings setting,
 			SonstigeAusgabenDao sADao) {
-		super(new String[1], new Object[0][0]);
+		super();
 
 		if (tankenDao.getTankenList() != null
 				&& sADao.getSonstigeAusgabenList() != null) {
@@ -46,9 +43,16 @@ public class ShowInfos extends Tabelle {
 
 		jTableInfos = new Tabelle(columnNamesTankenInfos, infosData)
 				.getJTable();
+		
 
 		for (int column = 1; column < jTableInfos.getColumnCount(); column++) {
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(3), 0, column);
 			prepareRenderer(NumberRenderer.getCurrencyRenderer(3), 1, column);
+			prepareRenderer(NumberRenderer.getLiterRenderer(), 2, column);
+			prepareRenderer(NumberRenderer.getKilometerRenderer(), 3, column);
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 4, column);
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 5, column);
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 6, column);
 		}
 
 		JScrollPane spInfos = new JScrollPane(jTableInfos);
@@ -62,26 +66,11 @@ public class ShowInfos extends Tabelle {
 		return jpInfosTable;
 	}
 
-	@Override
-	public Component getTableCellRendererComponent(JTable jTable, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		Component c = super.getTableCellRendererComponent(jTable, value,
-				isSelected, hasFocus, row, column);
-		if (c instanceof JLabel && value instanceof Number) {
-			JLabel label = (JLabel) c;
-			label.setHorizontalAlignment(JLabel.CENTER);
-			Number num = (Number) value;
-			String text = NumberRenderer.getCurrencyRenderer(3, num);
-			
-			label.setText(text);
-		}
-		return c;
-	}
-
 	private JComponent prepareRenderer(TableCellRenderer renderer, int row,
 			int column) {
 		Component c = jTableInfos.prepareRenderer(renderer, row, column);
-		jTableInfos.setValueAt(c, row, column);
+		JLabel l = (JLabel) c;
+		jTableInfos.setValueAt(l.getText(), row, column);
 		JComponent jc = (JComponent) c;
 		return jc;
 	}
