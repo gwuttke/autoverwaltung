@@ -78,7 +78,8 @@ public class TankenInfo {
 							.add(t.getLiter()));
 					if (index > 0) {
 						tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
-								new BigDecimal(t.getKmStand())));
+								new BigDecimal(Berechnung
+										.getGefahreneKilometer(tVorher, t))));
 					} else {
 						tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
 								new BigDecimal(t.getKmStand()
@@ -105,8 +106,7 @@ public class TankenInfo {
 										- setting.getAktuellAuto()
 												.getKmAktuell())));
 					}
-					
-					
+
 					tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
 							new BigDecimal(t.getKmStand())));
 					preiseLetztesJahr.add(t.getPreisProLiter());

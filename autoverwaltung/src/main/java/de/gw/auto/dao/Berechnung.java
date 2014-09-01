@@ -45,6 +45,10 @@ public class Berechnung {
 	public static int getInsgGefahreneKm(Auto auto){
 		return auto.getKmAktuell() - auto.getKmKauf();
 	}
+	
+	public static int getGefahreneKilometer(Tanken vorherTanken, Tanken tanken){
+		return tanken.getKmStand() - vorherTanken.getKmStand();
+	}
 
 	private String round(BigDecimal value, int nachkommaStelle) {
 		DecimalFormat df = new DecimalFormat();
