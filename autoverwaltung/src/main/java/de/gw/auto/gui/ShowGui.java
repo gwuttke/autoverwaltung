@@ -80,9 +80,8 @@ public class ShowGui {
 	}
 
 	private void loadDaten(Settings setting) {
-		this.tankenDao = new TankenDao(setting);
 		sADao = new SonstigeAusgabenDao(setting);
-		showTanken = new ShowTanken(this.tankenDao);
+		showTanken = new ShowTanken(setting);
 		tab.removeAll();
 		tab.addTab(Constans.TANKEN, showTanken.getJpTankenTable());
 		tab.addTab(Constans.SONSTIGE_AUSGABEN,

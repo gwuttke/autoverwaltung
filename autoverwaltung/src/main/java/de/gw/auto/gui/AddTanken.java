@@ -37,6 +37,7 @@ import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.model.Spinner;
+import de.gw.auto.service.TankenService;
 
 public class AddTanken extends Funktionen {
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
@@ -195,8 +196,7 @@ public class AddTanken extends Funktionen {
 
 				Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto,
 						datum, liter, preisProLiter, benzinArt);
-				tankenDao = new TankenDao(setting).tankenIntoDatabase(t,
-						setting);
+				tankenDao = new TankenService(setting).addTankfuellung(t);
 				setting.getAktuellAuto().setKmAktuell(kmStand);
 			}
 		});
