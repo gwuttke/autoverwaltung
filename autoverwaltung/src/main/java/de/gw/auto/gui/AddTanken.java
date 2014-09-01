@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
@@ -57,9 +59,9 @@ public class AddTanken extends Funktionen {
 	private JComboBox<Ort> cbOrt;
 	private JComboBox<Benzinart> cbBenzinart;
 	private JComboBox<Tank> cbTank;
-	private final JTextField tfLiter = new JTextField();
-	private final JTextField tfPreisPLiter = new JTextField();
-	private final JTextField tfKosten = new JTextField();
+	private JSpinner spLiter;
+	private JSpinner spPreisPLiter;
+	private JSpinner spKosten;
 
 	// Button
 	private JButton btnAdd = new JButton(Texte.Form.Button.HINZUFUEGEN);
@@ -81,6 +83,9 @@ public class AddTanken extends Funktionen {
 		spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 200,
 				setting.getAktuellAuto().getKmAktuell(), 999999, 100)
 				.getSpinner();
+		spLiter = new Spinner(20d, 0.1d, 150d, 0.01).getSpinner();
+		spPreisPLiter = new Spinner(1.509d, 0.1d, 3.0d, 0.01).getSpinner();
+		spKosten = new Spinner(50d, 0.1d * 0.1d, 150d * 3d, 0.01d).getSpinner();
 		cbLand = lModel.getCombobox();
 		cbOrt = oModel.getCombobox();
 		cbBenzinart = bModel.getCombobox();
@@ -104,11 +109,11 @@ public class AddTanken extends Funktionen {
 		jpEingaben.add(lKmStand);
 		jpEingaben.add(spKmStand);
 		jpEingaben.add(lLiter);
-		jpEingaben.add(tfLiter);
+		jpEingaben.add(spLiter);
 		jpEingaben.add(lPreisPLiter);
-		jpEingaben.add(tfPreisPLiter);
+		jpEingaben.add(spPreisPLiter);
 		jpEingaben.add(lKosten);
-		jpEingaben.add(tfKosten);
+		jpEingaben.add(spKosten);
 
 		JPanel jpButton = new JPanel();
 		jpButton.add(btnAdd);
@@ -170,12 +175,12 @@ public class AddTanken extends Funktionen {
 					return;
 				}
 
-				if (Double.parseDouble(tfKosten.getText()) < new Double(0)) {
+				if ((Double) spKosten.getValue() < new Double(0)) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
-							"Bitte wählen sie Kosten die größer als 0 sind.");
+							"Bitte wählen sie Kosten, die größer als 0 sind.");
 					return;
 				}
-				
+
 				/*
 				 * Daten werden überprüft
 				 */
@@ -184,12 +189,12 @@ public class AddTanken extends Funktionen {
 				Land land = (Land) cbLand.getModel().getSelectedItem();
 				Ort ort = (Ort) cbOrt.getModel().getSelectedItem();
 				Tank tank = (Tank) cbTank.getModel().getSelectedItem();
-				BigDecimal kosten = new BigDecimal(tfKosten.getText());
+				BigDecimal kosten = new BigDecimal((String) spKosten.getValue());
 				Auto auto = setting.getAktuellAuto();
 				Date datum = datepicker.getDate();
-				BigDecimal liter = new BigDecimal(tfLiter.getText());
-				BigDecimal preisProLiter = new BigDecimal(tfPreisPLiter
-						.getText());
+				BigDecimal liter = new BigDecimal((String) spLiter.getValue());
+				BigDecimal preisProLiter = new BigDecimal(
+						(String) spPreisPLiter.getValue());
 				Benzinart benzinArt = (Benzinart) cbBenzinart.getModel()
 						.getSelectedItem();
 
@@ -211,6 +216,30 @@ public class AddTanken extends Funktionen {
 				}
 			}
 		});
+		spPreisPLiter.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				spKosten.setValue((Double) ((Double) spPreisPLiter.getValue() * (Double) spLiter
+						.getValue()));
+				SpinnerEnable(spKosten,false);
+				SpinnerEnable(spPreisPLiter, true);
+			}
+		});
+		
+		spKosten.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				spPreisPLiter.setValue((Double) ((Double) spKosten.getValue() / (Double) spLiter.getValue()));
+				SpinnerEnable(spPreisPLiter, false);
+			}
+		});
+	}
+
+	private void SpinnerEnable(JSpinner spinner, Boolean enable) {
+		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField()
+				.setEditable(enable);
 	}
 
 	private class LandModel extends DefaultComboBoxModel<Land> {
