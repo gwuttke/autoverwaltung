@@ -47,8 +47,8 @@ public class SonstigeAusgabenInfo {
 					sAIKosten.setVorjahr(sAIKosten.getVorjahr().add(kosten));
 				}
 			}
-			sonstigeAusgabenInfos.add(sAIKosten);
 		}
+		sonstigeAusgabenInfos.add(sAIKosten);
 	}
 	
 	public Info searchInfo(String name){

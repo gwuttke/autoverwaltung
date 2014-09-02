@@ -1,7 +1,6 @@
 package de.gw.auto.service;
 
 import de.gw.auto.dao.TankenDao;
-import de.gw.auto.dao.TankenInfo;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 

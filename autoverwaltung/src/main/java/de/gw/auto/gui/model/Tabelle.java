@@ -23,7 +23,7 @@ public class Tabelle extends DefaultTableCellRenderer  implements TableModel {
 			AllException.messageBox("keine Spalten Namen",
 					"Wenden sie sich bitte an den Entwickler");
 		}
-		if (data.length == 0 || data == null) {
+		if (data == null || data.length == 0) {
 			data = new  Object[1][1];
 			data[0][0] = textTabelle.KEINE_DATEN;
 			columnNames = new String[1];

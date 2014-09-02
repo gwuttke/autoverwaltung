@@ -22,6 +22,7 @@ import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
+import de.gw.auto.service.InfoService;
 
 public class ShowInfos {
 
@@ -36,10 +37,7 @@ public class ShowInfos {
 			SonstigeAusgabenDao sADao) {
 		super();
 
-		if (tankenDao.getTankenList() != null
-				&& sADao.getSonstigeAusgabenList() != null) {
-			infosData = loadTankungenInfos(tankenDao, setting, sADao);
-		}
+		infosData = new InfoService(setting).loadInfos();
 
 		jTableInfos = new Tabelle(columnNamesTankenInfos, infosData)
 				.getJTable();
@@ -74,50 +72,4 @@ public class ShowInfos {
 		JComponent jc = (JComponent) c;
 		return jc;
 	}
-
-	private Object[][] loadTankungenInfos(TankenDao tankenDao,
-			Settings setting, SonstigeAusgabenDao sADao) {
-		Object[][] o = new Object[0][0];
-		int index = 0;
-
-		TankenInfo tankenInfo = new TankenInfo(tankenDao, setting);
-		SonstigeAusgabenInfo sonstigeAusgabenInfo = new SonstigeAusgabenInfo(
-				sADao);
-
-		List<Info> tankInfos = tankenInfo.getTankenInfos();
-		List<Info> sonstigeAusgabenInfos = sonstigeAusgabenInfo
-				.getSonstigeAusgabenInfos();
-		List<Info> allInfos = new ArrayList<Info>();
-
-		Info allKosten = new Info(Constans.GESAMT_KOSTEN);
-		try {
-			allKosten = tankenInfo.searchInfo(Constans.TANKEN_KOSTEN);
-			allKosten = allKosten.add(sonstigeAusgabenInfo
-					.searchInfo(Constans.SONSTIGEAUSGABEN_KOSTEN));
-		} catch (NullPointerException ex) {
-			allKosten = new Info(Constans.GESAMT_KOSTEN);
-		} finally {
-			allKosten.setName(Constans.GESAMT_KOSTEN);
-		}
-
-		allInfos.addAll(tankInfos);
-		allInfos.addAll(sonstigeAusgabenInfos);
-		allInfos.add(allKosten);
-
-		if (tankInfos.size() == 0) {
-			return o;
-		}
-
-		o = new Object[allInfos.size()][columnNamesTankenInfos.length];
-
-		for (Info info : allInfos) {
-			o[index][0] = info.getName();
-			o[index][1] = info.getDiesesJahr();
-			o[index][2] = info.getVorjahr();
-			o[index][3] = info.getGesammt();
-			index++;
-		}
-		return o;
-	}
-
 }
