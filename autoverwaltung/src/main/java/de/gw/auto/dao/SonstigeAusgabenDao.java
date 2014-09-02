@@ -1,6 +1,5 @@
 package de.gw.auto.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +20,14 @@ public class SonstigeAusgabenDao{
 		setSonstigeAusgabenList(this.setting);
 	}
 
-	public void intoDatabase(SonstigeAusgaben sa) {
+	public SonstigeAusgabenDao intoDatabase(SonstigeAusgaben sa) {
 		update.addSonstigeAusgaben(sa);
+		return updateListe();
+		
+		
 	}
 	
 	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
-		if (this.sonstigeAusgabenList.isEmpty()) {
-			return null;
-		}
 		return sonstigeAusgabenList;
 	}
 
@@ -37,9 +36,9 @@ public class SonstigeAusgabenDao{
 		
 	}
 
-	public void updateListe() throws SQLException {
-		getSonstigeAusgabenList().clear();
+	public SonstigeAusgabenDao updateListe() {
 		setSonstigeAusgabenList(setting);
+		return this;
 	}
 
 }

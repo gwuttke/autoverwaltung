@@ -14,9 +14,6 @@ public class TankenDao {
 	private List<Tanken> tankenList = new ArrayList<Tanken>();
 
 	public List<Tanken> getTankenList() {
-		if (this.tankenList.isEmpty()) {
-			return null;
-		}
 		return tankenList;
 	}
 	

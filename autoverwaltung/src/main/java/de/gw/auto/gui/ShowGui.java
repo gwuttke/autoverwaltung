@@ -30,8 +30,6 @@ public class ShowGui {
 	JFrame frame = new JFrame("Tanken");
 
 	private ShowTanken showTanken = null;
-	private TankenDao tankenDao = null;
-	private SonstigeAusgabenDao sADao = null;
 	private ShowInfos showInfos = null;
 	private JTabbedPane tab = new JTabbedPane();
 
@@ -80,14 +78,13 @@ public class ShowGui {
 	}
 
 	private void loadDaten(Settings setting) {
-		sADao = new SonstigeAusgabenDao(setting);
 		showTanken = new ShowTanken(setting);
 		tab.removeAll();
 		tab.addTab(Constans.TANKEN, showTanken.getJpTankenTable());
 		tab.addTab(Constans.SONSTIGE_AUSGABEN,
-				new ShowSonstigeAusgaben(sADao).getJpSonstigeAusgabenTable());
+				new ShowSonstigeAusgaben(setting).getJpSonstigeAusgabenTable());
 
-		showInfos = new ShowInfos(tankenDao, setting, sADao);
+		showInfos = new ShowInfos(setting);
 		loadAusgaben();
 	}
 

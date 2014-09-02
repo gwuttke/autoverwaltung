@@ -33,8 +33,7 @@ public class ShowInfos {
 	private JPanel jpInfosTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableInfos = null;
 
-	public ShowInfos(TankenDao tankenDao, Settings setting,
-			SonstigeAusgabenDao sADao) {
+	public ShowInfos(Settings setting) {
 		super();
 
 		infosData = new InfoService(setting).loadInfos();

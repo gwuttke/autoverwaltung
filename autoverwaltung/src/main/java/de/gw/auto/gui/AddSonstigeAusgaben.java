@@ -23,6 +23,7 @@ import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.model.Spinner;
+import de.gw.auto.service.SonstigeAusgabenService;
 
 public class AddSonstigeAusgaben extends Funktionen {
 
@@ -73,8 +74,6 @@ public class AddSonstigeAusgaben extends Funktionen {
 
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				SonstigeAusgabenDao saD = new SonstigeAusgabenDao(setting);
 				SonstigeAusgaben sa = new SonstigeAusgaben();
 				sa.setAuto(setting.getAktuellAuto());
 				sa.setDatum(new Date(dp.getDate().getTime()));
@@ -82,7 +81,7 @@ public class AddSonstigeAusgaben extends Funktionen {
 				sa.setKommentar(tfBezeichnung.getText());
 				sa.setKosten(new BigDecimal(Double.valueOf(spKosten.getValue().toString())));
 
-				saD.intoDatabase(sa);
+				new SonstigeAusgabenService(setting).addSonstigeAusgaben(sa);
 			}
 		});
 		cancel(frame);

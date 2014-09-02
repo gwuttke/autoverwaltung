@@ -8,10 +8,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import de.gw.auto.dao.SonstigeAusgabenDao;
+import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
+import de.gw.auto.service.SonstigeAusgabenService;
 
 public class ShowSonstigeAusgaben {
 
@@ -21,30 +23,25 @@ public class ShowSonstigeAusgaben {
 	private JPanel jpSonstigeAusgabenTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableSonstigeAusgaben = null;
 
-	public ShowSonstigeAusgaben(SonstigeAusgabenDao sADao) {
+	public ShowSonstigeAusgaben(Settings setting) {
 		Object[][] sonstigeAusgabenData = new Object[0][0];
 
-		if (sADao.getSonstigeAusgabenList() == null
-				|| sADao.getSonstigeAusgabenList().size() == 0) {
-			sonstigeAusgabenData = new Object[0][0];
-		} else {
-			sonstigeAusgabenData = loadSonstigeAusgaben(sADao);
-		}
+		sonstigeAusgabenData = new SonstigeAusgabenService(setting)
+				.loadSonstigeAusgaben();
 
-		jTableSonstigeAusgaben = new Tabelle(columnNamesTanken, sonstigeAusgabenData)
-				.getJTable();
-		
-		if (jTableSonstigeAusgaben.getColumnCount() > 1){
+		jTableSonstigeAusgaben = new Tabelle(columnNamesTanken,
+				sonstigeAusgabenData).getJTable();
+
+		if (jTableSonstigeAusgaben.getColumnCount() > 1) {
 			setTableStyle();
 		}
-		
 
 		JScrollPane spSonstigeAusgaben = new JScrollPane(jTableSonstigeAusgaben);
 
 		jpSonstigeAusgabenTable.add(spSonstigeAusgaben);
 	}
-	
-	private void setTableStyle(){
+
+	private void setTableStyle() {
 		TableColumnModel m = jTableSonstigeAusgaben.getColumnModel();
 		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
 		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
@@ -54,21 +51,6 @@ public class ShowSonstigeAusgaben {
 
 	public JPanel getJpSonstigeAusgabenTable() {
 		return jpSonstigeAusgabenTable;
-	}
-
-	private Object[][] loadSonstigeAusgaben(SonstigeAusgabenDao sADao) {
-		Object[][] o;
-		int index = 0;
-		o = new Object[sADao.getSonstigeAusgabenList().size()][columnNamesTanken.length];
-
-		for (SonstigeAusgaben sa : sADao.getSonstigeAusgabenList()) {
-			o[index][0] = sa.getDatum();
-			o[index][1] = sa.getKommentar();
-			o[index][2] = sa.getKmStand();
-			o[index][3] = sa.getKosten();
-			index++;
-		}
-		return o;
 	}
 
 }
