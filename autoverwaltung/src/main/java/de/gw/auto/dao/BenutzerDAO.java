@@ -3,6 +3,7 @@ package de.gw.auto.dao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.hibernate.UpdateDaten;
 
 public class BenutzerDAO {
 
@@ -20,6 +21,10 @@ public class BenutzerDAO {
 	
 	public Benutzer getBenutzer() {
 		return this.benutzer;
+	}
+	
+	public void addBenutzer(Benutzer registriert){
+		new UpdateDaten().addBenutzer(registriert);
 	}
 	
 	

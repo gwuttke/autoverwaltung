@@ -18,14 +18,18 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"name", "passwort"}))
+@Table(uniqueConstraints={@UniqueConstraint(name="ui_name_passwort", columnNames={"benutzername", "passwort"}), 
+@UniqueConstraint(name="ui_name_email_vorname", columnNames={"name","vorname", "eMail"})})
 public class Benutzer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "benutzer_seq")
 	private int id;
 	private String name;
+	private String vorname;
+	private String benutzername;
 	private String passwort;
+	private String eMail;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idBenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idAuto") })
 	private List<Auto> autos = new ArrayList<>();
@@ -34,7 +38,22 @@ public class Benutzer implements Serializable {
 		// for Hibernate
 	}
 	
+	public Benutzer(String benutzername, String passwort) {
+		this();
+		this.benutzername = benutzername;
+		this.passwort = passwort;
+	}
 	
+	
+	
+	public Benutzer(String name, String vorname, String benutzername,
+			String passwort, String eMail) {
+		this(benutzername,passwort);
+		this.name = name;
+		this.vorname = vorname;
+		this.eMail = eMail;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -42,13 +61,6 @@ public class Benutzer implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Benutzer(String name, String passwort) {
-		super();
-		this.name = name;
-		this.passwort = passwort;
-	}
-
 	
 	public List<Auto> getAutos() {
 		return autos;
@@ -78,6 +90,30 @@ public class Benutzer implements Serializable {
 
 	public void setPasswort(String passwort) {
 		this.passwort = passwort;
+	}
+
+
+	public String getVorname() {
+		return vorname;
+	}
+
+	public String getBenutzername() {
+		return benutzername;
+	}
+
+
+	public void setBenutzername(String benutzername) {
+		this.benutzername = benutzername;
+	}
+
+
+	public String geteMail() {
+		return eMail;
+	}
+
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
 	}
 
 }

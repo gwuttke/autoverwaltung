@@ -9,7 +9,7 @@ public class Texte {
 			public final static String TANKEN_KOSTEN_GES = "Kosten Gesammt:";
 			public final static String TANKEN_KOSTEN_AKT_JAHR = "Kosten dieses Jahr:";
 			public final static String TANKEN_KOSTEN_LET_JAHR = "Kosten letztes Jahr:";
-			public final static String BENUTZER = "Benutzer";
+			public final static String BENUTZER = "Benutzername";
 			public static final String PASSWORT = "Passwort";
 		}
 

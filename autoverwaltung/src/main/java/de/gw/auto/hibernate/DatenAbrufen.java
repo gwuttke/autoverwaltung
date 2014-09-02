@@ -116,8 +116,9 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	private void giveAutosByBenutzer(Benutzer benutzer) throws Exception {
-		benutzer = (Benutzer) this.select(FROM + "Benutzer " + WHERE + "id = " + benutzer.getId()).get(0);
-		autos =  benutzer.getAutos();
+		benutzer = (Benutzer) this.select(
+				FROM + "Benutzer " + WHERE + "id = " + benutzer.getId()).get(0);
+		autos = benutzer.getAutos();
 	}
 
 	public List<Tank> getBefuellung() {
@@ -157,8 +158,8 @@ public class DatenAbrufen extends DatenbankZugriff {
 		tankfuellungen.clear();
 		Set<Tanken> tankungen = ((List<Auto>) this.select(FROM + "Auto" + WHERE
 				+ "id = " + auto.getId())).get(0).getTankfuellungen();
-		 
-		for (Tanken t : tankungen){
+
+		for (Tanken t : tankungen) {
 			tankfuellungen.add(t);
 		}
 	}
@@ -173,10 +174,10 @@ public class DatenAbrufen extends DatenbankZugriff {
 		return tankfuellungen;
 	}
 
-	private Benutzer giveBenutzer(Benutzer benutzer)  {
+	private Benutzer giveBenutzer(Benutzer benutzer) {
 		for (Benutzer b : getBenutzer()) {
-			if (b.getName().equals(benutzer.getName())
-					&& b.getPasswort().equals(benutzer.getPasswort())) {
+			if ((b.getBenutzername().equals(benutzer.getBenutzername())
+					&& (b.getPasswort().equals(benutzer.getPasswort())))) {
 				return b;
 			}
 		}
@@ -185,9 +186,9 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	public Benutzer getBenutzer(Benutzer benutzer) {
-		
+
 		return giveBenutzer(benutzer);
-		
+
 	}
 
 	private void giveBenutzer() throws Exception {

@@ -41,16 +41,17 @@ public class LogIn {
 		con.setLayout(new BorderLayout());
 		
 		JPanel jpCenter = new JPanel(new GridLayout(3, 2));
+		JPanel jpSouth = new JPanel(new GridLayout(1,1));
 		jpCenter.add(lBenutzer);
 		jpCenter.add(tfBenutzer);
 		jpCenter.add(lPasswort);
 		jpCenter.add(tfPasswort);
+		jpCenter.add(btnRegistrieren);
 		jpCenter.add(btnLogIn);
-		//jpCenter.add(btnRegistrieren);
-		jpCenter.add(btnExit);
+		jpSouth.add(btnExit);
 		
 		con.add(jpCenter, BorderLayout.CENTER);
-		//con.add(btnExit, BorderLayout.SOUTH);
+		con.add(jpSouth, BorderLayout.SOUTH);
 		setListeners();
 		frame.pack();
 		frame.setVisible(true);
@@ -64,7 +65,7 @@ public class LogIn {
 			public void actionPerformed(ActionEvent arg0) {
 				Benutzer benutzer = null;
 				try {
-					settings = new de.gw.auto.service.LogIn().Login(tfBenutzer.getText(), new String(tfPasswort.getPassword()));
+					settings = new de.gw.auto.service.BenutzerService().Login(tfBenutzer.getText(), new String(tfPasswort.getPassword()));
 					benutzer = settings.getBenutzer();
 				} catch (Exception e) {
 					AllException.messageBox("Falscher Benutzer", e.getMessage());
@@ -82,6 +83,15 @@ public class LogIn {
 					AllException.messageBox("Falscher Benutzer", "Falsche eingabe bitte versuchen sie es noch einmal");
 					return;	
 				}
+			}
+		});
+		
+		btnRegistrieren.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new Registrieren();
+				
 			}
 		});
 		
