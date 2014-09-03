@@ -119,7 +119,7 @@ public class TankenInfo {
 				tiAvgPreisProLiter.setVorjahr(Berechnung
 						.findAverage(preiseLetztesJahr));
 
-				tVorher = t;
+				tVorher = t; 
 				index++;
 			}
 		}

@@ -71,4 +71,16 @@ public class ShowInfos {
 		JComponent jc = (JComponent) c;
 		return jc;
 	}
+
+
+
+	public JTable getjTableInfos() {
+		return jTableInfos;
+	}
+
+
+
+	public void setjTableInfos(JTable jTableInfos) {
+		this.jTableInfos = jTableInfos;
+	}
 }

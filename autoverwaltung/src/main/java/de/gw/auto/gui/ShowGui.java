@@ -13,24 +13,28 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.service.Drucken;
 
 public class ShowGui {
 
 	private JButton btnTanken = new JButton("Tanken hinzufügen");
 	private JButton btnSonstigeAusgaben = new JButton(
 			"Sonstige Ausgaben hinzufügen");
+	private JButton btnPrint = new JButton("Drucken");
 	private JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>();
 	private JPanel jpAusgabe = new JPanel(new BorderLayout());
 	JFrame frame = new JFrame("Tanken");
 
 	private ShowTanken showTanken = null;
 	private ShowInfos showInfos = null;
+	private ShowSonstigeAusgaben showSonstigeAusgaben = null;
 	private JTabbedPane tab = new JTabbedPane();
 
 	public ShowGui(Settings setting) {
@@ -63,8 +67,9 @@ public class ShowGui {
 	}
 	
 	private JPanel loadButtons(){
-		JPanel jpBtn = new JPanel(new GridLayout(1, 2));
+		JPanel jpBtn = new JPanel(new GridLayout(1, 3));
 		jpBtn.add(btnTanken);
+		jpBtn.add(btnPrint);
 		jpBtn.add(btnSonstigeAusgaben);
 		return jpBtn;
 	}
@@ -81,8 +86,9 @@ public class ShowGui {
 		showTanken = new ShowTanken(setting);
 		tab.removeAll();
 		tab.addTab(Constans.TANKEN, showTanken.getJpTankenTable());
+		showSonstigeAusgaben = new ShowSonstigeAusgaben(setting);
 		tab.addTab(Constans.SONSTIGE_AUSGABEN,
-				new ShowSonstigeAusgaben(setting).getJpSonstigeAusgabenTable());
+				showSonstigeAusgaben.getJpSonstigeAusgabenTable());
 
 		showInfos = new ShowInfos(setting);
 		loadAusgaben();
@@ -114,6 +120,22 @@ public class ShowGui {
 			public void actionPerformed(ActionEvent arg0) {
 				new AddSonstigeAusgaben(setting);
 				frame.dispose();
+			}
+		});
+		
+		btnPrint.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTable[] tables = new JTable[2];
+				if (tab.getSelectedIndex() == 0){
+					tables[0] = (JTable) showTanken.getjTableTanken();
+				}else{
+					tables[0] = (JTable) showSonstigeAusgaben.getjTableSonstigeAusgaben();
+				}
+				tables[1] = (JTable) showInfos.getjTableInfos();
+				new Drucken(setting).print(tables);
+				
 			}
 		});
 	}

@@ -53,4 +53,12 @@ public class ShowSonstigeAusgaben {
 		return jpSonstigeAusgabenTable;
 	}
 
+	public JTable getjTableSonstigeAusgaben() {
+		return jTableSonstigeAusgaben;
+	}
+
+	public void setjTableSonstigeAusgaben(JTable jTableSonstigeAusgaben) {
+		this.jTableSonstigeAusgaben = jTableSonstigeAusgaben;
+	}
+
 }

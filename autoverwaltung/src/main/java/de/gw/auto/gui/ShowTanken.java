@@ -47,6 +47,8 @@ public class ShowTanken {
 		jpTankenTable.add(spTanken);		
 
 	}
+	
+	
 
 	public JPanel getJpTankenTable() {
 		return jpTankenTable;
@@ -69,6 +71,18 @@ public class ShowTanken {
 		jTableTanken.setRowSorter(sorter);
 		sorter.setComparator(2,Collections.reverseOrder(new Tanken()));
 		
+	}
+
+
+
+	public JTable getjTableTanken() {
+		return jTableTanken;
+	}
+
+
+
+	public void setjTableTanken(JTable jTableTanken) {
+		this.jTableTanken = jTableTanken;
 	}
 	
 	
