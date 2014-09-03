@@ -1,6 +1,8 @@
 package de.gw.auto.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import de.gw.auto.domain.Auto;
@@ -14,9 +16,10 @@ public class TankenDao {
 	private List<Tanken> tankenList = new ArrayList<Tanken>();
 
 	public List<Tanken> getTankenList() {
+		Collections.sort(tankenList, new Tanken());
 		return tankenList;
 	}
-	
+
 	public TankenDao(Settings setting) {
 		setTankenList(setting);
 	}
@@ -25,18 +28,17 @@ public class TankenDao {
 		tankenList = new DatenAbrufen().getTankfuellungen(setting);
 	}
 
-	public TankenDao tankenIntoDatabase(Tanken tanken, Settings setting){
+	public TankenDao tankenIntoDatabase(Tanken tanken, Settings setting) {
 		UpdateDaten update = new UpdateDaten();
 		Auto auto = setting.getAktuellAuto();
-		
-		//update.addTanken(tanken);
-		auto.addTanken(tanken); 
-		 setting.setAktuellAuto(auto);
-		 update.updateAuto(auto);
-		 setTankenList(setting);
-		 return this;
-		 
+
+		// update.addTanken(tanken);
+		auto.addTanken(tanken);
+		setting.setAktuellAuto(auto);
+		update.updateAuto(auto);
+		setTankenList(setting);
+		return this;
+
 	}
-	
 
 }

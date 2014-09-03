@@ -190,12 +190,14 @@ public class AddTanken extends Funktionen {
 				Land land = (Land) cbLand.getModel().getSelectedItem();
 				Ort ort = (Ort) cbOrt.getModel().getSelectedItem();
 				Tank tank = (Tank) cbTank.getModel().getSelectedItem();
-				BigDecimal kosten = new BigDecimal((String) spKosten.getValue());
+				BigDecimal kosten = new BigDecimal(String.valueOf(spKosten
+						.getValue()));
 				Auto auto = setting.getAktuellAuto();
 				Date datum = datepicker.getDate();
-				BigDecimal liter = new BigDecimal((String) spLiter.getValue());
-				BigDecimal preisProLiter = new BigDecimal(
-						(String) spPreisPLiter.getValue());
+				BigDecimal liter = new BigDecimal(String.valueOf(spLiter
+						.getValue()));
+				BigDecimal preisProLiter = new BigDecimal(String
+						.valueOf(spPreisPLiter.getValue()));
 				Benzinart benzinArt = (Benzinart) cbBenzinart.getModel()
 						.getSelectedItem();
 
@@ -222,16 +224,17 @@ public class AddTanken extends Funktionen {
 			public void stateChanged(ChangeEvent e) {
 				spKosten.setValue((Double) ((Double) spPreisPLiter.getValue() * (Double) spLiter
 						.getValue()));
-				SpinnerEnable(spKosten,false);
+				SpinnerEnable(spKosten, false);
 				SpinnerEnable(spPreisPLiter, true);
 			}
 		});
-		
+
 		spKosten.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				spPreisPLiter.setValue((Double) ((Double) spKosten.getValue() / (Double) spLiter.getValue()));
+				spPreisPLiter.setValue((Double) ((Double) spKosten.getValue() / (Double) spLiter
+						.getValue()));
 				SpinnerEnable(spPreisPLiter, false);
 			}
 		});

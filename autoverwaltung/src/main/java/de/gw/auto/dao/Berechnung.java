@@ -46,6 +46,17 @@ public class Berechnung {
 		return auto.getKmAktuell() - auto.getKmKauf();
 	}
 	
+	public static BigDecimal getVerbrachPro100Km(Tanken tanken, Tanken tankenVorher){
+		if (tankenVorher == null){
+			return BigDecimal.ZERO;
+		}
+		if (tanken.getTank()== tankenVorher.getTank()){
+			BigDecimal gefahreneKm = new BigDecimal( getGefahreneKilometer(tankenVorher, tanken));
+			return tanken.getLiter().divide(gefahreneKm).multiply(new BigDecimal(100));
+		}
+		return BigDecimal.ZERO;
+	}
+	
 	public static int getGefahreneKilometer(Tanken vorherTanken, Tanken tanken){
 		return tanken.getKmStand() - vorherTanken.getKmStand();
 	}

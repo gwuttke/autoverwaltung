@@ -250,7 +250,9 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 
 	@Override
 	public int compare(Tanken t1, Tanken t2) {
-		return t1.kmStand + t2.kmStand;
+		Integer t1Km = t1.kmStand;
+		Integer t2Km = t2.kmStand;
+		return t1Km.compareTo(t2Km);
 	}
 
 }

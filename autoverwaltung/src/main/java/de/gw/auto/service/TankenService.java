@@ -1,5 +1,9 @@
 package de.gw.auto.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
@@ -7,7 +11,7 @@ import de.gw.auto.domain.Tanken;
 public class TankenService {
 
 	private TankenDao tankenDao = null;
-	
+
 	private Settings setting = null;
 
 	public TankenService(Settings setting) {
@@ -15,39 +19,64 @@ public class TankenService {
 		this.setting = setting;
 		tankenDao = new TankenDao(this.setting);
 	}
-	
+
 	public Object[][] loadTankungen() {
 		/**
 		 * Folgende Datenstrucktur:
-		 * Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand;Liter;PreisProLitter;Kosten
-		 * @return Object[][]
-		 * wenn keine Daten vorhanden dann null
+		 * Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
+		 * ;Liter;PreisProLitter;Kosten
+		 * 
+		 * @return Object[][] wenn keine Daten vorhanden dann null
 		 */
 		
-		if (tankenDao.getTankenList() == null){
+		List<Tanken> tankungen= tankenDao.getTankenList();
+
+		if (tankungen == null) {
 			return null;
 		}
-		
+
 		Object[][] o;
 		int index = 0;
-		o = new Object[tankenDao.getTankenList().size()][9];
-		for (Tanken t : tankenDao.getTankenList()) {
+		Tanken tOld = null;
+		Tanken tVoll = null;
+		o = new Object[tankungen.size()][11];
+		for (Tanken t : tankungen) {
 
 			o[index][0] = t.getDatum();
 			o[index][1] = t.getBenzinArt();
 			o[index][2] = t.getKmStand();
-			o[index][3] = t.getOrt().getOrt();
-			o[index][4] = t.getLand().getName();
-			o[index][5] = t.getTank().getBeschreibung();
-			o[index][6] = t.getLiter();
-			o[index][7] = t.getPreisProLiter();
-			o[index][8] = t.getKosten();
+			if (index > 0) {
+				o[index][3] = t.getKmStand() - tOld.getKmStand();
+				
+			} else {
+				o[index][3] = t.getKmStand()
+						- setting.getAktuellAuto().getKmKauf();
+			}
+			if (tVoll != null){
+				o[index][4] = Berechnung.getVerbrachPro100Km(t, tVoll);
+			}
+			else{
+				o[index][4] = BigDecimal.ZERO;
+			}
+			o[index][5] = t.getOrt().getOrt();
+			o[index][6] = t.getLand().getName();
+			o[index][7] = t.getTank().getBeschreibung();
+			o[index][8] = t.getLiter();
+			o[index][9] = t.getPreisProLiter();
+			o[index][10] = t.getKosten();
+
+			tOld = t;
+			
+			if (t.getTank().getId() == 4){
+				tVoll = t;
+			}
+			
 			index++;
 		}
 		return o;
 	}
-	
-	public TankenDao addTankfuellung(Tanken tanken){
+
+	public TankenDao addTankfuellung(Tanken tanken) {
 		this.tankenDao = tankenDao.tankenIntoDatabase(tanken, this.setting);
 		return tankenDao;
 	}

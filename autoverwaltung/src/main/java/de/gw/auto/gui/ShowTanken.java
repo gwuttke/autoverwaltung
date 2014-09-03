@@ -1,6 +1,7 @@
 package de.gw.auto.gui;
 
 import java.awt.GridLayout;
+import java.util.Collections;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +21,7 @@ import de.gw.auto.service.TankenService;
 
 public class ShowTanken {
 	
-	private final String[] columnNamesTanken = new String[] { "Datum", "Benzinart", "Km Stand",
+	private final String[] columnNamesTanken = new String[] { "Datum", "Benzinart", "Km Stand", "gefahrene Km", "Verbrauch / 100Km",
 			"Ort", "Land", "inhalt getankt", "Liter", "Preis p. Liter",
 			"Kosten" };
 	
@@ -56,15 +57,17 @@ public class ShowTanken {
 		TableColumnModel m = jTableTanken.getColumnModel();
 		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
 		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
-		m.getColumn(6).setCellRenderer(NumberRenderer.getLiterRenderer());
-		m.getColumn(7).setCellRenderer(NumberRenderer.getCurrencyRenderer(3));
-		m.getColumn(8).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
+		m.getColumn(3).setCellRenderer(NumberRenderer.getKilometerRenderer());
+		m.getColumn(4).setCellRenderer(NumberRenderer.getLiterRenderer());
+		m.getColumn(8).setCellRenderer(NumberRenderer.getLiterRenderer());
+		m.getColumn(9).setCellRenderer(NumberRenderer.getCurrencyRenderer(3));
+		m.getColumn(10).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
 		jTableTanken.setColumnModel(m);
 		
 		TableModel tm = jTableTanken.getModel();
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tm);
 		jTableTanken.setRowSorter(sorter);
-		sorter.setComparator(2,new Tanken());
+		sorter.setComparator(2,Collections.reverseOrder(new Tanken()));
 		
 	}
 	
