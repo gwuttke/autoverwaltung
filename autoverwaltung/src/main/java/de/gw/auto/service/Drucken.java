@@ -7,15 +7,18 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.text.MessageFormat;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.swing.JTable;
 import javax.swing.JTable.PrintMode;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.gui.PrintPreview;
 
 public class Drucken {
 
 	private Settings settings = null;
+	HashPrintRequestAttributeSet att = new javax.print.attribute.HashPrintRequestAttributeSet();
 
 	public Drucken(Settings settings) {
 		this.settings = settings;
@@ -41,11 +44,17 @@ public class Drucken {
 
 			Book printJob = new Book();
 
-			for (JTable t : tables)
-				printJob.append(
-						t.getPrintable(PrintMode.FIT_WIDTH, header, null), pf);
-
+			for (JTable t : tables){
+			//	printJob.append(t.getPrintable(PrintMode.FIT_WIDTH, header, null), pf);
+				new PrintPreview(t.getPrintable(
+						javax.swing.JTable.PrintMode.FIT_WIDTH, new MessageFormat(
+								"Capitals"), new MessageFormat("{0}")),
+						printer.getPageFormat(att));
+			}
+			
 			printer.setPageable(printJob);
+		
+		
 
 			System.out.println(printJob.getNumberOfPages());
 
@@ -54,5 +63,6 @@ public class Drucken {
 		} catch (PrinterException e) {
 			e.printStackTrace();
 		}
+		
 	}
 }
