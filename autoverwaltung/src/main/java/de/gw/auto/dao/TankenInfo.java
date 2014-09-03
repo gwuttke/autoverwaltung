@@ -47,7 +47,6 @@ public class TankenInfo {
 			for (Tanken t : tankungen) {
 
 				if (index > 0) {
-					tVorher = t;
 					v.setZahl(t.getPreisProLiter());
 				} else {
 					v = new Vergleich(t.getPreisProLiter());
@@ -81,10 +80,11 @@ public class TankenInfo {
 								new BigDecimal(Berechnung
 										.getGefahreneKilometer(tVorher, t))));
 					} else {
-						tiSummeKm.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
-								new BigDecimal(t.getKmStand()
-										- setting.getAktuellAuto()
-												.getKmAktuell())));
+						tiSummeKm
+								.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
+										new BigDecimal(t.getKmStand()
+												- setting.getAktuellAuto()
+														.getKmKauf())));
 					}
 
 					preiseDiesesJahr.add(t.getPreisProLiter());
@@ -118,6 +118,8 @@ public class TankenInfo {
 						.findAverage(preiseDiesesJahr));
 				tiAvgPreisProLiter.setVorjahr(Berechnung
 						.findAverage(preiseLetztesJahr));
+
+				tVorher = t;
 				index++;
 			}
 		}
