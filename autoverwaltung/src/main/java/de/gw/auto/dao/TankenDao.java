@@ -40,5 +40,23 @@ public class TankenDao {
 		return this;
 
 	}
+	
+	public Tanken search(int id){
+		for (Tanken t : this.tankenList){
+			if (t.getId() == id){
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public Tanken like(Tanken tanken) { 
+		for (Tanken t : this.tankenList){
+			if (t.like(tanken)){
+				return t;
+			}
+		}
+		return null;
+	}
 
 }

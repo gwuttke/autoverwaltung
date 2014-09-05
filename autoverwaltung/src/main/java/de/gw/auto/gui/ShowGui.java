@@ -7,11 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
@@ -20,6 +23,7 @@ import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.domain.Tanken;
 import de.gw.auto.service.Drucken;
 
 public class ShowGui {
@@ -34,6 +38,8 @@ public class ShowGui {
 
 	private ShowTanken showTanken = null;
 	private ShowInfos showInfos = null;
+	private JTable tankenTable = null;
+	private JTable sonstigeAusgabenTable = null;
 	private ShowSonstigeAusgaben showSonstigeAusgaben = null;
 	private JTabbedPane tab = new JTabbedPane();
 
@@ -46,14 +52,13 @@ public class ShowGui {
 		setActions(setting);
 
 		// tabelle Inizaliesieren
-		
+
 		Container con = new Container();
 
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
 		JPanel jpEingaben = new JPanel(new BorderLayout());
-
 
 		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
 
@@ -65,8 +70,8 @@ public class ShowGui {
 		frame.setVisible(true);
 
 	}
-	
-	private JPanel loadButtons(){
+
+	private JPanel loadButtons() {
 		JPanel jpBtn = new JPanel(new GridLayout(1, 3));
 		jpBtn.add(btnTanken);
 		jpBtn.add(btnPrint);
@@ -84,17 +89,63 @@ public class ShowGui {
 
 	private void loadDaten(Settings setting) {
 		showTanken = new ShowTanken(setting);
-		tab.removeAll();
-		tab.addTab(Constans.TANKEN, showTanken.getJpTankenTable());
 		showSonstigeAusgaben = new ShowSonstigeAusgaben(setting);
-		tab.addTab(Constans.SONSTIGE_AUSGABEN,
-				showSonstigeAusgaben.getJpSonstigeAusgabenTable());
+		this.tankenTable = showTanken.getjTableTanken();
+		this.sonstigeAusgabenTable = showSonstigeAusgaben
+				.getjTableSonstigeAusgaben();
+		tab.removeAll();
+		tab.addTab(Constans.TANKEN, new JScrollPane(this.tankenTable));
+		tab.addTab(Constans.SONSTIGE_AUSGABEN, new JScrollPane(
+				this.sonstigeAusgabenTable));
 
 		showInfos = new ShowInfos(setting);
 		loadAusgaben();
 	}
 
 	private void setActions(final Settings setting) {
+
+		tankenTable.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JTable target = (JTable) e.getSource();
+				int columnCount = target.getColumnCount();
+				if (columnCount > 1) {
+					if (e.getClickCount() == 2) {
+
+						int row = target.getSelectedRow();
+
+						Tanken t = showTanken.getRowObject(row);
+
+						new AddTanken(t, setting);
+					}
+				}
+			}
+		});
 
 		comboBoxAutos.addItemListener(new ItemListener() {
 
@@ -122,20 +173,21 @@ public class ShowGui {
 				frame.dispose();
 			}
 		});
-		
+
 		btnPrint.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTable[] tables = new JTable[2];
-				if (tab.getSelectedIndex() == 0){
+				if (tab.getSelectedIndex() == 0) {
 					tables[0] = (JTable) showTanken.getjTableTanken();
-				}else{
-					tables[0] = (JTable) showSonstigeAusgaben.getjTableSonstigeAusgaben();
+				} else {
+					tables[0] = (JTable) showSonstigeAusgaben
+							.getjTableSonstigeAusgaben();
 				}
 				tables[1] = (JTable) showInfos.getjTableInfos();
 				new Drucken(setting).print(tables);
-				
+
 			}
 		});
 	}
