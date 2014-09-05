@@ -88,5 +88,10 @@ public class TankenService {
 		this.tankenDao = tankenDao.tankenIntoDatabase(tanken, this.setting);
 		return tankenDao;
 	}
+	
+	public TankenDao updateTankfuellung(Tanken tanken){
+		this.tankenDao = tankenDao.tankenUpdate(tanken, this.setting);
+		return tankenDao;
+	}
 
 }

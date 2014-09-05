@@ -145,6 +145,19 @@ public class Auto implements Serializable {
 	public void addTanken(Tanken tanken){
 		tankfuellungen.add(tanken);
 	}
+	
+	public void updateTanken(Tanken tanken){
+		searchAndUpdate(tanken);
+	}
+	
+	private void searchAndUpdate(Tanken tanken){
+		for (Tanken t : tankfuellungen){
+			if (t.getId() == tanken.getId()){
+				t = tanken;
+				break;
+			}
+		}
+	}
 
 	@Override
 	public String toString() {

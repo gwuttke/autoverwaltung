@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 
 import com.michaelbaranov.microba.calendar.DatePicker;
 
+import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.LandDao;
 import de.gw.auto.dao.OrtDao;
@@ -150,7 +151,6 @@ public class AddTanken extends Funktionen {
 		
 		
 		cbLand.getModel().setSelectedItem(tanken.getLand());
-		//cbLand.getEditor().setItem(tanken.getLand());
 		cbOrt.getModel().setSelectedItem(tanken.getOrt());
 		cbBenzinart.getModel().setSelectedItem(tanken.getBenzinArt());
 		cbTank.getModel().setSelectedItem(tanken.getTank());
@@ -158,6 +158,7 @@ public class AddTanken extends Funktionen {
 		spLiter.setValue(tanken.getLiter());
 		spPreisPLiter.setValue(tanken.getPreisProLiter());
 		spKosten.setValue(tanken.getKosten());
+		btnAdd.setText("Bearbeiten");
 	}
 
 	private void setListener() {
@@ -233,8 +234,14 @@ public class AddTanken extends Funktionen {
 
 				Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto,
 						datum, liter, preisProLiter, benzinArt);
-				tankenDao = tankenService.addTankfuellung(t);
-				setting.getAktuellAuto().setKmAktuell(kmStand);
+				
+				if (btnAdd.getText() == Texte.Form.Button.HINZUFUEGEN){
+					tankenDao = tankenService.addTankfuellung(t);
+					setting.getAktuellAuto().setKmAktuell(kmStand);	
+				}else{
+					tankenDao = tankenService.addTankfuellung(t);
+				}
+				
 			}
 		});
 

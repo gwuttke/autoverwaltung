@@ -13,7 +13,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import de.gw.auto.dao.Berechnung;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Land;
@@ -24,7 +23,6 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
-import de.gw.auto.gui.model.TankenTabelle;
 import de.gw.auto.service.TankenService;
 
 public class ShowTanken {

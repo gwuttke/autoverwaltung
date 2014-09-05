@@ -41,6 +41,20 @@ public class TankenDao {
 
 	}
 	
+
+	public TankenDao tankenUpdate(Tanken tanken, Settings setting) {
+		UpdateDaten update = new UpdateDaten();
+		Auto auto = setting.getAktuellAuto();
+
+		// update.addTanken(tanken);
+		auto.updateTanken(tanken);
+		setting.setAktuellAuto(auto);
+		update.updateAuto(auto);
+		setTankenList(setting);
+		return this;
+
+	}
+	
 	public Tanken search(int id){
 		for (Tanken t : this.tankenList){
 			if (t.getId() == id){
