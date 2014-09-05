@@ -46,6 +46,20 @@ public class Berechnung {
 		return auto.getKmAktuell() - auto.getKmKauf();
 	}
 	
+	public static Info getAVGVerbrauchPro100(Info gefahrenKm, Info anzahlLiter){
+		Info info = new Info(Constans.VERBRAUCH_AUF_100_KM);
+		if (gefahrenKm.getDiesesJahr().max(BigDecimal.ZERO) != BigDecimal.ZERO){
+			info.setDiesesJahr(anzahlLiter.getDiesesJahr().divide(gefahrenKm.getDiesesJahr()).multiply(new BigDecimal(100)));
+		}
+		if (gefahrenKm.getVorjahr().max(BigDecimal.ZERO) != BigDecimal.ZERO){
+			info.setVorjahr(anzahlLiter.getVorjahr().divide(gefahrenKm.getVorjahr()).multiply(new BigDecimal(100)));			
+		}
+		if (gefahrenKm.getVorjahr().max(BigDecimal.ZERO) != BigDecimal.ZERO){
+			info.setGesammt(anzahlLiter.getGesammt().divide(gefahrenKm.getGesammt()).multiply(new BigDecimal(100)));	
+		}
+		return info;
+	}
+	
 	public static BigDecimal getVerbrachPro100Km(Tanken tanken, Tanken tankenVorher){
 		if (tankenVorher == null){
 			return BigDecimal.ZERO;
@@ -59,6 +73,18 @@ public class Berechnung {
 	
 	public static int getGefahreneKilometer(Tanken vorherTanken, Tanken tanken){
 		return tanken.getKmStand() - vorherTanken.getKmStand();
+	}
+	
+	public static Double getKosten(Double liter, Double preisProLiter){
+		return liter * preisProLiter;
+	}
+	
+	public static Double getPreisProLiter(Double liter, Double kosten){
+		return kosten / liter;
+	}
+	
+	public static Double getLiter(Double kosten, Double preisProLiter){
+		return kosten / preisProLiter;
 	}
 
 	private String round(BigDecimal value, int nachkommaStelle) {

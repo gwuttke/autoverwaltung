@@ -20,5 +20,6 @@ public class Constans {
 	public static final String SONSTIGE_AUSGABEN = "Sonstige Ausgaben ";
 	public static final String SONSTIGEAUSGABEN_KOSTEN = SONSTIGE_AUSGABEN + KOSTEN;
 	public static final String GESAMT_KOSTEN = GESAMT + KOSTEN;
+	public static final String VERBRAUCH_AUF_100_KM = DURCHSCHNITT + "Verbrauch auf 100 Km";
 
 }
