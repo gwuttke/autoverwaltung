@@ -2,10 +2,14 @@ package de.gw.auto.gui;
 
 //PrintPreview.java
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.event.*;
+
 import java.awt.print.*;
+
 import javax.swing.border.*;
 
 public class PrintPreview extends JFrame implements ActionListener, ChangeListener,
@@ -15,7 +19,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 	Pageable pg = null;
 	double scale = 1.0;
 	JSlider slider = new JSlider();
-	Page page[] = null;
+	Page pages[] = null;
 	JComboBox jcb = new JComboBox();
 	CardLayout cl = new CardLayout();
 	JPanel p = new JPanel(cl);
@@ -24,6 +28,41 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 	public PrintPreview(Pageable pg) {
 		super("Print Preview");
 		this.pg = pg;
+		createPreview();
+	}
+	
+	public PrintPreview(final Book book, final PageFormat p){
+		super("Print Preview");
+		this.pg = new Pageable() {
+			
+			@Override
+			public Printable getPrintable(int pageIndex)
+					throws IndexOutOfBoundsException {
+				return book.getPrintable(pageIndex);
+			}
+			
+			@Override
+			public PageFormat getPageFormat(int pageIndex)
+					throws IndexOutOfBoundsException {
+				return book.getPageFormat(pageIndex); 
+			}
+			
+			@Override
+			public int getNumberOfPages() {
+				
+				Graphics g = new java.awt.image.BufferedImage(2, 2,
+						java.awt.image.BufferedImage.TYPE_INT_RGB)
+						.getGraphics();
+				int n = 1;
+				try {
+					while (book.getPrintable(n).print(g, p, n) == Printable.PAGE_EXISTS)
+						n++;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				return book.getNumberOfPages();
+			}
+		};
 		createPreview();
 	}
 
@@ -36,7 +75,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 						.getGraphics();
 				int n = 0;
 				try {
-					while (pr.print(g, p, n) == pr.PAGE_EXISTS)
+					while (pr.print(g, p, n) == Printable.PAGE_EXISTS)
 						n++;
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -56,7 +95,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 	}
 
 	private void createPreview() {
-		page = new Page[pg.getNumberOfPages()];
+		pages = new Page[pg.getNumberOfPages()];
 		FlowLayout fl = new FlowLayout();
 		PageFormat pf = pg.getPageFormat(0);
 		Dimension size = new Dimension((int) pf.getPaper().getWidth(), (int) pf
@@ -64,10 +103,10 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 		if (pf.getOrientation() != PageFormat.PORTRAIT)
 			size = new Dimension(size.height, size.width);
 		JPanel temp = null;
-		for (int i = 0; i < page.length; i++) {
+		for (int i = 0; i < pages.length; i++) {
 			jcb.addItem("" + (i + 1));
-			page[i] = new Page(i, size);
-			p.add("" + (i + 1), new JScrollPane(page[i]));
+			pages[i] = new Page(i, size);
+			p.add("" + (i + 1), new JScrollPane(pages[i]));
 		}
 		setTopPanel();
 		this.getContentPane().add(p, "Center");
@@ -75,7 +114,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 		this.setSize(d.width, d.height - 60);
 		slider.setSize(this.getWidth() / 2, slider.getPreferredSize().height);
 		this.setVisible(true);
-		page[jcb.getSelectedIndex()].refreshScale();
+		pages[jcb.getSelectedIndex()].refreshScale();
 	}
 
 	private void setTopPanel() {
@@ -95,7 +134,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 		back.addActionListener(this);
 		forward.addActionListener(this);
 		back.setEnabled(false);
-		forward.setEnabled(page.length > 1);
+		forward.setEnabled(pages.length > 1);
 		gbc.gridx = 0;
 		gbc.gridwidth = 1;
 		gbl.setConstraints(slider, gbc);
@@ -122,7 +161,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 
 	public void itemStateChanged(ItemEvent ie) {
 		cl.show(p, (String) jcb.getSelectedItem());
-		page[jcb.getSelectedIndex()].refreshScale();
+		pages[jcb.getSelectedIndex()].refreshScale();
 		back.setEnabled(jcb.getSelectedIndex() == 0 ? false : true);
 		forward.setEnabled(jcb.getSelectedIndex() == jcb.getItemCount() - 1 ? false
 				: true);
@@ -179,7 +218,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 		if (temp == 0)
 			temp = 0.01;
 		scale = temp;
-		page[jcb.getSelectedIndex()].refreshScale();
+		pages[jcb.getSelectedIndex()].refreshScale();
 		this.validate();
 	}
 
@@ -190,6 +229,7 @@ public class PrintPreview extends JFrame implements ActionListener, ChangeListen
 		Dimension size = null;
 
 		public Page(int x, Dimension size) {
+			
 			this.size = size;
 			bi = new java.awt.image.BufferedImage(size.width, size.height,
 					java.awt.image.BufferedImage.TYPE_INT_RGB);
