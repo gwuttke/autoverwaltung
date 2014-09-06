@@ -2,9 +2,12 @@ package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
@@ -41,7 +44,7 @@ import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.model.Spinner;
 import de.gw.auto.service.TankenService;
 
-public class AddTanken extends Funktionen {
+public class AddTanken extends Funktionen implements ComponentListener {
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
 	private static final Texte.Error.Titel textError = new Texte.Error.Titel();
 	JFrame frame = new JFrame();
@@ -64,22 +67,23 @@ public class AddTanken extends Funktionen {
 	private JSpinner spPreisPLiter;
 	private JSpinner spKosten;
 
+	// Label
+	private JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
+	private JLabel lLand = new JLabel(Texte.Form.Label.LAND);
+	private JLabel lOrt = new JLabel(Texte.Form.Label.ORT);
+	private JLabel lBenzinart = new JLabel("Benzinart");
+	private JLabel lLiter = new JLabel("Liter");
+	private JLabel lPreisPLiter = new JLabel("Preis pro Liter");
+	private JLabel lKosten = new JLabel("Kosten");
+	private JLabel lVoll = new JLabel("Tank inhalt");
+	private JLabel lKmStand = new JLabel("Km Stand");
+
 	// Button
 	private JButton btnAdd = new JButton(Texte.Form.Button.HINZUFUEGEN);
 	private JButton btnCancel = new JButton(Texte.Form.Button.ABBRUCH);
 
 	public AddTanken(final Settings set) {
 		this.setting = set;
-		// Label
-		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
-		JLabel lLand = new JLabel(Texte.Form.Label.LAND);
-		JLabel lOrt = new JLabel(Texte.Form.Label.ORT);
-		JLabel lBenzinart = new JLabel("Benzinart");
-		JLabel lLiter = new JLabel("Liter");
-		JLabel lPreisPLiter = new JLabel("Preis pro Liter");
-		JLabel lKosten = new JLabel("Kosten");
-		JLabel lVoll = new JLabel("Tank inhalt");
-		JLabel lKmStand = new JLabel("Km Stand");
 
 		spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 200,
 				setting.getAktuellAuto().getKmAktuell(), 999999, 100)
@@ -128,6 +132,25 @@ public class AddTanken extends Funktionen {
 		frame.setTitle(Texte.Form.FensterTitel.ADD_TANKEN);
 		frame.pack();
 		frame.setVisible(true);
+	}
+
+	private void update(int width, int height, JLabel lable) {
+		Font testFont = null;
+		int size = 0;
+		for (int i = 1; i < height; i++) {
+			testFont = new Font("Dialog", Font.BOLD, i);
+			lable.setFont(testFont);
+			if (lable.getFontMetrics(testFont).stringWidth(lable.getText()) > width)
+				break;
+			if (lable.getFontMetrics(testFont).getHeight() > height)
+				break;
+			size = (i - 2); // vermutlich nötig, da ich die Insets nicht beachte
+		}
+		lable.setFont(new Font("Dialog", Font.BOLD, size));
+	}
+
+	private void resize(JLabel text) {
+		text.setFont(text.getFont().deriveFont((float) (text.getWidth() / 7)));
 	}
 
 	private void setListener() {
@@ -339,5 +362,31 @@ public class AddTanken extends Funktionen {
 			return cb;
 
 		}
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentResized(ComponentEvent cEvent) {
+		JFrame source = (JFrame) cEvent.getSource();
+
+		update(source.getWidth(), source.getHeight(), lDatum);
+
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }

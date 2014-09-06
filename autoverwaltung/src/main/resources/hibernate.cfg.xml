@@ -5,7 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.url">
-			jdbc:mysql://10.10.254.103:3306/auto
+			jdbc:mysql://192.168.178.21:3306/auto
 		</property>
 		<property name="connection.username">auto</property>
 		<property name="connection.password">Dj9aaQGpre3Cr4f3</property>
