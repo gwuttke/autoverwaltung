@@ -45,6 +45,6 @@ public class Ort implements Serializable {
 
 	@Override
 	public String toString() {
-		return MessageFormat.format("{0}: {1} : {2}", new Object[] { getClass().getSimpleName(), id, ort });
+		return ort;
 	}
 }

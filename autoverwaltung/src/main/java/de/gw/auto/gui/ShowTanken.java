@@ -34,7 +34,7 @@ public class ShowTanken {
 Settings setting = null;
 private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		"Km Stand", "gefahrene Km", "Verbrauch / 100Km", "Ort", "Land",
-		"inhalt getankt", "Liter", "Preis p. Liter", "Kosten" };
+		"inhalt getankt", "Liter", "Preis / Liter", "Kosten" };
 
 
 	public ShowTanken(Settings setting) {
