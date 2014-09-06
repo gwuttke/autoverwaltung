@@ -1,6 +1,8 @@
 package de.gw.auto.gui;
 
 import java.awt.GridLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
@@ -25,7 +27,7 @@ import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 import de.gw.auto.service.TankenService;
 
-public class ShowTanken {
+public class ShowTanken{
 
 	private JPanel jpTankenTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableTanken = null;
@@ -62,7 +64,8 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 
 		if (jTableTanken.getColumnCount() > 1) {
 			setTableStyle();
-		}
+		}jTableTanken.addComponentListener(this);
+		
 
 		JScrollPane spTanken = new JScrollPane(jTableTanken);
 
@@ -75,7 +78,6 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 	}
 
 	private void setTableStyle() {
-
 		TableColumnModel m = jTableTanken.getColumnModel();
 		m.getColumn(0).setCellRenderer(FormatRenderer.getDateRenderer());
 		m.getColumn(2).setCellRenderer(NumberRenderer.getKilometerRenderer());
@@ -84,6 +86,19 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		m.getColumn(8).setCellRenderer(NumberRenderer.getLiterRenderer());
 		m.getColumn(9).setCellRenderer(NumberRenderer.getCurrencyRenderer(3));
 		m.getColumn(10).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
+		
+		m.getColumn(0).setMinWidth(96);
+		m.getColumn(1).setMinWidth(70);
+		m.getColumn(2).setMinWidth(85);
+		m.getColumn(3).setMinWidth(93);
+		m.getColumn(4).setMinWidth(114);
+		m.getColumn(5).setMinWidth(76);
+		m.getColumn(6).setMinWidth(82);
+		m.getColumn(7).setMinWidth(82);
+		m.getColumn(8).setMinWidth(82);
+		m.getColumn(9).setMinWidth(82);
+		m.getColumn(10).setMinWidth(70);
+		
 		jTableTanken.setColumnModel(m);
 
 		TableModel tm = jTableTanken.getModel();
@@ -120,5 +135,4 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 	public void setjTableTanken(JTable jTableTanken) {
 		this.jTableTanken = jTableTanken;
 	}
-
 }

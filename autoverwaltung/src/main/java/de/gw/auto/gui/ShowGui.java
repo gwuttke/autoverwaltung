@@ -2,6 +2,7 @@ package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +71,7 @@ public class ShowGui {
 		con.add(tab, BorderLayout.CENTER);
 		con.add(jpAusgabe, BorderLayout.SOUTH);
 
-		frame.pack();
+		frame.setMinimumSize(new Dimension(950, 500));
 		frame.setVisible(true);
 
 	}
@@ -191,6 +192,7 @@ public class ShowGui {
 						Tanken t = showTanken.getRowObject(row);
 
 						new AddTanken(t, setting);
+						frame.dispose();
 					}
 				}
 			}
