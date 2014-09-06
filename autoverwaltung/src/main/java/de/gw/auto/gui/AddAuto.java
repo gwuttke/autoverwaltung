@@ -36,24 +36,24 @@ public class AddAuto extends JFrame {
 
 	private Settings setting;
 	// Klassen
-	final AutoDAO autoDao = new AutoDAO(setting);
-	// Komponenten
-	final static JList<String> ALL_AUTO_LIST = new JList<String>();
-	final static JTextField KFZ_ZEICHEN_TEXT_FIELD = new JTextField();
-	static JSpinner KM_STAND_SPINNER = new JSpinner(new SpinnerNumberModel());
-	final static DatePicker KFZ_ERSTDATUM_SPINNER = getDateSpinner("KFZ_ERSTDATUM_SPINNER");
-	final static DatePicker KFZ_KAUF_SPINNER = getDateSpinner("KFZ_KAUF_SPINNER");
-	final static JLabel KFZ_ZEICHEN_LABEL = new JLabel("Kennzeichen:");
-	final static JLabel KM_LABEL = new JLabel("Km-Stand:");
-	final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
-	final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
-	final static JLabel Benzinart_LABEL = new JLabel("Benzinarten:");
-	final static DefaultListModel<Benzinart> baModel = new DefaultListModel<Benzinart>();
-	final static DefaultComboBoxModel<Benzinart> bModel = new DefaultComboBoxModel<Benzinart>();
-	final static JList<Benzinart> autoBenzinarten = new JList<Benzinart>(baModel);
-	final static JComboBox<Benzinart> cmboBoxBenzinarten = new JComboBox<Benzinart>(bModel);
-	final static JButton BTN_NEW_AUTO = new JButton("neues Auto");
-	final static JButton BTN_ADD_BENZINART = new JButton("Hinzufügen");
+	private final AutoDAO autoDao = new AutoDAO(setting);
+	private final static JTextField KFZ_ZEICHEN_TEXT_FIELD = new JTextField();
+	private static JSpinner KM_STAND_SPINNER = new JSpinner(new SpinnerNumberModel());
+	private final static DatePicker KFZ_ERSTDATUM_SPINNER = getDateSpinner("KFZ_ERSTDATUM_SPINNER");
+	private final static DatePicker KFZ_KAUF_SPINNER = getDateSpinner("KFZ_KAUF_SPINNER");
+	private final static JLabel KFZ_ZEICHEN_LABEL = new JLabel("Kennzeichen:");
+	private final static JLabel KM_LABEL = new JLabel("Km-Stand:");
+	private final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
+	private final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
+	private final static JLabel Benzinart_LABEL = new JLabel("Benzinarten:");
+	private final static DefaultListModel<Benzinart> baModel = new DefaultListModel<Benzinart>();
+	private final static DefaultComboBoxModel<Benzinart> bModel = new DefaultComboBoxModel<Benzinart>();
+	private final static JList<Benzinart> autoBenzinarten = new JList<Benzinart>(baModel);
+	private final static JComboBox<Benzinart> cmboBoxBenzinarten = new JComboBox<Benzinart>(bModel);
+	private final static JButton BTN_NEW_AUTO = new JButton("neues Auto");
+	private final static JButton BTN_ADD_BENZINART = new JButton("Hinzufügen");
+	private final static JButton BTN_CANCEL = new JButton("Abbrechen");
+	
 
 	
 	Set<Benzinart> benzinArten = new HashSet<Benzinart>();
@@ -86,6 +86,7 @@ public class AddAuto extends JFrame {
 		JPanel jplTb = new JPanel(new GridLayout(0, 1));
 		JPanel jplBenzinarten = new JPanel(new GridLayout(0,1));
 		JPanel jplAddBenzinarten = new JPanel(new GridLayout(0,2));
+		JPanel jplBtn = new JPanel(new GridLayout(0,2));
 
 		jplLable.add(KFZ_ZEICHEN_LABEL);
 		jplLable.add(KFZ_KAUF_LABEL);
@@ -103,11 +104,16 @@ public class AddAuto extends JFrame {
 		jplBenzinarten.add(Benzinart_LABEL);
 		jplBenzinarten.add(autoBenzinarten);
 		jplBenzinarten.add(jplAddBenzinarten);
+		
+		jplBtn.add(BTN_NEW_AUTO);
+		jplBtn.add(BTN_CANCEL);
+		
+		
 
 		con.add(jplLable, BorderLayout.WEST);
 		con.add(jplTb, BorderLayout.CENTER);
 		con.add(jplBenzinarten, BorderLayout.EAST);
-		con.add(BTN_NEW_AUTO, BorderLayout.SOUTH);
+		con.add(jplBtn, BorderLayout.SOUTH);
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -145,6 +151,20 @@ public class AddAuto extends JFrame {
 				baModel.addElement((Benzinart) bModel.getSelectedItem());
 			}
 		});
+		
+		BTN_CANCEL.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (setting.getAutos().size() > 0){
+					new ShowGui(setting);
+				}else{
+					new LogIn();
+				}
+				dispose();
+			}
+		});
+		
 		pack();
 		setVisible(true);
 	}

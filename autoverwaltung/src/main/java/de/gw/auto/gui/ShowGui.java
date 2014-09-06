@@ -9,6 +9,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,10 +33,11 @@ public class ShowGui {
 	private JButton btnTanken = new JButton("Tanken hinzufügen");
 	private JButton btnSonstigeAusgaben = new JButton(
 			"Sonstige Ausgaben hinzufügen");
+	private JButton btnAddAuto = new JButton("Auto Hinzufügn");
 	private JButton btnPrint = new JButton("Drucken");
 	private JComboBox<Auto> comboBoxAutos = new JComboBox<Auto>();
 	private JPanel jpAusgabe = new JPanel(new BorderLayout());
-	JFrame frame = new JFrame("Tanken");
+	JFrame frame = new JFrame("Auto Verwaltung");
 
 	private ShowTanken showTanken = null;
 	private ShowInfos showInfos = null;
@@ -60,6 +63,7 @@ public class ShowGui {
 
 		JPanel jpEingaben = new JPanel(new BorderLayout());
 
+		jpEingaben.add(btnAddAuto, BorderLayout.WEST);
 		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
 
 		con.add(jpEingaben, BorderLayout.NORTH);
@@ -103,6 +107,51 @@ public class ShowGui {
 	}
 
 	private void setActions(final Settings setting) {
+
+		frame.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				frame.dispose();
+				System.exit(0);
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		tankenTable.addMouseListener(new MouseListener() {
 
@@ -170,6 +219,15 @@ public class ShowGui {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new AddSonstigeAusgaben(setting);
+				frame.dispose();
+			}
+		});
+
+		btnAddAuto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new AddAuto(setting);
 				frame.dispose();
 			}
 		});
