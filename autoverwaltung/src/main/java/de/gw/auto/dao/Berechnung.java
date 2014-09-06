@@ -1,5 +1,9 @@
 package de.gw.auto.dao;
 
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -7,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.JLabel;
 
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
@@ -41,6 +47,22 @@ public class Berechnung {
 
 	public void setB(double b) {
 		this.b = b;
+	}
+
+	public static Font updateFont(Component comp, String compText, int fontStyle) {
+		Font testFont = null;
+		int size = 0;
+		for (int i = 1; i < comp.getHeight(); i++) {
+			testFont = new Font("Dialog", Font.BOLD, i);
+			comp.setFont(testFont);
+			if (comp.getFontMetrics(testFont).stringWidth(compText) > comp
+					.getWidth())
+				break;
+			if (comp.getFontMetrics(testFont).getHeight() > comp.getHeight())
+				break;
+			size = (i - 2); // vermutlich nötig, da ich die Insets nicht beachte
+		}
+		return new Font("Dialog", fontStyle, size);
 	}
 
 	public static int getInsgGefahreneKm(Auto auto) {
