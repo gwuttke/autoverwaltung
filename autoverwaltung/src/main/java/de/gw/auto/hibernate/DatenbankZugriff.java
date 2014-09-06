@@ -7,15 +7,22 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import de.gw.auto.domain.Texte;
+import de.gw.auto.exception.AllException;
+
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;
 
 	protected Session startSession() {
+		try{
 		session = InitSessionFactory.getInstance().getCurrentSession();
 		tx = session.getTransaction();
-
 		return session;
+		}catch(ExceptionInInitializerError eiie){
+			AllException.messageBox(Texte.Error.Titel.CONNECTION, Texte.Error.Text.CONNECTION_TEXT);
+		}
+		return null;
 	}
 	public static void main(String[] args) {
 		new DatenbankZugriff().clean();
