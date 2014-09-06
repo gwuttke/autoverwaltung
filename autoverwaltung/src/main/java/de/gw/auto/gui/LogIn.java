@@ -25,8 +25,8 @@ public class LogIn {
 	private JFrame frame = new JFrame();
 	private JLabel lBenutzer = new JLabel(Texte.Form.Label.BENUTZER +":");
 	private JLabel lPasswort = new JLabel(Texte.Form.Label.PASSWORT + ":");
-	private JTextField tfBenutzer = new JTextField();
-	private JPasswordField tfPasswort = new JPasswordField();
+	private JTextField tfBenutzer = new JTextField("georg.wuttke");
+	private JPasswordField tfPasswort = new JPasswordField("123");
 	private JButton btnLogIn = new JButton("LogIn");
 	private JButton btnRegistrieren = new JButton("Registrieren");
 	private JButton btnExit = new Vordeffiniert().getBtnExit(frame);

@@ -35,7 +35,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	private BigDecimal kosten;
 	private Date datum;
 	private BigDecimal liter;
-	@Column(precision=10, scale=3)
+	@Column(precision = 10, scale = 3)
 	private BigDecimal preisProLiter;
 	@OneToOne
 	@JoinColumn
@@ -43,7 +43,6 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	@ManyToOne
 	@JoinColumn(name = "auto_id")
 	private Auto auto;
-
 
 	public int getId() {
 		return id;
@@ -147,7 +146,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 		return kosten;
 
 	}
-	
+
 	public Auto getAuto() {
 		return auto;
 	}
@@ -160,10 +159,11 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	public String toString() {
 		return MessageFormat
 				.format("{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7} : {8} : {9} : {10} : {11}",
-						new Object[] { getClass().getSimpleName(), id, 
-						kmStand,land.getName(), ort.getOrt(),tank.getBeschreibung(), kosten.toString(),
-						datum.toString(), liter.toString(), preisProLiter.toString(),
-						benzinArt.toString() });
+						new Object[] { getClass().getSimpleName(), id, kmStand,
+								land.getName(), ort.getOrt(),
+								tank.getBeschreibung(), kosten.toString(),
+								datum.toString(), liter.toString(),
+								preisProLiter.toString(), benzinArt.toString() });
 	}
 
 	@Override
@@ -247,12 +247,26 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 		return true;
 	}
 
+	public boolean like(Tanken tanken) {
+		if (this.auto.getId() == tanken.auto.getId()) {
+			if (this.datum.getTime() == tanken.datum.getTime()) {
+				if (this.getKmStand() == tanken.getKmStand()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public int compare(Tanken t1, Tanken t2) {
 		Integer t1Km = t1.kmStand;
 		Integer t2Km = t2.kmStand;
 		return t1Km.compareTo(t2Km);
+	}
+
+	public void setKmStand(int kmStand) {
+		this.kmStand = kmStand;
 	}
 
 }

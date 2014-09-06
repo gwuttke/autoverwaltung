@@ -47,9 +47,10 @@ public class ShowInfos {
 			prepareRenderer(NumberRenderer.getCurrencyRenderer(3), 1, column);
 			prepareRenderer(NumberRenderer.getLiterRenderer(), 2, column);
 			prepareRenderer(NumberRenderer.getKilometerRenderer(), 3, column);
-			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 4, column);
+			prepareRenderer(NumberRenderer.getLiterRenderer(), 4, column);
 			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 5, column);
 			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 6, column);
+			prepareRenderer(NumberRenderer.getCurrencyRenderer(2), 7, column);
 		}
 
 		JScrollPane spInfos = new JScrollPane(jTableInfos);

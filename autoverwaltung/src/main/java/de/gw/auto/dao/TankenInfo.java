@@ -32,8 +32,8 @@ public class TankenInfo {
 		Info tiMaxPreisProLiter = new Info(Constans.MAX_PREIS);
 		Info tiMinPreisProLiter = new Info(Constans.MIN_PREIS);
 		Info tiAnzahlLiter = new Info(Constans.ANZAHL_LITER);
-		Info tiAvgPreisProLiter = new Info(Constans.AVG_Preis);
 		Info tiSummeKm = new Info(Constans.GEFAHRENE_KM);
+		Info tiAvgPreisProLiter = new Info(Constans.AVG_Preis);
 
 		Set<BigDecimal> preiseGesamt = new HashSet<BigDecimal>();
 		Set<BigDecimal> preiseDiesesJahr = new HashSet<BigDecimal>();
@@ -123,11 +123,14 @@ public class TankenInfo {
 				index++;
 			}
 		}
-
+		
+		
 		tankenInfos.add(tiMinPreisProLiter);
 		tankenInfos.add(tiMaxPreisProLiter);
+		//tankenInfos.add(tiAvgPreisProLiter);
 		tankenInfos.add(tiAnzahlLiter);
 		tankenInfos.add(tiSummeKm);
+		tankenInfos.add(Berechnung.getAVGVerbrauchPro100(tiSummeKm, tiAnzahlLiter));
 		tankenInfos.add(tiKosten);
 	}
 

@@ -33,6 +33,15 @@ public class TankDAO {
 		}
 		return null;
 	}
+	
+	public Tank searchTank(String text){
+		for(Tank ta : tankfuellungList){
+			if(ta.getBeschreibung() == text){
+				return ta;
+			}
+		}
+		return null;
+	}
 
 	public void setTankList() throws SQLException {
 		tankfuellungList = new DatenAbrufen().getBefuellung();
