@@ -153,10 +153,11 @@ public class Auto implements Serializable {
 	private void searchAndUpdate(Tanken tanken){
 		for (Tanken t : tankfuellungen){
 			if (t.getId() == tanken.getId()){
-				t = tanken;
+				tankfuellungen.remove(t);
 				break;
 			}
 		}
+		tankfuellungen.add(tanken);
 	}
 
 	@Override

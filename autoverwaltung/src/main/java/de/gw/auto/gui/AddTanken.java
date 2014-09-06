@@ -53,6 +53,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	JFrame frame = new JFrame();
 
 	Settings setting;
+	Tanken oldTanken;
 	LandModel lModel = new LandModel();
 	OrtModel oModel = new OrtModel();
 	TankenDao tankenDao = new TankenDao(setting);
@@ -83,7 +84,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private JLabel lKmStand = new JLabel("Km Stand");
 
 	// Button
-	private JButton btnAdd = new JButton(Texte.Form.Button.HINZUFUEGEN);
+	private JButton btnAdd = new JButton("Hinzufügen");
 	private JButton btnCancel = new JButton(Texte.Form.Button.ABBRUCH);
 
 	public AddTanken(final Settings set) {
@@ -101,13 +102,15 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		JLabel lVoll = new JLabel("Tank inhalt");
 		JLabel lKmStand = new JLabel("Km Stand");
 
-
 		spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 10,
 				setting.getAktuellAuto().getKmAktuell(), 999999, 10)
 				.getSpinner();
 		spLiter = new Spinner(20d, 0.1d, 150d, 1.00).getSpinner();
 		spPreisPLiter = new Spinner(1.509d, 0.1d, 3.0d, 0.01).getSpinner();
-		spKosten = new Spinner(Berechnung.getKosten((Double) spLiter.getValue(), (Double) spPreisPLiter.getValue()), 0.1d * 0.1d, 150d * 3d, 0.50d).getSpinner();
+		spKosten = new Spinner(
+				Berechnung.getKosten((Double) spLiter.getValue(),
+						(Double) spPreisPLiter.getValue()), 0.1d * 0.1d,
+				150d * 3d, 0.50d).getSpinner();
 		cbLand = lModel.getCombobox();
 		cbOrt = oModel.getCombobox();
 		cbBenzinart = bModel.getCombobox();
@@ -150,22 +153,22 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
-	public AddTanken(Tanken tanken, Settings setting){
+
+	public AddTanken(Tanken tanken, Settings setting) {
 		this(setting);
-		if (tanken ==null){
+		if (tanken == null) {
 			return;
 		}
-		
+
 		tanken = tankenService.search(tanken);
-		
+		this.oldTanken = tanken;
+
 		try {
 			datepicker.setDate(tanken.getDatum());
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		cbLand.getModel().setSelectedItem(tanken.getLand());
 		cbOrt.getModel().setSelectedItem(tanken.getOrt());
 		cbBenzinart.getModel().setSelectedItem(tanken.getBenzinArt());
@@ -174,26 +177,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		spLiter.setValue(tanken.getLiter());
 		spPreisPLiter.setValue(tanken.getPreisProLiter());
 		spKosten.setValue(tanken.getKosten());
-		btnAdd.setText("Bearbeiten");
-	}
-
-	private void update(int width, int height, JLabel lable) {
-		Font testFont = null;
-		int size = 0;
-		for (int i = 1; i < height; i++) {
-			testFont = new Font("Dialog", Font.BOLD, i);
-			lable.setFont(testFont);
-			if (lable.getFontMetrics(testFont).stringWidth(lable.getText()) > width)
-				break;
-			if (lable.getFontMetrics(testFont).getHeight() > height)
-				break;
-			size = (i - 2); // vermutlich nötig, da ich die Insets nicht beachte
-		}
-		lable.setFont(new Font("Dialog", Font.BOLD, size));
-	}
-
-	private void resize(JLabel text) {
-		text.setFont(text.getFont().deriveFont((float) (text.getWidth() / 7)));
+		btnAdd.setText("Bearbeiten"); 
+		
 	}
 
 	private void setListener() {
@@ -233,16 +218,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					return;
 				}
 
-				if (Integer.parseInt(spKmStand.getValue().toString()) <= setting
-						.getAktuellAuto().getKmAktuell()) {
-					AllException.messageBox(textError.FALSCHE_EINGABE,
-							"Bitte wählen sie einen KM Stand der größer als "
-									+ setting.getAktuellAuto().getKmAktuell()
-									+ " Km ist.");
-					return;
-				}
-
-				if ((Double) spKosten.getValue() < new Double(0)) {
+				if (((BigDecimal) spKosten.getValue()).max(BigDecimal.ZERO) == BigDecimal.ZERO) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie Kosten, die größer als 0 sind.");
 					return;
@@ -267,16 +243,32 @@ public class AddTanken extends Funktionen implements ComponentListener {
 				Benzinart benzinArt = (Benzinart) cbBenzinart.getModel()
 						.getSelectedItem();
 
-				Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto,
-						datum, liter, preisProLiter, benzinArt);
-				
-				if (btnAdd.getText() == Texte.Form.Button.HINZUFUEGEN){
+				if (btnAdd.getText() == Texte.Form.Button.HINZUFUEGEN) {
+					if (Integer.parseInt(spKmStand.getValue().toString()) <= setting
+							.getAktuellAuto().getKmAktuell()) {
+						AllException.messageBox(textError.FALSCHE_EINGABE,
+								"Bitte wählen sie einen KM Stand der größer als "
+										+ setting.getAktuellAuto().getKmAktuell()
+										+ " Km ist.");
+						return;
+					}
+					Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto,
+							datum, liter, preisProLiter, benzinArt);
+					
 					tankenDao = tankenService.addTankfuellung(t);
-					setting.getAktuellAuto().setKmAktuell(kmStand);	
-				}else{
-					tankenDao = tankenService.addTankfuellung(t);
+					setting.getAktuellAuto().setKmAktuell(kmStand);
+				} else {
+					oldTanken.setKmStand(kmStand);
+					oldTanken.setLand(land);
+					oldTanken.setOrt(ort);
+					oldTanken.setTank(tank);
+					oldTanken.setKosten(kosten);
+					oldTanken.setDatum(datum);
+					oldTanken.setPreisProLiter(preisProLiter);
+					oldTanken.setBenzinArt(benzinArt);
+					tankenDao = tankenService.updateTankfuellung(oldTanken);
 				}
-				
+
 			}
 		});
 
@@ -294,8 +286,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				spKosten.setValue((Double) ((Double) spPreisPLiter.getValue() * (Double) spLiter
-						.getValue()));
+				spKosten.setValue(Berechnung.getKosten(
+						Double.valueOf(((BigDecimal)spLiter.getValue()).toString()),
+						Double.valueOf((spPreisPLiter.getValue()).toString())));
 			}
 		});
 
@@ -303,8 +296,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				spPreisPLiter.setValue((Double) ((Double) spKosten.getValue() / (Double) spLiter
-						.getValue()));
+				spPreisPLiter.setValue(Berechnung.getPreisProLiter(Double.valueOf(
+						((BigDecimal)spLiter.getValue()).toString()),
+						Double.valueOf((spKosten.getValue()).toString())));
 			}
 		});
 	}
@@ -424,9 +418,6 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 	@Override
 	public void componentResized(ComponentEvent cEvent) {
-		JFrame source = (JFrame) cEvent.getSource();
-
-		update(source.getWidth(), source.getHeight(), lDatum);
 
 	}
 

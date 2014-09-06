@@ -48,7 +48,7 @@ public class TankenDao {
 
 		// update.addTanken(tanken);
 		auto.updateTanken(tanken);
-		setting.setAktuellAuto(auto);
+		setting.setAktuellAuto(auto); 
 		update.updateAuto(auto);
 		setTankenList(setting);
 		return this;
