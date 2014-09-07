@@ -71,41 +71,39 @@ public class Berechnung {
 
 	public static Info getAVGVerbrauchPro100(Info gefahrenKm, Info anzahlLiter) {
 		Info info = new Info(Constans.VERBRAUCH_AUF_100_KM);
+		Double kmDJ = Double.valueOf(gefahrenKm.getDiesesJahr().toString());
+		Double literDJ =Double.valueOf(anzahlLiter.getDiesesJahr().toString());
+		Double kmLJ = Double.valueOf(gefahrenKm.getVorjahr().toString());
+		Double literLJ =Double.valueOf(anzahlLiter.getVorjahr().toString());  
+		Double kmG = Double.valueOf(gefahrenKm.getGesammt().toString());
+		Double literG =Double.valueOf(anzahlLiter.getGesammt().toString());  
+		
 		if (gefahrenKm.getDiesesJahr().max(BigDecimal.ZERO) != BigDecimal.ZERO) {
 			try {
-				info.setDiesesJahr(anzahlLiter.getDiesesJahr()
-						.divide(gefahrenKm.getDiesesJahr())
-						.multiply(new BigDecimal(100)));
+			info.setDiesesJahr(getVerbrauchPro100Km(literDJ , kmDJ));
 			} catch (ArithmeticException ae) {
-				info.setDiesesJahr(anzahlLiter.getDiesesJahr()
-						.divide(gefahrenKm.getDiesesJahr(), 0, RoundingMode.UP)
-						.multiply(new BigDecimal(100)));
-			}
 
+			}
 		}
+		
 		if (gefahrenKm.getVorjahr().max(BigDecimal.ZERO) != BigDecimal.ZERO) {
 			try {
-				info.setVorjahr(anzahlLiter.getVorjahr()
-						.divide(gefahrenKm.getVorjahr())
-						.multiply(new BigDecimal(100)));
+				info.setVorjahr(getVerbrauchPro100Km(literLJ , kmLJ));
 			} catch (ArithmeticException ae) {
-				info.setVorjahr(anzahlLiter.getVorjahr()
-						.divide(gefahrenKm.getVorjahr(), 0, RoundingMode.UP)
-						.multiply(new BigDecimal(100)));
+
 			}
 		}
 		if (gefahrenKm.getVorjahr().max(BigDecimal.ZERO) != BigDecimal.ZERO) {
 			try {
-				info.setGesammt(anzahlLiter.getGesammt()
-						.divide(gefahrenKm.getGesammt())
-						.multiply(new BigDecimal(100)));
+				info.setGesammt(getVerbrauchPro100Km(literG , kmG));
 			} catch (ArithmeticException ea) {
-				info.setGesammt(anzahlLiter.getGesammt()
-						.divide(gefahrenKm.getGesammt(), 0, RoundingMode.UP)
-						.multiply(new BigDecimal(100)));
 			}
 		}
 		return info;
+	}
+	
+	private static BigDecimal getVerbrauchPro100Km(Double liter,Double km){
+		return new BigDecimal(liter / km * 100);
 	}
 
 	public static BigDecimal getVerbrachPro100Km(Tanken tanken,
@@ -116,14 +114,9 @@ public class Berechnung {
 		if (tanken.getTank() == tankenVorher.getTank()) {
 			BigDecimal gefahreneKm = new BigDecimal(getGefahreneKilometer(
 					tankenVorher, tanken));
-			try {
-				return tanken.getLiter().divide(gefahreneKm)
-						.multiply(new BigDecimal(100));
-			} catch (ArithmeticException ae) {
-				return tanken.getLiter()
-						.divide(gefahreneKm, 0, RoundingMode.UP)
-						.multiply(new BigDecimal(100));
-			}
+			Double liter =Double.valueOf(tanken.getLiter().toString());
+			Double km = Double.valueOf(gefahreneKm.toString());
+			return getVerbrauchPro100Km(liter, km);
 		}
 		return BigDecimal.ZERO;
 	}

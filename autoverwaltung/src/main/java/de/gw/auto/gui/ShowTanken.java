@@ -64,9 +64,8 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 
 		if (jTableTanken.getColumnCount() > 1) {
 			setTableStyle();
-		}jTableTanken.addComponentListener(this);
+		}
 		
-
 		JScrollPane spTanken = new JScrollPane(jTableTanken);
 
 		jpTankenTable.add(spTanken);
