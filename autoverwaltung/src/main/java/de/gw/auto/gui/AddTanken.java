@@ -76,12 +76,12 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
 	private JLabel lLand = new JLabel(Texte.Form.Label.LAND);
 	private JLabel lOrt = new JLabel(Texte.Form.Label.ORT);
-	private JLabel lBenzinart = new JLabel("Benzinart");
-	private JLabel lLiter = new JLabel("Liter");
-	private JLabel lPreisPLiter = new JLabel("Preis pro Liter");
-	private JLabel lKosten = new JLabel("Kosten");
-	private JLabel lVoll = new JLabel("Tank inhalt");
-	private JLabel lKmStand = new JLabel("Km Stand");
+	private JLabel lBenzinart = new JLabel("Benzinart:");
+	private JLabel lLiter = new JLabel("Liter:");
+	private JLabel lPreisPLiter = new JLabel("Preis pro Liter:");
+	private JLabel lKosten = new JLabel("Kosten:");
+	private JLabel lVoll = new JLabel("Tank inhalt:");
+	private JLabel lKmStand = new JLabel("Km Stand:");
 
 	// Button
 	private JButton btnAdd = new JButton("Hinzufügen");
@@ -91,16 +91,6 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		this.setting = set;
 
 		tankenService = new TankenService(this.setting);
-		// Label
-		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
-		JLabel lLand = new JLabel(Texte.Form.Label.LAND);
-		JLabel lOrt = new JLabel(Texte.Form.Label.ORT);
-		JLabel lBenzinart = new JLabel("Benzinart");
-		JLabel lLiter = new JLabel("Liter");
-		JLabel lPreisPLiter = new JLabel("Preis pro Liter");
-		JLabel lKosten = new JLabel("Kosten");
-		JLabel lVoll = new JLabel("Tank inhalt");
-		JLabel lKmStand = new JLabel("Km Stand");
 
 		spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 10,
 				setting.getAktuellAuto().getKmAktuell(), 999999, 10)
@@ -182,6 +172,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	}
 
 	private void setListener() {
+		frame.addComponentListener(this);
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -418,7 +409,17 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 	@Override
 	public void componentResized(ComponentEvent cEvent) {
-
+		lDatum.setFont(Berechnung.updateFont(lDatum, lDatum.getText(), Font.BOLD));
+		lLand.setFont(Berechnung.updateFont(lLand, lLand.getText(), Font.BOLD));
+		lOrt.setFont(Berechnung.updateFont(lOrt, lOrt.getText(), Font.BOLD));
+		lBenzinart.setFont(Berechnung.updateFont(lBenzinart, lBenzinart.getText(), Font.BOLD));
+		lVoll.setFont(Berechnung.updateFont(lVoll, lVoll.getText(), Font.BOLD));
+		lKmStand.setFont(Berechnung.updateFont(lKmStand, lKmStand.getText(), Font.BOLD));
+		lLiter.setFont(Berechnung.updateFont(lLiter, lLiter.getText(), Font.BOLD));
+		lPreisPLiter.setFont(Berechnung.updateFont(lPreisPLiter, lPreisPLiter.getText(), Font.BOLD));
+		lKosten.setFont(Berechnung.updateFont(lKosten, lKosten.getText(), Font.BOLD));
+		datepicker.setFont(Berechnung.updateFont(datepicker, datepicker.getDate().toString(), Font.BOLD));
+		
 	}
 
 	@Override
