@@ -96,20 +96,13 @@ public class Willkommen {
 				}
 
 				if (setting.getAktuellAuto() != null) {
-					try {
-
-						new BenzinartDAO().setBenzinList();
-						new TankDAO().setTankList();
-						LandDao.setLaender();
-						OrtDao.setOrtList();
-						sADao.setSonstigeAusgabenList(setting);
-						tDao.setTankenList(setting);
-						lStatus.setText("Daten wurden geladen");
-					} catch (SQLException ex) {
-						ex.printStackTrace();
-						// sqlS.closeResults(sqlS.getSt(), sqlS.getRs(),
-						// sqlS.getConn());
-					}
+					new BenzinartDAO().setBenzinList();
+					new TankDAO().setTankList();
+					LandDao.setLaender();
+					OrtDao.setOrtList();
+					sADao.setSonstigeAusgabenList(setting);
+					tDao.setTankenList(setting);
+					lStatus.setText("Daten wurden geladen");
 				}
 				System.out.println(setting.getAktuellAuto().getId());
 				

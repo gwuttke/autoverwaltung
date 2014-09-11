@@ -131,16 +131,17 @@ public class Berechnung {
 		return tanken.getKmStand() - vorherTanken.getKmStand();
 	}
 
-	public static Double getKosten(Double liter, Double preisProLiter) {
-		return liter * preisProLiter;
+	public static BigDecimal getKosten(Double liter, Double preisProLiter) {
+		return new BigDecimal(liter * preisProLiter);
+		
 	}
 
-	public static Double getPreisProLiter(Double liter, Double kosten) {
-		return kosten / liter;
+	public static BigDecimal getPreisProLiter(Double liter, Double kosten) {
+		return new BigDecimal (kosten / liter);
 	}
 
-	public static Double getLiter(Double kosten, Double preisProLiter) {
-		return kosten / preisProLiter;
+	public static BigDecimal getLiter(Double kosten, Double preisProLiter) {
+		return new BigDecimal(kosten / preisProLiter);
 	}
 
 	private String round(BigDecimal value, int nachkommaStelle) {

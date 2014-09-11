@@ -44,15 +44,7 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		this.setting = setting;
 
 		tankenService =	new TankenService(setting);
-		/*		
-		jTableTanken =new JTable(new TankenTabelle(tankenService.loadTankungen(0)));
 
-		if (jTableTanken.getColumnCount() > 1) {
-			setTableStyle();
-		}
-		*/
-		
-		//Oberhalb löschen
 		Berechnung berechnung = new Berechnung();
 
 		Object[][] tankungenData;

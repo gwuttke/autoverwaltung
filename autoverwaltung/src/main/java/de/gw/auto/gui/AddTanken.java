@@ -97,10 +97,10 @@ public class AddTanken extends Funktionen implements ComponentListener {
 				.getSpinner();
 		spLiter = new Spinner(20d, 0.1d, 150d, 1.00).getSpinner();
 		spPreisPLiter = new Spinner(1.509d, 0.1d, 3.0d, 0.01).getSpinner();
-		spKosten = new Spinner(
-				Berechnung.getKosten((Double) spLiter.getValue(),
-						(Double) spPreisPLiter.getValue()), 0.1d * 0.1d,
-				150d * 3d, 0.50d).getSpinner();
+		spKosten = new Spinner(Double.valueOf(Berechnung.getKosten(
+				(Double) spLiter.getValue(), (Double) spPreisPLiter.getValue())
+				.toString()), 0.1d * 0.1d, 150d * 3d, 0.50d).getSpinner();
+
 		cbLand = lModel.getCombobox();
 		cbOrt = oModel.getCombobox();
 		cbBenzinart = bModel.getCombobox();
@@ -167,8 +167,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		spLiter.setValue(tanken.getLiter());
 		spPreisPLiter.setValue(tanken.getPreisProLiter());
 		spKosten.setValue(tanken.getKosten());
-		btnAdd.setText("Bearbeiten"); 
-		
+		btnAdd.setText("Bearbeiten");
+
 	}
 
 	private void setListener() {
@@ -239,13 +239,13 @@ public class AddTanken extends Funktionen implements ComponentListener {
 							.getAktuellAuto().getKmAktuell()) {
 						AllException.messageBox(textError.FALSCHE_EINGABE,
 								"Bitte wählen sie einen KM Stand der größer als "
-										+ setting.getAktuellAuto().getKmAktuell()
-										+ " Km ist.");
+										+ setting.getAktuellAuto()
+												.getKmAktuell() + " Km ist.");
 						return;
 					}
-					Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto,
-							datum, liter, preisProLiter, benzinArt);
-					
+					Tanken t = new Tanken(kmStand, land, ort, tank, kosten,
+							auto, datum, liter, preisProLiter, benzinArt);
+
 					tankenDao = tankenService.addTankfuellung(t);
 					setting.getAktuellAuto().setKmAktuell(kmStand);
 				} else {
@@ -277,9 +277,20 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				spKosten.setValue(Berechnung.getKosten(
-						Double.valueOf(((BigDecimal)spLiter.getValue()).toString()),
-						Double.valueOf((spPreisPLiter.getValue()).toString())));
+				/*
+				 * Double liter = Double.valueOf(((Double) spLiter.getValue())
+				 * .toString()); Double preisProLiter = Double
+				 * .valueOf(((BigDecimal) spPreisPLiter.getValue())
+				 * .toString());
+				 */
+				BigDecimal bigLiter = BigDecimal.valueOf((Double)spLiter.getValue());
+
+				BigDecimal bigPreisProLiter = BigDecimal.valueOf( Long.valueOf(spPreisPLiter
+						.getValue().toString()));
+
+				spKosten.setValue(Berechnung.getKosten(Double
+						.valueOf(((BigDecimal) bigLiter).toString()), Double
+						.valueOf(((BigDecimal) bigPreisProLiter).toString())));
 			}
 		});
 
@@ -287,9 +298,26 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				spPreisPLiter.setValue(Berechnung.getPreisProLiter(Double.valueOf(
-						((BigDecimal)spLiter.getValue()).toString()),
-						Double.valueOf((spKosten.getValue()).toString())));
+				Double liter = Double.valueOf(((Double) spLiter.getValue())
+						.toString());
+				Double kosten = Double.valueOf(((BigDecimal) spKosten
+						.getValue()).toString());
+				spPreisPLiter.setValue(Berechnung.getPreisProLiter(liter,
+						kosten));
+			}
+		});
+
+		spLiter.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				Double liter = Double.valueOf(((BigDecimal) spLiter.getValue())
+						.toString());
+				Double preisProLiter = Double
+						.valueOf(((BigDecimal) spPreisPLiter.getValue())
+								.toString());
+				spKosten.setValue(Berechnung.getKosten(liter, preisProLiter));
+
 			}
 		});
 	}
@@ -409,17 +437,24 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 	@Override
 	public void componentResized(ComponentEvent cEvent) {
-		lDatum.setFont(Berechnung.updateFont(lDatum, lDatum.getText(), Font.BOLD));
+		lDatum.setFont(Berechnung.updateFont(lDatum, lDatum.getText(),
+				Font.BOLD));
 		lLand.setFont(Berechnung.updateFont(lLand, lLand.getText(), Font.BOLD));
 		lOrt.setFont(Berechnung.updateFont(lOrt, lOrt.getText(), Font.BOLD));
-		lBenzinart.setFont(Berechnung.updateFont(lBenzinart, lBenzinart.getText(), Font.BOLD));
+		lBenzinart.setFont(Berechnung.updateFont(lBenzinart,
+				lBenzinart.getText(), Font.BOLD));
 		lVoll.setFont(Berechnung.updateFont(lVoll, lVoll.getText(), Font.BOLD));
-		lKmStand.setFont(Berechnung.updateFont(lKmStand, lKmStand.getText(), Font.BOLD));
-		lLiter.setFont(Berechnung.updateFont(lLiter, lLiter.getText(), Font.BOLD));
-		lPreisPLiter.setFont(Berechnung.updateFont(lPreisPLiter, lPreisPLiter.getText(), Font.BOLD));
-		lKosten.setFont(Berechnung.updateFont(lKosten, lKosten.getText(), Font.BOLD));
-		datepicker.setFont(Berechnung.updateFont(datepicker, datepicker.getDate().toString(), Font.BOLD));
-		
+		lKmStand.setFont(Berechnung.updateFont(lKmStand, lKmStand.getText(),
+				Font.BOLD));
+		lLiter.setFont(Berechnung.updateFont(lLiter, lLiter.getText(),
+				Font.BOLD));
+		lPreisPLiter.setFont(Berechnung.updateFont(lPreisPLiter,
+				lPreisPLiter.getText(), Font.BOLD));
+		lKosten.setFont(Berechnung.updateFont(lKosten, lKosten.getText(),
+				Font.BOLD));
+		datepicker.setFont(Berechnung.updateFont(datepicker, datepicker
+				.getDate().toString(), Font.BOLD));
+
 	}
 
 	@Override

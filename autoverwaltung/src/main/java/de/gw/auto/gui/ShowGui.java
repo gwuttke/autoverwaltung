@@ -246,7 +246,8 @@ public class ShowGui {
 							.getjTableSonstigeAusgaben();
 				}
 				tables[1] = (JTable) showInfos.getjTableInfos();
-				new Drucken(setting).print(tables);
+			//	new Drucken(setting).print(tables);
+				new Drucken(setting).printReport();
 
 			}
 		});

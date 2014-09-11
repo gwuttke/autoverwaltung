@@ -55,7 +55,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	public Tanken(int kmStand, Land land, Ort ort, Tank tank,
 			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
 			BigDecimal preisProLiter, Benzinart benzinArt) {
-		super();
+		this();
 		this.kmStand = kmStand;
 		this.land = land;
 		this.ort = ort;
@@ -66,6 +66,19 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 		this.liter = liter;
 		this.preisProLiter = preisProLiter;
 		this.benzinArt = benzinArt;
+	}
+	
+	protected Tanken(int id, int kmStand, Land land, Ort ort, Tank tank,
+			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
+			BigDecimal preisProLiter, Benzinart benzinArt) {
+		this(kmStand, land, ort, tank, kosten, auto, datum, liter,
+				preisProLiter, benzinArt);
+		this.id = id;
+	}
+	
+	protected Tanken(Tanken t){
+		this(t.id, t.kmStand, t.land, t.ort, t.tank, t.kosten, t.auto, t.datum, t.liter, t.preisProLiter, t.benzinArt);
+				
 	}
 
 	public BigDecimal getPreisProLiter() {

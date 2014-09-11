@@ -8,47 +8,50 @@ import de.gw.auto.domain.Tank;
 import de.gw.auto.hibernate.DatenAbrufen;
 
 public class TankDAO {
-	
+
 	private List<Tank> tankfuellungList = new ArrayList<Tank>();
+	
+
+	public TankDAO() {
+		setTankList();
+	}
 
 	public List<Tank> getTankList() {
-		if (tankfuellungList.isEmpty() == true){
-			try {
-				setTankList();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			getTankList();
-		}
-		
 		return tankfuellungList;
 	}
-	
-	
-	public Tank searchTank(int id){
-		for(Tank ta : tankfuellungList){
-			if(ta.getId() == id){
-				return ta;
-			}
-		}
-		return null;
-	}
-	
-	public Tank searchTank(String text){
-		for(Tank ta : tankfuellungList){
-			if(ta.getBeschreibung() == text){
+
+	public Tank searchTank(int id) {
+		for (Tank ta : tankfuellungList) {
+			if (ta.getId() == id) {
 				return ta;
 			}
 		}
 		return null;
 	}
 
-	public void setTankList() throws SQLException {
+	public Tank searchTank(String text) {
+		for (Tank ta : tankfuellungList) {
+			if (ta.getBeschreibung() == text) {
+				return ta;
+			}
+		}
+		return null;
+	}
+
+	public Tank getVoll() {
+		for (Tank t : this.tankfuellungList) {
+			if (t.getBeschreibung().equals("1/1") || t.getBeschreibung().equals("4/4")) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public void setTankList() {
 		tankfuellungList = new DatenAbrufen().getBefuellung();
-		if (tankfuellungList.isEmpty()){
+		if (tankfuellungList.isEmpty()) {
 			tankfuellungList.add(new Tank("noch keine Angaben"));
 		}
 	}
-	
 
 }

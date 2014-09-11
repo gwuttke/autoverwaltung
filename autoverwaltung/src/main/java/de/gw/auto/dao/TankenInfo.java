@@ -12,6 +12,7 @@ import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
+import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.domain.Vergleich;
 
 public class TankenInfo {
@@ -27,7 +28,7 @@ public class TankenInfo {
 
 	private void load(TankenDao tDao, Settings setting) {
 
-		List<Tanken> tankungen = tDao.getTankenList();
+		List<Tankfuellung> tankungen = tDao.getTankenList();
 		Info tiKosten = new Info(Constans.TANKEN_KOSTEN);
 		Info tiMaxPreisProLiter = new Info(Constans.MAX_PREIS);
 		Info tiMinPreisProLiter = new Info(Constans.MIN_PREIS);
@@ -68,6 +69,7 @@ public class TankenInfo {
 						.getInsgGefahreneKm(setting.getAktuellAuto())));
 				preiseGesamt.add(t.getPreisProLiter());
 
+				//Jahr und Vorjahr
 				if (nowJahr == jahr) {
 					tiKosten.setDiesesJahr(tiKosten.getDiesesJahr().add(
 							t.getKosten()));
