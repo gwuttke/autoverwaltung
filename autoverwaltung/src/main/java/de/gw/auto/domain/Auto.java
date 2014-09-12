@@ -169,4 +169,13 @@ public class Auto implements Serializable {
 		*/
 		return kfz;
 	}
+	
+	public String getBenzinartenString(){
+		StringBuilder sb = new StringBuilder();
+		for (Benzinart b : benzinarten){
+			sb.append(b).append(", ");
+		}
+		sb.delete(sb.length() -2, sb.length());
+		return sb.toString();
+	}
 }

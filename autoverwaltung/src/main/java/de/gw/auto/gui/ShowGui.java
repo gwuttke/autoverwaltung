@@ -16,10 +16,12 @@ import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.plaf.DimensionUIResource;
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.SonstigeAusgabenDao;
@@ -44,6 +46,7 @@ public class ShowGui {
 	private ShowInfos showInfos = null;
 	private JTable tankenTable = null;
 	private JTable sonstigeAusgabenTable = null;
+	private JScrollPane autoTabelle = null;
 	private ShowSonstigeAusgaben showSonstigeAusgaben = null;
 	private JTabbedPane tab = new JTabbedPane();
 
@@ -56,22 +59,37 @@ public class ShowGui {
 		setActions(setting);
 
 		// tabelle Inizaliesieren
+		Dimension d = new Dimension(10, 5);
+		Dimension dTable = new Dimension(200, 150);
+
+		btnAddAuto.setPreferredSize(d);
+		comboBoxAutos.setPreferredSize(d);
+		autoTabelle.setPreferredSize(dTable);
 
 		Container con = new Container();
 
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		JPanel jpEingaben = new JPanel(new BorderLayout());
+		JPanel jpEingaben = new JPanel(new GridLayout(2,3));
+		JPanel jpAuto = new JPanel(new GridLayout(2, 1));
+		JPanel jpTables = new JPanel(new GridLayout(1, 1));
 
-		jpEingaben.add(btnAddAuto, BorderLayout.WEST);
-		jpEingaben.add(comboBoxAutos, BorderLayout.EAST);
+		jpAuto.add(comboBoxAutos);
+		jpAuto.add(autoTabelle);
+		jpEingaben.add(btnAddAuto);
+		jpEingaben.add(new JLabel());
+		jpEingaben.add(comboBoxAutos);
+		jpEingaben.add(new JLabel());
+		jpEingaben.add(new JLabel());
+		jpEingaben.add(autoTabelle);
+		jpTables.add(tab);
 
 		con.add(jpEingaben, BorderLayout.NORTH);
-		con.add(tab, BorderLayout.CENTER);
+		con.add(jpTables, BorderLayout.CENTER);
 		con.add(jpAusgabe, BorderLayout.SOUTH);
 
-		frame.setMinimumSize(new Dimension(950, 500));
+		frame.setMinimumSize(new Dimension(950, 250));
 		frame.setVisible(true);
 
 	}
@@ -93,11 +111,13 @@ public class ShowGui {
 	}
 
 	private void loadDaten(Settings setting) {
+		ShowAuto showAuto = new ShowAuto(setting);
 		showTanken = new ShowTanken(setting);
 		showSonstigeAusgaben = new ShowSonstigeAusgaben(setting);
 		this.tankenTable = showTanken.getjTableTanken();
 		this.sonstigeAusgabenTable = showSonstigeAusgaben
 				.getjTableSonstigeAusgaben();
+		this.autoTabelle = showAuto.getTable();
 		tab.removeAll();
 		tab.addTab(Constans.TANKEN, new JScrollPane(this.tankenTable));
 		tab.addTab(Constans.SONSTIGE_AUSGABEN, new JScrollPane(
@@ -108,51 +128,6 @@ public class ShowGui {
 	}
 
 	private void setActions(final Settings setting) {
-
-		frame.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowIconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				frame.dispose();
-				System.exit(0);
-			}
-
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowActivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 
 		tankenTable.addMouseListener(new MouseListener() {
 
@@ -246,7 +221,7 @@ public class ShowGui {
 							.getjTableSonstigeAusgaben();
 				}
 				tables[1] = (JTable) showInfos.getjTableInfos();
-			//	new Drucken(setting).print(tables);
+				// new Drucken(setting).print(tables);
 				new Drucken(setting).printReport();
 
 			}
