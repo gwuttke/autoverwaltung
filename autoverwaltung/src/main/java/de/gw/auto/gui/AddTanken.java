@@ -214,6 +214,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 							"Bitte wählen sie Kosten, die größer als 0 sind.");
 					return;
 				}
+				
+				
 
 				/*
 				 * Daten werden überprüft
@@ -259,6 +261,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					oldTanken.setBenzinArt(benzinArt);
 					tankenDao = tankenService.updateTankfuellung(oldTanken);
 				}
+				new ShowGui(setting);
+				frame.dispose();
 
 			}
 		});
