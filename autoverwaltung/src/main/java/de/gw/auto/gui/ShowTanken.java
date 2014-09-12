@@ -1,6 +1,7 @@
 package de.gw.auto.gui;
 
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.math.BigDecimal;
@@ -96,7 +97,14 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tm);
 		jTableTanken.setRowSorter(sorter);
 		sorter.setComparator(2, Collections.reverseOrder(new Tanken()));
+		
+		scrollToLastRow();
 
+	}
+	
+	private void scrollToLastRow(){
+		Rectangle cellBounds = jTableTanken.getCellRect(jTableTanken.getRowCount() - 1, 0, true);
+		jTableTanken.scrollRectToVisible(cellBounds);
 	}
 	
 	public Tanken getRowObject(int rowIndex){
