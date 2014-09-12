@@ -209,7 +209,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					return;
 				}
 
-				if (((BigDecimal) spKosten.getValue()).max(BigDecimal.ZERO) == BigDecimal.ZERO) {
+				if (getKosten() < 0d) {
 					AllException.messageBox(textError.FALSCHE_EINGABE,
 							"Bitte wählen sie Kosten, die größer als 0 sind.");
 					return;
@@ -277,20 +277,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				/*
-				 * Double liter = Double.valueOf(((Double) spLiter.getValue())
-				 * .toString()); Double preisProLiter = Double
-				 * .valueOf(((BigDecimal) spPreisPLiter.getValue())
-				 * .toString());
-				 */
-				Double liter = Double.valueOf(((Double) spLiter.getValue())
-						.toString());
 
-				Double preisProLiter = Double
-						.valueOf( spPreisPLiter.getValue()
-								.toString());
-
-				spKosten.setValue(Berechnung.getKosten(liter, preisProLiter));
+				spKosten.setValue(Berechnung.getKosten(getLiter(),
+						getPreisProLiter()));
 			}
 		});
 
@@ -298,12 +287,10 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				Double liter = Double.valueOf(((Double) spLiter.getValue())
-						.toString());
-				Double kosten = Double.valueOf(spKosten
-						.getValue().toString());
-				spPreisPLiter.setValue(Berechnung.getPreisProLiter(liter,
-						kosten));
+
+				
+				spPreisPLiter.setValue(Berechnung.getPreisProLiter(getLiter(),
+						getKosten()));
 			}
 		});
 
@@ -311,12 +298,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				Double liter = Double.valueOf(spLiter.getValue()
-						.toString());
-				Double preisProLiter = Double
-						.valueOf( spPreisPLiter.getValue()
-								.toString());
-				spKosten.setValue(Berechnung.getKosten(liter, preisProLiter));
+
+				spKosten.setValue(Berechnung.getKosten(getLiter(),
+						getPreisProLiter()));
 
 			}
 		});
@@ -325,6 +309,18 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private void SpinnerEnable(JSpinner spinner, Boolean enable) {
 		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField()
 				.setEditable(enable);
+	}
+
+	private Double getPreisProLiter() {
+		return Double.valueOf(spPreisPLiter.getValue().toString());
+	}
+
+	private Double getLiter() {
+		return Double.valueOf(spLiter.getValue().toString());
+	}
+	
+	private Double getKosten(){
+		return Double.valueOf(spKosten.getValue().toString());
 	}
 
 	private class LandModel extends DefaultComboBoxModel<Land> {
