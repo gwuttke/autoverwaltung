@@ -283,14 +283,14 @@ public class AddTanken extends Funktionen implements ComponentListener {
 				 * .valueOf(((BigDecimal) spPreisPLiter.getValue())
 				 * .toString());
 				 */
-				BigDecimal bigLiter = BigDecimal.valueOf((Double)spLiter.getValue());
+				Double liter = Double.valueOf(((Double) spLiter.getValue())
+						.toString());
 
-				BigDecimal bigPreisProLiter = BigDecimal.valueOf( Long.valueOf(spPreisPLiter
-						.getValue().toString()));
+				Double preisProLiter = Double
+						.valueOf( spPreisPLiter.getValue()
+								.toString());
 
-				spKosten.setValue(Berechnung.getKosten(Double
-						.valueOf(((BigDecimal) bigLiter).toString()), Double
-						.valueOf(((BigDecimal) bigPreisProLiter).toString())));
+				spKosten.setValue(Berechnung.getKosten(liter, preisProLiter));
 			}
 		});
 
@@ -300,8 +300,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 			public void stateChanged(ChangeEvent e) {
 				Double liter = Double.valueOf(((Double) spLiter.getValue())
 						.toString());
-				Double kosten = Double.valueOf(((BigDecimal) spKosten
-						.getValue()).toString());
+				Double kosten = Double.valueOf(spKosten
+						.getValue().toString());
 				spPreisPLiter.setValue(Berechnung.getPreisProLiter(liter,
 						kosten));
 			}
@@ -311,10 +311,10 @@ public class AddTanken extends Funktionen implements ComponentListener {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				Double liter = Double.valueOf(((BigDecimal) spLiter.getValue())
+				Double liter = Double.valueOf(spLiter.getValue()
 						.toString());
 				Double preisProLiter = Double
-						.valueOf(((BigDecimal) spPreisPLiter.getValue())
+						.valueOf( spPreisPLiter.getValue()
 								.toString());
 				spKosten.setValue(Berechnung.getKosten(liter, preisProLiter));
 
