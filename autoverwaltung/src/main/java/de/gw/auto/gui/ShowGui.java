@@ -60,7 +60,7 @@ public class ShowGui {
 
 		// tabelle Inizaliesieren
 		Dimension d = new Dimension(10, 5);
-		Dimension dTable = new Dimension(200, 150);
+		Dimension dTable = new Dimension(200, 120);
 
 		btnAddAuto.setPreferredSize(d);
 		comboBoxAutos.setPreferredSize(d);
@@ -90,6 +90,7 @@ public class ShowGui {
 		con.add(jpAusgabe, BorderLayout.SOUTH);
 
 		frame.setMinimumSize(new Dimension(950, 250));
+		frame.setSize(new Dimension(950, 800));
 		frame.setVisible(true);
 
 	}
