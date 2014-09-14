@@ -18,13 +18,15 @@ public class ShowAuto {
 	private String[] dataBeschreibung = { "Kennzeichen", "Km Aktuell",
 			"Km beim Kauf", "Datum Erstzulassung", "Kaufdatum", "Benzinarten" };
 	private Object[][] autoDetails = new Object[6][2];
-	private DefaultTableModel dtm = new DefaultTableModel(autoDetails, columns);
-	private JTable table = new JTable(dtm);
+	private DefaultTableModel dtm = null;
+	private JTable table = null;
 
 	public ShowAuto(Settings setting) {
 		super();
 		this.setting = setting;
 		insertData();
+		dtm = new DefaultTableModel(autoDetails, columns);
+		table = new JTable(dtm);
 
 	}
 
@@ -33,7 +35,7 @@ public class ShowAuto {
 		int i = 0;
 		int index = 0;
 		for (String s : dataBeschreibung) {
-			autoDetails[0][i] = s + ":";
+			autoDetails[index][i] = s + ":";
 			index++;
 		}
 		i++;
