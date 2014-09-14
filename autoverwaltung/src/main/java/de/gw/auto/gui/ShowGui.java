@@ -62,8 +62,8 @@ public class ShowGui {
 		Dimension d = new Dimension(10, 5);
 		Dimension dTable = new Dimension(200, 120);
 
-		btnAddAuto.setPreferredSize(d);
-		comboBoxAutos.setPreferredSize(d);
+		// btnAddAuto.setPreferredSize(d);
+		// comboBoxAutos.setPreferredSize(d);
 		autoTabelle.setPreferredSize(dTable);
 
 		Container con = new Container();
@@ -71,18 +71,17 @@ public class ShowGui {
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		JPanel jpEingaben = new JPanel(new GridLayout(2,3));
+		JPanel jpEingaben = new JPanel(new BorderLayout());
+		JPanel jpButton = new JPanel();
 		JPanel jpAuto = new JPanel(new GridLayout(2, 1));
 		JPanel jpTables = new JPanel(new GridLayout(1, 1));
 
+		jpButton.add(btnAddAuto);
 		jpAuto.add(comboBoxAutos);
 		jpAuto.add(autoTabelle);
-		jpEingaben.add(btnAddAuto);
-		jpEingaben.add(new JLabel());
-		jpEingaben.add(comboBoxAutos);
-		jpEingaben.add(new JLabel());
-		jpEingaben.add(new JLabel());
-		jpEingaben.add(autoTabelle);
+		jpEingaben.add(jpButton, BorderLayout.WEST);
+		jpEingaben.add(autoTabelle, BorderLayout.CENTER);
+		jpEingaben.add(jpAuto, BorderLayout.EAST);
 		jpTables.add(tab);
 
 		con.add(jpEingaben, BorderLayout.NORTH);
