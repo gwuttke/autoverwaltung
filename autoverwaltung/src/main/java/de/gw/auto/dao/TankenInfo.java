@@ -100,7 +100,7 @@ public class TankenInfo {
 					tiAnzahlLiter.setVorjahr(tiAnzahlLiter.getVorjahr().add(
 							t.getLiter()));
 					if (index > 0) {
-						tiSummeKm.setVorjahr(tiSummeKm.getDiesesJahr().add(
+						tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
 								new BigDecimal(t.getKmStand())));
 					} else {
 						tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
