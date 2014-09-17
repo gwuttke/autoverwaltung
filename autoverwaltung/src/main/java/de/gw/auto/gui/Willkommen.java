@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import de.gw.auto.Constans;
 import de.gw.auto.dao.AutoDAO;
 import de.gw.auto.dao.BenzinartDAO;
 import de.gw.auto.dao.LandDao;
@@ -29,106 +32,59 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.Button.Funktionen;
 
-public class Willkommen {
-
-	private Benutzer benutzer = new Benutzer();
-	private Settings setting = new Settings(benutzer);
-	AutoDAO aDao = new AutoDAO(setting);
-	TankenDao tDao = new TankenDao(setting);
-	private SonstigeAusgabenDao sADao = new SonstigeAusgabenDao(setting);
+public class Willkommen implements Runnable{
 
 	private static JFrame frame = new JFrame();
-	private static JTextField tfEingabe = new JTextField("M - WU 3194");
-	private static JButton btnOk = new JButton("OK");
-	private JLabel lAuto = new JLabel(
-			"Bitte geben Sie das Kennzeichen des Autos ein:");
-	private static JLabel lStatus = new JLabel("Daten werden geladen");
+	private static JLabel lStatus = new JLabel("Daten werden geladen...");
 
-	public static void main(String[] args) {
-		//new Willkommen();
+	public Willkommen() {
+		run();
 	}
-
-	public Willkommen(Settings settings) {
-		setting = settings;
+	
+	private void show(){
 		frame = new JFrame();
 		frame.setTitle("Willkommen");
-		setListeners();
+		
 
 		Container con = new Container();
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
 
-		JPanel jpEingabe = new JPanel();
-		jpEingabe.setLayout(new GridLayout(3, 1));
-
-		tfEingabe.setEnabled(false);
-		jpEingabe.add(lAuto);
-		jpEingabe.add(tfEingabe);
-		jpEingabe.add(btnOk);
-
-		con.add(jpEingabe, BorderLayout.CENTER);
 		con.add(lStatus, BorderLayout.SOUTH);
 
 		frame.pack();
 		frame.setVisible(true);
+		setListeners();
+	}
+
+	public static void setStatus(String statusText) {
+		lStatus.setText(statusText);
 	}
 
 	private void setListeners() {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				Funktionen funk = new Funktionen();
-				funk.exit(frame);
+				Funktionen.exit(frame);
 			}
 		});
 
-		btnOk.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				setting.setAktuellAuto(aDao.find(tfEingabe.getText()));
-				aDao.setAutoList(setting);
+		lStatus.addPropertyChangeListener(new PropertyChangeListener() {
 
-				if (setting.getAktuellAuto() == null) {
-					lStatus.setText("Falsche eingabe bitte versuchen sie es Erneut!!");
-					tfEingabe.setText("");
-					tfEingabe.setFocusable(true);
-					return;
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (lStatus.getText() == Constans.CLOSE_WINDOW) {
+					frame.dispose();
 				}
 
-				if (setting.getAktuellAuto() != null) {
-					new BenzinartDAO().setBenzinList();
-					new TankDAO().setTankList();
-					LandDao.setLaender();
-					OrtDao.setOrtList();
-					sADao.setSonstigeAusgabenList(setting);
-					tDao.setTankenList(setting);
-					lStatus.setText("Daten wurden geladen");
-				}
-				System.out.println(setting.getAktuellAuto().getId());
-				
-				new ShowGui(setting);
 			}
 		});
+
 	}
 
-	private void inizialsieren() {
-		if (aDao.getAutoList() != null) {
-			tfEingabe.setEnabled(true);
-			lStatus.setText("Bitte geben sie Ihr kennzeichen ein");
-
-		}
+	@Override
+	public void run() {
+		this.show();
 	}
 
-	public static String eingabe() {
-		String s = null;
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					System.in));
-
-			s = br.readLine();
-		} catch (IOException e) {
-			throw new IllegalArgumentException("falsche eingabe!!");
-		}
-		return s;
-	}
 }

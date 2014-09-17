@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
@@ -30,8 +31,8 @@ public class LogIn implements ComponentListener {
 	private JFrame frame = new JFrame("Anmeldung");
 	private JLabel lBenutzer = new JLabel(Texte.Form.Label.BENUTZER + ":");
 	private JLabel lPasswort = new JLabel(Texte.Form.Label.PASSWORT + ":");
-	private JTextField tfBenutzer = new JTextField("georg.wuttke");
-	private JPasswordField tfPasswort = new JPasswordField("123");
+	private JTextField tfBenutzer = new JTextField();
+	private JPasswordField tfPasswort = new JPasswordField();
 	private JButton btnLogIn = new JButton("Anmelden");
 	private JButton btnRegistrieren = new JButton("Registrieren");
 	private JButton btnExit = new Vordeffiniert().getBtnExit(frame);
@@ -72,8 +73,11 @@ public class LogIn implements ComponentListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				new Willkommen();
+				Willkommen.setStatus("Verbinde zur Datenbank...");
 				Benutzer benutzer = null;
 				try {
+				Willkommen.setStatus("Benutzerdaten werden überprüft...");
 					settings = new de.gw.auto.service.BenutzerService().Login(
 							tfBenutzer.getText(),
 							new String(tfPasswort.getPassword()));
@@ -82,6 +86,7 @@ public class LogIn implements ComponentListener {
 					AllException.messageBox("Falscher Benutzer", e.getMessage());
 					return;
 				}
+				Willkommen.setStatus("Prüfen ob ein Auto schon vorhanden...");
 				if (settings.getBenutzer() != null) {
 					if (settings.getAutos().isEmpty()) {
 						new AddAuto(settings);
@@ -89,7 +94,9 @@ public class LogIn implements ComponentListener {
 					} else {
 						new ShowGui(settings);
 					}
+					Willkommen.setStatus(Constans.CLOSE_WINDOW);
 					frame.dispose();
+					
 				} else {
 					AllException
 							.messageBox("Falscher Benutzer",

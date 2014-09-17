@@ -22,5 +22,6 @@ public class Constans {
 	public static final String GESAMT_KOSTEN = GESAMT + KOSTEN;
 	public static final String VERBRAUCH_AUF_100_KM = DURCHSCHNITT + "Verbrauch auf 100 Km";
 	protected static final String HINZUFUEGEN = "hinzufügen";
+	public static final String CLOSE_WINDOW = "Fenster Schliessen";
 
 }
