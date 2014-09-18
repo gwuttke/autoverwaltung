@@ -1,15 +1,17 @@
 package de.gw.auto.gui;
 
-import java.awt.ScrollPane;
-import java.lang.reflect.Field;
-import java.util.Vector;
+import java.awt.Component;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
+import de.gw.auto.gui.model.NumberRenderer;
 
 public class ShowAuto {
 
@@ -27,7 +29,16 @@ public class ShowAuto {
 		insertData();
 		dtm = new DefaultTableModel(autoDetails, columns);
 		table = new JTable(dtm);
+		
+		tableFormatting();
+	}
 
+	private void tableFormatting() {
+		int col = 1;
+		prepareRenderer(NumberRenderer.getKilometerRenderer(), 1, col);
+		prepareRenderer(NumberRenderer.getKilometerRenderer(), 2, col);
+		prepareRenderer(NumberRenderer.getDateRenderer(), 3, col);
+		prepareRenderer(NumberRenderer.getDateRenderer(), 4, col);
 	}
 
 	private void insertData() {
@@ -45,6 +56,15 @@ public class ShowAuto {
 		autoDetails[3][i] = a.getErstZulassung();
 		autoDetails[4][i] = a.getKauf();
 		autoDetails[5][i] = a.getBenzinartenString();
+	}
+	
+	private JComponent prepareRenderer(TableCellRenderer renderer, int row,
+			int column) {
+		Component c = table.prepareRenderer(renderer, row, column);
+		JLabel l = (JLabel) c;
+		table.setValueAt(l.getText(), row, column);
+		JComponent jc = (JComponent) c;
+		return jc;
 	}
 	
 	public JScrollPane getTable() {
