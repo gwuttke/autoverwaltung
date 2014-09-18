@@ -2,6 +2,7 @@ package de.gw.auto.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,13 +33,13 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.Button.Funktionen;
 
-public class Willkommen implements Runnable{
+public class Willkommen extends Thread{
 
-	private static JFrame frame = new JFrame();
-	private static JLabel lStatus = new JLabel("Daten werden geladen...");
+	private JFrame frame = new JFrame();
+	private JLabel lStatus = new JLabel("Daten werden geladen...");
 
 	public Willkommen() {
-		run();
+		start();
 	}
 	
 	private void show(){
@@ -51,13 +52,13 @@ public class Willkommen implements Runnable{
 		con.setLayout(new BorderLayout());
 
 		con.add(lStatus, BorderLayout.SOUTH);
-
-		frame.pack();
-		frame.setVisible(true);
 		setListeners();
+		
+		frame.setPreferredSize(new Dimension(200,200));
+		frame.setVisible(true);
 	}
 
-	public static void setStatus(String statusText) {
+	public void setStatus(String statusText) {
 		lStatus.setText(statusText);
 	}
 
@@ -74,7 +75,7 @@ public class Willkommen implements Runnable{
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (lStatus.getText() == Constans.CLOSE_WINDOW) {
-					frame.dispose();
+					Funktionen.cancel(frame);
 				}
 
 			}

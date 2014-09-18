@@ -23,6 +23,7 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
+import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.Button.Vordeffiniert;
 
 public class LogIn implements ComponentListener {
@@ -73,11 +74,11 @@ public class LogIn implements ComponentListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new Willkommen();
-				Willkommen.setStatus("Verbinde zur Datenbank...");
+				Willkommen willkommen = new Willkommen();
+				willkommen.setStatus("Verbinde zur Datenbank...");
 				Benutzer benutzer = null;
 				try {
-				Willkommen.setStatus("Benutzerdaten werden überprüft...");
+				willkommen.setStatus("Benutzerdaten werden überprüft...");
 					settings = new de.gw.auto.service.BenutzerService().Login(
 							tfBenutzer.getText(),
 							new String(tfPasswort.getPassword()));
@@ -86,7 +87,7 @@ public class LogIn implements ComponentListener {
 					AllException.messageBox("Falscher Benutzer", e.getMessage());
 					return;
 				}
-				Willkommen.setStatus("Prüfen ob ein Auto schon vorhanden...");
+				willkommen.setStatus("Prüfen ob ein Auto schon vorhanden...");
 				if (settings.getBenutzer() != null) {
 					if (settings.getAutos().isEmpty()) {
 						new AddAuto(settings);
@@ -94,8 +95,8 @@ public class LogIn implements ComponentListener {
 					} else {
 						new ShowGui(settings);
 					}
-					Willkommen.setStatus(Constans.CLOSE_WINDOW);
-					frame.dispose();
+					willkommen.setStatus(Constans.CLOSE_WINDOW);
+					Funktionen.cancel(frame);
 					
 				} else {
 					AllException
