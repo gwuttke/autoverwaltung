@@ -37,9 +37,11 @@ import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Tank;
 import de.gw.auto.domain.Tanken;
+import de.gw.auto.domain.Version;
 
 public class DatenAbrufen extends DatenbankZugriff {
 
+	private List<Version> versionen = new ArrayList<Version>();
 	private List<Benzinart> benzinarten = new ArrayList<Benzinart>();
 	private List<Land> laender = new ArrayList<Land>();
 	private List<Ort> orte = new ArrayList<Ort>();
@@ -59,6 +61,16 @@ public class DatenAbrufen extends DatenbankZugriff {
 		load();
 	}
 
+	public List<Version> getVersionen(){
+		try {
+			giveVersionen();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return versionen;
+	}
+	
 	public List<Land> getLaender() {
 		try {
 			giveLaender();
@@ -96,7 +108,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void giveLaender() throws Exception {
 		laender = (List<Land>) this.select(FROM + "Land");
 
@@ -172,6 +184,10 @@ public class DatenAbrufen extends DatenbankZugriff {
 		}
 
 		return tankfuellungen;
+	}
+	
+	private void giveVersionen() throws Exception{
+		versionen = (List<Version>) this.select(FROM + "Version");
 	}
 
 	private Benutzer giveBenutzer(Benutzer benutzer) {
