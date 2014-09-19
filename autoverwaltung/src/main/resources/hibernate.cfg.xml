@@ -8,8 +8,8 @@
 		<!-- jdbc:mysql://192.168.178.21:3306/auto -->
 			jdbc:mysql://10.10.254.103:3306/auto
 		</property>
-		<property name="connection.username">auto</property>
-		<property name="connection.password">Dj9aaQGpre3Cr4f3</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">TDiabyGYsR</property>
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
@@ -25,7 +25,7 @@
 			org.hibernate.transaction.JDBCTransactionFactory
 		</property>
 		<property name="show_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">validate</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<mapping class="de.gw.auto.domain.Benutzer" />
 		<mapping class="de.gw.auto.domain.Auto" />
 		<mapping class="de.gw.auto.domain.Benzinart" />
