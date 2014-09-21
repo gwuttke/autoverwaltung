@@ -1,5 +1,12 @@
 package de.gw.auto;
 
+import java.io.File;
+
+import org.jfree.io.FileUtilities;
+
+import de.gw.auto.domain.Version;
+import de.gw.auto.service.Versionierungsservice;
+
 public class Constans {
 
 	private static final String MAX = "Maximal ";
@@ -10,6 +17,8 @@ public class Constans {
 	private static final String LITER = "Liter";
 	private static final String KOSTEN = "Kosten";
 	private static final String GESAMT = "Gesamt ";
+	public static final Version PROGRAMM_VERSION = new Version(10,
+			Versionierungsservice.DESKTOP);
 	public static final String MAX_PREIS = MAX + PREIS;
 	public static final String MIN_PREIS = MIN + PREIS;
 	public static final String ANZAHL_LITER = ANZAHL + LITER;
@@ -18,11 +27,13 @@ public class Constans {
 	public static final String TANKEN = "Tankungen ";
 	public static final String TANKEN_KOSTEN = TANKEN + KOSTEN;
 	public static final String SONSTIGE_AUSGABEN = "Sonstige Ausgaben ";
-	public static final String SONSTIGEAUSGABEN_KOSTEN = SONSTIGE_AUSGABEN + KOSTEN;
+	public static final String SONSTIGEAUSGABEN_KOSTEN = SONSTIGE_AUSGABEN
+			+ KOSTEN;
 	public static final String GESAMT_KOSTEN = GESAMT + KOSTEN;
-	public static final String VERBRAUCH_AUF_100_KM = DURCHSCHNITT + "Verbrauch auf 100 Km";
+	public static final String VERBRAUCH_AUF_100_KM = DURCHSCHNITT
+			+ "Verbrauch auf 100 Km";
 	protected static final String HINZUFUEGEN = "hinzufügen";
 	public static final String CLOSE_WINDOW = "Fenster Schliessen";
-	public static final String ROOT_DIRECTORY = System.getProperty("user.dir");
+	public static final String ROOT_DIRECTORY = System.getProperty("user.dir") + File.separator;
 
 }

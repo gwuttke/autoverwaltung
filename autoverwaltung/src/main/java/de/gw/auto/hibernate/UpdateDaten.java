@@ -4,6 +4,7 @@ import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Tanken;
+import de.gw.auto.domain.Version;
 
 public class UpdateDaten extends DatenbankZugriff {
 	
@@ -25,6 +26,10 @@ public class UpdateDaten extends DatenbankZugriff {
 	
 	public void addTanken(Tanken tanken){
 		speichern(tanken);
+	}
+	
+	public void addVersion(Version version){
+		speichern(version);
 	}
 	
 	public void updateBenutzer(Benutzer benutzer){

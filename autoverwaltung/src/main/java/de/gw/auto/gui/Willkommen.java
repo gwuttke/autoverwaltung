@@ -32,20 +32,24 @@ import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.Button.Funktionen;
+import de.gw.auto.service.FtpService;
 
-public class Willkommen extends Thread{
+public class Willkommen extends Thread {
 
 	private JFrame frame = new JFrame();
-	private JLabel lStatus = new JLabel("Daten werden geladen...");
+	private JLabel lStatus = new JLabel("Prüfe ob aktelle Version...");
+
+	public static void main(String[] args) {
+		new Willkommen();
+	}
 
 	public Willkommen() {
 		start();
 	}
-	
-	private void show(){
+
+	private void show() {
 		frame = new JFrame();
 		frame.setTitle("Willkommen");
-		
 
 		Container con = new Container();
 		con = frame.getContentPane();
@@ -53,8 +57,8 @@ public class Willkommen extends Thread{
 
 		con.add(lStatus, BorderLayout.SOUTH);
 		setListeners();
-		
-		frame.setPreferredSize(new Dimension(200,200));
+
+		frame.pack();
 		frame.setVisible(true);
 	}
 
@@ -86,6 +90,9 @@ public class Willkommen extends Thread{
 	@Override
 	public void run() {
 		this.show();
+		new FtpService().getCurrentVersion();
+		new LogIn();
+		Funktionen.cancel(frame);
 	}
 
 }

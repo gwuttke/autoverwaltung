@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import de.gw.auto.Constans;
+
 @Entity
 @SequenceGenerator(name = "version_gen", sequenceName = "version_id_seq")
 public class Version implements Serializable{
@@ -17,6 +19,18 @@ public class Version implements Serializable{
 	private int nummer;
 	
 	private String plattform;
+	
+	
+
+	public Version(int nummer, String plattform) {
+		this();
+		this.nummer = nummer;
+		this.plattform = plattform;
+	}
+
+	public Version() {
+		super();
+	}
 
 	public int getNummer() {
 		return nummer;
