@@ -67,7 +67,7 @@ public class VersionDao {
 		}
 		sbNummer.deleteCharAt(sbNummer.length() -1);
 
-		sbVersion.append(version.getPlattform()).append("_")
+		sbVersion.append("Version: ").append(version.getPlattform()).append("_")
 				.append(sbNummer.toString());
 		return sbVersion.toString();
 	}

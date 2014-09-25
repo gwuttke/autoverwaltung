@@ -12,15 +12,18 @@ import de.gw.auto.Constans;
 
 @Entity
 @SequenceGenerator(name = "version_gen", sequenceName = "version_id_seq")
-public class Version implements Serializable{
+public class Version implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "version_gen")
 	private int id;
 	private int nummer;
-	
+
 	private String plattform;
-	
-	
+
+	public void newVersion(Version version) {
+		this.id = version.id;
+		this.nummer = version.nummer;
+	}
 
 	public Version(int nummer, String plattform) {
 		this();

@@ -21,7 +21,7 @@ public class Ftp {
 	private  final String server = "192.168.178.21";
 	private  final String user = "ftpuser";
 	private  final String pass = "123";
-	private  final String verzeichnis = "Auto\\";
+	private  final String verzeichnis = "Auto";
 
 public void download(String versionString){
 	FTPClient ftpClient = new FTPClient();
@@ -29,7 +29,7 @@ public void download(String versionString){
 	try {
 		ftpClient.connect(server);
 		ftpClient.login(user, pass);
-		ftpClient.changeWorkingDirectory("Auto");
+		ftpClient.changeWorkingDirectory(verzeichnis);
 		ftpClient.enterLocalPassiveMode();
 		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 	
@@ -45,7 +45,7 @@ public void download(String versionString){
 
     boolean success = ftpClient.completePendingCommand();
      if (success) {
-         System.out.println("File #2 has been downloaded successfully.");
+         System.out.println("new Version has been downloaded successfully.");
      }
      outputStream2.close();
      inputStream.close();

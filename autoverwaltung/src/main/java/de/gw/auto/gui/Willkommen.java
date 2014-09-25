@@ -33,11 +33,15 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.service.FtpService;
+import de.gw.auto.service.Versionierungsservice;
 
 public class Willkommen extends Thread {
 
 	private JFrame frame = new JFrame();
 	private JLabel lStatus = new JLabel("Prüfe ob aktelle Version...");
+	private JLabel lVersion = new JLabel(
+			new Versionierungsservice()
+					.getVersionString(Constans.PROGRAMM_VERSION));
 
 	public static void main(String[] args) {
 		new Willkommen();
@@ -54,7 +58,8 @@ public class Willkommen extends Thread {
 		Container con = new Container();
 		con = frame.getContentPane();
 		con.setLayout(new BorderLayout());
-
+		
+con.add(lVersion,BorderLayout.CENTER);
 		con.add(lStatus, BorderLayout.SOUTH);
 		setListeners();
 
@@ -90,7 +95,7 @@ public class Willkommen extends Thread {
 	@Override
 	public void run() {
 		this.show();
-		new FtpService().getCurrentVersion();
+		new FtpService().downloadCurrentVersion();
 		new LogIn();
 		Funktionen.cancel(frame);
 	}
