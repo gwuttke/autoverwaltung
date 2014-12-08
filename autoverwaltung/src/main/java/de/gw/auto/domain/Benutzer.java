@@ -32,7 +32,7 @@ public class Benutzer implements Serializable {
 	private String eMail;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idBenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idAuto") })
-	private List<Auto> autos = new ArrayList<>();
+	private List<Auto> autos = new ArrayList<Auto>();
 	
 	public Benutzer() {
 		// for Hibernate

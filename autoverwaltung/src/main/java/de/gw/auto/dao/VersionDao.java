@@ -59,6 +59,13 @@ public class VersionDao {
 	}
 
 	public static String getVersionString(Version version) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Version: ").append(getVersionToString(version));
+		
+		return sb.toString();
+	}
+	
+	private static String getVersionToString(Version version){
 		StringBuilder sbVersion = new StringBuilder();
 		StringBuilder sbNummer = new StringBuilder();
 		char[] cNummer = String.valueOf(version.getNummer()).toCharArray();
@@ -67,7 +74,7 @@ public class VersionDao {
 		}
 		sbNummer.deleteCharAt(sbNummer.length() -1);
 
-		sbVersion.append("Version: ").append(version.getPlattform()).append("_")
+		sbVersion.append(version.getPlattform()).append("_")
 				.append(sbNummer.toString());
 		return sbVersion.toString();
 	}
