@@ -17,7 +17,7 @@ public class Constans {
 	private static final String LITER = "Liter";
 	private static final String KOSTEN = "Kosten";
 	private static final String GESAMT = "Gesamt ";
-	public static final Version PROGRAMM_VERSION = new Version(10,
+	public static final Version PROGRAMM_VERSION = new Version(11,
 			Versionierungsservice.DESKTOP);
 	public static final String MAX_PREIS = MAX + PREIS;
 	public static final String MIN_PREIS = MIN + PREIS;

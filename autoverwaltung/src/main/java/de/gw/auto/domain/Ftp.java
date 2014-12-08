@@ -60,12 +60,15 @@ public class Ftp {
 			while ((bytesRead = inputStream.read(bytesArray)) != -1) {
 				outputStream2.write(bytesArray, 0, bytesRead);
 			}
+			
 
 			boolean success = ftpClient.completePendingCommand();
 			if (success) {
 				System.out
 						.println("new Version has been downloaded successfully.");
-				Runtime.getRuntime().exec(new String[]{"javaw","-jar",downloadFile2.getAbsolutePath()});
+				ProcessBuilder pb = new ProcessBuilder(new String[]{"javaw","-jar",downloadFile2.getAbsolutePath()});
+				pb.start();
+				
 			}
 			outputStream2.close();
 			inputStream.close();

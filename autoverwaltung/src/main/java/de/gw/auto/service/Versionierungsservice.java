@@ -20,7 +20,11 @@ public class Versionierungsservice {
 		return versionen.getCurrentversion();
 	}
 	
-	public String getVersionString(Version version){
+	public static String getCurrentVersionString(){
+		return getVersionString(new Versionierungsservice().getCurrentVersion());
+	}
+	
+	public static String getVersionString(Version version){
 		return VersionDao.getVersionString(version);
 	}
 	public String getDownloadString(Version version){

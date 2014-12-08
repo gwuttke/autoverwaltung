@@ -41,7 +41,8 @@ public class VersionDao {
 	
 	
 	public Version getCurrentversion(){
-		return get(Constans.PROGRAMM_VERSION.getPlattform());
+		Version version = get(Constans.PROGRAMM_VERSION.getPlattform()); 
+		return version;
 	}
 	
 	public static String getDownloadFileString(Version version){

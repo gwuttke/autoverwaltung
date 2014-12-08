@@ -25,6 +25,7 @@ import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.Button.Vordeffiniert;
+import de.gw.auto.service.Versionierungsservice;
 
 public class LogIn implements ComponentListener {
 
@@ -32,6 +33,7 @@ public class LogIn implements ComponentListener {
 	private JFrame frame = new JFrame("Anmeldung");
 	private JLabel lBenutzer = new JLabel(Texte.Form.Label.BENUTZER + ":");
 	private JLabel lPasswort = new JLabel(Texte.Form.Label.PASSWORT + ":");
+	private JLabel lVersion = new JLabel(Versionierungsservice.getCurrentVersionString());
 	private JTextField tfBenutzer = new JTextField();
 	private JPasswordField tfPasswort = new JPasswordField();
 	private JButton btnLogIn = new JButton("Anmelden");
@@ -48,7 +50,7 @@ public class LogIn implements ComponentListener {
 		con.setLayout(new BorderLayout());
 
 		JPanel jpCenter = new JPanel(new GridLayout(4, 2));
-		JPanel jpSouth = new JPanel(new GridLayout(1, 1));
+		JPanel jpSouth = new JPanel(new GridLayout(1, 2));
 		jpCenter.add(lBenutzer);
 		jpCenter.add(tfBenutzer);
 		jpCenter.add(lPasswort);
@@ -56,6 +58,7 @@ public class LogIn implements ComponentListener {
 		jpCenter.add(btnRegistrieren);
 		jpCenter.add(btnLogIn);
 		jpSouth.add(btnExit);
+		jpCenter.add(lVersion);
 		jpCenter.add(jpSouth);
 
 		con.add(jpCenter, BorderLayout.CENTER);

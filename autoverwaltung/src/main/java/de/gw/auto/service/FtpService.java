@@ -13,11 +13,13 @@ public class FtpService {
 		ftp.download(versionString);
 	}
 
-	public void downloadCurrentVersion() {
+	public boolean downloadCurrentVersion() {
 		if (versionen.isCurrentversion() == false) {
 			downloadCurrentversion();
 			Constans.PROGRAMM_VERSION.newVersion(versionen.getCurrentVersion());
+			return true;
 		}
+		return false;
 	}
 	
 	private void downloadCurrentversion() {
