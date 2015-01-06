@@ -18,8 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-//@SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
-@Table(uniqueConstraints = {
+// @SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
+@Table(name = "Benutzer", uniqueConstraints = {
 		@UniqueConstraint(name = "ui_name_passwort", columnNames = {
 				"benutzername", "passwort" }),
 		@UniqueConstraint(name = "ui_name_email_vorname", columnNames = {
@@ -33,7 +33,7 @@ public class Benutzer implements Serializable {
 	private String vorname;
 	private String benutzername;
 	private String passwort;
-	@Column(unique = true)
+	@Column(name = "eMail", unique = true)
 	private String eMail;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idBenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idAuto") })
@@ -115,6 +115,6 @@ public class Benutzer implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("ID: %d , Name: %s %s", id,vorname, name);
+		return String.format("ID: %d , Name: %s %s", id, vorname, name);
 	}
 }
