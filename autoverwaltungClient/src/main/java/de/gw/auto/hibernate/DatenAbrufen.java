@@ -39,7 +39,7 @@ import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Tank;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Version;
-
+@Deprecated
 public class DatenAbrufen extends DatenbankZugriff {
 
 	private List<Version> versionen = new ArrayList<Version>();

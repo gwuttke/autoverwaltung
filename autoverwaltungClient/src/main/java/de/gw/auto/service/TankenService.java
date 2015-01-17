@@ -4,30 +4,39 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 
+@Controller
 public class TankenService {
 
-	private TankenDao tankenDao = null;
+	private List<Tankfuellung> tankenList;
+
+	private TankenDao tankenDao;
 
 	private Settings setting = null;
+	
+	protected TankenService(){}
 
 	public TankenService(Settings setting) {
 		super();
 		this.setting = setting;
-		tankenDao = new TankenDao(this.setting);
+		this.tankenDao = new TankenDao(this.setting);
+		tankenList = tankenDao.getTankenList();
 	}
 
 	public Vector<Tanken> loadTankungen(int i) {
-		return new Vector<Tanken>(tankenDao.getTankenList());
+		return new Vector<Tanken>(tankenList);
 	}
 
 	public List<Tankfuellung> getPrintList() {
-		return tankenDao.getTankenList();
+		return tankenList;
 	}
 
 	public Object[][] loadTankungen() {
@@ -39,7 +48,7 @@ public class TankenService {
 		 * @return Object[][] wenn keine Daten vorhanden dann null
 		 */
 
-		List<Tankfuellung> tankungen = tankenDao.getTankenList();
+		List<Tankfuellung> tankungen = tankenList;
 
 		if (tankungen == null) {
 			return null;
@@ -72,14 +81,14 @@ public class TankenService {
 		return this.tankenDao.like(tanken);
 	}
 
-	public TankenDao addTankfuellung(Tanken tanken) {
-		this.tankenDao = tankenDao.tankenIntoDatabase(tanken, this.setting);
-		return tankenDao;
+	public List<Tankfuellung> addTankfuellung(Tanken tanken) {
+		this.tankenList = tankenDao.tankenIntoDatabase(tanken, this.setting);
+		return tankenList;
 	}
 
-	public TankenDao updateTankfuellung(Tanken tanken) {
-		this.tankenDao = tankenDao.tankenUpdate(tanken, this.setting);
-		return tankenDao;
+	public List<Tankfuellung> updateTankfuellung(Tanken tanken) {
+		this.tankenList = tankenDao.tankenUpdate(tanken, this.setting);
+		return tankenList;
 	}
 
 }

@@ -5,18 +5,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import de.gw.auto.SpringApplicationContext;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.repository.UserRepository;
-
+@Component
 public class User {
 	
-
+	@Autowired
+	private UserRepository userRepository; 
 	
-	
-	private UserRepository userRepository = (UserRepository) SpringApplicationContext.getBean(UserRepository.class);
-
 	public void test() {
 		Benutzer test = new Benutzer("Wuttke", "Georg", "georg.wuttke", "123",
 				"georg1wuttke@gmail.com");

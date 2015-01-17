@@ -49,6 +49,7 @@ public class Willkommen extends Thread {
 
 	public Willkommen() {
 		start();
+		show();
 	}
 
 	private void show() {

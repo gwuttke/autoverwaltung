@@ -5,54 +5,46 @@ import java.util.List;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Version;
 import de.gw.auto.hibernate.DatenAbrufen;
 import de.gw.auto.hibernate.UpdateDaten;
+import de.gw.auto.repository.VersionenRepository;
 
+@Service
 public class VersionDao {
-
-	private List<Version> versionen = new ArrayList<Version>();
-
+	@Autowired
+	private VersionenRepository versionenRepository;
 
 	public VersionDao() {
 		super();
-		load();
-	}
-
-	public void load() {
-		this.versionen = new DatenAbrufen().getVersionen();
 	}
 
 	public void add(Version version) {
-		this.versionen.add(version);
-		new UpdateDaten().addVersion(version);
+		versionenRepository.save(version);
 	}
 
 	public Version get(String plattform) {
-		for (Version v : versionen) {
-			if (v.getPlattform().equals(plattform)) {
-				return v;
-			}
-		}
-		return null;
+		return versionenRepository.findByPlattform(plattform);
+		
 	}
-	
-	
-	
-	public Version getCurrentversion(){
-		Version version = get(Constans.PROGRAMM_VERSION.getPlattform()); 
-		return version;
+
+	public Version getCurrentversion() {
+		return get(Constans.PROGRAMM_VERSION.getPlattform());
+		
 	}
-	
-	public static String getDownloadFileString(Version version){
+
+	public static String getDownloadFileString(Version version) {
 		StringBuilder sbVersion = new StringBuilder();
 		StringBuilder sbNummer = new StringBuilder();
 		char[] cNummer = String.valueOf(version.getNummer()).toCharArray();
 		for (char c : cNummer) {
 			sbNummer.append(c).append("_");
 		}
-		sbNummer.deleteCharAt(sbNummer.length() -1);
+		sbNummer.deleteCharAt(sbNummer.length() - 1);
 
 		sbVersion.append(version.getPlattform()).append("_")
 				.append(sbNummer.toString()).append(".jar");
@@ -62,29 +54,29 @@ public class VersionDao {
 	public static String getVersionString(Version version) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Version: ").append(getVersionToString(version));
-		
+
 		return sb.toString();
 	}
-	
-	private static String getVersionToString(Version version){
+
+	private static String getVersionToString(Version version) {
 		StringBuilder sbVersion = new StringBuilder();
 		StringBuilder sbNummer = new StringBuilder();
 		char[] cNummer = String.valueOf(version.getNummer()).toCharArray();
 		for (char c : cNummer) {
 			sbNummer.append(c).append(".");
 		}
-		sbNummer.deleteCharAt(sbNummer.length() -1);
+		sbNummer.deleteCharAt(sbNummer.length() - 1);
 
 		sbVersion.append(version.getPlattform()).append("_")
 				.append(sbNummer.toString());
 		return sbVersion.toString();
 	}
-	
-	public Boolean isCurrent(){
+
+	public Boolean isCurrent() {
 		final Version programm = Constans.PROGRAMM_VERSION;
 		final Version current = getCurrentversion();
-		if(current.getPlattform().equals(programm.getPlattform())){
-			if (current.getNummer() == programm.getNummer()){
+		if (current.getPlattform().equals(programm.getPlattform())) {
+			if (current.getNummer() == programm.getNummer()) {
 				return true;
 			}
 		}

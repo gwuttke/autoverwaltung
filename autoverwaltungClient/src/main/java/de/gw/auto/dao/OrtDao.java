@@ -3,28 +3,24 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.domain.Ort;
 import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.repository.OrtRepository;
 
+@Service
 public class OrtDao {
-
-	private static List<Ort> orte = new ArrayList<Ort>();
 	
+	@Autowired
+	private OrtRepository ortRepository;
 	
 	public List<Ort> getOrtList() {
-		return orte;
+		return ortRepository.findAll();
 	}
 
-	public static void setOrtList(){
-		orte = new DatenAbrufen().getOrte();
-	}
-	
 	public Ort searchOrt(int id){
-		for(Ort o : orte){
-			if (o.getId() == id){
-				return o;
-			}
-		}
-		return null;
+		return ortRepository.findOne(id);
 	}
 }

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import de.gw.auto.domain.Auto;
 
-public interface AutoRepository extends JpaRepository<Auto, Integer>{
-
+public interface AutoRepository extends JpaRepository<Auto, Integer> {
+	public Auto findByKfz(String kfz);
 }

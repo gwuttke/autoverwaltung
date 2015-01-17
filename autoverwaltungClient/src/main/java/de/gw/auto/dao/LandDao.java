@@ -4,41 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.hibernate.DatenAbrufen;
+import de.gw.auto.repository.LandRepository;
+import de.gw.auto.repository.OrtRepository;
 
+@Service
 public class LandDao {
 
-	private static List<Land> laender = new ArrayList<Land>();
+	@Autowired
+	private LandRepository landRepository;
 
 	public List<Land> getLaender() {
-		if (laender.isEmpty()){
-			setLaender();
-		}
-		return laender;
-	}
-
-	public static void setLaender() {
-		laender = new DatenAbrufen().getLaender();
+		return landRepository.findAll();
 	}
 
 	public Land searchLand(int id) {
-		for (Land l : laender) {
-			if (l.getId() == id) {
-				return l;
-			}
-		}
-		return null;
+		return landRepository.findOne(id);
 	}
 
-	public Set<Ort> getOrteByLand(Land land) {
-		if (laender.isEmpty()) {
-			setLaender();
-			if (laender.isEmpty()){
-				return null;
-			}
-		}
-		return searchLand(land.getId()).getOrte();
+	public List<Ort> getOrteByLand(Land land) {
+		return landRepository.findOrtById(land.getId());
 	}
 }

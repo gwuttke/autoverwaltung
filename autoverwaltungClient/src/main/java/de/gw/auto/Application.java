@@ -29,11 +29,10 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-
-
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import de.gw.auto.domain.Benutzer;
+import de.gw.auto.gui.Willkommen;
 import de.gw.auto.hibernate.example.User;
 import de.gw.auto.repository.UserRepository;
 
@@ -45,18 +44,21 @@ import de.gw.auto.repository.UserRepository;
 @ComponentScan("de.gw.auto")
 @EnableAutoConfiguration
 @EntityScan("de.gw.auto.domain")
-@EnableJpaRepositories(basePackages="de.gw.auto.repository")
+@EnableJpaRepositories(basePackages = "de.gw.auto.repository")
 @PropertySource("classpath:application.properies")
 @EnableTransactionManagement
 public class Application {
 
 	public static void main(final String[] args) {
-
+		
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 		SpringApplicationContext sac = new SpringApplicationContext();
-		sac.setApplicationContext(ctx);
-		final User user = new User();
-		user.test();
+		UserRepository ur = ctx.getBean(UserRepository.class);
 
+		sac.setApplicationContext(ctx);
+		if (ur.findOne(1) == null) {
+			final User user = new User();
+			user.test();
+		}
 	}
 }

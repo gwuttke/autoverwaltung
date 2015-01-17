@@ -1,9 +1,11 @@
 package de.gw.auto.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
@@ -12,25 +14,42 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.hibernate.DatenAbrufen;
 import de.gw.auto.hibernate.UpdateDaten;
+import de.gw.auto.repository.AutoRepository;
+import de.gw.auto.repository.TankenRepository;
 
+@Service
 public class TankenDao {
+
+	@Autowired
+	private TankenRepository tankenRepository;
+
+	@Autowired
+	public TankDAO tankDao;
+
+	@Autowired
+	private AutoRepository autoRepository;
 
 	private List<Tankfuellung> tankfuellungList = new ArrayList<Tankfuellung>();
 	private List<Tanken> tankenList = new ArrayList<Tanken>();
-	private Tank voll = new TankDAO().getVoll();
+	private Tank voll;
+
+	protected TankenDao() {
+	}
 
 	public List<Tankfuellung> getTankenList() {
+
 		return tankfuellungList;
 	}
 
 	public TankenDao(Settings setting) {
 		setTankenList(setting);
+		voll = tankDao.getVoll();
 	}
 
 	public void setTankenList(Settings setting) {
-		tankenList = new DatenAbrufen().getTankfuellungen(setting);
-		Collections.sort(tankenList, new Tanken());
-		
+		tankenList = tankenRepository.findByAutoOrderByKmStandDesc(setting
+				.getAktuellAuto());
+
 		int index = 0;
 		Tanken tVor = null;
 		Tanken tVoll = null;
@@ -43,8 +62,8 @@ public class TankenDao {
 				tfuellung.setGefahreneKm(Berechnung.getGefahreneKilometer(
 						t.getAuto(), t));
 			}
-			tfuellung
-					.setVerbrauch100Km(Berechnung.getVerbrachPro100Km(t, tVoll));
+			tfuellung.setVerbrauch100Km(Berechnung
+					.getVerbrachPro100Km(t, tVoll));
 
 			tVor = t;
 			if (isVoll(t)) {
@@ -55,46 +74,44 @@ public class TankenDao {
 		}
 	}
 
-	public TankenDao tankenIntoDatabase(Tanken tanken, Settings setting) {
-		UpdateDaten update = new UpdateDaten();
+	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken, Settings setting) {
 		Auto auto = setting.getAktuellAuto();
 
-		// update.addTanken(tanken);
+		tanken = tankenRepository.save(tanken);
+
 		auto.addTanken(tanken);
 		setting.setAktuellAuto(auto);
-		update.updateAuto(auto);
+
+		autoRepository.save(auto);
 		setTankenList(setting);
-		return this;
+		return getTankenList();
 
 	}
-	
-	public boolean isVoll(Tanken t){
-		if (t.getTank().getId() == voll.getId()){
+
+	public boolean isVoll(Tanken t) {
+		if (t.getTank().getId() == voll.getId()) {
 			return true;
 		}
 		return false;
 	}
 
-	public TankenDao tankenUpdate(Tanken tanken, Settings setting) {
-		UpdateDaten update = new UpdateDaten();
+	public List<Tankfuellung> tankenUpdate(Tanken tanken, Settings setting) {
+
 		Auto auto = setting.getAktuellAuto();
 
-		// update.addTanken(tanken);
+		tankenRepository.save(tanken);
 		auto.updateTanken(tanken);
 		setting.setAktuellAuto(auto);
-		update.updateAuto(auto);
+
+		autoRepository.save(auto);
+
 		setTankenList(setting);
-		return this;
+		return getTankenList();
 
 	}
 
 	public Tanken search(int id) {
-		for (Tanken t : this.tankenList) {
-			if (t.getId() == id) {
-				return t;
-			}
-		}
-		return null;
+		return tankenRepository.findOne(id);
 	}
 
 	public Tanken like(Tanken tanken) {

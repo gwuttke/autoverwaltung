@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 
+@Deprecated
 public class DatenbankZugriff {
 	private Session session;
 	private Transaction tx;

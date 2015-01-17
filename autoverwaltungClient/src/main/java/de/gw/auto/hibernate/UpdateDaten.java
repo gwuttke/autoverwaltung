@@ -5,7 +5,7 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Version;
-
+@Deprecated
 public class UpdateDaten extends DatenbankZugriff {
 	
 	public void addAuto(Auto auto){

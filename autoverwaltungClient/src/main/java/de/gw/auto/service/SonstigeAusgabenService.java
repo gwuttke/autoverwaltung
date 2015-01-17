@@ -1,17 +1,27 @@
 package de.gw.auto.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Tanken;
-
+@Controller
 public class SonstigeAusgabenService {
 	
-	SonstigeAusgabenDao sonstigeAusgabenDao = null;
+	SonstigeAusgabenDao sonstigeAusgabenDao;
+	
+	List<SonstigeAusgaben> sonstigeAusgabenList = null;
 
 	Settings setting = null;
 
+	protected SonstigeAusgabenService(){
+		
+	}
+	
 	public SonstigeAusgabenService(Settings setting) {
 		super();
 		this.setting = setting;
@@ -40,9 +50,9 @@ public class SonstigeAusgabenService {
 		return o;
 	}
 	
-	public SonstigeAusgabenDao addSonstigeAusgaben(SonstigeAusgaben sonstigeAusgaben){
-		this.sonstigeAusgabenDao = sonstigeAusgabenDao.intoDatabase(sonstigeAusgaben);
-		return this.sonstigeAusgabenDao;
+	public List<SonstigeAusgaben> addSonstigeAusgaben(SonstigeAusgaben sonstigeAusgaben){
+		this.sonstigeAusgabenList = sonstigeAusgabenDao.intoDatabase(sonstigeAusgaben);
+		return this.sonstigeAusgabenList;
 	}
 	
 

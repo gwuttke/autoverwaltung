@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
 // @SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
 @Table(name = "Benutzer", uniqueConstraints = {
@@ -33,7 +35,8 @@ public class Benutzer implements Serializable {
 	private String vorname;
 	private String benutzername;
 	private String passwort;
-	@Column(name = "eMail", unique = true)
+	@Email
+	@Column(name = "email", unique = true)
 	private String eMail;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idBenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idAuto") })

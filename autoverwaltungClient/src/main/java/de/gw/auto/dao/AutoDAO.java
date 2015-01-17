@@ -5,24 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.hibernate.DatenAbrufen;
 import de.gw.auto.hibernate.UpdateDaten;
+import de.gw.auto.repository.AutoRepository;
+import de.gw.auto.repository.UserRepository;
 
-public class AutoDAO extends DatenAbrufen {
+@Service
+public class AutoDAO {
 
-	Settings setting;
-
-	UpdateDaten update = new UpdateDaten();
-
-	private List<Auto> autoList = new ArrayList<Auto>();
-	Auto a = new Auto();
+	private Settings setting;
+	
+	@Autowired
+	private AutoRepository autoRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public AutoDAO(Settings setting) {
 		this.setting = setting;
+	}
+	
+	protected AutoDAO(){
+		
 	}
 
 	public Settings CarIntoDatabase(Settings setting, String kfz, int kaufKm,
@@ -35,9 +46,11 @@ public class AutoDAO extends DatenAbrufen {
 		Auto a = new Auto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinarten,
 				kmAktuell);
 		
-		update.addAuto(a);
+		a = autoRepository.save(a);
+		
 		benutzer.addAuto(a);
-		update.updateBenutzer(benutzer);
+		benutzer = userRepository.save(benutzer);
+		
 		setting.addAuto(a);
 		this.setting = setting;
 
@@ -47,6 +60,7 @@ public class AutoDAO extends DatenAbrufen {
 	public void updateAuto(int autoID, Set<Benzinart> benzinarten,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
 		Auto a = findById(autoID);
+		
 		if (a != null) {
 			if (benzinarten != null) {
 				a.setBenzinarten(benzinarten);
@@ -65,37 +79,16 @@ public class AutoDAO extends DatenAbrufen {
 			}
 
 		}
-	}
-
-	public void setAutoList(Settings setting) {
-
-		autoList.add(a);
-	}
-
-	public List<Auto> getAutoList() {
-		if (autoList.isEmpty()) {
-			setAutoList(setting);
-			getAutoList();
-		}
-		return this.autoList;
+		
+		autoRepository.save(a);
 	}
 
 	public Auto find(String kennzeichen) {
-		for (Auto a : this.autoList) {
-			if (a.getKfz().equals(kennzeichen)) {
-				return a;
-			}
-		}
-		return null;
+		return autoRepository.findByKfz(kennzeichen);
 	}
 
 	public Auto findById(int id) {
-		for (Auto a : this.autoList) {
-			if (a.getId() == id) {
-				return a;
-			}
-		}
-		return null;
+		return autoRepository.findOne(id);
 	}
 
 }

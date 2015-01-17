@@ -1,10 +1,14 @@
 package de.gw.auto.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.dao.VersionDao;
 import de.gw.auto.domain.Version;
-
+@Controller
 public class Versionierungsservice {
 
+	@Autowired
 	private final VersionDao versionen = new VersionDao();
 	public static final String DESKTOP = "Desktop";
 

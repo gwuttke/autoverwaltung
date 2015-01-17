@@ -248,7 +248,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					Tanken t = new Tanken(kmStand, land, ort, tank, kosten,
 							auto, datum, liter, preisProLiter, benzinArt);
 
-					tankenDao = tankenService.addTankfuellung(t);
+					tankenService.addTankfuellung(t);
 					setting.getAktuellAuto().setKmAktuell(kmStand);
 				} else {
 					oldTanken.setKmStand(kmStand);
@@ -259,7 +259,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					oldTanken.setDatum(datum);
 					oldTanken.setPreisProLiter(preisProLiter);
 					oldTanken.setBenzinArt(benzinArt);
-					tankenDao = tankenService.updateTankfuellung(oldTanken);
+					tankenService.updateTankfuellung(oldTanken);
 				}
 				new ShowGui(setting);
 				frame.dispose();

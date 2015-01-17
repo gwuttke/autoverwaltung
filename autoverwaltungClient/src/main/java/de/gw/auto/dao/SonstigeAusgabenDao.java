@@ -3,42 +3,38 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.hibernate.DatenAbrufen;
 import de.gw.auto.hibernate.UpdateDaten;
+import de.gw.auto.repository.SonstigeAusgabenRepository;
 
-public class SonstigeAusgabenDao{
+@Service
+public class SonstigeAusgabenDao {
 
 	private Settings setting;
-	private List<SonstigeAusgaben> sonstigeAusgabenList = new ArrayList<SonstigeAusgaben>();
-	private UpdateDaten update = new UpdateDaten();
-	
+
+	@Autowired
+	private SonstigeAusgabenRepository sonstigeAusgabenRepository;
+
+	protected SonstigeAusgabenDao() {
+	}
+
 	public SonstigeAusgabenDao(Settings setting) {
 		super();
 		this.setting = setting;
-		setSonstigeAusgabenList(this.setting);
 	}
 
-	public SonstigeAusgabenDao intoDatabase(SonstigeAusgaben sa) {
-		update.addSonstigeAusgaben(sa);
-		return updateListe();
-		
-		
+	public List<SonstigeAusgaben> intoDatabase(SonstigeAusgaben sa) {
+		sonstigeAusgabenRepository.save(sa);
+
+		return getSonstigeAusgabenList();
 	}
-	
+
 	public List<SonstigeAusgaben> getSonstigeAusgabenList() {
-		return sonstigeAusgabenList;
+		return sonstigeAusgabenRepository.findByAuto(setting.getAktuellAuto());
 	}
-
-	public void setSonstigeAusgabenList(Settings setting) {
-		sonstigeAusgabenList = new DatenAbrufen().getSonstigeAusgabens(setting);
-		
-	}
-
-	public SonstigeAusgabenDao updateListe() {
-		setSonstigeAusgabenList(setting);
-		return this;
-	}
-
 }
