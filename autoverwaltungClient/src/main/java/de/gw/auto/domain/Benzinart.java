@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Benzinart")
 @SequenceGenerator(name = "benzinart_gen", sequenceName = "benzinart_id_seq")
 public class Benzinart implements Serializable {
 

@@ -21,7 +21,7 @@ public class Land implements Serializable {
 	private int id;
 	private String name;	
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idLand") }, inverseJoinColumns = { @JoinColumn(name = "idOrt") })
+	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idland") }, inverseJoinColumns = { @JoinColumn(name = "idort") })
 	private Set<Ort> orte;
 	
 

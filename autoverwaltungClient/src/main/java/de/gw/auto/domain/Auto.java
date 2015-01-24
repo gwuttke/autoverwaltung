@@ -20,7 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="car")
+@Table(name="Auto")
 @SequenceGenerator(name = "auto_seq", sequenceName = "auto_id_seq")
 public class Auto implements Serializable {
 
@@ -29,13 +29,16 @@ public class Auto implements Serializable {
 	private int id;
 	@Column(unique=true)
 	private String kfz;
+	@Column(name="kmkauf")
 	private int kmKauf;
 	private Date kauf;
+	@Column(name="erstzulassung")
 	private Date erstZulassung;
 	// Wissen Notieren n:m Beziehung
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idAuto") }, inverseJoinColumns = { @JoinColumn(name = "idBenzinart") })
+	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idauto") }, inverseJoinColumns = { @JoinColumn(name = "idbenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
+	@Column(name="kmaktuell")
 	private int kmAktuell;
 	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<SonstigeAusgaben> sonstigeAusgaben;

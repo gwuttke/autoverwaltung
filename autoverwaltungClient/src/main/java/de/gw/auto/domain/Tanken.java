@@ -22,6 +22,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tanken_gen")
 	private int id;
+	@Column(name="kmstand")
 	private int kmStand;
 	@ManyToOne
 	@JoinColumn
@@ -35,10 +36,10 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	private BigDecimal kosten;
 	private Date datum;
 	private BigDecimal liter;
-	@Column(precision = 10, scale = 3)
+	@Column(name = "preisproliter", precision = 10, scale = 3)
 	private BigDecimal preisProLiter;
 	@OneToOne
-	@JoinColumn
+	@JoinColumn(name="benzinart_id")
 	private Benzinart benzinArt;
 	@ManyToOne
 	@JoinColumn(name = "auto_id")
