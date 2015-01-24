@@ -52,10 +52,8 @@ public class Application {
 	public static void main(final String[] args) {
 		
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
-		SpringApplicationContext sac = new SpringApplicationContext();
 		UserRepository ur = ctx.getBean(UserRepository.class);
 
-		sac.setApplicationContext(ctx);
 		if (ur.findOne(1) == null) {
 			final User user = new User();
 			user.test();

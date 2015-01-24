@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import de.gw.auto.SpringApplicationContext;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.repository.UserRepository;
 @Component
