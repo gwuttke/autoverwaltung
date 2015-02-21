@@ -13,6 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.Constans;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.SonstigeAusgabenInfo;
@@ -23,8 +26,11 @@ import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 import de.gw.auto.service.InfoService;
-
+@Controller
 public class ShowInfos {
+	
+	@Autowired
+	private InfoService infoService;
 
 	private String[] columnNamesTankenInfos = new String[] { "Bezeichnung",
 			"Dieses Jahr", "letztes Jahr", "Gesammt" };
@@ -33,10 +39,14 @@ public class ShowInfos {
 	private JPanel jpInfosTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableInfos = null;
 
-	public ShowInfos(Settings setting) {
-		super();
+	protected ShowInfos(){}
 
-		infosData = new InfoService(setting).loadInfos();
+
+	public void init(Settings setting) {
+		
+		infoService.init(setting);
+		
+		infosData = infoService.loadInfos();
 
 		jTableInfos = new Tabelle(columnNamesTankenInfos, infosData)
 				.getJTable();
@@ -57,7 +67,6 @@ public class ShowInfos {
 		spInfos.setPreferredSize(new Dimension(100, 135));
 
 		jpInfosTable.add(spInfos);
-
 	}
 
 	public JPanel getJpInfosTable() {

@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.SonstigeAusgaben;
 
+@Service
 public class SonstigeAusgabenInfo {
 
 	private List<Info> sonstigeAusgabenInfos = new ArrayList<Info>();
@@ -17,11 +20,12 @@ public class SonstigeAusgabenInfo {
 
 	// aktuelles Jahr
 	private final int nowJahr = datum.getNow().get(Calendar.YEAR);
-	
-	public SonstigeAusgabenInfo(SonstigeAusgabenDao sADao) {
+
+	public void init(SonstigeAusgabenDao sADao) {
 		load(sADao);
+
 	}
-	
+
 	public List<Info> getSonstigeAusgabenInfos() {
 		return sonstigeAusgabenInfos;
 	}
@@ -50,15 +54,14 @@ public class SonstigeAusgabenInfo {
 		}
 		sonstigeAusgabenInfos.add(sAIKosten);
 	}
-	
-	public Info searchInfo(String name){
-		for(Info info : sonstigeAusgabenInfos){
-			if (name == info.getName()){
+
+	public Info searchInfo(String name) {
+		for (Info info : sonstigeAusgabenInfos) {
+			if (name == info.getName()) {
 				return info;
 			}
 		}
 		return null;
 	}
-	
 
 }

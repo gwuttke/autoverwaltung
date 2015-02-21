@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.net.ftp.parser.EnterpriseUnixFTPEntryParser;
+import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import de.gw.auto.domain.Benutzer;
+import de.gw.auto.gui.LogIn;
 import de.gw.auto.gui.Willkommen;
 import de.gw.auto.hibernate.example.User;
 import de.gw.auto.repository.UserRepository;
@@ -48,10 +50,21 @@ import de.gw.auto.repository.UserRepository;
 @PropertySource("classpath:application.properies")
 @EnableTransactionManagement
 public class Application {
+	
+	private static Logger LOGGER =Logger.getLogger(Application.class);
 
 	public static void main(final String[] args) {
 		
+		new Willkommen().show();
+		
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
+		
+		for(String s : ctx.getBeanDefinitionNames()){
+			System.out.println(s);
+		}
+		
+		 ctx.getBean(LogIn.class).show();;
+		
 		UserRepository ur = ctx.getBean(UserRepository.class);
 
 		if (ur.findOne(1) == null) {

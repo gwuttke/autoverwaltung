@@ -2,6 +2,7 @@ package de.gw.auto.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.gw.auto.dao.SonstigeAusgabenDao;
@@ -12,6 +13,7 @@ import de.gw.auto.domain.Tanken;
 @Controller
 public class SonstigeAusgabenService {
 	
+	@Autowired
 	SonstigeAusgabenDao sonstigeAusgabenDao;
 	
 	List<SonstigeAusgaben> sonstigeAusgabenList = null;
@@ -21,18 +23,15 @@ public class SonstigeAusgabenService {
 	protected SonstigeAusgabenService(){
 		
 	}
-	
-	public SonstigeAusgabenService(Settings setting) {
-		super();
+	public void init(Settings setting) {
 		this.setting = setting;
-		sonstigeAusgabenDao = new SonstigeAusgabenDao(this.setting);
+		sonstigeAusgabenDao.init(this.setting);
 	}
 
 	public Object[][] loadSonstigeAusgaben() {
 		Object[][] o = new Object[0][0];
 		int index = 0;
-		SonstigeAusgabenDao sonstigeAusgabenDao = new SonstigeAusgabenDao(
-				this.setting);
+		
 		int entrySize = sonstigeAusgabenDao.getSonstigeAusgabenList().size();
 
 		if (entrySize > 0) {

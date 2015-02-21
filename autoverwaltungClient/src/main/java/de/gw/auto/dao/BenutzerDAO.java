@@ -17,15 +17,9 @@ public class BenutzerDAO {
 
 	public Benutzer logInBenutzer(Benutzer loginBenutzer) {
 
-		return userRepository.findByBenutzernameAndPasswort(loginBenutzer.getBenutzername(), loginBenutzer.getPasswort());
-		/*
-		try {
-			this.benutzer = new DatenAbrufen().getBenutzer(loginBenutzer);
-		} catch (Exception e) {
-			AllException.messageBox("Falscher Benutzer",
-					"Dieser Benutzer ist nicht vorhanden");
-		}
-		*/
+		return userRepository.findByBenutzernameAndPasswort(
+				loginBenutzer.getBenutzername(), loginBenutzer.getPasswort());
+
 	}
 
 }

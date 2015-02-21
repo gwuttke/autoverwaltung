@@ -35,7 +35,7 @@ public class TankDAO {
 
 	public Tank getVoll() {
 
-		return searchTank("1/1");
+		return searchTank("4/4");
 	}
 
 }

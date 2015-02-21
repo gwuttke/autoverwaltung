@@ -1,17 +1,28 @@
 package de.gw.auto.service;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.gw.auto.dao.BenutzerDAO;
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.repository.UserRepository;
 
+@Service
 public class BenutzerService {
 	
-	@Autowired
+	@Resource
 	private UserRepository userRepository;
+	
+	@Autowired
+	private Settings settings;
+	
 	
 
 	public Settings Login(String benutzername, String passwort)
@@ -26,7 +37,9 @@ public class BenutzerService {
 							new IllegalArgumentException());
 			return null;
 		}
-		Settings settings = new Settings(benutzer);
+		
+		settings.setBenutzer(benutzer);
+		settings.setAutos();
 		System.out.println("LogIn!!");
 		return settings;
 
@@ -40,5 +53,4 @@ public class BenutzerService {
 		userRepository.save(benutzer);
 
 	}
-
 }

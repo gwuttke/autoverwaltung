@@ -10,22 +10,31 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.swing.JTable;
 import javax.swing.JTable.PrintMode;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.PrintPreview;
 import de.gw.auto.reports.Report;
 
+@Controller
 public class Drucken {
 
+	@Autowired
+	private Report report;
+	
 	private Settings settings = null;
 	HashPrintRequestAttributeSet att = new javax.print.attribute.HashPrintRequestAttributeSet();
 
-	public Drucken(Settings settings) {
+	protected Drucken(){}
+	
+	public void init(Settings setting) {
 		this.settings = settings;
 	}
 
 	public void printReport() {
-		new Report(settings);
+		report.init(settings);
 	}
 
 	public void print(JTable[] tables) {

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import de.gw.auto.Constans;
@@ -14,7 +15,7 @@ import de.gw.auto.hibernate.DatenAbrufen;
 import de.gw.auto.hibernate.UpdateDaten;
 import de.gw.auto.repository.VersionenRepository;
 
-@Service
+@Component
 public class VersionDao {
 	@Autowired
 	private VersionenRepository versionenRepository;

@@ -14,20 +14,38 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 
+@Service
 public class Berechnung {
+	
+	@Autowired
+	TankenDao tankenDao;
+	
+	@Autowired
+	TankenInfo tankenInfo;
+	
+	protected Berechnung(){
+	}
+
+	public void init(Settings setting) {
+		tankenDao.init(setting);
+		tankenInfo.init(tankenDao, setting);
+	}
+	
 	private double b;
 	private Map<String, List<Info>> ausgabenBerechnungen = new HashMap<String, List<Info>>();
 
 	public List<Info> getTankenInfos(TankenDao tDao, Settings setting) {
 		if (ausgabenBerechnungen.size() == 0) {
-			addAusgabenBerechnungen(Constans.TANKEN, new TankenInfo(tDao,
-					setting).getTankenInfos());
+			addAusgabenBerechnungen(Constans.TANKEN, tankenInfo.getTankenInfos());
 		}
 		return ausgabenBerechnungen.get(Constans.TANKEN);
 	}

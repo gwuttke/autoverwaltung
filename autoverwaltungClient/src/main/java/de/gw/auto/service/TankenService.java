@@ -1,33 +1,32 @@
 package de.gw.auto.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
-import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 
-@Controller
+@Service
 public class TankenService {
 
 	private List<Tankfuellung> tankenList;
 
+	@Autowired
 	private TankenDao tankenDao;
 
 	private Settings setting = null;
-	
-	protected TankenService(){}
 
-	public TankenService(Settings setting) {
-		super();
+	protected TankenService() {
+	}
+
+	public void init(Settings setting) {
 		this.setting = setting;
-		this.tankenDao = new TankenDao(this.setting);
+		this.tankenDao.init(setting);
 		tankenList = tankenDao.getTankenList();
 	}
 
@@ -39,15 +38,14 @@ public class TankenService {
 		return tankenList;
 	}
 
+	/**
+	 * Folgende Datenstrucktur:
+	 * Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
+	 * ;Liter;PreisProLitter;Kosten
+	 * 
+	 * @return Object[][] wenn keine Daten vorhanden dann null
+	 */
 	public Object[][] loadTankungen() {
-		/**
-		 * Folgende Datenstrucktur:
-		 * Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
-		 * ;Liter;PreisProLitter;Kosten
-		 * 
-		 * @return Object[][] wenn keine Daten vorhanden dann null
-		 */
-
 		List<Tankfuellung> tankungen = tankenList;
 
 		if (tankungen == null) {

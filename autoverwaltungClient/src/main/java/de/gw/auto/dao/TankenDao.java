@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sun.org.apache.xml.internal.security.Init;
+
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tank;
@@ -41,14 +43,22 @@ public class TankenDao {
 		return tankfuellungList;
 	}
 
+	/*
 	public TankenDao(Settings setting) {
-		setTankenList(setting);
-		voll = tankDao.getVoll();
+		
 	}
-
+*/
+	
+	public void init(Settings setting) {
+		voll = tankDao.getVoll();
+		setTankenList(setting);
+		
+	}
+	
 	public void setTankenList(Settings setting) {
-		tankenList = tankenRepository.findByAutoOrderByKmStandDesc(setting
-				.getAktuellAuto());
+		Auto aktuellesAuto = setting.getAktuellAuto();
+		tankenList = tankenRepository
+				.findByAutoOrderByKmStandAsc(aktuellesAuto);
 
 		int index = 0;
 		Tanken tVor = null;
@@ -72,6 +82,15 @@ public class TankenDao {
 			tankfuellungList.add(tfuellung);
 			index++;
 		}
+	}
+
+	public double giveAVGPreis() {
+		double preis = 0d;
+		int count = 0;
+		for (Tankfuellung t : tankfuellungList) {
+			preis = preis + new Double(t.getPreisProLiter().toString());
+		}
+		return count == 0 ? 0 : preis / count;
 	}
 
 	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken, Settings setting) {

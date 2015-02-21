@@ -15,9 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.SonstigeAusgabenDao;
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Texte;
@@ -26,10 +29,28 @@ import de.gw.auto.gui.model.Spinner;
 import de.gw.auto.service.SonstigeAusgabenService;
 
 public class AddSonstigeAusgaben extends Funktionen {
+	
+	@Autowired
+	private ShowGui showGui;
+	
+	@Autowired
+	private SonstigeAusgabenService sonstigeAusgabenService;
 
-	JFrame frame = new JFrame("Sonstige Ausgaben hinzufügen");
+	private JFrame frame = new JFrame("Sonstige Ausgaben hinzufügen");
 
+	protected AddSonstigeAusgaben(){}
+	
+	public void init(Settings setting){
+		sonstigeAusgabenService.init(setting);
+	}
+	
 	public AddSonstigeAusgaben(final Settings setting) {
+		showGui(setting);
+	}
+
+	public void showGui(final Settings setting) {
+		final Auto aktuellesAuto = setting.getAktuellAuto();
+		
 		// Lable
 		JLabel lDatum = new JLabel(Texte.Form.Label.DATUM);
 		JLabel lBezeichnung = new JLabel("Bezeichnung");
@@ -39,7 +60,8 @@ public class AddSonstigeAusgaben extends Funktionen {
 		// Eingaben
 		final DatePicker dp = new DatePicker();
 		final JTextField tfBezeichnung = new JTextField();
-		final JSpinner spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 200, setting.getAktuellAuto()
+		
+		final JSpinner spKmStand = new Spinner(aktuellesAuto.getKmAktuell() + 200, aktuellesAuto
 				.getKmAktuell(), 999999, 100).getSpinner();
 		final JSpinner spKosten = new Spinner(0d, 0d, 99999.99, 100d)
 				.getSpinner();
@@ -75,20 +97,22 @@ public class AddSonstigeAusgaben extends Funktionen {
 			public void actionPerformed(ActionEvent e) {
 				
 				SonstigeAusgaben sa = new SonstigeAusgaben();
-				sa.setAuto(setting.getAktuellAuto());
+				sa.setAuto(aktuellesAuto);
 				sa.setDatum(new Date(dp.getDate().getTime()));
 				sa.setKmStand(Integer.valueOf(spKmStand.getValue().toString()));
 				sa.setKommentar(tfBezeichnung.getText());
 				sa.setKosten(new BigDecimal(Double.valueOf(spKosten.getValue().toString())));
 
-				new SonstigeAusgabenService(setting).addSonstigeAusgaben(sa);
+				sonstigeAusgabenService.addSonstigeAusgaben(sa);
 			}
 		});
 		cancel(frame);
 		btnCancel.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				new ShowGui(setting);
+				
+				showGui.setSetting(setting);
+				showGui.showGui();
 				cancel(frame);
 				
 			}

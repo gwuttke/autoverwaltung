@@ -9,4 +9,5 @@ import de.gw.auto.domain.Tanken;
 
 public interface TankenRepository extends JpaRepository<Tanken, Integer>{
 public List<Tanken> findByAutoOrderByKmStandDesc(Auto auto);
+public List<Tanken> findByAutoOrderByKmStandAsc(Auto auto);
 }

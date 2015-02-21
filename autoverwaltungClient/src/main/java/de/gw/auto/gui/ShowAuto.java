@@ -9,10 +9,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.gui.model.NumberRenderer;
 
+@Controller
 public class ShowAuto {
 
 	private Settings setting;
@@ -23,15 +26,18 @@ public class ShowAuto {
 	private DefaultTableModel dtm = null;
 	private JTable table = null;
 
-	public ShowAuto(Settings setting) {
-		super();
+	protected ShowAuto() {
+	}
+	
+	public void init(Settings setting){
 		this.setting = setting;
 		insertData();
 		dtm = new DefaultTableModel(autoDetails, columns);
 		table = new JTable(dtm);
-		
+
 		tableFormatting();
 	}
+	
 
 	private void tableFormatting() {
 		int col = 1;
@@ -57,7 +63,7 @@ public class ShowAuto {
 		autoDetails[4][i] = a.getKauf();
 		autoDetails[5][i] = a.getBenzinartenString();
 	}
-	
+
 	private JComponent prepareRenderer(TableCellRenderer renderer, int row,
 			int column) {
 		Component c = table.prepareRenderer(renderer, row, column);
@@ -66,7 +72,11 @@ public class ShowAuto {
 		JComponent jc = (JComponent) c;
 		return jc;
 	}
-	
+
+	public void setSetting(Settings setting) {
+		this.setting = setting;
+	}
+
 	public JScrollPane getTable() {
 		return new JScrollPane(table);
 	}

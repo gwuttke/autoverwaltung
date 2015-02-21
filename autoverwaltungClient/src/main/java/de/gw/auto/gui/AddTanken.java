@@ -13,27 +13,22 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyVetoException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import com.michaelbaranov.microba.calendar.DatePicker;
 
-import de.gw.auto.Constans;
 import de.gw.auto.dao.Berechnung;
-import de.gw.auto.dao.LandDao;
-import de.gw.auto.dao.OrtDao;
-import de.gw.auto.dao.TankDAO;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Land;
@@ -44,22 +39,39 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
+import de.gw.auto.gui.model.BenzinartModel;
+import de.gw.auto.gui.model.LandModel;
+import de.gw.auto.gui.model.OrtModel;
 import de.gw.auto.gui.model.Spinner;
+import de.gw.auto.gui.model.TankModel;
 import de.gw.auto.service.TankenService;
 
+@Controller
 public class AddTanken extends Funktionen implements ComponentListener {
+
+	@Autowired
+	private ShowGui showGui;
+
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
 	private static final Texte.Error.Titel textError = new Texte.Error.Titel();
-	JFrame frame = new JFrame();
+	private JFrame frame = new JFrame();
 
-	Settings setting;
-	Tanken oldTanken;
-	LandModel lModel = new LandModel();
-	OrtModel oModel = new OrtModel();
-	TankenDao tankenDao = new TankenDao(setting);
-	BenzinartModel bModel = new BenzinartModel();
-	TankModel tModel = new TankModel();
-	TankenService tankenService = null;
+	private Settings setting;
+	private Tanken oldTanken;
+	@Autowired
+	private LandModel lModel;
+	
+	@Autowired
+	private OrtModel oModel;
+	
+	@Autowired
+	private BenzinartModel bModel;
+	
+	@Autowired
+	private TankModel tModel;
+	
+	@Autowired
+	private TankenService tankenService;
 
 	// Eingaben
 	private final DatePicker datepicker = new DatePicker(new Date());
@@ -87,11 +99,17 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private JButton btnAdd = new JButton("Hinzufügen");
 	private JButton btnCancel = new JButton(Texte.Form.Button.ABBRUCH);
 
-	public AddTanken(final Settings set) {
+	protected AddTanken(){}
+
+	public void init(final Settings set) {
 		this.setting = set;
+		tankenService.init(setting);
+bModel.init(setting);
+		showGui();
+	}
+	
 
-		tankenService = new TankenService(this.setting);
-
+	public void showGui() {
 		spKmStand = new Spinner(setting.getAktuellAuto().getKmAktuell() + 10,
 				setting.getAktuellAuto().getKmAktuell(), 999999, 10)
 				.getSpinner();
@@ -145,7 +163,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	}
 
 	public AddTanken(Tanken tanken, Settings setting) {
-		this(setting);
+		this.init(setting);
 		if (tanken == null) {
 			return;
 		}
@@ -176,7 +194,8 @@ public class AddTanken extends Funktionen implements ComponentListener {
 		btnCancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				new ShowGui(setting);
+				showGui.setSetting(setting);
+				showGui.showGui();
 				cancel(frame);
 
 			}
@@ -214,8 +233,6 @@ public class AddTanken extends Funktionen implements ComponentListener {
 							"Bitte wählen sie Kosten, die größer als 0 sind.");
 					return;
 				}
-				
-				
 
 				/*
 				 * Daten werden überprüft
@@ -261,7 +278,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 					oldTanken.setBenzinArt(benzinArt);
 					tankenService.updateTankfuellung(oldTanken);
 				}
-				new ShowGui(setting);
+				showGui.setSetting(setting);
+				showGui.showGui();
+				;
 				frame.dispose();
 
 			}
@@ -292,7 +311,6 @@ public class AddTanken extends Funktionen implements ComponentListener {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
-				
 				spPreisPLiter.setValue(Berechnung.getPreisProLiter(getLiter(),
 						getKosten()));
 			}
@@ -322,105 +340,9 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private Double getLiter() {
 		return Double.valueOf(spLiter.getValue().toString());
 	}
-	
-	private Double getKosten(){
+
+	private Double getKosten() {
 		return Double.valueOf(spKosten.getValue().toString());
-	}
-
-	private class LandModel extends DefaultComboBoxModel<Land> {
-		LandDao lDao = new LandDao();
-		Vector<Land> vLand = new Vector<Land>();
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vLand);
-
-		JComboBox<Land> getCombobox() {
-
-			JComboBox<Land> cb = new JComboBox<Land>(model);
-
-			model.addElement(textFormAK.BITTE_AUSWAELEN);
-			if (lDao.getLaender().isEmpty()) {
-				return cb;
-			}
-			for (Land l : lDao.getLaender()) {
-				model.addElement(l);
-			}
-
-			return cb;
-
-		}
-
-	}
-
-	private class OrtModel extends DefaultComboBoxModel<Ort> {
-		LandDao lDao = new LandDao();
-		OrtDao oDao = new OrtDao();
-		Vector<Ort> vOrt = new Vector<Ort>();
-		JComboBox<Ort> cb;
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vOrt);
-
-		public JComboBox<Ort> getCombobox() {
-
-			cb = new JComboBox<Ort>(model);
-			cb.setEditable(false);
-
-			updateItems((Land) lModel.getSelectedItem());
-
-			return cb;
-		}
-
-		public void updateItems(Land l) {
-			model.removeAllElements();
-
-			if (lModel.getSelectedItem() == textFormAK.BITTE_AUSWAELEN) {
-				cb.setEditable(false);
-			} else {
-				model.addElement(textFormAK.BITTE_AUSWAELEN);
-				try {
-					for (Ort o : lDao.getOrteByLand(l)) {
-						model.addElement(o);
-					}
-				} catch (NullPointerException npe) {
-					model.addElement("keine Orte zu diesem Land");
-				}
-			}
-		}
-	}
-
-	private class BenzinartModel extends DefaultComboBoxModel<Benzinart> {
-
-		// BenzinartDAO bDao = new BenzinartDAO();
-		Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
-
-		JComboBox<Benzinart> getCombobox() {
-			JComboBox<Benzinart> cb = new JComboBox<Benzinart>(model);
-			model.addElement(textFormAK.BITTE_AUSWAELEN);
-			for (Benzinart b : setting.getAktuellAuto().getBenzinarten()) {
-				model.addElement(b);
-			}
-			return cb;
-
-		}
-
-	}
-
-	private class TankModel extends DefaultComboBoxModel<Benzinart> {
-		TankDAO tDao = new TankDAO();
-		Vector<Tank> vTank = new Vector<Tank>();
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vTank);
-
-		JComboBox<Tank> getCombobox() {
-
-			JComboBox cb = new JComboBox<Tank>(model);
-
-			model.addElement(Texte.Form.AndereKomponennte.BITTE_AUSWAELEN);
-
-			for (Tank t : tDao.getTankList()) {
-				model.addElement(t);
-			}
-
-			return cb;
-
-		}
 	}
 
 	@Override

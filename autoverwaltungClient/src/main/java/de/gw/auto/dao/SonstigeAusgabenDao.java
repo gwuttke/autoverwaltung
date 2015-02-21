@@ -23,8 +23,7 @@ public class SonstigeAusgabenDao {
 	protected SonstigeAusgabenDao() {
 	}
 
-	public SonstigeAusgabenDao(Settings setting) {
-		super();
+	public void init(Settings setting) {
 		this.setting = setting;
 	}
 

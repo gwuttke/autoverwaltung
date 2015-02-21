@@ -15,6 +15,9 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
@@ -28,41 +31,45 @@ import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 import de.gw.auto.service.TankenService;
 
-public class ShowTanken{
+@Controller
+public class ShowTanken {
 
 	private JPanel jpTankenTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableTanken = null;
-	private TankenService tankenService = null;
+	
+	@Autowired
+	private TankenService tankenService;
+	
+	@Autowired
+	private Berechnung berechnung;
 
-Settings setting = null;
-private final String[] columnNames = new String[] { "Datum", "Benzinart",
-		"Km Stand", "gefahrene Km", "Verbrauch / 100Km", "Ort", "Land",
-		"inhalt getankt", "Liter", "Preis / Liter", "Kosten" };
+	Settings setting = null;
+	private final String[] columnNames = new String[] { "Datum", "Benzinart",
+			"Km Stand", "gefahrene Km", "Verbrauch / 100Km", "Ort", "Land",
+			"inhalt getankt", "Liter", "Preis / Liter", "Kosten" };
+	
+	protected ShowTanken(){}
 
-
-	public ShowTanken(Settings setting) {
-		
+	public void init(Settings setting) {
 		this.setting = setting;
 
-		tankenService =	new TankenService(setting);
+		tankenService.init(setting);
 
-		Berechnung berechnung = new Berechnung();
+		berechnung.init(setting);
 
 		Object[][] tankungenData;
 
 		tankungenData = tankenService.loadTankungen();
 
-		jTableTanken = new Tabelle(columnNames, tankungenData)
-			.getJTable();
+		jTableTanken = new Tabelle(columnNames, tankungenData).getJTable();
 
 		if (jTableTanken.getColumnCount() > 1) {
 			setTableStyle();
 		}
-		
+
 		JScrollPane spTanken = new JScrollPane(jTableTanken);
 
 		jpTankenTable.add(spTanken);
-
 	}
 
 	public JPanel getJpTankenTable() {
@@ -78,7 +85,7 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		m.getColumn(8).setCellRenderer(NumberRenderer.getLiterRenderer());
 		m.getColumn(9).setCellRenderer(NumberRenderer.getCurrencyRenderer(3));
 		m.getColumn(10).setCellRenderer(NumberRenderer.getCurrencyRenderer(2));
-		
+
 		m.getColumn(0).setMinWidth(96);
 		m.getColumn(1).setMinWidth(70);
 		m.getColumn(2).setMinWidth(85);
@@ -90,40 +97,42 @@ private final String[] columnNames = new String[] { "Datum", "Benzinart",
 		m.getColumn(8).setMinWidth(82);
 		m.getColumn(9).setMinWidth(82);
 		m.getColumn(10).setMinWidth(70);
-		
+
 		jTableTanken.setColumnModel(m);
 
 		TableModel tm = jTableTanken.getModel();
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tm);
 		jTableTanken.setRowSorter(sorter);
 		sorter.setComparator(2, Collections.reverseOrder(new Tanken()));
-		
+
 		scrollToLastRow();
 
 	}
-	
-	private void scrollToLastRow(){
-		Rectangle cellBounds = jTableTanken.getCellRect(jTableTanken.getRowCount() - 1, 0, true);
+
+	private void scrollToLastRow() {
+		Rectangle cellBounds = jTableTanken.getCellRect(
+				jTableTanken.getRowCount() - 1, 0, true);
 		jTableTanken.scrollRectToVisible(cellBounds);
 	}
-	
-	public Tanken getRowObject(int rowIndex){
+
+	public Tanken getRowObject(int rowIndex) {
 		Object[] o = new Object[jTableTanken.getColumnCount()];
-		for (int column = 0; column < jTableTanken.getColumnCount(); column++){
+		for (int column = 0; column < jTableTanken.getColumnCount(); column++) {
 			o[column] = jTableTanken.getValueAt(rowIndex, column);
 		}
-		int kmStand = (Integer)o[2];
+		int kmStand = (Integer) o[2];
 		Land land = (Land) o[6];
 		Ort ort = (Ort) o[5];
-		Tank tank = (Tank)o[7];
-		BigDecimal kosten = (BigDecimal)o[10];
+		Tank tank = (Tank) o[7];
+		BigDecimal kosten = (BigDecimal) o[10];
 		Auto auto = setting.getAktuellAuto();
-		Date datum = (Date)o[0];
-		BigDecimal liter = (BigDecimal)o[8];
+		Date datum = (Date) o[0];
+		BigDecimal liter = (BigDecimal) o[8];
 		BigDecimal preisProLiter = (BigDecimal) o[9];
-		Benzinart benzinart = (Benzinart) o[1];		
-		Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto, datum, liter, preisProLiter, benzinart);
-		
+		Benzinart benzinart = (Benzinart) o[1];
+		Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto, datum,
+				liter, preisProLiter, benzinart);
+
 		return t;
 	}
 

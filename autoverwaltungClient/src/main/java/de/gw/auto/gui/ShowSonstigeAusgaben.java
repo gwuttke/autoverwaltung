@@ -7,6 +7,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.SonstigeAusgaben;
@@ -15,7 +18,11 @@ import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
 import de.gw.auto.service.SonstigeAusgabenService;
 
+@Controller
 public class ShowSonstigeAusgaben {
+
+	@Autowired
+	private SonstigeAusgabenService sonstigeAusgabenService;
 
 	private final String[] columnNamesTanken = new String[] { "Datum",
 			"Bezeichnung", "Km Stand", "Kosten" };
@@ -23,11 +30,17 @@ public class ShowSonstigeAusgaben {
 	private JPanel jpSonstigeAusgabenTable = new JPanel(new GridLayout(1, 1));
 	private JTable jTableSonstigeAusgaben = null;
 
-	public ShowSonstigeAusgaben(Settings setting) {
-		Object[][] sonstigeAusgabenData = new Object[0][0];
+	protected ShowSonstigeAusgaben() {
+	}
 
-		sonstigeAusgabenData = new SonstigeAusgabenService(setting)
-				.loadSonstigeAusgaben();
+	public void init(Settings setting) {
+		sonstigeAusgabenService.init(setting);
+		load();
+	}
+
+	private void load() {
+		Object[][] sonstigeAusgabenData;
+		sonstigeAusgabenData = sonstigeAusgabenService.loadSonstigeAusgaben();
 
 		jTableSonstigeAusgaben = new Tabelle(columnNamesTanken,
 				sonstigeAusgabenData).getJTable();

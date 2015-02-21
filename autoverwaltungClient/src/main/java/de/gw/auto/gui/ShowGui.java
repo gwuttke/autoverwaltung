@@ -23,6 +23,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.plaf.DimensionUIResource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import de.gw.auto.Constans;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.TankenDao;
@@ -31,7 +34,31 @@ import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.service.Drucken;
 
+@Controller
 public class ShowGui {
+
+	private Settings setting;
+
+	@Autowired
+	AddAuto addAuto;
+
+	@Autowired
+	ShowAuto showAuto;
+
+	@Autowired
+	Drucken drucken;
+
+	@Autowired
+	private AddTanken addTanken;
+
+	@Autowired
+	private ShowTanken showTanken;
+
+	@Autowired
+	private ShowInfos showInfos;
+
+	@Autowired
+	private ShowSonstigeAusgaben showSonstigeAusgaben;
 
 	private JButton btnTanken = new JButton("Tanken hinzufügen");
 	private JButton btnSonstigeAusgaben = new JButton(
@@ -42,17 +69,29 @@ public class ShowGui {
 	private JPanel jpAusgabe = new JPanel(new BorderLayout());
 	JFrame frame = new JFrame("Auto Verwaltung");
 
-	private ShowTanken showTanken = null;
-	private ShowInfos showInfos = null;
 	private JTable tankenTable = null;
 	private JTable sonstigeAusgabenTable = null;
 	private JScrollPane autoTabelle = null;
-	private ShowSonstigeAusgaben showSonstigeAusgaben = null;
 	private JTabbedPane tab = new JTabbedPane();
 
-	public ShowGui(Settings setting) {
-		loadDaten(setting);
+	protected ShowGui() {
+	}
 
+	public void init(Settings setting) {
+		this.setting = setting;
+		addAuto.init(setting);
+		addTanken.init(setting);
+		drucken.init(setting);
+		showAuto.init(setting);
+		showTanken.init(setting);
+		showSonstigeAusgaben.init(setting);
+		showInfos.init(setting);
+
+		loadDaten(setting);
+	}
+
+	public void showGui() {
+		
 		comboBoxAutos = new JComboBox<Auto>(setting.getAutosArray());
 
 		comboBoxAutos.getModel().setSelectedItem(setting.getAktuellAuto());
@@ -91,7 +130,10 @@ public class ShowGui {
 		frame.setMinimumSize(new Dimension(950, 250));
 		frame.setSize(new Dimension(950, 800));
 		frame.setVisible(true);
+	}
 
+	public void setSetting(Settings setting) {
+		this.setting = setting;
 	}
 
 	private JPanel loadButtons() {
@@ -111,9 +153,7 @@ public class ShowGui {
 	}
 
 	private void loadDaten(Settings setting) {
-		ShowAuto showAuto = new ShowAuto(setting);
-		showTanken = new ShowTanken(setting);
-		showSonstigeAusgaben = new ShowSonstigeAusgaben(setting);
+
 		this.tankenTable = showTanken.getjTableTanken();
 		this.sonstigeAusgabenTable = showSonstigeAusgaben
 				.getjTableSonstigeAusgaben();
@@ -123,7 +163,6 @@ public class ShowGui {
 		tab.addTab(Constans.SONSTIGE_AUSGABEN, new JScrollPane(
 				this.sonstigeAusgabenTable));
 
-		showInfos = new ShowInfos(setting);
 		loadAusgaben();
 	}
 
@@ -187,7 +226,8 @@ public class ShowGui {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new AddTanken(setting);
+				addTanken.init(setting);
+				addTanken.showGui();
 				frame.dispose();
 			}
 		});
@@ -204,7 +244,7 @@ public class ShowGui {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new AddAuto(setting);
+				addAuto.showGui();
 				frame.dispose();
 			}
 		});
@@ -222,7 +262,7 @@ public class ShowGui {
 				}
 				tables[1] = (JTable) showInfos.getjTableInfos();
 				// new Drucken(setting).print(tables);
-				new Drucken(setting).printReport();
+				drucken.printReport();
 
 			}
 		});

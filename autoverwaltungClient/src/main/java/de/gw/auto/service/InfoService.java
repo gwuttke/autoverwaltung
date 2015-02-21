@@ -3,6 +3,9 @@ package de.gw.auto.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.Constans;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.SonstigeAusgabenInfo;
@@ -11,24 +14,39 @@ import de.gw.auto.dao.TankenInfo;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Settings;
 
+@Service
 public class InfoService {
-
+	
+	@Autowired
+	private TankenDao tankenDao;
+	
+	@Autowired
+	private SonstigeAusgabenDao sonstigeAusgabenDao;
+	
+	@Autowired
+	SonstigeAusgabenInfo sonstigeAusgabenInfo;
+	
+	@Autowired
+	TankenInfo tankenInfo;
+	
 	Settings setting = null;
 
-	public InfoService(Settings settings){
-		this.setting = settings;
+	protected InfoService(){}
+	
+	public void init(Settings setting) {
+		this.setting = setting;
+		tankenDao.init(this.setting);
+		sonstigeAusgabenDao.init(setting);
+		sonstigeAusgabenInfo.init(sonstigeAusgabenDao);
+		tankenInfo.init(tankenDao, setting);
+	
 	}
-
+	
 	public Object[][] loadInfos() {
 		
-		TankenDao tankenDao = new TankenDao(this.setting);
-		SonstigeAusgabenDao sonstigeAusgabenDao = new SonstigeAusgabenDao(this.setting);
+		
 		Object[][] o = new Object[0][0];
 		int index = 0;
-
-		TankenInfo tankenInfo = new TankenInfo(tankenDao, setting);
-		SonstigeAusgabenInfo sonstigeAusgabenInfo = new SonstigeAusgabenInfo(
-				sonstigeAusgabenDao);
 
 		List<Info> tankInfos = tankenInfo.getTankenInfos();
 		List<Info> sonstigeAusgabenInfos = sonstigeAusgabenInfo

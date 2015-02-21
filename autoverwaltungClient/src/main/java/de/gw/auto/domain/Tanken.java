@@ -22,7 +22,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tanken_gen")
 	private int id;
-	@Column(name="kmstand")
+	@Column(name = "kmstand")
 	private int kmStand;
 	@ManyToOne
 	@JoinColumn
@@ -39,7 +39,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 	@Column(name = "preisproliter", precision = 10, scale = 3)
 	private BigDecimal preisProLiter;
 	@OneToOne
-	@JoinColumn(name="benzinart_id")
+	@JoinColumn(name = "benzinart_id")
 	private Benzinart benzinArt;
 	@ManyToOne
 	@JoinColumn(name = "auto_id")
@@ -68,7 +68,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 		this.preisProLiter = preisProLiter;
 		this.benzinArt = benzinArt;
 	}
-	
+
 	protected Tanken(int id, int kmStand, Land land, Ort ort, Tank tank,
 			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
 			BigDecimal preisProLiter, Benzinart benzinArt) {
@@ -76,10 +76,11 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 				preisProLiter, benzinArt);
 		this.id = id;
 	}
-	
-	protected Tanken(Tanken t){
-		this(t.id, t.kmStand, t.land, t.ort, t.tank, t.kosten, t.auto, t.datum, t.liter, t.preisProLiter, t.benzinArt);
-				
+
+	protected Tanken(Tanken t) {
+		this(t.id, t.kmStand, t.land, t.ort, t.tank, t.kosten, t.auto, t.datum,
+				t.liter, t.preisProLiter, t.benzinArt);
+
 	}
 
 	public BigDecimal getPreisProLiter() {
@@ -274,9 +275,7 @@ public class Tanken implements Serializable, Comparator<Tanken> {
 
 	@Override
 	public int compare(Tanken t1, Tanken t2) {
-		Integer t1Km = t1.kmStand;
-		Integer t2Km = t2.kmStand;
-		return t1Km.compareTo(t2Km);
+	
 	}
 
 	public void setKmStand(int kmStand) {

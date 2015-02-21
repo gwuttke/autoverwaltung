@@ -1,7 +1,7 @@
 package de.gw.auto.dao;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -12,8 +12,6 @@ import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Settings;
-import de.gw.auto.hibernate.DatenAbrufen;
-import de.gw.auto.hibernate.UpdateDaten;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.UserRepository;
 
@@ -36,15 +34,9 @@ public class AutoDAO {
 		
 	}
 
-	public Settings CarIntoDatabase(Settings setting, String kfz, int kaufKm,
-			java.util.Date kaufDatum, java.util.Date erstZulassung,
-			Set<Benzinart> benzinarten, int kmAktuell) {
-		java.sql.Date erstSqlDate = new java.sql.Date(erstZulassung.getTime());
-		java.sql.Date kaufSqlDate = new java.sql.Date(kaufDatum.getTime());
+	public Settings carIntoDatabase(Settings setting, Auto a) {
 		
 		Benutzer benutzer = setting.getBenutzer();
-		Auto a = new Auto(kfz, kaufKm, kaufSqlDate, erstSqlDate, benzinarten,
-				kmAktuell);
 		
 		a = autoRepository.save(a);
 		
@@ -57,7 +49,7 @@ public class AutoDAO {
 		return this.setting;
 	}
 
-	public void updateAuto(int autoID, Set<Benzinart> benzinarten,
+	public Auto updateAuto(int autoID, Set<Benzinart> benzinarten,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
 		Auto a = findById(autoID);
 		
@@ -80,7 +72,7 @@ public class AutoDAO {
 
 		}
 		
-		autoRepository.save(a);
+		return autoRepository.save(a);
 	}
 
 	public Auto find(String kennzeichen) {
@@ -89,6 +81,10 @@ public class AutoDAO {
 
 	public Auto findById(int id) {
 		return autoRepository.findOne(id);
+	}
+	
+	public List<Auto> findByBenutzer(Benutzer benutzer){
+		return autoRepository.findByBenutzer(benutzer);
 	}
 
 }

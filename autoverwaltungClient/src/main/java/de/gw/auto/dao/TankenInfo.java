@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
@@ -15,10 +17,14 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.domain.Vergleich;
 
+@Service
 public class TankenInfo {
 	private List<Info> tankenInfos = new ArrayList<Info>();
 
-	public TankenInfo(TankenDao tDao, Settings setting) {
+	protected TankenInfo() {
+	}
+
+	public void init(TankenDao tDao, Settings setting) {
 		load(tDao, setting);
 	}
 
@@ -69,7 +75,7 @@ public class TankenInfo {
 						.getInsgGefahreneKm(setting.getAktuellAuto())));
 				preiseGesamt.add(t.getPreisProLiter());
 
-				//Jahr und Vorjahr
+				// Jahr und Vorjahr
 				if (nowJahr == jahr) {
 					tiKosten.setDiesesJahr(tiKosten.getDiesesJahr().add(
 							t.getKosten()));
@@ -121,18 +127,18 @@ public class TankenInfo {
 				tiAvgPreisProLiter.setVorjahr(Berechnung
 						.findAverage(preiseLetztesJahr));
 
-				tVorher = t; 
+				tVorher = t;
 				index++;
 			}
 		}
-		
-		
+
 		tankenInfos.add(tiMinPreisProLiter);
 		tankenInfos.add(tiMaxPreisProLiter);
-		//tankenInfos.add(tiAvgPreisProLiter);
+		// tankenInfos.add(tiAvgPreisProLiter);
 		tankenInfos.add(tiAnzahlLiter);
 		tankenInfos.add(tiSummeKm);
-		tankenInfos.add(Berechnung.getAVGVerbrauchPro100(tiSummeKm, tiAnzahlLiter));
+		tankenInfos.add(Berechnung.getAVGVerbrauchPro100(tiSummeKm,
+				tiAnzahlLiter));
 		tankenInfos.add(tiKosten);
 	}
 
