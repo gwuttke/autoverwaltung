@@ -1,0 +1,22 @@
+package de.gw.auto.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import de.gw.auto.domain.Benutzer;
+import de.gw.auto.repository.UserRepository;
+
+@Service
+public class BenutzerDAO {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	public Benutzer logInBenutzer(Benutzer loginBenutzer) {
+
+		return userRepository.findByBenutzernameAndPasswort(
+				loginBenutzer.getBenutzername(), loginBenutzer.getPasswort());
+
+	}
+
+}

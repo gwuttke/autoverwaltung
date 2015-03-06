@@ -63,13 +63,6 @@ public class Application {
 			System.out.println(s);
 		}
 		
-		 ctx.getBean(LogIn.class).show();;
-		
-		UserRepository ur = ctx.getBean(UserRepository.class);
-
-		if (ur.findOne(1) == null) {
-			final User user = new User();
-			user.test();
-		}
+		 ctx.getBean(LogIn.class).show();
 	}
 }

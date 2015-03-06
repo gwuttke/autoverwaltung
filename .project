@@ -17,7 +17,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1420369913111</id>
+			<id>1425663476309</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -26,6 +26,10 @@
 					<matcher>
 						<id>org.eclipse.ui.ide.multiFilter</id>
 						<arguments>1.0-projectRelativePath-equals-true-false-autoverwaltungServer</arguments>
+					</matcher>
+					<matcher>
+						<id>org.eclipse.ui.ide.multiFilter</id>
+						<arguments>1.0-projectRelativePath-equals-true-false-autoverwaltungWeb</arguments>
 					</matcher>
 					<matcher>
 						<id>org.eclipse.ui.ide.multiFilter</id>

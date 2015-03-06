@@ -10,29 +10,23 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.plaf.DimensionUIResource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.gw.auto.Constans;
-import de.gw.auto.dao.SonstigeAusgabenDao;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Settings;
 import de.gw.auto.domain.Tanken;
-import de.gw.auto.service.Drucken;
+import de.gw.auto.reports.Drucken;
 
 @Controller
 public class ShowGui {

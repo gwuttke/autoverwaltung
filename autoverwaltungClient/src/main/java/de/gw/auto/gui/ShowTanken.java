@@ -103,7 +103,7 @@ public class ShowTanken {
 		TableModel tm = jTableTanken.getModel();
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tm);
 		jTableTanken.setRowSorter(sorter);
-		sorter.setComparator(2, Collections.reverseOrder(new Tanken()));
+		//sorter.setComparator(2, Collections.reverseOrder(new Tanken()));
 
 		scrollToLastRow();
 
