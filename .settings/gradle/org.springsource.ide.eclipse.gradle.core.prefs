@@ -1,5 +1,5 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
-#Fri Mar 06 18:17:08 CET 2015
-build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;autoverwaltungClient;autoverwaltungServer;autoverwaltungWeb;
+#Sun Mar 08 18:51:00 CET 2015
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;av-client;av-domain;av-server;av-web;
 org.springsource.ide.eclipse.gradle.linkedresources=
 org.springsource.ide.eclipse.gradle.rootprojectloc=

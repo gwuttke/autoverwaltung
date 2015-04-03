@@ -1,36 +1,20 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
-    }
-}
-
 allprojects {
-	version = "1.4.001"
+
+	version = '0.1.0.auto'
 	group = "de.gw.auto"
 	repositories {
 		mavenCentral()
-		mavenLocal()
-		maven{ url 'https://maven.atlassian.com/content/repositories/atlassian-public/'}
 	}
 }
 
 apply plugin: "base"
 
-subprojects {
+configure(subprojects.findAll { it.name }) {
 	apply plugin: "java"
-	apply plugin: "eclipse"
-	apply plugin: "eclipse-wtp"
-	apply plugin: "spring-boot"	
 	
-	sourceCompatibility = 1.7
-	targetCompatibility = 1.7
+	sourceCompatibility = 1.8
+	targetCompatibility = sourceCompatibility
 	
-	compileJava.options.encoding = "ISO-8859-15"
-	compileTestJava.options.encoding = "ISO-8859-15"
-
 	configurations {
 		provided
 	}
@@ -42,11 +26,23 @@ subprojects {
 			runtimeClasspath += [configurations.provided]
 		}
 	}
+}
+
+subprojects {
+
+	apply plugin: "eclipse"
+	apply plugin: "eclipse-wtp"
+	
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.8
+		
+	compileJava.options.encoding = "UTF-8"
+	compileTestJava.options.encoding = "UTF-8"
 
 	eclipse.project.natures "org.springsource.ide.eclipse.gradle.core.nature"	
 	eclipse.classpath.plusConfigurations += [configurations.provided]
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = "2.3"
+	gradleVersion = "2.2.1"
 }

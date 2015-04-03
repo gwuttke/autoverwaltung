@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+		maven { url "http://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
+        classpath 'mysql:mysql-connector-java:5.1.34'
+    }
+}
+
+	apply plugin: 'spring-boot'
+
+
+jar {
+ 	baseName = 'Desktop'
+}
+
+	repositories {
+		mavenCentral()
+		maven {url "https://maven.atlassian.com/content/repositories/atlassian-public/"}
+	}
+
+dependencies {
+	compile project(':av-server')
+	    
+	compile 'com.michaelbaranov:microba:0.4.4.3'
+	compile 'net.sourceforge.dynamicreports:dynamicreports-core:3.0.0'
+}

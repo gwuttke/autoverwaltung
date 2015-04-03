@@ -1,5 +1,5 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleImportPreferences
-#Fri Mar 06 18:17:11 CET 2015
+#Sun Mar 08 18:51:04 CET 2015
 addResourceFilters=true
 afterTasks=afterEclipseImport;
 beforeTasks=cleanEclipse;eclipse;
@@ -7,4 +7,4 @@ enableAfterTasks=true
 enableBeforeTasks=true
 enableDSLD=false
 enableDependendencyManagement=true
-projects=;autoverwaltungClient;autoverwaltungServer;autoverwaltungWeb;
+projects=;av-client;av-domain;av-server;av-web;
