@@ -1,4 +1,4 @@
-package de.gw.auto.service;
+package de.gw.auto.service.implementation;
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.FtpDao;

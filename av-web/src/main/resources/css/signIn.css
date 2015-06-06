@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+
+#chbRememberMe{
+	left: 10px
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}

@@ -7,11 +7,16 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.10.RELEASE")
         classpath 'mysql:mysql-connector-java:5.1.34'
+        classpath 'org.springframework:springloaded:1.2.0.RELEASE'
     }
 }
 
 	apply plugin: 'spring-boot'
 
+
+applicationDefaultJvmArgs = [
+    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+]
 
 jar {
     baseName = 'Web'
@@ -19,4 +24,9 @@ jar {
 
 dependencies {
 compile project(':av-server')
+compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.2.3.RELEASE'
+compile 'org.springframework.boot:spring-boot-starter-security'
+//compile 'com.efsavage.twitter.bootstrap:bootstrap-maven:2.3.1'
+compile 'org.webjars:bootstrap:3.3.4'
+compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 }

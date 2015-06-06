@@ -1,8 +1,10 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,39 +22,44 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="Auto")
+@Table(name = "Auto")
 @SequenceGenerator(name = "auto_seq", sequenceName = "auto_id_seq")
 public class Auto implements Serializable {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "auto_seq")
 	private int id;
-	@Column(unique=true)
+
+	@Column(unique = true)
 	private String kfz;
-	@Column(name="kmkauf")
+
+	@Column(name = "kmkauf")
 	private int kmKauf;
+
 	private Date kauf;
-	@Column(name="erstzulassung")
+
+	@Column(name = "erstzulassung")
 	private Date erstZulassung;
+
 	// Wissen Notieren n:m Beziehung
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idauto") }, inverseJoinColumns = { @JoinColumn(name = "idbenzinart") })
 	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
-	@Column(name="kmaktuell")
+
+	@Column(name = "kmaktuell")
 	private int kmAktuell;
-	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<SonstigeAusgaben> sonstigeAusgaben;
-	@OneToMany(mappedBy="auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "auto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Tanken> tankfuellungen = new HashSet<Tanken>();
-	@ManyToOne
-	private Benutzer benutzer;
-	
-	
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Benutzer> users = new ArrayList<Benutzer>();
 
 	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
-			Set<Benzinart> benzinarten, int kmAktuell) {
+			Set<Benzinart> benzinarten, int kmAktuell, Benutzer user) {
 		super();
 		this.kfz = kfz;
 		this.kmKauf = kmKauf;
@@ -60,13 +67,25 @@ public class Auto implements Serializable {
 		this.erstZulassung = erstZulassung;
 		this.benzinarten = benzinarten;
 		this.kmAktuell = kmAktuell;
+		this.users.add(user);
 	}
-
 
 	public Auto() {
 		super();
 	}
-		
+
+	public List<Benutzer> getUsers() {
+		return this.users;
+	}
+
+	public void addBenutzer(Benutzer user) {
+		this.users.add(user);
+	}
+
+	public void setUsers(List<Benutzer> users) {
+		this.users = users;
+	}
+
 	public Set<Tanken> getTankfuellungen() {
 		return tankfuellungen;
 	}
@@ -142,18 +161,18 @@ public class Auto implements Serializable {
 	public void addBenzinart(Benzinart benzinart) {
 		benzinarten.add(benzinart);
 	}
-	
-	public void addTanken(Tanken tanken){
+
+	public void addTanken(Tanken tanken) {
 		tankfuellungen.add(tanken);
 	}
-	
-	public void updateTanken(Tanken tanken){
+
+	public void updateTanken(Tanken tanken) {
 		searchAndUpdate(tanken);
 	}
-	
-	private void searchAndUpdate(Tanken tanken){
-		for (Tanken t : tankfuellungen){
-			if (t.getId() == tanken.getId()){
+
+	private void searchAndUpdate(Tanken tanken) {
+		for (Tanken t : tankfuellungen) {
+			if (t.getId() == tanken.getId()) {
 				tankfuellungen.remove(t);
 				break;
 			}
@@ -163,20 +182,21 @@ public class Auto implements Serializable {
 
 	@Override
 	public String toString() {
-		/* return MessageFormat.format(
-				"{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}", new Object[] {
-						getClass().getSimpleName(), id, kfz, kmKauf, kauf,
-						erstZulassung, benzinarten, kmAktuell });
-		*/
+		/*
+		 * return MessageFormat.format(
+		 * "{0}: {1} : {2} : {3} : {4} : {5} : {6} : {7}", new Object[] {
+		 * getClass().getSimpleName(), id, kfz, kmKauf, kauf, erstZulassung,
+		 * benzinarten, kmAktuell });
+		 */
 		return kfz;
 	}
-	
-	public String getBenzinartenString(){
+
+	public String getBenzinartenString() {
 		StringBuilder sb = new StringBuilder();
-		for (Benzinart b : benzinarten){
+		for (Benzinart b : benzinarten) {
 			sb.append(b).append(", ");
 		}
-		sb.delete(sb.length() -2, sb.length());
+		sb.delete(sb.length() - 2, sb.length());
 		return sb.toString();
 	}
 }

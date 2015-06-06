@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 
 import org.springframework.stereotype.Component;
 
-import de.gw.auto.dao.Settings;
+
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.domain.Texte;
 
@@ -21,16 +21,12 @@ import de.gw.auto.domain.Texte;
 public class BenzinartModel {
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
 
-	private Settings setting;
+	
 
 	Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
 	DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
 
 	public BenzinartModel() {
-	}
-
-	public void init(Settings setting) {
-		this.setting = setting;
 	}
 
 	public JComboBox<Benzinart> getCombobox() {

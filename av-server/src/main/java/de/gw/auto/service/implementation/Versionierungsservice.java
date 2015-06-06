@@ -1,4 +1,4 @@
-package de.gw.auto.service;
+package de.gw.auto.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

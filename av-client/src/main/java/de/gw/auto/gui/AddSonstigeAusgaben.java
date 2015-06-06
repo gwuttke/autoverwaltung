@@ -26,7 +26,7 @@ import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.model.Spinner;
-import de.gw.auto.service.SonstigeAusgabenService;
+import de.gw.auto.service.implementation.SonstigeAusgabenService;
 
 public class AddSonstigeAusgaben extends Funktionen {
 	

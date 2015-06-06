@@ -41,8 +41,8 @@ import de.gw.auto.dao.TankDAO;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.gui.Button.Funktionen;
-import de.gw.auto.service.FtpService;
-import de.gw.auto.service.Versionierungsservice;
+import de.gw.auto.service.implementation.FtpService;
+import de.gw.auto.service.implementation.Versionierungsservice;
 
 @Controller
 public class Willkommen extends Thread {

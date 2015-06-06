@@ -9,5 +9,10 @@ import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 
 public interface UserRepository extends JpaRepository<Benutzer,Integer>{
-	public Benutzer findByBenutzernameAndPasswort(String benutzername,String passwort);
+	public Benutzer findByBenutzernameOrEMailAndPasswort(String benutzername, String eMail,String passwort);
+	
+	public Benutzer findByBenutzername(String benutzername);
+	
+	public Benutzer findByEMail(String eMail);
+	
 }

@@ -29,7 +29,7 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
-import de.gw.auto.service.TankenService;
+import de.gw.auto.service.implementation.TankenService;
 
 @Controller
 public class ShowTanken {

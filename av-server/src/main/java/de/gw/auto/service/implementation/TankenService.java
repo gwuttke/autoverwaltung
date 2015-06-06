@@ -1,4 +1,4 @@
-package de.gw.auto.service;
+package de.gw.auto.service.implementation;
 
 import java.util.List;
 import java.util.Vector;
@@ -6,10 +6,10 @@ import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.gw.auto.dao.Settings;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class TankenService {
@@ -19,14 +19,11 @@ public class TankenService {
 	@Autowired
 	private TankenDao tankenDao;
 
-	private Settings setting = null;
-
 	protected TankenService() {
 	}
 
-	public void init(Settings setting) {
-		this.setting = setting;
-		this.tankenDao.init(setting);
+	public void init(RegisteredUser registeredUser) {
+		this.tankenDao.init(registeredUser);
 		tankenList = tankenDao.getTankenList();
 	}
 
@@ -54,8 +51,6 @@ public class TankenService {
 
 		Object[][] o;
 		int index = 0;
-		Tanken tOld = null;
-		Tanken tVoll = null;
 		o = new Object[tankungen.size()][11];
 		for (Tankfuellung t : tankungen) {
 
@@ -79,13 +74,13 @@ public class TankenService {
 		return this.tankenDao.like(tanken);
 	}
 
-	public List<Tankfuellung> addTankfuellung(Tanken tanken) {
-		this.tankenList = tankenDao.tankenIntoDatabase(tanken, this.setting);
+	public List<Tankfuellung> addTankfuellung(Tanken tanken, RegisteredUser registeredUser) {
+		this.tankenList = tankenDao.tankenIntoDatabase(tanken, registeredUser);
 		return tankenList;
 	}
 
-	public List<Tankfuellung> updateTankfuellung(Tanken tanken) {
-		this.tankenList = tankenDao.tankenUpdate(tanken, this.setting);
+	public List<Tankfuellung> updateTankfuellung(Tanken tanken, RegisteredUser registeredUser) {
+		this.tankenList = tankenDao.tankenUpdate(tanken, registeredUser);
 		return tankenList;
 	}
 

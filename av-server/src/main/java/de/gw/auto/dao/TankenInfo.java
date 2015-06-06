@@ -15,6 +15,7 @@ import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.domain.Vergleich;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class TankenInfo {
@@ -23,15 +24,15 @@ public class TankenInfo {
 	protected TankenInfo() {
 	}
 
-	public void init(TankenDao tDao, Settings setting) {
-		load(tDao, setting);
+	public void init(TankenDao tDao, RegisteredUser registedUser) {
+		load(tDao, registedUser);
 	}
 
 	public List<Info> getTankenInfos() {
 		return tankenInfos;
 	}
 
-	private void load(TankenDao tDao, Settings setting) {
+	private void load(TankenDao tDao, RegisteredUser registedUser) {
 
 		List<Tankfuellung> tankungen = tDao.getTankenList();
 		Info tiKosten = new Info(Constans.TANKEN_KOSTEN);
@@ -71,7 +72,7 @@ public class TankenInfo {
 				tiAnzahlLiter.setGesammt(tiAnzahlLiter.getGesammt().add(
 						t.getLiter()));
 				tiSummeKm.setGesammt(new BigDecimal(Berechnung
-						.getInsgGefahreneKm(setting.getAktuellAuto())));
+						.getInsgGefahreneKm(registedUser.getCurrentAuto())));
 				preiseGesamt.add(t.getPreisProLiter());
 
 				// Jahr und Vorjahr
@@ -90,7 +91,7 @@ public class TankenInfo {
 						tiSummeKm
 								.setDiesesJahr(tiSummeKm.getDiesesJahr().add(
 										new BigDecimal(t.getKmStand()
-												- setting.getAktuellAuto()
+												- registedUser.getCurrentAuto()
 														.getKmKauf())));
 					}
 
@@ -110,7 +111,7 @@ public class TankenInfo {
 					} else {
 						tiSummeKm.setVorjahr(tiSummeKm.getVorjahr().add(
 								new BigDecimal(t.getKmStand()
-										- setting.getAktuellAuto()
+										- registedUser.getCurrentAuto()
 												.getKmAktuell())));
 					}
 

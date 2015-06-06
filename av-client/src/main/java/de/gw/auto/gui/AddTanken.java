@@ -46,7 +46,7 @@ import de.gw.auto.gui.model.LandModel;
 import de.gw.auto.gui.model.OrtModel;
 import de.gw.auto.gui.model.Spinner;
 import de.gw.auto.gui.model.TankModel;
-import de.gw.auto.service.TankenService;
+import de.gw.auto.service.implementation.TankenService;
 
 @Component
 public class AddTanken extends Funktionen implements ComponentListener {

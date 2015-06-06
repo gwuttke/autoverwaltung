@@ -1,15 +1,13 @@
-package de.gw.auto.service;
+package de.gw.auto.service.implementation;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.gw.auto.dao.Settings;
 import de.gw.auto.dao.SonstigeAusgabenDao;
-import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.SonstigeAusgaben;
-import de.gw.auto.domain.Tanken;
+import de.gw.auto.service.RegisteredUser;
 @Controller
 public class SonstigeAusgabenService {
 	
@@ -18,27 +16,23 @@ public class SonstigeAusgabenService {
 	
 	List<SonstigeAusgaben> sonstigeAusgabenList = null;
 
-	Settings setting = null;
+
 
 	protected SonstigeAusgabenService(){
 		
 	}
-	public void init(Settings setting) {
-		this.setting = setting;
-		sonstigeAusgabenDao.init(this.setting);
-	}
-
-	public Object[][] loadSonstigeAusgaben() {
+	
+	public Object[][] loadSonstigeAusgaben(RegisteredUser registeredUser) {
 		Object[][] o = new Object[0][0];
 		int index = 0;
 		
-		int entrySize = sonstigeAusgabenDao.getSonstigeAusgabenList().size();
+		int entrySize = sonstigeAusgabenDao.getSonstigeAusgabenList(registeredUser).size();
 
 		if (entrySize > 0) {
 			o = new Object[entrySize][4];
 
 			for (SonstigeAusgaben sa : sonstigeAusgabenDao
-					.getSonstigeAusgabenList()) {
+					.getSonstigeAusgabenList(registeredUser)) {
 				o[index][0] = sa.getDatum();
 				o[index][1] = sa.getKommentar();
 				o[index][2] = sa.getKmStand();

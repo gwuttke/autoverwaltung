@@ -5,24 +5,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.gw.auto.Constans;
 import de.gw.auto.domain.Datum;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.SonstigeAusgaben;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class SonstigeAusgabenInfo {
 
+	@Autowired
+	private SonstigeAusgabenDao sonstigeAusgabenDao;
+	
 	private List<Info> sonstigeAusgabenInfos = new ArrayList<Info>();
 	private Datum datum = new Datum();
 
 	// aktuelles Jahr
 	private final int nowJahr = datum.getNow().get(Calendar.YEAR);
 
-	public void init(SonstigeAusgabenDao sADao) {
-		load(sADao);
+	public void init(RegisteredUser registeredUser) {
+		load(registeredUser);
 
 	}
 
@@ -30,8 +35,8 @@ public class SonstigeAusgabenInfo {
 		return sonstigeAusgabenInfos;
 	}
 
-	private void load(SonstigeAusgabenDao sADao) {
-		List<SonstigeAusgaben> sAs = sADao.getSonstigeAusgabenList();
+	private void load(RegisteredUser registeredUser) {
+		List<SonstigeAusgaben> sAs = sonstigeAusgabenDao.getSonstigeAusgabenList(registeredUser);
 
 		Info sAIKosten = new Info(Constans.SONSTIGEAUSGABEN_KOSTEN);
 

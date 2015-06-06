@@ -12,6 +12,7 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.TankenRepository;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class TankenDao {
@@ -36,21 +37,15 @@ public class TankenDao {
 
 		return tankfuellungList;
 	}
-
-	/*
-	public TankenDao(Settings setting) {
-		
-	}
-*/
 	
-	public void init(Settings setting) {
+	public void init(RegisteredUser registeredUser) {
 		voll = tankDao.getVoll();
-		setTankenList(setting);
+		setTankenList(registeredUser);
 		
 	}
 	
-	public void setTankenList(Settings setting) {
-		Auto aktuellesAuto = setting.getAktuellAuto();
+	public void setTankenList(RegisteredUser registedUser) {
+		Auto aktuellesAuto = registedUser.getCurrentAuto();
 		tankenList = tankenRepository
 				.findByAutoOrderByKmStandAsc(aktuellesAuto);
 
@@ -87,16 +82,16 @@ public class TankenDao {
 		return count == 0 ? 0 : preis / count;
 	}
 
-	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken, Settings setting) {
-		Auto auto = setting.getAktuellAuto();
+	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken, RegisteredUser registedUser) {
+		Auto auto = registedUser.getCurrentAuto();
 
 		tanken = tankenRepository.save(tanken);
 
 		auto.addTanken(tanken);
-		setting.setAktuellAuto(auto);
+		registedUser.setCurrentAuto(auto);
 
 		autoRepository.save(auto);
-		setTankenList(setting);
+		setTankenList(registedUser);
 		return getTankenList();
 
 	}
@@ -108,17 +103,17 @@ public class TankenDao {
 		return false;
 	}
 
-	public List<Tankfuellung> tankenUpdate(Tanken tanken, Settings setting) {
+	public List<Tankfuellung> tankenUpdate(Tanken tanken, RegisteredUser registedUser) {
 
-		Auto auto = setting.getAktuellAuto();
+		Auto auto = registedUser.getCurrentAuto();
 
 		tankenRepository.save(tanken);
 		auto.updateTanken(tanken);
-		setting.setAktuellAuto(auto);
+		registedUser.setCurrentAuto(auto);
 
 		autoRepository.save(auto);
 
-		setTankenList(setting);
+		setTankenList(registedUser);
 		return getTankenList();
 
 	}

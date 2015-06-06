@@ -1,4 +1,4 @@
-package de.gw.auto.service;
+package de.gw.auto.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,38 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.gw.auto.Constans;
-import de.gw.auto.dao.Settings;
 import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.SonstigeAusgabenInfo;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.dao.TankenInfo;
 import de.gw.auto.domain.Info;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class InfoService {
 	
 	@Autowired
-	private TankenDao tankenDao;
-	
-	@Autowired
-	private SonstigeAusgabenDao sonstigeAusgabenDao;
+	private TankenDao tankenDao;	
 	
 	@Autowired
 	SonstigeAusgabenInfo sonstigeAusgabenInfo;
 	
 	@Autowired
 	TankenInfo tankenInfo;
-	
-	Settings setting = null;
 
 	protected InfoService(){}
 	
-	public void init(Settings setting) {
-		this.setting = setting;
-		tankenDao.init(this.setting);
-		sonstigeAusgabenDao.init(setting);
-		sonstigeAusgabenInfo.init(sonstigeAusgabenDao);
-		tankenInfo.init(tankenDao, setting);
+	public void init(RegisteredUser registeredUser) {
+		tankenDao.init(registeredUser);
+		sonstigeAusgabenInfo.init(registeredUser);
+		tankenInfo.init(tankenDao, registeredUser);
 	
 	}
 	

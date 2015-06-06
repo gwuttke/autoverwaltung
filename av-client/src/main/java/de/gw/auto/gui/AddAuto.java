@@ -35,7 +35,7 @@ import de.gw.auto.dao.BenzinartDAO;
 import de.gw.auto.dao.Settings;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benzinart;
-import de.gw.auto.service.AutoService;
+import de.gw.auto.service.implementation.AutoService;
 
 @Controller
 public class AddAuto extends JFrame {

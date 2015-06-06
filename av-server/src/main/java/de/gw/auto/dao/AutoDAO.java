@@ -1,6 +1,5 @@
 package de.gw.auto.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -13,11 +12,10 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Benzinart;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.UserRepository;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class AutoDAO {
-
-	private Settings setting;
 	
 	@Autowired
 	private AutoRepository autoRepository;
@@ -25,27 +23,20 @@ public class AutoDAO {
 	@Autowired
 	private UserRepository userRepository;
 
-	public AutoDAO(Settings setting) {
-		this.setting = setting;
-	}
 	
 	protected AutoDAO(){
 		
 	}
 
-	public Settings carIntoDatabase(Settings setting, Auto a) {
-		
-		Benutzer benutzer = setting.getBenutzer();
+	public RegisteredUser carIntoDatabase(RegisteredUser benutzer, Auto a) {
 		
 		a = autoRepository.save(a);
 		
 		benutzer.addAuto(a);
 		benutzer = userRepository.save(benutzer);
 		
-		setting.addAuto(a);
-		this.setting = setting;
 
-		return this.setting;
+		return benutzer;
 	}
 
 	public Auto updateAuto(int autoID, Set<Benzinart> benzinarten,
@@ -82,8 +73,8 @@ public class AutoDAO {
 		return autoRepository.findOne(id);
 	}
 	
-	public List<Auto> findByBenutzer(Benutzer benutzer){
-		return autoRepository.findByBenutzer(benutzer);
+	public List<Auto> findByBenutzer(List<Benutzer> users){
+		return autoRepository.findByUsers(users);
 	}
 
 }
