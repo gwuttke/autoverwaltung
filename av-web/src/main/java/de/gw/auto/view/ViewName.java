@@ -1,24 +1,40 @@
 package de.gw.auto.view;
 
 public class ViewName {
-
 	private static final String REDIRECT = "redirect:";
+
 	private static final String ERROR = "error?";
-	
+
 	private static final String ROOT = "/";
 
-	public static final String GREETING = "greeting";
-	public static final String HELLO = "hello";
+	private static final String USER = "user";
+
+	private static final String TANKEN = "tanken";
+
+	private static final String ROOT_USER = ROOT + USER;
+
+	private static final String ROOT_USER_TANKEN = ROOT_USER + ROOT + TANKEN;
+
 	public static final String LOGIN = "login";
+
+	public static final String LOGOUT = "logout";
+
 	public static final String REGISTER = "register";
+
 	public static final String REGISTRATION = "registration";
-	
+
+	public static final String USER_MAIN_PAGE = ROOT_USER_TANKEN + "/show";
+
 	public static final String DEFAULT_ROOT = ROOT;
 
 	public static final String REDIRECT_LOGIN = REDIRECT + LOGIN;
+
 	public static final String REDIRECT_ROOT = REDIRECT + ROOT;
+
+	public static final String REDIRECT_USER_MAIN_PAGE = REDIRECT
+			+ USER_MAIN_PAGE;
+
 	public static final String REDIRECT_REGISTER = REDIRECT + REGISTER;
-	
-	public static final String ERROR_GREETING = ERROR + GREETING;
+
 	public static final String ERROR_LOGIN = ERROR + LOGIN;
 }

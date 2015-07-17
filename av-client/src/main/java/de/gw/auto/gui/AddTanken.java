@@ -33,7 +33,7 @@ import com.michaelbaranov.microba.calendar.DatePicker;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.Settings;
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.domain.Tank;
@@ -80,7 +80,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 	private JSpinner spKmStand;
 	private JComboBox<Land> cbLand;
 	private JComboBox<Ort> cbOrt;
-	private JComboBox<Benzinart> cbBenzinart;
+	private JComboBox<Kraftstoffsorte> cbBenzinart;
 	private JComboBox<Tank> cbTank;
 	private JSpinner spLiter;
 	private JSpinner spPreisPLiter;
@@ -257,7 +257,7 @@ public class AddTanken extends Funktionen implements ComponentListener {
 						.getValue()));
 				BigDecimal preisProLiter = new BigDecimal(String
 						.valueOf(spPreisPLiter.getValue()));
-				Benzinart benzinArt = (Benzinart) cbBenzinart.getModel()
+				Kraftstoffsorte benzinArt = (Kraftstoffsorte) cbBenzinart.getModel()
 						.getSelectedItem();
 
 				if (btnAdd.getText() == Texte.Form.Button.HINZUFUEGEN) {

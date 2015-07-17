@@ -31,10 +31,10 @@ import org.springframework.stereotype.Controller;
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import de.gw.auto.dao.AutoDAO;
-import de.gw.auto.dao.BenzinartDAO;
+import de.gw.auto.dao.KraftstoffDAO;
 import de.gw.auto.dao.Settings;
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.service.implementation.AutoService;
 
 @Controller
@@ -46,7 +46,7 @@ public class AddAuto extends JFrame {
 	private AutoService autoService;
 
 	@Autowired
-	private BenzinartDAO benzinartDao;
+	private KraftstoffDAO benzinartDao;
 
 	@Autowired
 	private ShowGui showGui;
@@ -61,17 +61,17 @@ public class AddAuto extends JFrame {
 	private final static JLabel KFZ_ERST_LABEL = new JLabel("Erst Zulassung:");
 	private final static JLabel KFZ_KAUF_LABEL = new JLabel("Kaufdatum:");
 	private final static JLabel Benzinart_LABEL = new JLabel("Benzinarten:");
-	private final static DefaultListModel<Benzinart> baModel = new DefaultListModel<Benzinart>();
-	private final static DefaultComboBoxModel<Benzinart> bModel = new DefaultComboBoxModel<Benzinart>();
-	private final static JList<Benzinart> autoBenzinarten = new JList<Benzinart>(
+	private final static DefaultListModel<Kraftstoffsorte> baModel = new DefaultListModel<Kraftstoffsorte>();
+	private final static DefaultComboBoxModel<Kraftstoffsorte> bModel = new DefaultComboBoxModel<Kraftstoffsorte>();
+	private final static JList<Kraftstoffsorte> autoBenzinarten = new JList<Kraftstoffsorte>(
 			baModel);
-	private final static JComboBox<Benzinart> cmboBoxBenzinarten = new JComboBox<Benzinart>(
+	private final static JComboBox<Kraftstoffsorte> cmboBoxBenzinarten = new JComboBox<Kraftstoffsorte>(
 			bModel);
 	private final static JButton BTN_NEW_AUTO = new JButton("neues Auto");
 	private final static JButton BTN_ADD_BENZINART = new JButton("Hinzufügen");
 	private final static JButton BTN_CANCEL = new JButton("Abbrechen");
 
-	Set<Benzinart> benzinArten = new HashSet<Benzinart>();
+	Set<Kraftstoffsorte> benzinArten = new HashSet<Kraftstoffsorte>();
 
 	private static DatePicker getDateSpinner(final String name) {
 		Calendar cal = Calendar.getInstance();
@@ -169,7 +169,7 @@ public class AddAuto extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				baModel.addElement((Benzinart) bModel.getSelectedItem());
+				baModel.addElement((Kraftstoffsorte) bModel.getSelectedItem());
 			}
 		});
 
@@ -193,7 +193,7 @@ public class AddAuto extends JFrame {
 	}
 
 	private void fillComboBox() {
-		for (Benzinart b : benzinartDao.getBenzinartList()) {
+		for (Kraftstoffsorte b : benzinartDao.getBenzinartList()) {
 			bModel.addElement(b);
 		}
 	}

@@ -1,0 +1,57 @@
+<body>
+	<div class="container" th:fragment="tankenTable"  th:object="${tankenView}">
+		<div th:if="${#lists.isEmpty(tankfuellungenView)}" id="tankenEmpty">
+			<div class="alert alert-danger">
+			    noch keine Tankvorg&auml;nge vorhanden
+			</div>
+		</div>
+		<div th:if="${not #lists.isEmpty(tankfuellungenView)}" id="tankenNotEmpty">
+			<table class="table">
+		    <thead>
+		      <tr>
+		        <th>Datum</th>
+		        <th>Km-Stand</th>
+		        <th>Kosten</th>
+		      	<th>Liter</th>
+		        <th>gefahrene Km</th>
+		        <th>Verbrauch auf 100Km</th>
+		        <th>Preis pro Liter</th>
+		        <th>Land</th>
+		        <th>Ort</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		    	<tr th:each="tankenModel : ${tankfuellungenView}" class="row" th:classappend="${tankenModel.cssStyleRow}">
+		    		<td th:text="${tankenModel.datum}">
+		    			Datum
+		    		</td>
+		    		<td th:text="${tankenModel.kmStand}">
+		    			km-Stand
+		    		</td>
+		    		<td th:text="${tankenModel.kosten}">
+		    			Kosten
+		    		</td>
+		    		<td th:text="${tankenModel.liter}">
+		    			Liter
+		    		</td>
+		    		<td th:text="${#strings.defaultString(tankenModel.getGefahreneKm)}">
+		    			gefahrene-Km
+		    		</td>
+		    		<td th:text="${#strings.defaultString(tankenModel.getVerbrauch100Km}">
+		    			verbrauch
+		    		</td>
+		    		<td th:text="${tankenModel.preisProLiter}+ &euro;">
+		    			preisProLiter
+		    		</td>
+		    		<td th:text="${tankenModel.land}">
+		    			Land
+		    		</td>
+		    		<td th:text="${tankenModel.ort}">
+		    			Ort
+		    		</td>
+		    	</tr>
+    		</tbody>
+    	</table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<th:block th:include="fragments/headTag :: head" />
+<title>Autoverwaltung - Neue Tankf&uuml;llung</title>
+</head>
+<body>
+	<!-- Trigger the modal with a button -->
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+		data-target="#myModal">Open Modal</button>
+
+	<!-- Modal -->
+	<div th:fragment="newTankenModal">
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Neue Tankf&uuml;llung</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" th:object="newTanken">
+							<div class="row">
+								<div class='col-sm-6'>
+									<div class="control-group">
+										<label for="date-picker-2" class="control-label">B</label>
+										<div class="controls">
+											<div class="input-group">
+													<input type="text" placeholder="click to show datepicker"
+														id="example1" />
+												<label for="date-picker-2" class="input-group-addon btn"><span
+													class="glyphicon glyphicon-calendar"></span> </label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(".date-picker").datepicker();
+
+									$(".date-picker")
+											.on(
+													"change",
+													function() {
+														var id = $(this).attr(
+																"id");
+														var val = $(
+																"label[for='"
+																		+ id
+																		+ "']")
+																.text();
+														$("#msg")
+																.text(
+																		val
+																				+ " changed");
+													});
+								</script>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Liter</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="focusedInput" type="text"
+										th:value="${liter}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Kosten</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="focusedInput" type="text"
+										th:value="${kosten}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Preis pro Liter</label>
+								<div class="col-sm-10">
+									<input class="form-control" id="focusedInput" type="text"
+										th:value="${preisProLiter}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="selectBenzinart">Benzinart</label> <select
+									class="form-control" id="selectBenzinart">
+									<option th:value="">bitte ausw&auml;len</option>
+									<option th:each="benzinart : ${benzinarten}"
+										th:value="${benzinart}" th:text="${benzinart.name}">benzinarten</option>
+								</select>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Schlie&szlig;en</button>
+								<button type="button" class="btn btn-sucess"
+									data-dismiss="modal">Speichern</button>
+							</div>
+						</form>
+						<p>Some text in the modal.</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

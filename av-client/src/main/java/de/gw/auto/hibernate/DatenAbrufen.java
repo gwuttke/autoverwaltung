@@ -32,7 +32,7 @@ import org.hibernate.type.Type;
 import de.gw.auto.dao.Settings;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.domain.SonstigeAusgaben;
@@ -43,7 +43,7 @@ import de.gw.auto.domain.Version;
 public class DatenAbrufen extends DatenbankZugriff {
 
 	private List<Version> versionen = new ArrayList<Version>();
-	private List<Benzinart> benzinarten = new ArrayList<Benzinart>();
+	private List<Kraftstoffsorte> benzinarten = new ArrayList<Kraftstoffsorte>();
 	private List<Land> laender = new ArrayList<Land>();
 	private List<Ort> orte = new ArrayList<Ort>();
 	private List<Auto> autos = new ArrayList<Auto>();
@@ -121,7 +121,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 	}
 
 	private void giveBenzinarten() throws Exception {
-		benzinarten = (List<Benzinart>) this.select(FROM + "Benzinart");
+		benzinarten = (List<Kraftstoffsorte>) this.select(FROM + "Benzinart");
 	}
 
 	private void giveTankbefuellung() throws Exception {
@@ -143,7 +143,7 @@ public class DatenAbrufen extends DatenbankZugriff {
 		return befuellung;
 	}
 
-	public List<Benzinart> getBenzinarten() {
+	public List<Kraftstoffsorte> getBenzinarten() {
 		try {
 			giveBenzinarten();
 		} catch (Exception e) {

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.gw.auto.dao.TankDAO;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Tank;
 import de.gw.auto.domain.Texte;
 import de.gw.auto.service.implementation.TankenService;

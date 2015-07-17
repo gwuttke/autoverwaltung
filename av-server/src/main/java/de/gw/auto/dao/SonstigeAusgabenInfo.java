@@ -35,6 +35,7 @@ public class SonstigeAusgabenInfo {
 		return sonstigeAusgabenInfos;
 	}
 
+	@Deprecated
 	private void load(RegisteredUser registeredUser) {
 		List<SonstigeAusgaben> sAs = sonstigeAusgabenDao.getSonstigeAusgabenList(registeredUser);
 

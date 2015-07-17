@@ -33,5 +33,6 @@ public class Constans {
 	protected static final String HINZUFUEGEN = "hinzufügen";
 	public static final String CLOSE_WINDOW = "Fenster Schliessen";
 	public static final String ROOT_DIRECTORY = System.getProperty("user.dir") + File.separator;
+	public static final String SESSION_BENUTZER = "User";
 
 }

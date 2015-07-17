@@ -12,30 +12,30 @@ import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class SonstigeAusgabenDao {
-
 	@Autowired
 	private SonstigeAusgabenRepository sonstigeAusgabenRepository;
 
 	protected SonstigeAusgabenDao() {
 	}
 
-
 	public List<SonstigeAusgaben> intoDatabase(SonstigeAusgaben sa) {
 		sonstigeAusgabenRepository.save(sa);
-
 		return getSonstigeAusgabenList(sa.getAuto().getUsers(), sa);
 	}
 
-	public List<SonstigeAusgaben> getSonstigeAusgabenList(RegisteredUser registeredUser) {
-		return sonstigeAusgabenRepository.findByAuto(registeredUser.getCurrentAuto());
+	public List<SonstigeAusgaben> getSonstigeAusgabenList(
+			RegisteredUser registeredUser) {
+		return sonstigeAusgabenRepository.findByAuto(registeredUser
+				.getCurrentAuto());
 	}
-	
-	private List<SonstigeAusgaben> getSonstigeAusgabenList(List<Benutzer> users, SonstigeAusgaben sa) {
-		for(Benutzer u : users){
-			if(u.getAutos().contains(sa.getAuto())){
+
+	private List<SonstigeAusgaben> getSonstigeAusgabenList(
+			List<Benutzer> users, SonstigeAusgaben sa) {
+		for (Benutzer u : users) {
+			if (u.getAutos().contains(sa.getAuto())) {
 				return sonstigeAusgabenRepository.findByAuto(sa.getAuto());
 			}
 		}
 		return null;
 	}
-} 
+}

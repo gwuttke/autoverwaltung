@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoff;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.UserRepository;
 import de.gw.auto.service.RegisteredUser;
@@ -28,24 +29,23 @@ public class AutoDAO {
 		
 	}
 
-	public RegisteredUser carIntoDatabase(RegisteredUser benutzer, Auto a) {
+	public Benutzer save(Benutzer benutzer, Auto a) {
 		
-		a = autoRepository.save(a);
-		
+		benutzer = userRepository.findOne(benutzer.getId());
+			
 		benutzer.addAuto(a);
-		benutzer = userRepository.save(benutzer);
-		
-
+		benutzer.setCurrentAuto(a);
+		userRepository.save(benutzer);
 		return benutzer;
 	}
 
-	public Auto updateAuto(int autoID, Set<Benzinart> benzinarten,
+	public Auto updateAuto(int autoID, Kraftstoff kraftstoff,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
 		Auto a = findById(autoID);
 		
 		if (a != null) {
-			if (benzinarten != null) {
-				a.setBenzinarten(benzinarten);
+			if (kraftstoff != null) {
+				a.setKraftstoff(kraftstoff);
 			}
 			if (eZulassung != null) {
 				a.setErstZulassung((java.sql.Date) eZulassung);

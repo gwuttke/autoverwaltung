@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.gw.auto.Constans;
-import de.gw.auto.dao.SonstigeAusgabenDao;
 import de.gw.auto.dao.SonstigeAusgabenInfo;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.dao.TankenInfo;
@@ -18,16 +17,15 @@ import de.gw.auto.service.RegisteredUser;
 public class InfoService {
 	
 	@Autowired
-	private TankenDao tankenDao;	
+	private TankenInfo tankenInfo;
 	
-	@Autowired
-	SonstigeAusgabenInfo sonstigeAusgabenInfo;
-	
-	@Autowired
-	TankenInfo tankenInfo;
-
 	protected InfoService(){}
 	
+	public TankenInfo getTankenInfo() {
+		return tankenInfo;
+	}
+	
+	@Deprecated
 	public void init(RegisteredUser registeredUser) {
 		tankenDao.init(registeredUser);
 		sonstigeAusgabenInfo.init(registeredUser);

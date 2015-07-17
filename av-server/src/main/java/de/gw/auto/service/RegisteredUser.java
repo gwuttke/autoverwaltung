@@ -22,6 +22,7 @@ public class RegisteredUser extends Benutzer implements UserDetails, Principal {
 			this.seteMail(user.geteMail());
 			this.setPasswort(user.getPasswort());
 			this.setAutos(user.getAutos());
+			this.setCurrentAuto(user.getCurrentAuto());
 			this.setRoles(user.getRoles());
 		}
 	}

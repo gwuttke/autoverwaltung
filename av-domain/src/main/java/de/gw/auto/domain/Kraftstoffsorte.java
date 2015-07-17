@@ -10,12 +10,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Benzinart")
-@SequenceGenerator(name = "benzinart_gen", sequenceName = "benzinart_id_seq")
-public class Benzinart implements Serializable {
+@Table(name="Kraftstoffsorte")
+@SequenceGenerator(name = "kraftstoffsorte_gen", sequenceName = "kraftstoffsorte_id_seq")
+public class Kraftstoffsorte implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "benzinart_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "kraftstoffsorte_gen")
 	private Integer id;
 	private String name;
 	/*@ManyToMany(cascade = CascadeType.PERSIST)
@@ -31,10 +31,10 @@ public class Benzinart implements Serializable {
 		this.id = id;
 	}
 
-	public Benzinart() {
+	public Kraftstoffsorte() {
 	}
 
-	public Benzinart(String name) {
+	public Kraftstoffsorte(String name) {
 		super();
 		if (name.equals(null)) {
 			throw new IllegalArgumentException("Der Name ist nicht gueltig");

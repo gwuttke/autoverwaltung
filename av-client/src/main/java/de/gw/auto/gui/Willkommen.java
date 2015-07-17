@@ -32,7 +32,7 @@ import com.sun.corba.se.impl.io.FVDCodeBaseImpl;
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.AutoDAO;
-import de.gw.auto.dao.BenzinartDAO;
+import de.gw.auto.dao.KraftstoffDAO;
 import de.gw.auto.dao.LandDao;
 import de.gw.auto.dao.OrtDao;
 import de.gw.auto.dao.Settings;

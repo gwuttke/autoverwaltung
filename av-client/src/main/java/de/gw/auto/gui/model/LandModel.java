@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import de.gw.auto.dao.LandDao;
+import de.gw.auto.dao.DefaultDao;
 import de.gw.auto.dao.OrtDao;
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
@@ -22,7 +22,7 @@ public class LandModel {
 
 	
 	@Autowired
-	LandDao lDao;
+	DefaultDao lDao;
 	
 	Vector<Land> vLand = new Vector<Land>();
 	DefaultComboBoxModel model = new DefaultComboBoxModel(vLand);

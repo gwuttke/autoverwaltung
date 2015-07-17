@@ -36,15 +36,16 @@ public class Auto implements Serializable {
 	@Column(name = "kmkauf")
 	private int kmKauf;
 
+	@Column(name = "kmstart")
+	private int kmStart;
+
 	private Date kauf;
 
 	@Column(name = "erstzulassung")
 	private Date erstZulassung;
 
-	// Wissen Notieren n:m Beziehung
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "auto_benzinart", joinColumns = { @JoinColumn(name = "idauto") }, inverseJoinColumns = { @JoinColumn(name = "idbenzinart") })
-	private Set<Benzinart> benzinarten = new HashSet<Benzinart>();
+	@ManyToOne
+	private Kraftstoff kraftstoff;
 
 	@Column(name = "kmaktuell")
 	private int kmAktuell;
@@ -56,18 +57,29 @@ public class Auto implements Serializable {
 	private Set<Tanken> tankfuellungen = new HashSet<Tanken>();
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "auto_benutzer")
 	private List<Benutzer> users = new ArrayList<Benutzer>();
 
-	public Auto(String kfz, int kmKauf, Date kauf, Date erstZulassung,
-			Set<Benzinart> benzinarten, int kmAktuell, Benutzer user) {
+	public Auto(String kfz, int kmKauf, int kmStart, Date kauf,
+			Date erstZulassung, Kraftstoff kraftstoff, int kmAktuell,
+			List<Benutzer> users) {
 		super();
 		this.kfz = kfz;
 		this.kmKauf = kmKauf;
+		this.kmStart = kmStart;
 		this.kauf = kauf;
 		this.erstZulassung = erstZulassung;
-		this.benzinarten = benzinarten;
+		this.kraftstoff = kraftstoff;
 		this.kmAktuell = kmAktuell;
-		this.users.add(user);
+		this.users = users;
+	}
+	
+	public int getKmStart() {
+		return kmStart;
+	}
+
+	public void setKmStart(int kmStart) {
+		this.kmStart = kmStart;
 	}
 
 	public Auto() {
@@ -142,24 +154,12 @@ public class Auto implements Serializable {
 		this.erstZulassung = erstZulassung;
 	}
 
-	public Set<Benzinart> getBenzinarten() {
-		return benzinarten;
-	}
-
-	public void setBenzinarten(Set<Benzinart> benzinarten) {
-		this.benzinarten = benzinarten;
-	}
-
 	public int getKmAktuell() {
 		return kmAktuell;
 	}
 
 	public void setKmAktuell(int kmAktuell) {
 		this.kmAktuell = kmAktuell;
-	}
-
-	public void addBenzinart(Benzinart benzinart) {
-		benzinarten.add(benzinart);
 	}
 
 	public void addTanken(Tanken tanken) {
@@ -191,12 +191,18 @@ public class Auto implements Serializable {
 		return kfz;
 	}
 
+	public Kraftstoff getKraftstoff() {
+		return kraftstoff;
+	}
+
+	public void setKraftstoff(Kraftstoff kraftstoff) {
+		this.kraftstoff = kraftstoff;
+	}
+
+	@Deprecated
 	public String getBenzinartenString() {
 		StringBuilder sb = new StringBuilder();
-		for (Benzinart b : benzinarten) {
-			sb.append(b).append(", ");
-		}
-		sb.delete(sb.length() - 2, sb.length());
+		sb.append(kraftstoff);
 		return sb.toString();
 	}
 }
