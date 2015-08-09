@@ -31,4 +31,5 @@ compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 compile 'ro.isdc.wro4j:wro4j-core:1.7.8'
 compile 'javax.servlet:javax.servlet-api:3.1.0'
 compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
+compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 }

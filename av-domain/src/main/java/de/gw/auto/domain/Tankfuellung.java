@@ -17,6 +17,9 @@ public class Tankfuellung extends Tanken {
 	}
 
 	public int getGefahreneKm() {
+		if(vorTankfuellung ==null){
+			return this.getKmStand()-this.getAuto().getKmStart();
+		}
 		return this.getKmStand() - vorTankfuellung.getKmStand();
 	}
 

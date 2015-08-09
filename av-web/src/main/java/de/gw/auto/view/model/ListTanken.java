@@ -15,10 +15,18 @@ public class ListTanken {
 
 	private List<Tank> fuellstaende;
 
-	private List<Kraftstoff> kraftstoffarten;
+	private List<Kraftstoffsorte> kraftstoffsorten;
 
 	public List<Land> getLaender() {
 		return laender;
+	}
+
+	public List<Kraftstoffsorte> getKraftstoffsorten() {
+		return kraftstoffsorten;
+	}
+
+	public void setKraftstoffsorten(List<Kraftstoffsorte> kraftstoffsorten) {
+		this.kraftstoffsorten = kraftstoffsorten;
 	}
 
 	public void setLaender(List<Land> laender) {
@@ -39,13 +47,5 @@ public class ListTanken {
 
 	public void setFuellstaende(List<Tank> fuellstaende) {
 		this.fuellstaende = fuellstaende;
-	}
-
-	public List<Kraftstoff> getKraftstoffarten() {
-		return kraftstoffarten;
-	}
-
-	public void setKraftstoffarten(List<Kraftstoff> kraftstoffarten) {
-		this.kraftstoffarten = kraftstoffarten;
 	}
 }

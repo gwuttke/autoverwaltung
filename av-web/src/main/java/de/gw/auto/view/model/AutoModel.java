@@ -81,9 +81,13 @@ public class AutoModel {
 		this.kauf =stringToDate(kauf);
 	}
 
-	private static Date stringToDate(String dateString) throws ParseException {
-		DateFormat format = new SimpleDateFormat("dd.mm.yyyy",Locale.GERMANY);
+	public static Date stringToDate(String dateString) throws ParseException {
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy",Locale.GERMANY);
 		return format.parse(dateString);
+	}
+	public static String formattedDate(Date date) throws ParseException {
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy",Locale.GERMANY);
+		return format.format(date);
 	}
 	
 	/*public void setKauf(Date kauf) {

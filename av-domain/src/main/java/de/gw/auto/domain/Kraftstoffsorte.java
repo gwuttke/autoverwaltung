@@ -58,9 +58,5 @@ public class Kraftstoffsorte implements Serializable {
 		autos.add(auto);
 	}
 */
-	@Override
-	public String toString() {
-		return name;
-	}
 
 }

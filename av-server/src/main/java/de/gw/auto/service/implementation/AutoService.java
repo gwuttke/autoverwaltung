@@ -17,7 +17,7 @@ public class AutoService {
 	AutoDAO autoDao;
 	
 	public RegisteredUser addAuto(RegisteredUser user, Auto auto){
-		user = autoDao.carIntoDatabase(user, auto);
+		user = new RegisteredUser(autoDao.save(user, auto));
 		return user;
 	}
 	
@@ -35,6 +35,6 @@ public class AutoService {
 	}
 	
 	public Auto updateAuto(Auto a){
-		return autoDao.updateAuto(a.getId(), a.getBenzinarten(), a.getErstZulassung(), a.getKauf(), a.getKmKauf(), a.getKmAktuell());
+		return autoDao.updateAuto(a.getId(), a.getKraftstoff(), a.getErstZulassung(), a.getKauf(), a.getKmKauf(), a.getKmAktuell());
 	}
 }

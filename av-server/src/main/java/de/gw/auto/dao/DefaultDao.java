@@ -10,6 +10,8 @@ public class DefaultDao {
 	protected static Sort sortByBeschreibungAsc() {
 	    return new Sort(Sort.Direction.ASC, "beschreibung");
 	}
+	
+	
 
 	public DefaultDao() {
 		super();

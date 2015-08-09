@@ -1,5 +1,7 @@
 package de.gw.auto.view.model;
 
+import java.util.Date;
+
 import de.gw.auto.domain.Tankfuellung;
 
 public class TankenModel extends Tankfuellung {
@@ -15,13 +17,13 @@ public class TankenModel extends Tankfuellung {
 				cssStyleRow = CssStyles.CSS_EIN_VIRTEL;
 				break;
 			case 2:
-				cssStyleRow = CssStyles.CSS_EIN_VIRTEL;
+				cssStyleRow = CssStyles.CSS_HALB_VOLL;
 				break;
 			case 3:
-				cssStyleRow = CssStyles.CSS_EIN_VIRTEL;
+				cssStyleRow = CssStyles.CSS_DREI_VIRTEL;
 				break;
 			case 4:
-				cssStyleRow = CssStyles.CSS_EIN_VIRTEL;
+				cssStyleRow = CssStyles.CSS_VOLL;
 				break;
 			default:
 				cssStyleRow = CssStyles.CSS_KEINE_ANGABE;
@@ -29,7 +31,7 @@ public class TankenModel extends Tankfuellung {
 		}
 		return cssStyleRow;
 	}
-
+	
 	public TankenModel(Tankfuellung t) {
 		super(t);
 	}

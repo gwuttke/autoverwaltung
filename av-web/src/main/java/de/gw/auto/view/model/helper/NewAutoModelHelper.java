@@ -16,7 +16,7 @@ public class NewAutoModelHelper {
 	private StammdatenService stammdatenService;
 
 	public AutoModel prepareAutoModel(AutoModel autoModel) {
-		autoModel.setKraftstoffarten(stammdatenService.getKrftstoffarten());
+		autoModel.setKraftstoffarten(stammdatenService.getKrftstoffe());
 		return autoModel;
 	}
 }

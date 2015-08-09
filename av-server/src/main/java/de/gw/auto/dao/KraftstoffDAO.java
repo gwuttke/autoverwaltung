@@ -1,5 +1,6 @@
 package de.gw.auto.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,11 @@ import de.gw.auto.repository.KraftstoffRepository;
 import de.gw.auto.repository.KraftstoffsorteRepository;
 
 @Service
-public class KraftstoffDAO extends DefaultDao{
-
+public class KraftstoffDAO extends DefaultDao {
 	@Autowired
 	private KraftstoffRepository kraftstoffRepository;
 
 	public KraftstoffDAO() {
-
 	}
 
 	public List<Kraftstoff> getKraftstoffAlphabetisch() {
@@ -26,5 +25,10 @@ public class KraftstoffDAO extends DefaultDao{
 
 	public Kraftstoff searchById(int id) {
 		return kraftstoffRepository.findOne(id);
+	}
+
+	public List<Kraftstoffsorte> getKraftstoffsorten(Kraftstoff kraftstoff) {
+		Kraftstoff k = searchById(kraftstoff.getId());
+		return new ArrayList<Kraftstoffsorte>(k.getKraftstoffsorten());
 	}
 }

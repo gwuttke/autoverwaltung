@@ -46,22 +46,19 @@ public class TankenDao {
 		voll = tankDao.getVoll();
 		setTankenList(registeredUser);
 	}
-	
-
-	
 
 	public Tanken getMinPreisProLiter(int year, Auto auto) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
 		return tankenRepository
 				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterDesc(auto,
-						dateOfYear[0], dateOfYear[1]);
+						dateOfYear[0].toDate(), dateOfYear[1].toDate());
 	}
 
 	public Tanken getMaxPreisProLiter(int year, Auto auto) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
 		return tankenRepository
 				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterAsc(auto,
-						dateOfYear[0], dateOfYear[1]);
+						dateOfYear[0].toDate(), dateOfYear[1].toDate());
 	}
 
 	public Tanken getMaxPreisProLiter(Auto auto) {
@@ -84,8 +81,8 @@ public class TankenDao {
 	 */
 	public List<Tanken> getTankungen(Auto auto, int year) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
-		return tankenRepository.findByAutoAndDatumBetween(auto, dateOfYear[0],
-				dateOfYear[1]);
+		return tankenRepository.findByAutoAndDatumBetween(auto, dateOfYear[0].toDate(),
+				dateOfYear[1].toDate());
 	}
 
 	@Deprecated
@@ -93,26 +90,11 @@ public class TankenDao {
 		Auto aktuellesAuto = registedUser.getCurrentAuto();
 		tankenList = tankenRepository
 				.findByAutoOrderByKmStandAsc(aktuellesAuto);
-		int index = 0;
-		Tanken tVor = null;
 		Tanken tVoll = null;
+		Tankfuellung tVorFuellung = null;
 		for (Tanken t : tankenList) {
-			Tankfuellung tfuellung = new Tankfuellung(t);
-			if (index > 0) {
-				tfuellung.setGefahreneKm(Berechnung.getGefahreneKilometer(tVor,
-						t));
-			} else {
-				tfuellung.setGefahreneKm(Berechnung.getGefahreneKilometer(
-						t.getAuto(), t));
-			}
-			tfuellung.setVerbrauch100Km(Berechnung
-					.getVerbrachPro100Km(t, tVoll));
-			tVor = t;
-			if (isVoll(t)) {
-				tVoll = t;
-			}
+			Tankfuellung tfuellung = new Tankfuellung(t, tVorFuellung);
 			tankfuellungList.add(tfuellung);
-			index++;
 		}
 	}
 
@@ -131,14 +113,9 @@ public class TankenDao {
 		return count == 0 ? 0 : preis / count;
 	}
 
-	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken,
-			Auto auto) {
-		
-		tanken = tankenRepository.save(tanken);
+	public void save(Tanken tanken, Auto auto) {
 		auto.addTanken(tanken);
 		autoRepository.save(auto);
-		setTankenList(registedUser);
-		return getTankenList();
 	}
 
 	public boolean isVoll(Tanken t) {

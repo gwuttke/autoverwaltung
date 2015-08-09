@@ -1,5 +1,6 @@
 package de.gw.auto.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -18,13 +19,13 @@ public interface TankenRepository extends JpaRepository<Tanken, Integer>,
 	public List<Tanken> findByAutoOrderByKmStandAsc(Auto auto);
 
 	public List<Tanken> findByAutoAndDatumBetween(Auto auto,
-			DateTime startDate, DateTime endDate);
+			Date startDate, Date endDate);
 
 	public Tanken findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterDesc(
-			Auto auto, DateTime startDate, DateTime endDate);
+			Auto auto, Date startDate, Date endDate);
 
 	public Tanken findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterAsc(
-			Auto auto, DateTime startDate, DateTime endDate);
+			Auto auto, Date startDate, Date endDate);
 
 	public Tanken findFirst1ByAutoOrderByPreisProLiterDesc(Auto auto);
 

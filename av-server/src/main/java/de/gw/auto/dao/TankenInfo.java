@@ -45,22 +45,38 @@ public class TankenInfo {
 	}
 
 	public double getMaxPreisProLiter(int year, Auto auto) {
-		return tankenDao.getMaxPreisProLiter(year, auto).getPreisProLiter()
+		Tanken maxPreisProLiter = tankenDao.getMaxPreisProLiter(year, auto);
+		if(maxPreisProLiter == null){
+			return 0d;
+		}
+		return maxPreisProLiter.getPreisProLiter()
 				.doubleValue();
 	}
 
 	public double getMaxPreisProLiter(Auto auto) {
-		return tankenDao.getMaxPreisProLiter(auto).getPreisProLiter()
+		Tanken maxPreisProLiter = tankenDao.getMaxPreisProLiter(auto);
+		if(maxPreisProLiter == null){
+			return 0d;
+		}
+		return maxPreisProLiter.getPreisProLiter()
 				.doubleValue();
 	}
 
 	public double getMinPreisProLiter(int year, Auto auto) {
-		return tankenDao.getMinPreisProLiter(year, auto).getPreisProLiter()
+		Tanken minPreisProLiter = tankenDao.getMinPreisProLiter(year, auto);
+		if(minPreisProLiter==null){
+			return 0d;
+		}
+		return minPreisProLiter.getPreisProLiter()
 				.doubleValue();
 	}
 
 	public double getMinPreisProLiter(Auto auto) {
-		return tankenDao.getMinPreisProLiter(auto).getPreisProLiter()
+		Tanken minPreisProLiter = tankenDao.getMinPreisProLiter(auto);
+		if(minPreisProLiter==null){
+			return 0d;
+		}
+		return minPreisProLiter.getPreisProLiter()
 				.doubleValue();
 	}
 
@@ -125,8 +141,11 @@ public class TankenInfo {
 
 	public int getAllKm(Auto auto) {
 		List<Tanken> tankfuellungen = getTankfuellungSorted(auto);
-		int gesKm = tankfuellungen.get(tankfuellungen.size()).getKmStand()
-				- tankfuellungen.get(1).getKmStand();
+		if (tankfuellungen==null){
+			return 0;
+		}
+		int gesKm = tankfuellungen.get(tankfuellungen.size()-1).getKmStand()
+				- auto.getKmStart();
 		return gesKm;
 	}
 

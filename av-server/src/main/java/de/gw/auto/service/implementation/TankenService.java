@@ -15,7 +15,7 @@ import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.service.RegisteredUser;
 
 @Service
-public class TankenService extends TankenInfo{
+public class TankenService extends TankenInfo {
 	private List<Tankfuellung> tankenList;
 
 	@Autowired
@@ -24,6 +24,7 @@ public class TankenService extends TankenInfo{
 	protected TankenService() {
 	}
 
+	@Deprecated
 	public void init(RegisteredUser registeredUser) {
 		this.tankenDao.init(registeredUser);
 		tankenList = tankenDao.getTankenList();
@@ -48,18 +49,6 @@ public class TankenService extends TankenInfo{
 	public List<Tankfuellung> getPrintList() {
 		return tankenList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Folgende Datenstrucktur: Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
@@ -96,10 +85,8 @@ public class TankenService extends TankenInfo{
 		return this.tankenDao.like(tanken);
 	}
 
-	public List<Tankfuellung> addTankfuellung(Tanken tanken,
-			RegisteredUser registeredUser) {
-		this.tankenList = tankenDao.tankenIntoDatabase(tanken, registeredUser);
-		return tankenList;
+	public void save(Tanken tanken, RegisteredUser registeredUser) {
+		tankenDao.save(tanken, registeredUser.getCurrentAuto());
 	}
 
 	public List<Tankfuellung> updateTankfuellung(Tanken tanken,
