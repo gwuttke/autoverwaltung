@@ -1,30 +1,30 @@
-    drop table if exists Auto;
+    drop table if exists auto;
 
-    drop table if exists Auto_Benutzer;
+    drop table if exists auto_benutzer;
 
-    drop table if exists Autoritaet;
+    drop table if exists autoritaet;
 
-    drop table if exists Benutzer;
+    drop table if exists benutzer;
 
-    drop table if exists Kraftstoff;
+    drop table if exists kraftstoff;
 
-    drop table if exists Kraftstoffsorte;
+    drop table if exists kraftstoffsorte;
 
-    drop table if exists Laenderorte;
+    drop table if exists laenderorte;
 
-    drop table if exists Land;
+    drop table if exists land;
 
-    drop table if exists Ort;
+    drop table if exists ort;
 
-    drop table if exists Role;
+    drop table if exists role;
 
-    drop table if exists Role_Autoritaet;
+    drop table if exists role_autoritaet;
 
-    drop table if exists Tank;
+    drop table if exists tank;
 
-    drop table if exists Tanken;
+    drop table if exists tanken;
 
-    drop table if exists Version;
+    drop table if exists version;
 
     drop table if exists benutzer_auto;
 
@@ -34,7 +34,7 @@
 
     drop table if exists sonstigeausgaben;
 
-    create table Auto (
+    create table auto (
         id integer not null auto_increment,
         erstzulassung datetime,
         kauf datetime,
@@ -46,18 +46,18 @@
         primary key (id)
     );
 
-    create table Auto_Benutzer (
+    create table auto_benutzer (
         Auto_id integer not null,
         users_id integer not null
     );
 
-    create table Autoritaet (
+    create table autoritaet (
         id integer not null auto_increment,
         name varchar(255) not null,
         primary key (id)
     );
 
-    create table Benutzer (
+    create table benutzer (
         id integer not null auto_increment,
         benutzername varchar(255),
         email varchar(255),
@@ -68,54 +68,54 @@
         primary key (id)
     );
 
-    create table Kraftstoff (
+    create table kraftstoff (
         id integer not null auto_increment,
         name varchar(255),
         primary key (id)
     );
 
-    create table Kraftstoffsorte (
+    create table kraftstoffsorte (
         id integer not null auto_increment,
         name varchar(255),
         primary key (id)
     );
 
-    create table Laenderorte (
+    create table laenderorte (
         idland integer not null,
         idort integer not null,
         primary key (idland, idort)
     );
 
-    create table Land (
+    create table land (
         id integer not null auto_increment,
         name varchar(255),
         primary key (id)
     );
 
-    create table Ort (
+    create table ort (
         id integer not null auto_increment,
         ort varchar(255),
         primary key (id)
     );
 
-    create table Role (
+    create table role (
         id double precision not null auto_increment,
         name varchar(255),
         primary key (id)
     );
 
-    create table Role_Autoritaet (
+    create table role_autoritaet (
         Role_id double precision not null,
         autoritaet_id integer not null
     );
 
-    create table Tank (
+    create table tank (
         id integer not null auto_increment,
         beschreibung varchar(255),
         primary key (id)
     );
 
-    create table Tanken (
+    create table tanken (
         id integer not null auto_increment,
         datum datetime,
         kmstand integer,
@@ -130,7 +130,7 @@
         primary key (id)
     );
 
-    create table Version (
+    create table version (
         id integer not null auto_increment,
         nummer integer not null,
         plattform varchar(255),
@@ -163,25 +163,25 @@
         primary key (id)
     );
 
-    alter table Auto 
+    alter table auto 
         add constraint UK_jhb5bayjw7ry9omwtt21k4v91  unique (kfz);
 
-    alter table Autoritaet 
+    alter table autoritaet 
         add constraint UK_3h2vqx7bbefeabr9dqpt8ef1y  unique (name);
 
-    alter table Benutzer 
+    alter table benutzer 
         add constraint ui_name_passwort  unique (benutzername, passwort);
 
-    alter table Benutzer 
+    alter table benutzer 
         add constraint ui_name_email_vorname  unique (name, vorname, email);
 
-    alter table Benutzer 
+    alter table benutzer 
         add constraint UK_t9bp7irfyjjjldki65t589vuc  unique (email);
 
-    alter table Laenderorte 
+    alter table laenderorte 
         add constraint UK_nylnxam3kf3wx3g6dtdsb3gwk  unique (idort);
 
-    alter table Role_Autoritaet 
+    alter table role_autoritaet 
         add constraint UK_ibwuqqqjgroadqyl2qrewxljk  unique (autoritaet_id);
 
     alter table benutzer_role 
@@ -190,102 +190,102 @@
     alter table kraftstoff_kraftstoffsorte 
         add constraint UK_8jhnom7tppa7m6864ivtxmrle  unique (kraftstoffsorten_id);
 
-    alter table Auto 
+    alter table auto 
         add constraint FK_cbtv9niidsum4gm1avv09puse 
         foreign key (kraftstoff_id) 
-        references Kraftstoff (id);
+        references kraftstoff (id);
 
-    alter table Auto_Benutzer 
+    alter table auto_benutzer 
         add constraint FK_2t6gyyx2hcsdapqdmq7fdwiuj 
         foreign key (users_id) 
-        references Benutzer (id);
+        references benutzer (id);
 
-    alter table Auto_Benutzer 
+    alter table auto_benutzer 
         add constraint FK_ii0vch2wqan0516dbns7q916v 
-        foreign key (Auto_id) 
-        references Auto (id);
+        foreign key (auto_id) 
+        references auto (id);
 
-    alter table Benutzer 
+    alter table benutzer 
         add constraint FK_pgi2ycepxoecplfx8lug3dxe9 
         foreign key (currentautoid) 
-        references Auto (id);
+        references auto (id);
 
-    alter table Laenderorte 
+    alter table laenderorte 
         add constraint FK_nylnxam3kf3wx3g6dtdsb3gwk 
         foreign key (idort) 
-        references Ort (id);
+        references ort (id);
 
-    alter table Laenderorte 
+    alter table laenderorte 
         add constraint FK_7vte171wm2mjeax3nvd3uh3s6 
         foreign key (idland) 
-        references Land (id);
+        references land (id);
 
-    alter table Role_Autoritaet 
+    alter table role_autoritaet 
         add constraint FK_ibwuqqqjgroadqyl2qrewxljk 
         foreign key (autoritaet_id) 
-        references Autoritaet (id);
+        references autoritaet (id);
 
-    alter table Role_Autoritaet 
+    alter table role_autoritaet 
         add constraint FK_crp36hl4y3h81vw42bnu5mayn 
-        foreign key (Role_id) 
-        references Role (id);
+        foreign key (role_id) 
+        references role (id);
 
-    alter table Tanken 
+    alter table tanken 
         add constraint FK_ocqfvjobcxmdf58bcpplg15p2 
         foreign key (auto_id) 
-        references Auto (id);
+        references auto (id);
 
-    alter table Tanken 
+    alter table tanken 
         add constraint FK_5n03kc2dmw9q7ga82ig06vmw 
         foreign key (benzinart_id) 
-        references Kraftstoffsorte (id);
+        references kraftstoffsorte (id);
 
-    alter table Tanken 
+    alter table tanken 
         add constraint FK_fxbrofpqod3ticax5yl08gr4p 
         foreign key (land_id) 
-        references Land (id);
+        references land (id);
 
-    alter table Tanken 
+    alter table tanken 
         add constraint FK_g4wuu74alnaqunxnugr9fcgo0 
         foreign key (ort_id) 
-        references Ort (id);
+        references ort (id);
 
-    alter table Tanken 
+    alter table tanken 
         add constraint FK_bj6fca1xx6tc6c2sqf8ocbc1 
         foreign key (tank_id) 
-        references Tank (id);
+        references tank (id);
 
     alter table benutzer_auto 
         add constraint FK_8lkl6gcxxn6cuk9h3m06yh3hf 
         foreign key (autos_id) 
-        references Auto (id);
+        references auto (id);
 
     alter table benutzer_auto 
         add constraint FK_lkysk249xp47h65f9gw4wydle 
-        foreign key (Benutzer_id) 
-        references Benutzer (id);
+        foreign key (benutzer_id) 
+        references benutzer (id);
 
     alter table benutzer_role 
         add constraint FK_n0yvy2q77ohdig0gwp7idvb7x 
         foreign key (roles_id) 
-        references Role (id);
+        references role (id);
 
     alter table benutzer_role 
         add constraint FK_nixxvwdnga9p18gn6i7g1qd6k 
-        foreign key (Benutzer_id) 
-        references Benutzer (id);
+        foreign key (benutzer_id) 
+        references benutzer (id);
 
     alter table kraftstoff_kraftstoffsorte 
         add constraint FK_8jhnom7tppa7m6864ivtxmrle 
         foreign key (kraftstoffsorten_id) 
-        references Kraftstoffsorte (id);
+        references kraftstoffsorte (id);
 
     alter table kraftstoff_kraftstoffsorte 
         add constraint FK_oku0nf0tqrehs4itbo1ensirj 
-        foreign key (Kraftstoff_id) 
-        references Kraftstoff (id);
+        foreign key (kraftstoff_id) 
+        references kraftstoff (id);
 
     alter table sonstigeausgaben 
         add constraint FK_eaioye1hv31v8ku65dqufsuc2 
         foreign key (auto_id) 
-        references Auto (id);
+        references auto (id);

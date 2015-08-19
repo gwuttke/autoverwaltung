@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- Daten für Tabelle `Auto`
 --
 
-INSERT INTO `Auto` (`id`, `erstZulassung`, `kauf`, `kfz`, `kmaktuell`, `kmkauf`, `kmstart`, `kraftstoff_id`) VALUES
+INSERT INTO `auto` (`id`, `erstZulassung`, `kauf`, `kfz`, `kmaktuell`, `kmkauf`, `kmstart`, `kraftstoff_id`) VALUES
 (1, '1995-01-01', '2007-01-11', 'M - UC 2522', 160156, 90278,90278,1),
 (2, '2000-11-07', '2010-07-11', 'M - WU 3194', 96598, 62026, 62026,1);
 
@@ -41,7 +41,7 @@ INSERT INTO `auto_benutzer` (`users_id`, `Auto_id`) VALUES
 -- Daten für Tabelle `SonstigeAusgaben`
 --
 
-INSERT INTO `SonstigeAusgaben` (`id`, `datum`, `kmStand`, `kommentar`, `kosten`, `auto_id`) VALUES
+INSERT INTO `sonstigeausgaben` (`id`, `datum`, `kmStand`, `kommentar`, `kosten`, `auto_id`) VALUES
 (1, '2014-09-04', 168000, 'Lack Weiß', 10.00, 1);
 
 
@@ -49,7 +49,7 @@ INSERT INTO `SonstigeAusgaben` (`id`, `datum`, `kmStand`, `kommentar`, `kosten`,
 -- Daten für Tabelle `Tanken`
 --
 
-INSERT INTO `Tanken` (`id`, `datum`, `kmStand`, `kosten`, `liter`, `preisproliter`, `auto_id`, `benzinart_id`, `land_id`, `ort_id`, `tank_id`) VALUES
+INSERT INTO `tanken` (`id`, `datum`, `kmStand`, `kosten`, `liter`, `preisproliter`, `auto_id`, `benzinart_id`, `land_id`, `ort_id`, `tank_id`) VALUES
 (1, '2007-01-12 00:00:00', 90308, 68.00, 55.00, 1.236, 1, 1, 1, 3, 4),
 (2, '2007-01-24 00:00:00', 90776, 62.00, 52.00, 1.192, 1, 1, 1, 3, 4),
 (3, '2007-02-10 00:00:00', 91150, 50.00, 48.00, 1.042, 1, 1, 1, 3, 4),

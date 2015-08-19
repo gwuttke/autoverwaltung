@@ -18,7 +18,7 @@ USE `auto`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `kraftstoffsorte`
+-- Dumping data for table `Kraftstoffsorte`
 --
 
 LOCK TABLES `kraftstoffsorte` WRITE;
@@ -136,7 +136,7 @@ UNLOCK TABLES;
 -- Daten für Tabelle `Land`
 --
 
-INSERT INTO `Land` (`id`, `name`) VALUES
+INSERT INTO `land` (`id`, `name`) VALUES
 (1, 'keine Angabe'),
 (2, 'Deutschland'),
 (3, 'Österreich'),
@@ -148,7 +148,7 @@ INSERT INTO `Land` (`id`, `name`) VALUES
 -- Daten für Tabelle `Ort`
 --
 
-INSERT INTO `Ort` (`id`, `ort`) VALUES
+INSERT INTO `ort` (`id`, `ort`) VALUES
 (1, 'München'),
 (2, 'Neuried'),
 (3, 'keine Angabe'),
@@ -180,7 +180,7 @@ INSERT INTO `Ort` (`id`, `ort`) VALUES
 -- Daten für Tabelle `Laenderorte`
 --
 
-INSERT INTO `Laenderorte` (`idland`, `idort`) VALUES
+INSERT INTO `laenderorte` (`idland`, `idort`) VALUES
 (2, 1),
 (2, 2),
 (2, 4),

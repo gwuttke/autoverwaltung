@@ -27,10 +27,11 @@ public class InfoService {
 	
 	@Deprecated
 	public void init(RegisteredUser registeredUser) {
+		/*
 		tankenDao.init(registeredUser);
 		sonstigeAusgabenInfo.init(registeredUser);
 		tankenInfo.init(tankenDao, registeredUser);
-	
+	*/
 	}
 	
 	public Object[][] loadInfos() {
@@ -40,15 +41,15 @@ public class InfoService {
 		int index = 0;
 
 		List<Info> tankInfos = tankenInfo.getTankenInfos();
-		List<Info> sonstigeAusgabenInfos = sonstigeAusgabenInfo
-				.getSonstigeAusgabenInfos();
+		//List<Info> sonstigeAusgabenInfos = sonstigeAusgabenInfo
+			//	.getSonstigeAusgabenInfos();
 		List<Info> allInfos = new ArrayList<Info>();
 
 		Info allKosten = new Info(Constans.GESAMT_KOSTEN);
 		try {
 			allKosten = tankenInfo.searchInfo(Constans.TANKEN_KOSTEN);
-			allKosten = allKosten.add(sonstigeAusgabenInfo
-					.searchInfo(Constans.SONSTIGEAUSGABEN_KOSTEN));
+			//allKosten = allKosten.add(sonstigeAusgabenInfo
+					//.searchInfo(Constans.SONSTIGEAUSGABEN_KOSTEN));
 		} catch (NullPointerException ex) {
 			allKosten = new Info(Constans.GESAMT_KOSTEN);
 		} finally {
@@ -56,7 +57,7 @@ public class InfoService {
 		}
 
 		allInfos.addAll(tankInfos);
-		allInfos.addAll(sonstigeAusgabenInfos);
+		//allInfos.addAll(sonstigeAusgabenInfos);
 		allInfos.add(allKosten);
 
 		if (tankInfos.size() == 0) {
