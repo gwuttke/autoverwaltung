@@ -1,8 +1,10 @@
 *.metadata
-
 *.class
-
 *Bin*
 *sqljdbc_4.0*
 GitCredStore*
 /build/
+.gradle/*
+.project
+*.classpath
+.settings/*

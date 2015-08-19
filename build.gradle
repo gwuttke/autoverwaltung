@@ -1,6 +1,6 @@
 allprojects {
 
-	version = '0.1.0.auto'
+	version = '1.0.01-Beta'
 	group = "de.gw.auto"
 	repositories {
 		mavenCentral()
@@ -33,7 +33,7 @@ subprojects {
 	apply plugin: "eclipse"
 	apply plugin: "eclipse-wtp"
 	
-	sourceCompatibility = 1.6
+	sourceCompatibility = 1.7
 	targetCompatibility = 1.8
 		
 	compileJava.options.encoding = "UTF-8"

@@ -12,6 +12,7 @@ buildscript {
 }
 
 	apply plugin: 'spring-boot'
+	
 
 
 applicationDefaultJvmArgs = [
@@ -21,6 +22,11 @@ applicationDefaultJvmArgs = [
 jar {
     baseName = 'Web'
 }
+
+bootRepackage {
+    mainClass = 'de.gw.auto.ApplicationWeb'
+}
+
 
 dependencies {
 compile project(':av-server')
