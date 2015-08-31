@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+	<group name="all">
+		<css>/css/form.css</css>
+		<css>/css/signin.css</css>
+		<js>/js/bootstrap-datepicker.js</js>
+	</group>
+</groups>  

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+    	<th:block th:include="fragments/headTag :: head"/>
+    	<link rel="stylesheet" th:href="@{/asset/css/signIn.css}" type="text/css"/>
+        <title>Autoverwaltung - Login</title>
+    </head>
+    <body>
+      <div class="container">
+      	<div th:include="fragments/header :: header">header</div>
+		<h2 >Please sign in</h2>
+		<form class="form" role="form" th:action="@{login}" method="post" th:object="${loginModel}">
+	        <label for="inputEmail" class="sr-only">Email address</label>
+	        <input type= "email" id="inputEmail" class="form-control" placeholder="Email address" required="autofocus" th:field="*{username}"/>
+	        <label for="inputPassword" class="sr-only">Password</label>
+	        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="true" th:field="*{passwort}" />
+	       	<label class="checkbox" id="chbRememberMe">
+				<input type="checkbox" value="remember-me" />
+				Remember me
+			</label>
+			<div th:if="${loginModel.status} != null" class="alert alert-danger" id="status" th:text="${loginModel.status}">
+			  <strong>Danger!</strong> User nicht vorhanden 
+			</div>
+	        <button class="btn btn-lg btn-primary btn-lg" type="submit" name="login">Sign in</button>
+	        <a class="btn btn-lg btn-primary"  th:href="@{/register}">Registrieren</a>
+	     </form>
+  	</div> <!-- /container --> 
+    </body>
+</html>

@@ -3,6 +3,7 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,11 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.TankenRepository;
+import de.gw.auto.service.RegisteredUser;
+import de.gw.auto.service.helper.DateHelper;
 
 @Service
 public class TankenDao {
-
 	@Autowired
 	private TankenRepository tankenRepository;
 
@@ -26,58 +28,82 @@ public class TankenDao {
 	private AutoRepository autoRepository;
 
 	private List<Tankfuellung> tankfuellungList = new ArrayList<Tankfuellung>();
+
 	private List<Tanken> tankenList = new ArrayList<Tanken>();
+
 	private Tank voll;
 
 	protected TankenDao() {
 	}
 
+	@Deprecated
 	public List<Tankfuellung> getTankenList() {
-
 		return tankfuellungList;
 	}
 
-	/*
-	public TankenDao(Settings setting) {
-		
-	}
-*/
-	
-	public void init(Settings setting) {
+	@Deprecated
+	public void init(RegisteredUser registeredUser) {
 		voll = tankDao.getVoll();
-		setTankenList(setting);
-		
+		setTankenList(registeredUser);
 	}
-	
-	public void setTankenList(Settings setting) {
-		Auto aktuellesAuto = setting.getAktuellAuto();
+
+	public Tanken getMinPreisProLiter(int year, Auto auto) {
+		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
+		return tankenRepository
+				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterDesc(auto,
+						dateOfYear[0].toDate(), dateOfYear[1].toDate());
+	}
+
+	public Tanken getMaxPreisProLiter(int year, Auto auto) {
+		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
+		return tankenRepository
+				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterAsc(auto,
+						dateOfYear[0].toDate(), dateOfYear[1].toDate());
+	}
+
+	public Tanken getMaxPreisProLiter(Auto auto) {
+		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterAsc(auto);
+	}
+
+	public Tanken getMinPreisProLiter(Auto auto) {
+		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterDesc(auto);
+	}
+
+	public List<Tanken> getTankungen(Auto auto) {
+		return tankenRepository.findByAutoOrderByKmStandAsc(auto);
+	}
+
+	/**
+	 * 
+	 * @param year
+	 * @param auto
+	 * @return An List of Tankungen form an Car at one year
+	 */
+	public List<Tanken> getTankungen(Auto auto, int year) {
+		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
+		return tankenRepository.findByAutoAndDatumBetween(auto, dateOfYear[0].toDate(),
+				dateOfYear[1].toDate());
+	}
+
+	@Deprecated
+	public void setTankenList(RegisteredUser registedUser) {
+		Auto aktuellesAuto = registedUser.getCurrentAuto();
 		tankenList = tankenRepository
 				.findByAutoOrderByKmStandAsc(aktuellesAuto);
-
-		int index = 0;
-		Tanken tVor = null;
 		Tanken tVoll = null;
+		Tankfuellung tVorFuellung = null;
 		for (Tanken t : tankenList) {
-			Tankfuellung tfuellung = new Tankfuellung(t);
-			if (index > 0) {
-				tfuellung.setGefahreneKm(Berechnung.getGefahreneKilometer(tVor,
-						t));
-			} else {
-				tfuellung.setGefahreneKm(Berechnung.getGefahreneKilometer(
-						t.getAuto(), t));
-			}
-			tfuellung.setVerbrauch100Km(Berechnung
-					.getVerbrachPro100Km(t, tVoll));
-
-			tVor = t;
-			if (isVoll(t)) {
-				tVoll = t;
-			}
+			Tankfuellung tfuellung = new Tankfuellung(t, tVorFuellung);
 			tankfuellungList.add(tfuellung);
-			index++;
 		}
 	}
 
+	/**
+	 * @deprecated
+	 * @since 1.1
+	 * @return
+	 */
+	@Deprecated
 	public double giveAVGPreis() {
 		double preis = 0d;
 		int count = 0;
@@ -87,18 +113,9 @@ public class TankenDao {
 		return count == 0 ? 0 : preis / count;
 	}
 
-	public List<Tankfuellung> tankenIntoDatabase(Tanken tanken, Settings setting) {
-		Auto auto = setting.getAktuellAuto();
-
-		tanken = tankenRepository.save(tanken);
-
+	public void save(Tanken tanken, Auto auto) {
 		auto.addTanken(tanken);
-		setting.setAktuellAuto(auto);
-
 		autoRepository.save(auto);
-		setTankenList(setting);
-		return getTankenList();
-
 	}
 
 	public boolean isVoll(Tanken t) {
@@ -108,19 +125,15 @@ public class TankenDao {
 		return false;
 	}
 
-	public List<Tankfuellung> tankenUpdate(Tanken tanken, Settings setting) {
-
-		Auto auto = setting.getAktuellAuto();
-
+	public List<Tankfuellung> tankenUpdate(Tanken tanken,
+			RegisteredUser registedUser) {
+		Auto auto = registedUser.getCurrentAuto();
 		tankenRepository.save(tanken);
 		auto.updateTanken(tanken);
-		setting.setAktuellAuto(auto);
-
+		registedUser.setCurrentAuto(auto);
 		autoRepository.save(auto);
-
-		setTankenList(setting);
+		setTankenList(registedUser);
 		return getTankenList();
-
 	}
 
 	public Tanken search(int id) {
@@ -135,5 +148,4 @@ public class TankenDao {
 		}
 		return null;
 	}
-
 }

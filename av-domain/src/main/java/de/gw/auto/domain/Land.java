@@ -1,6 +1,7 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public class Land implements Serializable {
 	private String name;	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idland") }, inverseJoinColumns = { @JoinColumn(name = "idort") })
-	private Set<Ort> orte;
+	private Set<Ort> orte = new HashSet<Ort>();
 	
 
 	public Set<Ort> getOrte() {
@@ -58,6 +59,15 @@ public class Land implements Serializable {
 	public String toString() {
 	
 		return name;
+	}
+	
+	public Ort getOrt(int ortId){
+		for (Ort o : orte){
+			if(o.getId() == ortId){
+				return o;
+			}
+		}
+		return null;
 	}
 	
 }

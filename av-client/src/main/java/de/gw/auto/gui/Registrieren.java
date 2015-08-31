@@ -18,13 +18,13 @@ import org.springframework.stereotype.Component;
 
 import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
-import de.gw.auto.service.BenutzerService;
+import de.gw.auto.service.I_BenutzerService;
 
 @Component
 public class Registrieren {
 	
 	@Autowired
-	BenutzerService benutzerService;
+	I_BenutzerService benutzerService;
 
 	public Registrieren() {
 		final JFrame frame = new JFrame();

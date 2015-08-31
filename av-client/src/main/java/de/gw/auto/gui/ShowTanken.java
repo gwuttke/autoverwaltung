@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 import de.gw.auto.dao.Berechnung;
 import de.gw.auto.dao.Settings;
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Land;
 import de.gw.auto.domain.Ort;
 import de.gw.auto.domain.Tank;
@@ -29,7 +29,7 @@ import de.gw.auto.domain.Tanken;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
-import de.gw.auto.service.TankenService;
+import de.gw.auto.service.implementation.TankenService;
 
 @Controller
 public class ShowTanken {
@@ -129,7 +129,7 @@ public class ShowTanken {
 		Date datum = (Date) o[0];
 		BigDecimal liter = (BigDecimal) o[8];
 		BigDecimal preisProLiter = (BigDecimal) o[9];
-		Benzinart benzinart = (Benzinart) o[1];
+		Kraftstoffsorte benzinart = (Kraftstoffsorte) o[1];
 		Tanken t = new Tanken(kmStand, land, ort, tank, kosten, auto, datum,
 				liter, preisProLiter, benzinart);
 

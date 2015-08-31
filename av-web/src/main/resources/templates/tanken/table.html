@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	<div class="container" th:fragment="tankenTable"
+		th:object="${tankenView}">
+		<div th:if="*{#lists.isEmpty(tankfuellungenView)}" id="tankenEmpty">
+			<div class="alert alert-danger">noch keine Tankvorg&auml;nge
+				vorhanden</div>
+		</div>
+		<div th:if="*{not #lists.isEmpty(tankfuellungenView)}"
+			id="tankenNotEmpty">
+			<table class="table">
+				<thead>
+					<tr class="row">
+						<th>Datum</th>
+						<th>Km-Stand</th>
+						<th>Kosten</th>
+						<th>Liter</th>
+						<th>gefahrene Km</th>
+						<th>Verbrauch auf 100Km</th>
+						<th>Preis pro Liter</th>
+						<th>Land</th>
+						<th>Ort</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="tankenModel : *{tankfuellungenView}">
+						<tr class="row" th:classappend="${tankenModel.cssStyleRow}">
+							<td th:text="${tankenModel.datum}">Datum</td>
+							<td th:text="${tankenModel.kmStand}">km-Stand</td>
+							<td
+								th:text="${#numbers.formatDecimal(tankenModel.kosten,2,2,'COMMA')} + &euro;">Kosten</td>
+							<td
+								th:text="${#numbers.formatDecimal(tankenModel.liter,1,2,'COMMA')} + ' l'">Liter</td>
+							<td
+								th:text="${#numbers.formatInteger(tankenModel.getGefahreneKm(),3)}">
+								gefahrene-Km</td>
+							<td
+								th:text="${#numbers.formatDecimal(tankenModel.getVerbrauch100Km(),1,2,'COMMA')} + ' l'">
+								verbrauch</td>
+							<td
+								th:text="${#numbers.formatDecimal(tankenModel.preisProLiter,1,3,'COMMA')}+ &euro;">
+								preisProLiter</td>
+							<td th:text="${tankenModel.land}">Land</td>
+							<td th:utext="${tankenModel.ort}">Ort</td>
+						</tr>
+
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package de.gw.auto.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
-import de.gw.auto.domain.Benzinart;
+import de.gw.auto.domain.Kraftstoff;
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.repository.AutoRepository;
 import de.gw.auto.repository.UserRepository;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class AutoDAO {
-
-	private Settings setting;
 	
 	@Autowired
 	private AutoRepository autoRepository;
@@ -25,36 +24,28 @@ public class AutoDAO {
 	@Autowired
 	private UserRepository userRepository;
 
-	public AutoDAO(Settings setting) {
-		this.setting = setting;
-	}
 	
 	protected AutoDAO(){
 		
 	}
 
-	public Settings carIntoDatabase(Settings setting, Auto a) {
+	public Benutzer save(Benutzer benutzer, Auto a) {
 		
-		Benutzer benutzer = setting.getBenutzer();
-		
-		a = autoRepository.save(a);
-		
+		benutzer = userRepository.findOne(benutzer.getId());
+			
 		benutzer.addAuto(a);
-		benutzer = userRepository.save(benutzer);
-		
-		setting.addAuto(a);
-		this.setting = setting;
-
-		return this.setting;
+		benutzer.setCurrentAuto(a);
+		userRepository.save(benutzer);
+		return benutzer;
 	}
 
-	public Auto updateAuto(int autoID, Set<Benzinart> benzinarten,
+	public Auto updateAuto(int autoID, Kraftstoff kraftstoff,
 			Date eZulassung, Date kauf, int anfKm, int aktuKm) {
 		Auto a = findById(autoID);
 		
 		if (a != null) {
-			if (benzinarten != null) {
-				a.setBenzinarten(benzinarten);
+			if (kraftstoff != null) {
+				a.setKraftstoff(kraftstoff);
 			}
 			if (eZulassung != null) {
 				a.setErstZulassung((java.sql.Date) eZulassung);
@@ -82,8 +73,8 @@ public class AutoDAO {
 		return autoRepository.findOne(id);
 	}
 	
-	public List<Auto> findByBenutzer(Benutzer benutzer){
-		return autoRepository.findByBenutzer(benutzer);
+	public List<Auto> findByBenutzer(List<Benutzer> users){
+		return autoRepository.findByUsers(users);
 	}
 
 }

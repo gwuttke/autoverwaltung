@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.gw.auto.dao.Settings;
-import de.gw.auto.service.TankenService;
+import de.gw.auto.service.implementation.TankenService;
 
 @Controller
 public class Report {

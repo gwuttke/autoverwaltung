@@ -45,11 +45,6 @@ public class Tank implements Serializable {
 		return this.id;
 	}
 
-	@Override
-	public String toString() {
-		return beschreibung;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}

@@ -25,7 +25,7 @@ import de.gw.auto.dao.TankenInfo;
 import de.gw.auto.domain.Info;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
-import de.gw.auto.service.InfoService;
+import de.gw.auto.service.implementation.InfoService;
 @Controller
 public class ShowInfos {
 	

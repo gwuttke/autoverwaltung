@@ -15,14 +15,14 @@ public class Ort implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ort_gen")
 	private int id;
-	private String ort;
 
+	private String ort;
 
 	public Ort(String ort) {
 		super();
 		this.ort = ort;
 	}
-	
+
 	public Ort() {
 		super();
 	}
@@ -45,6 +45,6 @@ public class Ort implements Serializable {
 
 	@Override
 	public String toString() {
-		return ort;
+		return this.ort;
 	}
 }

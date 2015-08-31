@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<th:block th:include="fragments/headTag :: head" />
+<title>Autoverwaltung - User</title>
+</head>
+<body>
+	<div class="container" id="UserMainPage" th:object="${tankenView}">
+		<div th:include="fragments/header :: header">header</div>
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab"
+				href="#tankfuellungenTable"> Tankf&uuml;llungen </a></li>
+			<li><a data-toggle="tab" href="#sonstigeAusgabenTable">
+					Sonstige Ausgaben </a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="tankfuellungenTable" class="tab-pane fade in active">
+				<h1>
+					Tankf&uuml;llungen 
+					<a th:href="@{new}"
+						class="btn btn-success"> <span
+						class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
+					</a>
+				</h1>
+				<br />
+				<div th:include="tanken/table :: tankenTable">TankenTable</div>
+			</div>
+			<div id="sonstigeAusgabenTable" class="tab-pane fade">
+				<h1>Sonstige Ausgaben
+				<a th:disabled="true" th:href="@{/user/sonstigeausgaben/new}"
+						class="btn btn-success"> <span
+						class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
+					</a>
+				</h1>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -16,7 +16,7 @@ import de.gw.auto.domain.SonstigeAusgaben;
 import de.gw.auto.gui.model.FormatRenderer;
 import de.gw.auto.gui.model.NumberRenderer;
 import de.gw.auto.gui.model.Tabelle;
-import de.gw.auto.service.SonstigeAusgabenService;
+import de.gw.auto.service.implementation.SonstigeAusgabenService;
 
 @Controller
 public class ShowSonstigeAusgaben {

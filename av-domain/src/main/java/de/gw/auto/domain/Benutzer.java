@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,10 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.engine.internal.Cascade;
 import org.hibernate.validator.constraints.Email;
 
 @Entity
@@ -27,23 +31,44 @@ import org.hibernate.validator.constraints.Email;
 		@UniqueConstraint(name = "ui_name_email_vorname", columnNames = {
 				"name", "vorname", "eMail" }) })
 public class Benutzer implements Serializable {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
 	private String name;
+
 	private String vorname;
+
 	private String benutzername;
+
 	private String passwort;
+
 	@Email
 	@Column(name = "email", unique = true)
 	private String eMail;
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "idbenutzer") }, inverseJoinColumns = { @JoinColumn(name = "idauto") })
-	private List<Auto> autos = new ArrayList<Auto>();
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name = "benutzer_auto")
+	private List<Auto> autos;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(nullable=true, name="currentautoid")
+	private Auto currentAuto;
+
+	@OneToMany 
+	@JoinTable(name="benutzer_role")
+	private List<Role> roles;
 
 	protected Benutzer() {
 		// for Hibernate
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public Benutzer(String benutzername, String passwort) {
@@ -53,11 +78,21 @@ public class Benutzer implements Serializable {
 	}
 
 	public Benutzer(String name, String vorname, String benutzername,
-			String passwort, String eMail) {
+			String passwort, String eMail, Role role) {
 		this(benutzername, passwort);
 		this.name = name;
 		this.vorname = vorname;
 		this.eMail = eMail;
+		this.roles = new ArrayList<Role>();
+		roles.add(role);
+	}
+
+	public Auto getCurrentAuto() {
+		return currentAuto;
+	}
+
+	public void setCurrentAuto(Auto currentAuto) {
+		this.currentAuto = currentAuto;
 	}
 
 	public int getId() {

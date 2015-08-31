@@ -21,6 +21,7 @@ import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Tanken;
+import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class Berechnung {
@@ -34,15 +35,15 @@ public class Berechnung {
 	protected Berechnung(){
 	}
 
-	public void init(Settings setting) {
-		tankenDao.init(setting);
-		tankenInfo.init(tankenDao, setting);
+	public void init(RegisteredUser registeredUser) {
+		tankenDao.init(registeredUser);
+		tankenInfo.init(tankenDao, registeredUser);
 	}
 	
 	private double b;
 	private Map<String, List<Info>> ausgabenBerechnungen = new HashMap<String, List<Info>>();
 
-	public List<Info> getTankenInfos(TankenDao tDao, Settings setting) {
+	public List<Info> getTankenInfos(TankenDao tDao) {
 		if (ausgabenBerechnungen.size() == 0) {
 			addAusgabenBerechnungen(Constans.TANKEN, tankenInfo.getTankenInfos());
 		}

@@ -9,7 +9,7 @@ import de.gw.auto.domain.Tank;
 import de.gw.auto.repository.TankRepository;
 
 @Service
-public class TankDAO {
+public class TankDAO extends DefaultDao{
 
 	@Autowired
 	private TankRepository tankRepository;
@@ -18,8 +18,8 @@ public class TankDAO {
 
 	}
 
-	public List<Tank> getTankList() {
-		return tankRepository.findAll();
+	public List<Tank> getTankAlphabetisch() {
+		return tankRepository.findAll(sortByBeschreibungAsc());
 	}
 
 	public Tank searchTank(int id) {

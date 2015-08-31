@@ -7,8 +7,8 @@ import javax.swing.JComboBox;
 
 import org.springframework.stereotype.Component;
 
-import de.gw.auto.dao.Settings;
-import de.gw.auto.domain.Benzinart;
+
+import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Texte;
 
 /**
@@ -21,22 +21,18 @@ import de.gw.auto.domain.Texte;
 public class BenzinartModel {
 	private static final Texte.Form.AndereKomponennte textFormAK = new Texte.Form.AndereKomponennte();
 
-	private Settings setting;
+	
 
-	Vector<Benzinart> vBenzinart = new Vector<Benzinart>();
+	Vector<Kraftstoffsorte> vBenzinart = new Vector<Kraftstoffsorte>();
 	DefaultComboBoxModel model = new DefaultComboBoxModel(vBenzinart);
 
 	public BenzinartModel() {
 	}
 
-	public void init(Settings setting) {
-		this.setting = setting;
-	}
-
-	public JComboBox<Benzinart> getCombobox() {
-		JComboBox<Benzinart> cb = new JComboBox<Benzinart>(model);
+	public JComboBox<Kraftstoffsorte> getCombobox() {
+		JComboBox<Kraftstoffsorte> cb = new JComboBox<Kraftstoffsorte>(model);
 		model.addElement(textFormAK.BITTE_AUSWAELEN);
-		for (Benzinart b : setting.getAktuellAuto().getBenzinarten()) {
+		for (Kraftstoffsorte b : setting.getAktuellAuto().getBenzinarten()) {
 			model.addElement(b);
 		}
 		return cb;

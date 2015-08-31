@@ -29,8 +29,8 @@ import de.gw.auto.domain.Texte;
 import de.gw.auto.exception.AllException;
 import de.gw.auto.gui.Button.Funktionen;
 import de.gw.auto.gui.Button.Vordeffiniert;
-import de.gw.auto.service.BenutzerService;
-import de.gw.auto.service.Versionierungsservice;
+import de.gw.auto.service.I_BenutzerService;
+import de.gw.auto.service.implementation.Versionierungsservice;
 
 @Controller
 public class LogIn implements ComponentListener {
@@ -42,7 +42,7 @@ public class LogIn implements ComponentListener {
 	private Versionierungsservice versionierungsservice;
 
 	@Autowired
-	private BenutzerService benutzerService;
+	private I_BenutzerService benutzerService;
 
 	@Autowired
 	private AddAuto addAuto;
@@ -109,7 +109,7 @@ public class LogIn implements ComponentListener {
 				Benutzer benutzer = null;
 				try {
 					willkommen.setStatus("Benutzerdaten werden überprüft...");
-					settings = benutzerService.Login(tfBenutzer.getText(),
+					settings = benutzerService.login(tfBenutzer.getText(),
 							new String(tfPasswort.getPassword()));
 					benutzer = settings.getBenutzer();
 				} catch (Exception e) {

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<th:block th:include="fragments/headTag :: head" />
+<title>Autoverwaltung - Registration</title>
+</head>
+<body>
+	<div class="container">
+		<th:block th:include="fragments/header :: header">header</th:block>
+		<h1>Registration</h1>
+		<form role="form" th:action="@{registration}" th:object="${registrationModel}" method="post">
+		  <div class="form-group"> 
+		    <input type="text" th:field="*{name}" id="txtNachname" placeholder="Nachname" required="required" />
+		  </div>
+		  <div class="form-group"> 
+		  	<input type="text" th:field="*{vorname}" id="txtVorname" placeholder="Vorname" required="required"/>
+		  </div>
+		  <div class="form-group"> 
+		    <input type="text" th:field="*{benutzername}" placeholder="Benutzername" required="required"/>
+		  </div>
+		  <div class="form-group"> 
+		    <input type="password" th:field="*{passwort}" id="txtPasswort" placeholder="Passwort" required="required"/>
+		    <input type="password" th:field="*{wiederholungPasswort}" id="txtWiederholungPasswort" placeholder="wiederhole Passwort" required="required"/> 
+		  </div>
+		  <div class="form-group"> 
+		    <input type="text" th:field="*{eMail}" id="txtEMail" placeholder="e-Mail" required="required"/>
+		  </div>
+		  <div class="form-group"> 
+			<button class="btn btn-lg btn-primary" type="submit" name="registration">Registration</button>
+		  </div>
+		</form> 
+	</div>
+</body>
+</html>

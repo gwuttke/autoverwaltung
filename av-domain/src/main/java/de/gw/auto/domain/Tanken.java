@@ -40,7 +40,7 @@ public class Tanken implements Serializable {
 	private BigDecimal preisProLiter;
 	@OneToOne
 	@JoinColumn(name = "benzinart_id")
-	private Benzinart benzinArt;
+	private Kraftstoffsorte benzinArt;
 	@ManyToOne
 	@JoinColumn(name = "auto_id")
 	private Auto auto;
@@ -55,7 +55,7 @@ public class Tanken implements Serializable {
 
 	public Tanken(int kmStand, Land land, Ort ort, Tank tank,
 			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
-			BigDecimal preisProLiter, Benzinart benzinArt) {
+			BigDecimal preisProLiter, Kraftstoffsorte benzinArt) {
 		this();
 		this.kmStand = kmStand;
 		this.land = land;
@@ -71,7 +71,7 @@ public class Tanken implements Serializable {
 
 	protected Tanken(int id, int kmStand, Land land, Ort ort, Tank tank,
 			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
-			BigDecimal preisProLiter, Benzinart benzinArt) {
+			BigDecimal preisProLiter, Kraftstoffsorte benzinArt) {
 		this(kmStand, land, ort, tank, kosten, auto, datum, liter,
 				preisProLiter, benzinArt);
 		this.id = id;
@@ -133,11 +133,11 @@ public class Tanken implements Serializable {
 		this.liter = liter;
 	}
 
-	public Benzinart getBenzinArt() {
+	public Kraftstoffsorte getBenzinArt() {
 		return benzinArt;
 	}
 
-	public void setBenzinArt(Benzinart benzinArt) {
+	public void setBenzinArt(Kraftstoffsorte benzinArt) {
 		this.benzinArt = benzinArt;
 	}
 

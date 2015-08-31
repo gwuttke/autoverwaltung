@@ -32,7 +32,7 @@ import com.sun.corba.se.impl.io.FVDCodeBaseImpl;
 
 import de.gw.auto.Constans;
 import de.gw.auto.dao.AutoDAO;
-import de.gw.auto.dao.BenzinartDAO;
+import de.gw.auto.dao.KraftstoffDAO;
 import de.gw.auto.dao.LandDao;
 import de.gw.auto.dao.OrtDao;
 import de.gw.auto.dao.Settings;
@@ -41,8 +41,8 @@ import de.gw.auto.dao.TankDAO;
 import de.gw.auto.dao.TankenDao;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.gui.Button.Funktionen;
-import de.gw.auto.service.FtpService;
-import de.gw.auto.service.Versionierungsservice;
+import de.gw.auto.service.implementation.FtpService;
+import de.gw.auto.service.implementation.Versionierungsservice;
 
 @Controller
 public class Willkommen extends Thread {
