@@ -1,6 +1,6 @@
 allprojects {
 
-	version = '1.0.01-Beta'
+	version = '1.0.02-Beta'
 	group = "de.gw.auto"
 	repositories {
 		mavenCentral()
@@ -32,7 +32,8 @@ subprojects {
 
 	apply plugin: "eclipse"
 	apply plugin: "eclipse-wtp"
-	
+	apply plugin: "java"
+		
 	sourceCompatibility = 1.7
 	targetCompatibility = 1.8
 		

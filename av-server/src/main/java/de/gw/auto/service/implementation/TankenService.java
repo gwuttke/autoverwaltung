@@ -30,7 +30,7 @@ public class TankenService extends TankenInfo {
 		tankenList = tankenDao.getTankenList();
 	}
 
-	public List<Tankfuellung> loadTankfuellungen(Auto auto) {
+	public List<Tankfuellung> getTankfuellungen(Auto auto) {
 		List<Tanken> tanken = tankenDao.getTankungen(auto);
 		List<Tankfuellung> tankfuellungen = new ArrayList<Tankfuellung>();
 		Tankfuellung tfuellung = null;

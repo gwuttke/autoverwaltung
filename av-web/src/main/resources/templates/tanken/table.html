@@ -10,6 +10,17 @@
 		</div>
 		<div th:if="*{not #lists.isEmpty(tankfuellungenView)}"
 			id="tankenNotEmpty">
+
+
+
+			<ul class="pagination">
+				<li
+					th:each="number : *{#numbers.sequence(0,tankfuellungenView.getPageCount()-1)}"
+					 th:class="${number}==*{tankfuellungenView.page}?'active':''">
+					<a th:text="${number+1}" th:href="@{/user/tanken/show(page=${number})}">1</a>
+				</li>
+			</ul>
+
 			<table class="table">
 				<thead>
 					<tr class="row">
@@ -25,9 +36,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="tankenModel : *{tankfuellungenView}">
+					<th:block th:each="tankenModel : *{tankfuellungenView.pageList}">
 						<tr class="row" th:classappend="${tankenModel.cssStyleRow}">
-							<td th:text="${tankenModel.datum}">Datum</td>
+							<td th:text="${#dates.format(tankenModel.datum,'dd.MM.yyyy')}">Datum</td>
 							<td th:text="${tankenModel.kmStand}">km-Stand</td>
 							<td
 								th:text="${#numbers.formatDecimal(tankenModel.kosten,2,2,'COMMA')} + &euro;">Kosten</td>

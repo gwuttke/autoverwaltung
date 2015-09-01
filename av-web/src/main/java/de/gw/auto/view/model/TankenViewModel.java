@@ -3,11 +3,13 @@ package de.gw.auto.view.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.support.PagedListHolder;
+
 import de.gw.auto.domain.Tanken;
 import de.gw.auto.domain.Tankfuellung;
 
 public class TankenViewModel {
-	private List<TankenModel> tankfuellungenView = new ArrayList<TankenModel>();
+	private PagedListHolder<TankenModel> tankfuellungenView = new PagedListHolder<TankenModel>();
 
 	/**
 	 * index 0 = eingestelltes Jahr <br>
@@ -54,19 +56,21 @@ public class TankenViewModel {
 	public TankenViewModel() {
 	}
 
-	public List<TankenModel> getTankfuellungenView() {
+	public PagedListHolder<TankenModel> getTankfuellungenView() {
 		return tankfuellungenView;
 	}
 
-	public void setTankfuellungenView(List<TankenModel> tankfuellungenView) {
-		this.tankfuellungenView = tankfuellungenView;
+	public void setTankfuellungenView(PagedListHolder<TankenModel> pages) {
+		this.tankfuellungenView = pages;
 	}
 
 	public TankenViewModel(List<Tankfuellung> tankfuellungen) {
 		super();
+		List<TankenModel> list = new ArrayList<TankenModel>();
 		for (Tankfuellung t : tankfuellungen) {
-			tankfuellungenView.add(new TankenModel(t));
+			list.add(new TankenModel(t));
 		}
+		this.tankfuellungenView.setSource(list);
 	}
 
 	public double[] getKosten() {

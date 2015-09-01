@@ -1,10 +1,14 @@
 package de.gw.auto.view.model.helper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import de.gw.auto.domain.Auto;
@@ -19,7 +23,7 @@ public class TankenModelHelper {
 	private TankenService tankenService;
 
 	public TankenViewModel prepareTankViewModel(
-			TankenViewModel tankenViewModel, Auto auto) {
+			TankenViewModel tankenViewModel, Auto auto, int page) {
 		if (auto == null) {
 			return tankenViewModel;
 		}
@@ -54,13 +58,10 @@ public class TankenModelHelper {
 		km[0] = tankenService.getKmOfYear(currentYear, auto);
 		km[1] = tankenService.getKmOfYear(currentYear - 1, auto);
 		km[2] = tankenService.getAllKm(auto);
-		List<Tankfuellung> tankfuellungen = tankenService
-				.loadTankfuellungen(auto);
-		List<TankenModel> tankenModels = new ArrayList<TankenModel>();
-		for (Tankfuellung tfuellung : tankfuellungen) {
-			tankenModels.add(new TankenModel(tfuellung));
-		}
-		tankenViewModel.setTankfuellungenView(tankenModels);
+
+		
+		setPagination(tankenViewModel, auto, page);
+	
 		tankenViewModel.setKosten(kosten);
 		tankenViewModel.setLiter(liter);
 		tankenViewModel.setKm(km);
@@ -68,5 +69,25 @@ public class TankenModelHelper {
 		tankenViewModel.setMinPreisProLiter(minPreisProLiter);
 		tankenViewModel.setAvgPreisProLiter(avgPreisProLiter);
 		return tankenViewModel;
+	}
+
+	private void setPagination(TankenViewModel tankenViewModel, Auto auto, int page) {
+		List<Tankfuellung> tankfuellungen = tankenService.getTankfuellungen(
+				auto);
+		List<TankenModel> tankenModels = new ArrayList<TankenModel>();
+		for (Tankfuellung tfuellung : tankfuellungen) {
+			tankenModels.add(new TankenModel(tfuellung));
+		}
+		tankenModels.sort(new Comparator<TankenModel>() {
+
+			@Override
+			public int compare(TankenModel o1, TankenModel o2) {
+				return o2.getKmStand() - o1.getKmStand();
+			}
+		});
+		PagedListHolder<TankenModel> pages = new PagedListHolder<TankenModel>(
+				tankenModels, new MutableSortDefinition("getKmStand()", true, false));
+		pages.setPage(page);
+		tankenViewModel.setTankfuellungenView(pages);
 	}
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.gw.auto.Constans;
@@ -48,7 +50,7 @@ public class TankenController extends ControllerHelper {
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String show(TankenViewModel tankenView, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request,@RequestParam(value="page",defaultValue="0") int page) {
 		RegisteredUser user = giveRegisteredUser(request);
 		if (user == null) {
 			return ViewName.REDIRECT_LOGIN;
@@ -60,10 +62,13 @@ public class TankenController extends ControllerHelper {
 			return "redirect:/user/tanken/new";
 		}
 		tankenView = this.tankenHelper.prepareTankViewModel(tankenView,
-				user.getCurrentAuto());
+				user.getCurrentAuto(),page);
 		model.addAttribute("tankenView", tankenView);
 		return "userMainPage";
 	}
+	
+	
+	
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String prepareNew(NewTanken newTanken, Model model,
