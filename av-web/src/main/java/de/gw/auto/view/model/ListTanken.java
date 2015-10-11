@@ -1,5 +1,6 @@
 package de.gw.auto.view.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.gw.auto.domain.Kraftstoff;
@@ -11,11 +12,11 @@ import de.gw.auto.domain.Tank;
 public class ListTanken {
 	List<Land> laender;
 
-	private List<Ort> orte;
+	private List<Ort> orte = new ArrayList<Ort>();
 
-	private List<Tank> fuellstaende;
+	private List<Tank> fuellstaende = new ArrayList<Tank>();
 
-	private List<Kraftstoffsorte> kraftstoffsorten;
+	private List<Kraftstoffsorte> kraftstoffsorten = new ArrayList<Kraftstoffsorte>();
 
 	public List<Land> getLaender() {
 		return laender;

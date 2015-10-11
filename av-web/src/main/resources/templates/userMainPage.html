@@ -5,9 +5,27 @@
 <head>
 <th:block th:include="fragments/headTag :: head" />
 <title>Autoverwaltung - User</title>
+
+<script type="text/javascript" th:src="@{/js/tanken/get.js}" id="tankenGetJS"/>
+<script type="text/javascript" th:src="@{/js/tanken/new.js}" id="tankenNewJS"/>
+
+<script th:inline="javascript">
+	
+/*<![CDATA[*/
+
+var urlNewTanken = [[@{/user/tanken/new}]];
+var urlLaender = /*[[@{/user/json/orte(land=${tankenView.newTanken.landId}]]*/;
+
+/*]]>*/
+
+</script>
+
 </head>
 <body>
 	<div class="container" id="UserMainPage" th:object="${tankenView}">
+		
+		<div th:include="tanken/new :: newTankenModal"></div>
+	
 		<div th:include="fragments/header :: header">header</div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab"
@@ -20,7 +38,7 @@
 			<div id="tankfuellungenTable" class="tab-pane fade in active">
 				<h1>
 					Tankf&uuml;llungen 
-					<a th:href="@{new}"
+					<a id="TankenAdd"
 						class="btn btn-success"> <span
 						class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
 					</a>

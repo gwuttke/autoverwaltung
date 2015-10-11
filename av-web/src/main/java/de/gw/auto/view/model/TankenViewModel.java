@@ -10,6 +10,7 @@ import de.gw.auto.domain.Tankfuellung;
 
 public class TankenViewModel {
 	private PagedListHolder<TankenModel> tankfuellungenView = new PagedListHolder<TankenModel>();
+	private NewTanken newTanken = new NewTanken();
 
 	/**
 	 * index 0 = eingestelltes Jahr <br>
@@ -119,5 +120,13 @@ public class TankenViewModel {
 
 	public void setLiter(double[] liter) {
 		this.liter = liter;
+	}
+
+	public NewTanken getNewTanken() {
+		return newTanken;
+	}
+
+	public void setNewTanken(NewTanken newTanken) {
+		this.newTanken = newTanken;
 	}
 }

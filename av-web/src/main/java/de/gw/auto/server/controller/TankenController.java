@@ -12,9 +12,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.gw.auto.Constans;
@@ -49,7 +51,7 @@ public class TankenController extends ControllerHelper {
 	private NewTankenModelHelper newTankenModelHelper;
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String show(TankenViewModel tankenView, Model model,
+	public String show(@ModelAttribute("tankenView") TankenViewModel tankenView, Model model,
 			HttpServletRequest request,@RequestParam(value="page",defaultValue="0") int page) {
 		RegisteredUser user = giveRegisteredUser(request);
 		if (user == null) {
@@ -64,6 +66,7 @@ public class TankenController extends ControllerHelper {
 		tankenView = this.tankenHelper.prepareTankViewModel(tankenView,
 				user.getCurrentAuto(),page);
 		model.addAttribute("tankenView", tankenView);
+		model.addAttribute("newTanken", new NewTanken());
 		return "userMainPage";
 	}
 	
@@ -71,16 +74,16 @@ public class TankenController extends ControllerHelper {
 	
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String prepareNew(NewTanken newTanken, Model model,
+	public String prepareNew(@ModelAttribute("tankenView") TankenViewModel tankenView, Model model,
 			HttpServletRequest request) {
 		RegisteredUser user = giveRegisteredUser(request);
 		if (user == null) {
 			return ViewName.REDIRECT_LOGIN;
 		}
-		newTanken = newTankenModelHelper.prepareNewTankenModel(newTanken,
+		newTankenModelHelper.prepareNewTankenModel(tankenView,
 				user.getCurrentAuto());
-		model.addAttribute(newTanken);
-		return "tanken/new";
+		model.addAttribute(tankenView);
+		return "userMainPage";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)

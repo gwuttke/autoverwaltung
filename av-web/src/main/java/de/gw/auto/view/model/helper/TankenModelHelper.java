@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.service.implementation.TankenService;
+import de.gw.auto.view.model.NewTanken;
 import de.gw.auto.view.model.TankenModel;
 import de.gw.auto.view.model.TankenViewModel;
 
@@ -68,6 +69,7 @@ public class TankenModelHelper {
 		tankenViewModel.setMaxPreisProLiter(maxPreisProLiter);
 		tankenViewModel.setMinPreisProLiter(minPreisProLiter);
 		tankenViewModel.setAvgPreisProLiter(avgPreisProLiter);
+		
 		return tankenViewModel;
 	}
 

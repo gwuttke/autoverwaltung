@@ -45,6 +45,9 @@ public class NewTanken extends ListTanken {
 		this.landId = landId;
 	}
 
+
+
+
 	public int getOrtId() {
 		return ortId;
 	}
