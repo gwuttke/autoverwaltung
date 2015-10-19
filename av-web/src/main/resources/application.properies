@@ -21,4 +21,6 @@ wro.modelUpdatePeriod=100
 wro.file=classpath:/resources/wro.xml
 wro.ignoreMissingResources=false
 wro.uriLocators=servletContext,classpath,uri
-wro.preProcessors=less4j,customEncoding,cssImport,cssUrlRewriting,semicolonAppender
+wro.parallelPreprocessing=true
+wro.preProcessors=cssUrlRewriting,cssImport,semicolonAppender,lessCss,less4j,customEncoding
+wro.postProcessors=cssVariables,cssMinJawr,jsMin
