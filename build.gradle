@@ -45,7 +45,7 @@ subprojects {
 }
 
 task stage {
-  dependsOn :av-web:build
+  dependsOn build
 }
 
 
