@@ -9,10 +9,8 @@
 </head>
 <body>
 	<!-- Modal -->
-	<div th:fragment="newTankenModal">
 
-		<div class="modal fade" id="newTankenModal" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog"  th:fragment="newTankenModal">
 
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -87,9 +85,9 @@
 							<div class="row">
 								<div class="control-group col-sm-6">
 									<label for="selectLand">Land</label> <select
-										th:field="*{landId}" class="form-control" id="selectLand">
+										th:field="*{landId}" class="form-control" id="selectLand" th:remove="all-but-first">
 										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option th:each="land : ${tankenView.newTanken.laender}"
+										<option th:each="land : *{laender}"
 											th:value="${land.id}" th:text="${land.name}">land</option>
 									</select>
 								</div>
@@ -133,7 +131,5 @@
 					</form>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
 </html>

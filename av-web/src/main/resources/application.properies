@@ -1,13 +1,17 @@
 #DB properties:
-db.driver=com.mysql.jdbc.Driver
-db.url=jdbc:mysql://192.168.178.53:3306/auto 
-db.username=auto
-db.password=Dj9aaQGpre3Cr4f3
+#db.driver=com.mysql.jdbc.Driver
+#db.url=jdbc:mysql://192.168.178.53:3306/auto 
+#db.username=auto
+#db.password=Dj9aaQGpre3Cr4f3
  
 #Hibernate Configuration:
 hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 hibernate.show_sql=true
 hibernate.hbm2ddl.auto=update
+
+spring.thymeleaf.cache=false
+logging.level.org.springframework.security: DEBUG
+logging.level.org.springframework.jdbc: DEBUG
 
 #wro Config
 wro.debug=false

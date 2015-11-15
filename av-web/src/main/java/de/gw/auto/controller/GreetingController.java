@@ -1,4 +1,4 @@
-  package de.gw.auto.server.controller;
+  package de.gw.auto.controller;
 
 import java.security.Principal;
 

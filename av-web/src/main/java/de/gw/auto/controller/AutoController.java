@@ -1,5 +1,6 @@
-package de.gw.auto.server.controller;
+package de.gw.auto.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,9 @@ public class AutoController extends ControllerHelper {
 	private AutoDAO autoDAO;
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String prepareNewAuto(HttpServletRequest request,
+	public String prepareNewAuto(Principal principal,
 			AutoModel autoModel, Model model) {
-		RegisteredUser user = giveRegisteredUser(request);
+		RegisteredUser user = giveRegisteredUser(principal);
 		if (user == null) {
 			return ViewName.REDIRECT_LOGIN;
 		}
@@ -44,12 +45,12 @@ public class AutoController extends ControllerHelper {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAuto(HttpServletRequest request,
+	public String saveAuto(Principal principal,
 			@Valid AutoModel autoModel, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "auto/new";
 		}
-		RegisteredUser user = giveRegisteredUser(request);
+		RegisteredUser user = giveRegisteredUser(principal);
 		if (user == null) {
 			return ViewName.REDIRECT_LOGIN;
 		}

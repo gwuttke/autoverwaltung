@@ -16,12 +16,8 @@ buildscript {
 	
 
 
-applicationDefaultJvmArgs = [
-    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
-]
-
 jar {
-    baseName = 'Web'
+    baseName = 'autoverwaltung-web'
 }
 
 bootRepackage {
@@ -33,7 +29,6 @@ dependencies {
 compile project(':av-server')
 compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.2.3.RELEASE'
 compile 'org.springframework.boot:spring-boot-starter-security'
-compile 'org.webjars:bootstrap:3.3.4'
 compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
 compile 'javax.servlet:javax.servlet-api:3.1.0'
 compile 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'

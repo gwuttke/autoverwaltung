@@ -1,7 +1,9 @@
 package de.gw.auto.view.model;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.support.PagedListHolder;
 
@@ -13,46 +15,27 @@ public class TankenViewModel {
 	private NewTanken newTanken = new NewTanken();
 
 	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
+	 * key = Jahr, Double = Wert;
 	 */
-	private double[] kosten = new double[3];
+	LinkedHashMap<Integer, Double> kosten;
+	
 
 	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
+	 * key = Jahr, Map<String ='min'||'max'||'avg',  Double = Wert>;
 	 */
-	private double[] maxPreisProLiter = new double[3];
+	LinkedHashMap<Integer, Map<String, Double>> preisProLiter;
 
 	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
+	 * key = Jahr, Double = Wert;
 	 */
-	private double[] minPreisProLiter = new double[3];
-
+	LinkedHashMap<Integer, Integer> kms;
+	
+	
 	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
+	 * key = Jahr, Double = Wert;
 	 */
-	private double[] avgPreisProLiter = new double[3];
-
-	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
-	 */
-	private int[] km = new int[3];
-
-	/**
-	 * index 0 = eingestelltes Jahr <br>
-	 * index 1 = eingestelltes Jahr -1 <br>
-	 * index 2 = gesamt
-	 */
-	private double[] liter = new double[3];
+	LinkedHashMap<Integer, Double> liter;
+	
 	
 	public TankenViewModel() {
 	}
@@ -74,51 +57,37 @@ public class TankenViewModel {
 		this.tankfuellungenView.setSource(list);
 	}
 
-	public double[] getKosten() {
+	
+	public LinkedHashMap<Integer, Double> getKosten() {
 		return kosten;
 	}
 
-	public void setKosten(double[] kosten) {
+	public void setKosten(LinkedHashMap<Integer, Double> kosten) {
 		this.kosten = kosten;
 	}
 
-	public double[] getMaxPreisProLiter() {
-		return maxPreisProLiter;
+	public LinkedHashMap<Integer, Map<String, Double>> getPreisProLiter() {
+		return preisProLiter;
 	}
 
-	public void setMaxPreisProLiter(double[] maxPreisProLiter) {
-		this.maxPreisProLiter = maxPreisProLiter;
+	public void setPreisProLiter(
+			LinkedHashMap<Integer, Map<String, Double>> preisProLiter) {
+		this.preisProLiter = preisProLiter;
 	}
 
-	public double[] getMinPreisProLiter() {
-		return minPreisProLiter;
+	public LinkedHashMap<Integer, Integer> getKms() {
+		return kms;
 	}
 
-	public void setMinPreisProLiter(double[] minPreisProLiter) {
-		this.minPreisProLiter = minPreisProLiter;
+	public void setKms(LinkedHashMap<Integer, Integer> kms) {
+		this.kms = kms;
 	}
 
-	public double[] getAvgPreisProLiter() {
-		return avgPreisProLiter;
-	}
-
-	public void setAvgPreisProLiter(double[] avgPreisProLiter) {
-		this.avgPreisProLiter = avgPreisProLiter;
-	}
-
-	public int[] getKm() {
-		return km;
-	}
-
-	public void setKm(int[] km) {
-		this.km = km;
-	}
-
-	public double[] getLiter() {
+	public LinkedHashMap<Integer, Double> getLiter() {
 		return liter;
 	}
 
-	public void setLiter(double[] liter) {
+	public void setLiter(LinkedHashMap<Integer, Double> liter) {
 		this.liter = liter;
 	}
 

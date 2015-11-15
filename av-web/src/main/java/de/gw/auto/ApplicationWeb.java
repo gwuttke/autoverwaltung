@@ -1,41 +1,46 @@
 package de.gw.auto;
 
-import java.util.Arrays;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import ch.qos.logback.classic.joran.action.ConfigurationAction;
+import de.gw.auto.view.ViewName;
 
 @Configuration
-@EnableWebSecurity
 @EnableAutoConfiguration
 @ComponentScan
 @EnableTransactionManagement
-public class ApplicationWeb extends Application{
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class ApplicationWeb extends Application {
+	
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
 
-	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-		"classpath:/META-INF/resources/", "classpath:/resources/",
-		"classpath:/static/", "classpath:/public/" };
-	/*
+		registry.addViewController("/"+ViewName.LOGIN).setViewName(ViewName.LOGIN);
+		registry.addRedirectViewController("/", ViewName.USER_MAIN_PAGE);
+	}
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		if (!registry.hasMappingForPattern("/static/**")) {
-			registry.addResourceHandler("/static/**").addResourceLocations(
-					"classpath:/static/");
-		}
-		if (!registry.hasMappingForPattern("/**")) {
-			registry.addResourceHandler("/**").addResourceLocations(
-					CLASSPATH_RESOURCE_LOCATIONS);
+		if(!registry.hasMappingForPattern("/fonts/**")){
+			registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/assert/bootstrap/3_3_5/fonts/");
 		}
 	}
-	*/
+	
+	@Bean
+	public ConfigurationSecurity configurationSecurity(){
+		return new ConfigurationSecurity();
+	}
 	
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(ApplicationWeb.class, args);

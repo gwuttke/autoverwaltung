@@ -7,37 +7,46 @@
 <title>Autoverwaltung - User</title>
 
 <link rel="stylesheet" th:href="@{/wro/tanken.css}" type="text/css" />
-<script type="text/javascript" th:src="@{/wro/tanken.js}" id="alllJS" ></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" >
+/*<![CDATA[*/
+/*]]>*/
+</script>
 
 <script th:inline="javascript">
 /*<![CDATA[*/
 var urlNewTanken = /*[[@{/user/tanken/new}]]*/;
 var urlLaender = /*[[@{/user/json/orte(land=${tankenView.newTanken.landId})}]]*/;
 /*]]>*/
-
+<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" th:remove="tag"/>
 </script>
 
 </head>
 <body>
+	<div th:include="fragments/header :: header">header</div>
 	<div class="container" id="UserMainPage" th:object="${tankenView}">
-
-		<div th:include="tanken/new :: newTankenModal"></div>
-
-		<div th:include="fragments/header :: header">header</div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab"
 				href="#tankfuellungenTable"> Tankf&uuml;llungen </a></li>
 			<li><a data-toggle="tab" href="#sonstigeAusgabenTable">
 					Sonstige Ausgaben </a></li>
 		</ul>
-
+		
 		<div class="tab-content">
 			<div id="tankfuellungenTable" class="tab-pane fade in active">
 				<h1>
-					Tankf&uuml;llungen <a id="TankenAdd" class="btn btn-success"> <span
-						class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
-					</a>
+					Tankf&uuml;llungen 
 				</h1>
+				<br/>
+				<a id="TankenAdd" class="btn btn-success"> <span
+					class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
+				</a>
+				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadTanken}"> <span
+					class="glyphicon glyphicon-print"></span> Drucken
+				</a>
+				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadEmptyTanken}"> <span
+					class="glyphicon glyphicon-print"></span> Drucke Leere Tabelle
+				</a>
+				
 				<br />
 				<div th:include="tanken/table :: tankenTable">TankenTable</div>
 			</div>
@@ -49,10 +58,7 @@ var urlLaender = /*[[@{/user/json/orte(land=${tankenView.newTanken.landId})}]]*/
 					</a>
 				</h1>
 			</div>
-
 		</div>
-
 	</div>
-
 </body>
 </html>

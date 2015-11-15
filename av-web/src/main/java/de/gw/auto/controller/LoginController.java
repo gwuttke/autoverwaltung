@@ -1,4 +1,4 @@
-package de.gw.auto.server.controller;
+package de.gw.auto.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +22,38 @@ import de.gw.auto.view.model.RegistrationModel;
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	I_BenutzerService benutzerService;
+	
+	@RequestMapping(value = "/" + ViewName.REGISTER, method = RequestMethod.GET)
+	public String register(RegistrationModel registrationModel) {
+		return ViewName.REGISTER;
+	}
+
+	@RequestMapping(value = ViewName.REGISTRATION, method = RequestMethod.POST)
+	public String registration(@Valid RegistrationModel registrationModel,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ViewName.REGISTER;
+		}
+		if (!registrationModel.getPasswort().equals(
+				registrationModel.getWiederholungPasswort())) {
+			bindingResult.rejectValue("wiederholungPasswort",
+					"Die Passwörter stimmen nicht überein");
+		}
+		try {
+			benutzerService.registry(registrationModel.getName(),
+					registrationModel.getVorname(),
+					registrationModel.getBenutzername(),
+					registrationModel.getPasswort(),
+					registrationModel.geteMail());
+			return ViewName.REDIRECT_ROOT;
+		} catch (Exception e) {
+			return ViewName.REGISTER;
+		}
+	}
+	/*
 	@Autowired
 	I_BenutzerService benutzerService;
 
@@ -58,37 +90,12 @@ public class LoginController {
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
 
-	@RequestMapping(value = "/" + ViewName.REGISTER, method = RequestMethod.GET)
-	public String register(RegistrationModel registrationModel) {
-		return ViewName.REGISTER;
-	}
-
-	@RequestMapping(value = ViewName.REGISTRATION, method = RequestMethod.POST)
-	public String registration(@Valid RegistrationModel registrationModel,
-			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ViewName.REGISTER;
-		}
-		if (!registrationModel.getPasswort().equals(
-				registrationModel.getWiederholungPasswort())) {
-			bindingResult.rejectValue("wiederholungPasswort",
-					"Die Passwörter stimmen nicht überein");
-		}
-		try {
-			benutzerService.registry(registrationModel.getName(),
-					registrationModel.getVorname(),
-					registrationModel.getBenutzername(),
-					registrationModel.getPasswort(),
-					registrationModel.geteMail());
-			return ViewName.REDIRECT_ROOT;
-		} catch (Exception e) {
-			return ViewName.REGISTER;
-		}
-	}
+	
 
 	@RequestMapping(value = ViewName.ERROR_LOGIN, method = RequestMethod.GET)
 	public String loginError(Model model) {
 		model.addAttribute("loginError", true);
 		return ViewName.LOGIN;
 	}
+	*/
 }
