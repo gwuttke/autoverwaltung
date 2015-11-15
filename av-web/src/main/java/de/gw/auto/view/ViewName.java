@@ -31,8 +31,7 @@ public class ViewName {
 
 	public static final String REDIRECT_ROOT = REDIRECT + ROOT;
 
-	public static final String REDIRECT_USER_MAIN_PAGE = REDIRECT
-			+ USER_MAIN_PAGE;
+	public static final String REDIRECT_USER_MAIN_PAGE = REDIRECT + USER_MAIN_PAGE;
 
 	public static final String REDIRECT_REGISTER = REDIRECT + REGISTER;
 

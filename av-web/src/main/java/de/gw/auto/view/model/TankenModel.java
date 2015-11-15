@@ -1,10 +1,11 @@
 package de.gw.auto.view.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import de.gw.auto.domain.Tankfuellung;
 
-public class TankenModel extends Tankfuellung {
+public class TankenModel extends Tankfuellung{
 	private String cssStyleRow;
 
 	public String getCssStyleRow() {

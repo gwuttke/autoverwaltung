@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar build/lib/autoverwaltung-web-1.0.02-Beta.jar

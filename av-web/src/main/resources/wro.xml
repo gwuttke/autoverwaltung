@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <groups xmlns="http://www.isdc.ro/wro">
-	<group name="all">
-		<css>/css/form.css</css>
-		<css>/css/signin.css</css>
-		<js>/js/bootstrap-datepicker.js</js>
+	<group name="datepicker">
+	<css>classpath:assert/datepicker/css/datepicker.css</css>
+	<js>classpath:assert/datepicker/js/bootstrap-datepicker.js</js>
+	<js>classpath:assert/datepicker/js/bootstrap-datepicker.de.min.js</js>
 	</group>
+	
+	<group name="jQuery">
+		<js>classpath:assert/jQuery/jquery-1.11.3.min.js</js>
+	</group>
+	
+	<group name="bootstrap">
+	<css>classpath:assert/bootstrap/3_3_5/css/bootstrap.css</css>
+	<css>classpath:assert/bootstrap/3_3_5/css/bootstrap-theme.css</css>
+	<js>classpath:assert/bootstrap/3_3_5/js/bootstrap.js</js>
+	</group>
+	
+	<group name="all">
+		<group-ref>jQuery</group-ref>
+		<group-ref>bootstrap</group-ref>
+		<group-ref>datepicker</group-ref>
+	</group>
+	
+	<group name="login">
+		<css>classpath:css/form.css</css>
+		<css>classpath:css/signin.css</css>
+	</group>
+	
+	<group name="tanken">
+		<js>classpath:js/tanken/get.js</js>
+	</group>
+	
+	
 </groups>  

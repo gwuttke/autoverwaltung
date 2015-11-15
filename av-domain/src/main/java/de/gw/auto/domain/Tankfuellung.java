@@ -1,8 +1,13 @@
 package de.gw.auto.domain;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.Comparator;
 
-public class Tankfuellung extends Tanken {
+import org.hibernate.cfg.SetSimpleValueTypeSecondPass;
+
+public class Tankfuellung extends Tanken implements Comparator<Tanken> {
 	private Tankfuellung vorTankfuellung;
 
 	
@@ -23,7 +28,13 @@ public class Tankfuellung extends Tanken {
 		return this.getKmStand() - vorTankfuellung.getKmStand();
 	}
 
-	public Double getVerbrauch100Km() {
-		return (this.getLiter().doubleValue() / this.getGefahreneKm()) * 100;
+	public BigDecimal getVerbrauch100Km() {
+		BigDecimal verbrauch = new BigDecimal((this.getLiter().doubleValue() / this.getGefahreneKm()) * 100);
+		return verbrauch;
+	}
+
+	@Override
+	public int compare(Tanken o1, Tanken o2) {
+		return o2.getKmStand()-o1.getKmStand();
 	}
 }

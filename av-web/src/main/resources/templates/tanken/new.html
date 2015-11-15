@@ -5,50 +5,12 @@
 <head>
 <th:block th:include="fragments/headTag :: head" />
 
-<script th:inline="javascript">
-	
-/*<![CDATA[*/
-
-var url = /*[[@{/user/json/orte(land=${newTanken.landId})}]]*/;
-
-//When the document is ready
-$(document).ready(function() {
-
-	$('#inputTankenDatum').datepicker({
-		format : "dd.mm.yyyy"
-	});
-	$('#selectLand').change(function(){
-		$.ajax({
-		    url: url +$('#selectLand').val(),
-		    type:'GET',
-		    dataType: 'json',
-		    success: function( json ) {
-		    	$("#selectOrt").empty();
-		        $.each(json, function(i, value) {
-		            $('#selectOrt').append($('<option>').text(value.ort).attr('value', value.id));
-		            $('#selectOrt').append('</option>');
-		        });
-		    }
-		});	
-	});
-});
-
-/*]]>*/
- 
-
-</script>
 <title>Autoverwaltung - Neue Tankf&uuml;llung</title>
 </head>
 <body>
-	<!-- Trigger the modal with a button -->
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-		data-target="#myModal">Open Modal</button>
-
 	<!-- Modal -->
-	<div th:fragment="newTankenModal">
 
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog"  th:fragment="newTankenModal">
 
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -56,7 +18,7 @@ $(document).ready(function() {
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">Neue Tankf&uuml;llung</h4>
 					</div>
-					<form class="form-horizontal" role="form" th:object="${newTanken}"
+					<form class="form-horizontal" role="form" th:object="${tankenView.newTanken}"
 						th:action="@{/user/tanken/save}" method="post">
 						<div class="modal-body">
 							<div class="row">
@@ -123,9 +85,9 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="control-group col-sm-6">
 									<label for="selectLand">Land</label> <select
-										th:field="*{landId}" class="form-control" id="selectLand">
+										th:field="*{landId}" class="form-control" id="selectLand" th:remove="all-but-first">
 										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option th:each="land : ${newTanken.laender}"
+										<option th:each="land : *{laender}"
 											th:value="${land.id}" th:text="${land.name}">land</option>
 									</select>
 								</div>
@@ -143,18 +105,17 @@ $(document).ready(function() {
 										id="selectBenzinart">
 										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
 										<option
-											th:each="kraftstoffsorte : ${newTanken.kraftstoffsorten}"
+											th:each="kraftstoffsorte : ${tankenView.newTanken.kraftstoffsorten}"
 											th:value="${kraftstoffsorte.id}"
 											th:text="${kraftstoffsorte.name}">benzinarten</option>
 									</select>
 								</div>
 								<div class="control-group col-sm-6">
-									<label for="selectBenzinart">Tankf&uuml;llstand nach Tanken</label> <select
-										th:field="*{tankId}" class="form-control"
+									<label for="selectBenzinart">Tankf&uuml;llstand nach
+										Tanken</label> <select th:field="*{tankId}" class="form-control"
 										id="selectFuellstaendet">
 										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option
-											th:each="fuellstand : ${newTanken.fuellstaende}"
+										<option th:each="fuellstand : ${tankenView.newTanken.fuellstaende}"
 											th:value="${fuellstand.id}"
 											th:text="${fuellstand.beschreibung}">fuellstaende</option>
 									</select>
@@ -170,7 +131,5 @@ $(document).ready(function() {
 					</form>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
 </html>

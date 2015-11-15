@@ -1,6 +1,10 @@
 package de.gw.auto.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -40,6 +44,16 @@ public class BenutzerDAO {
 			throw new UsernameNotFoundException("UserName " + username
 					+ " not found");
 		}
-		return new RegisteredUser(user);
+		List<GrantedAuthority> auth = AuthorityUtils
+				.commaSeparatedStringToAuthorityList("ROLE_USER");
+		if (username.equals("admin")) {
+			auth = AuthorityUtils
+					.commaSeparatedStringToAuthorityList("ROLE_ADMIN");
+		}
+		
+		String password = user.getPasswort();
+		return new org.springframework.security.core.userdetails.User(username, password,
+				auth);
+		
 	}
 }
