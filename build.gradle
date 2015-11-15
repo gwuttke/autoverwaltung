@@ -44,10 +44,11 @@ subprojects {
 	eclipse.classpath.plusConfigurations += [configurations.provided]
 }
 
-task wrapper(type: Wrapper) {
-	gradleVersion = "2.7"
+task stage {
+  dependsOn :av-web:build
 }
 
-task stage {
-  dependsOn build
+
+task wrapper(type: Wrapper) {
+	gradleVersion = "2.7"
 }
