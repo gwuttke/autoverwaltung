@@ -48,7 +48,6 @@ task stage {
   dependsOn ':av-web:build'
 }
 
-
 task wrapper(type: Wrapper) {
 	gradleVersion = "2.7"
 }
