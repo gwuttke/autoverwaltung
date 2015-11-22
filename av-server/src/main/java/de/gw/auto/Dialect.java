@@ -7,7 +7,8 @@ public enum Dialect {
 
 	ORACLE("org.hibernate.dialect.Oracle10gDialect"), 
 	MYSQL("org.hibernate.dialect.MySQLDialect"), 
-	HSQL("org.hibernate.dialect.HSQLDialect");
+	HSQL("org.hibernate.dialect.HSQLDialect"),
+	POSGRESQL("org.hibernate.dialect.PostgreSQLDialect");
 
 	private String dialectClass;
 

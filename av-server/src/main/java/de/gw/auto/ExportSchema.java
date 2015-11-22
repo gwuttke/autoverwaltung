@@ -50,7 +50,7 @@ public class ExportSchema {
 	public static void main(String[] args) throws Exception {
 		ExportSchema gen = new ExportSchema();
 		gen.inputConfig();
-		gen.generate(Dialect.MYSQL);
+		gen.generate(Dialect.POSGRESQL);
 		// gen.generate(Dialect.ORACLE);
 		// gen.generate(Dialect.HSQL);
 		// gen.generate(null);
