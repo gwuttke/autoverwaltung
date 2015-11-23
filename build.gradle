@@ -17,6 +17,7 @@ configure(subprojects.findAll { it.name }) {
 	
 	configurations {
 		provided
+		compile
 	}
 	
 	sourceSets {
