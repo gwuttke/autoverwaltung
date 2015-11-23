@@ -48,6 +48,13 @@ task stage {
   dependsOn ':av-web:build'
 }
 
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)
+
 task wrapper(type: Wrapper) {
 	gradleVersion = "2.7"
 }
