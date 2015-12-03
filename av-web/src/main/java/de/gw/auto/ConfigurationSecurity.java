@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import de.gw.auto.view.ViewName;
 
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @Configuration
+@EnableWebMvcSecurity
 public class ConfigurationSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override
@@ -22,7 +24,7 @@ public class ConfigurationSecurity extends WebSecurityConfigurerAdapter {
 				.anyRequest().fullyAuthenticated()
 				.and().formLogin().loginPage("/login")
 				.failureUrl("/login?error")
-				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
+				.and().
+				logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
 	}
-
 }
