@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import de.gw.auto.dao.AutoDAO;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.service.RegisteredUser;
 import de.gw.auto.view.ViewName;
 import de.gw.auto.view.model.AutoModel;
+import de.gw.auto.view.model.AutoModelShow;
 import de.gw.auto.view.model.helper.NewAutoModelHelper;
 
 @Controller
@@ -33,27 +36,22 @@ public class AutoController extends ControllerHelper {
 	private AutoDAO autoDAO;
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String prepareNewAuto(Principal principal,
-			AutoModel autoModel, Model model) {
+	public String prepareNewAuto(Principal principal, AutoModel autoModel,
+			Model model) {
 		RegisteredUser user = giveRegisteredUser(principal);
-		if (user == null) {
-			return ViewName.REDIRECT_LOGIN;
-		}
 		autoModel = autoHelper.prepareAutoModel(autoModel);
 		model.addAttribute("autoModel", autoModel);
-		return "auto/new";
+		return "auto/new :: newAutoModal";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAuto(Principal principal,
-			@Valid AutoModel autoModel, BindingResult bindingResult, Model model) {
+	public String saveAuto(Principal principal, @Valid AutoModel autoModel,
+			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return "auto/new";
+			return "auto/new :: newAutoModal";
 		}
 		RegisteredUser user = giveRegisteredUser(principal);
-		if (user == null) {
-			return ViewName.REDIRECT_LOGIN;
-		}
+		
 		List<Benutzer> users = new ArrayList<Benutzer>();
 		users.add(user);
 		Auto auto = new Auto(autoModel.getKfz(), autoModel.getKmKauf(),
@@ -61,6 +59,22 @@ public class AutoController extends ControllerHelper {
 				autoModel.getErstZulassung(), autoModel.getUserKraftstoffart(),
 				autoModel.getKmAktuell(), users);
 		autoDAO.save(user, auto);
-		return "Speicherung erfolgreich";
+		return ViewName.REDIRECT_USER_MAIN_PAGE;
+	}
+
+	@RequestMapping(value = "/updateCurrent", method = RequestMethod.POST)
+	public String updateCurrentAuto(Principal principal,
+			AutoModelShow autoModel, HttpServletRequest request, BindingResult bindingResult, Model model) {
+		RegisteredUser user = giveRegisteredUser(principal);
+		Auto a = autoDAO.findById(autoModel.getId());
+		if(user.getAutos().contains(a)){
+			user.setCurrentAuto(a);
+			return "redirect:/user/tanken/show";
+		}
+		bindingResult.reject("no.Car", String.format(
+				"Es gibt kein Auto mit dem Kennzeichen: %s .",
+				autoModel.getKfz()));
+		 String referer = request.getHeader("Referer");
+		    return "redirect:"+ referer;
 	}
 }

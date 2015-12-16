@@ -21,13 +21,6 @@ import org.hibernate.engine.internal.Cascade;
 @Table(name = "Kraftstoff")
 @SequenceGenerator(name = "kraftstoff_gen", sequenceName = "kraftstoff_id_seq")
 public class Kraftstoff implements Serializable {
-	public Set<Kraftstoffsorte> getKraftstoffsorten() {
-		return kraftstoffsorten;
-	}
-
-	public void setKraftstoffsorten(Set<Kraftstoffsorte> kraftstoffsorten) {
-		this.kraftstoffsorten = kraftstoffsorten;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "kraftstoff_gen")
@@ -39,6 +32,15 @@ public class Kraftstoff implements Serializable {
 	@JoinTable(name="kraftstoff_kraftstoffsorte")
 	private Set<Kraftstoffsorte> kraftstoffsorten = new HashSet<Kraftstoffsorte>();
 
+	
+	public Set<Kraftstoffsorte> getKraftstoffsorten() {
+		return kraftstoffsorten;
+	}
+
+	public void setKraftstoffsorten(Set<Kraftstoffsorte> kraftstoffsorten) {
+		this.kraftstoffsorten = kraftstoffsorten;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

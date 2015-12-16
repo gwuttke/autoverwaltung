@@ -53,49 +53,4 @@ public class LoginController {
 			return ViewName.REGISTER;
 		}
 	}
-	/*
-	@Autowired
-	I_BenutzerService benutzerService;
-
-	@RequestMapping(value = ViewName.DEFAULT_ROOT)
-	public String prepareLogin(LoginModel loginModel) {
-		return ViewName.LOGIN;
-	}
-
-	@RequestMapping(value = ViewName.LOGOUT)
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setAttribute(Constans.SESSION_BENUTZER, null);
-		return ViewName.DEFAULT_ROOT;
-	}
-
-	@RequestMapping(value = ViewName.LOGIN, method = RequestMethod.POST)
-	public String login(@Validated LoginModel loginModel,
-			BindingResult bindingResult, HttpServletRequest request) {
-		if (bindingResult.hasErrors()) {
-			return ViewName.REDIRECT_LOGIN;
-		}
-		RegisteredUser registedUser = null;
-		try {
-			registedUser = benutzerService.login(loginModel.getUsername(),
-					loginModel.getEmail(), loginModel.getPasswort());
-			if (registedUser != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute(Constans.SESSION_BENUTZER, registedUser);
-			}
-		} catch (UsernameNotFoundException e) {
-			loginModel.setStatus(e.getMessage());
-			return ViewName.REDIRECT_ROOT;
-		}
-		return ViewName.REDIRECT_USER_MAIN_PAGE;
-	}
-
-	
-
-	@RequestMapping(value = ViewName.ERROR_LOGIN, method = RequestMethod.GET)
-	public String loginError(Model model) {
-		model.addAttribute("loginError", true);
-		return ViewName.LOGIN;
-	}
-	*/
 }

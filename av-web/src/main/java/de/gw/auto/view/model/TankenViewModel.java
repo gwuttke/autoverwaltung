@@ -17,24 +17,24 @@ public class TankenViewModel {
 	/**
 	 * key = Jahr, Double = Wert;
 	 */
-	LinkedHashMap<Integer, Double> kosten;
+	private LinkedHashMap<Integer, Double> kosten;
 	
 
 	/**
 	 * key = Jahr, Map<String ='min'||'max'||'avg',  Double = Wert>;
 	 */
-	LinkedHashMap<Integer, Map<String, Double>> preisProLiter;
+	private LinkedHashMap<Integer, Map<String, Double>> preisProLiter;
 
 	/**
 	 * key = Jahr, Double = Wert;
 	 */
-	LinkedHashMap<Integer, Integer> kms;
+	private LinkedHashMap<Integer, Integer> kms;
 	
 	
 	/**
 	 * key = Jahr, Double = Wert;
 	 */
-	LinkedHashMap<Integer, Double> liter;
+	private LinkedHashMap<Integer, Double> liter;
 	
 	
 	public TankenViewModel() {

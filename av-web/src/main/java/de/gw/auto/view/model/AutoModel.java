@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Kraftstoff;
 import de.gw.auto.domain.Kraftstoffsorte;
 
@@ -29,6 +30,30 @@ public class AutoModel {
 	private int kmAktuell;
 
 	private int kmStart;
+
+	protected AutoModel() {
+		super();
+	}
+
+	public AutoModel(Auto auto) {
+		this(auto.getKfz(), auto.getKmKauf(), auto.getKauf(), auto
+				.getErstZulassung(), null, auto.getKraftstoff(), auto
+				.getKmAktuell(), auto.getKmStart());
+	}
+
+	protected AutoModel(String kfz, int kmKauf, Date kauf, Date erstZulassung,
+			List<Kraftstoff> kraftstoffarten, Kraftstoff userKraftstoffart,
+			int kmAktuell, int kmStart) {
+		this();
+		this.kfz = kfz;
+		this.kmKauf = kmKauf;
+		this.kauf = kauf;
+		this.erstZulassung = erstZulassung;
+		this.kraftstoffarten = kraftstoffarten;
+		this.userKraftstoffart = userKraftstoffart;
+		this.kmAktuell = kmAktuell;
+		this.kmStart = kmStart;
+	}
 
 	public int getKmStart() {
 		return kmStart;
@@ -58,9 +83,6 @@ public class AutoModel {
 		return kfz;
 	}
 
-	public AutoModel() {
-	}
-
 	public void setKfz(String kfz) {
 		this.kfz = kfz;
 	}
@@ -77,23 +99,23 @@ public class AutoModel {
 		return kauf;
 	}
 
-	public void setKauf(String kauf) throws ParseException{
-		this.kauf =stringToDate(kauf);
+	public void setKauf(String kauf) throws ParseException {
+		this.kauf = stringToDate(kauf);
 	}
 
 	public static Date stringToDate(String dateString) throws ParseException {
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy",Locale.GERMANY);
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		return format.parse(dateString);
 	}
+
 	public static String formattedDate(Date date) throws ParseException {
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy",Locale.GERMANY);
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		return format.format(date);
 	}
-	
-	/*public void setKauf(Date kauf) {
-		this.kauf = kauf;
-	}
-*/
+
+	/*
+	 * public void setKauf(Date kauf) { this.kauf = kauf; }
+	 */
 	public Date getErstZulassung() {
 		return erstZulassung;
 	}
