@@ -1,5 +1,5 @@
 $(function() {
-	
+		
 	$('#addAuto').click(function(){
 		openModal('newAutoModal',urlNewAuto, function(){
 			$('.date-picker').each(function(){
@@ -11,14 +11,19 @@ $(function() {
 		});
 	});
 	
-	$('a[name="auto"]').click(function(){
-		autoModelShow = {
-        		id : $(this).data('value')
-        }
-		 $.ajax({
+	$('button[name="btnAuto"]').click(function(){
+		var id = $(this).data('id');
+		var token = $("meta[name='_csrf']").attr("content");
+		$('#autoId').val(id);
+		//$.post(urlUpdateCurrent, {});
+		$.post(urlUpdateCurrent, {s: $('#currentAutoForm').serialize(),
+			_csrf: token});
+		//$("#currentAutoForm").ajaxForm({url: urlUpdateCurrent, type: 'post'});
+		/*
+		$.ajax({
 	            type : "POST",
 	            url : urlUpdateCurrent,
-	            data : autoModelShow,
+	            data : {autoModelShow: id},
 	            success : function(response) {
 	               
 	            },
@@ -26,7 +31,7 @@ $(function() {
 	               alert('Failed!: ' + e);
 	            }
 	        }); 
-		
+		*/
 	});
 	
 	

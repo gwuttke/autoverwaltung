@@ -34,6 +34,7 @@ import de.gw.auto.service.implementation.StammdatenService;
 import de.gw.auto.service.implementation.TankenService;
 import de.gw.auto.view.ViewName;
 import de.gw.auto.view.model.NewLandOrCity;
+import de.gw.auto.view.model.HeaderModel;
 import de.gw.auto.view.model.NewTanken;
 import de.gw.auto.view.model.TankenViewModel;
 import de.gw.auto.view.model.helper.NewTankenModelHelper;
@@ -67,8 +68,14 @@ public class TankenController extends ControllerHelper {
 		if (user.getCurrentAuto() == null) {
 			return "redirect:/user/auto/new";
 		}
+		if (user.getCurrentAuto().getTankfuellungen().isEmpty()) {
+			return "redirect:/user/tanken/new";
+		}
+		HeaderModel headerModel = new HeaderModel(user);
 		tankenView = this.tankenHelper.prepareTankViewModel(tankenView,
 				user.getCurrentAuto(), page);
+		
+		model.addAttribute("headerModel", headerModel);
 		model.addAttribute("tankenView", tankenView);
 		model.addAttribute("newTanken", new NewTanken());
 		return "userMainPage";
@@ -79,9 +86,6 @@ public class TankenController extends ControllerHelper {
 			@ModelAttribute("tankenView") TankenViewModel tankenView,
 			Model model, Principal principal) {
 		RegisteredUser user = giveRegisteredUser(principal);
-		if (user == null) {
-			return ViewName.REDIRECT_LOGIN;
-		}
 		newTankenModelHelper.prepareNewTankenModel(tankenView,
 				user.getCurrentAuto());
 		model.addAttribute(tankenView);

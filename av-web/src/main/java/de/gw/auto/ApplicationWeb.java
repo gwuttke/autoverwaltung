@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -17,6 +18,9 @@ import ch.qos.logback.classic.joran.action.ConfigurationAction;
 import de.gw.auto.view.ViewName;
 
 @Configuration
+@EnableAutoConfiguration
+@ComponentScan
+@EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ApplicationWeb extends Application {

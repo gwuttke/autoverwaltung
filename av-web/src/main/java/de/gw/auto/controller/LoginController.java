@@ -41,6 +41,7 @@ public class LoginController {
 				registrationModel.getWiederholungPasswort())) {
 			bindingResult.rejectValue("wiederholungPasswort",
 					"Die Passwörter stimmen nicht überein");
+			return ViewName.REGISTER;
 		}
 		try {
 			benutzerService.registry(registrationModel.getName(),
