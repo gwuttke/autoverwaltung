@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <groups xmlns="http://www.isdc.ro/wro">
-	<group name="datepicker">
-	<css>classpath:assert/datepicker/css/datepicker.css</css>
-	<js>classpath:assert/datepicker/js/bootstrap-datepicker.js</js>
-	<js>classpath:assert/datepicker/js/bootstrap-datepicker.de.min.js</js>
-	</group>
 	
+	<group name="jQuery-plugin">
+		<js>classpath:assert/Formatter/jquery.number.js</js>
+	</group>
 	<group name="jQuery">
 		<js>classpath:assert/jQuery/jquery-1.11.3.min.js</js>
+		<group-ref>jQuery-plugin</group-ref>
 	</group>
 	
 	<group name="bootstrap">
 	<css>classpath:assert/bootstrap/3_3_5/css/bootstrap.css</css>
 	<css>classpath:assert/bootstrap/3_3_5/css/bootstrap-theme.css</css>
 	<js>classpath:assert/bootstrap/3_3_5/js/bootstrap.js</js>
+	<css>classpath:assert/bootstrap/switch/bootstrap-switch.css</css>
+	<js>classpath:assert/bootstrap/switch/bootstrap-switch.js</js>
+	</group>
+	
+	<group name="datepicker">
+	<css>classpath:assert/datepicker/css/datepicker.css</css>
+	<js>classpath:assert/datepicker/js/bootstrap-datepicker.js</js>
+	<js>classpath:assert/datepicker/js/bootstrap-datepicker.de.min.js</js>
+	</group>
+	
+	<group name="bootstrap-switch">
+	<css>classpath:assert/bootstrap/switch/bootstrap-switch.css</css>
+	<js>classpath:assert/bootstrap/switch/bootstrap-switch.js</js>
 	</group>
 	
 	<group name="all">
 		<group-ref>jQuery</group-ref>
 		<group-ref>bootstrap</group-ref>
 		<group-ref>datepicker</group-ref>
+		<group-ref>bootstrap-switch</group-ref>
 	</group>
 	
 	<group name="login">
@@ -29,6 +42,7 @@
 	
 	<group name="tanken">
 		<js>classpath:js/tanken/get.js</js>
+		<js>classpath:js/tanken/new.js</js>
 	</group>
 	
 	

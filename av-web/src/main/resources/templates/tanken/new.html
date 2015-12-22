@@ -10,126 +10,126 @@
 <body>
 	<!-- Modal -->
 
-			<div class="modal-dialog"  th:fragment="newTankenModal">
+	<div class="modal-dialog" th:fragment="newTankenModal">
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Neue Tankf&uuml;llung</h4>
-					</div>
-					<form class="form-horizontal" role="form" th:object="${tankenView.newTanken}"
-						th:action="@{/user/tanken/save}" method="post">
-						<div class="modal-body">
-							<div class="row">
-								<div class="col-sm-2"></div>
-								<div class='control-group col-sm-8'>
-									<label for="inputTankenDatum" class="control-label">Datum</label>
-									<div class="controls">
-										<div class="input-group">
-											<input type="text" id="inputTankenDatum" th:field="*{datum}"
-												class="date-picker form-control" /> <label
-												for="inputKaufDatum" class="input-group-addon btn"><span
-												class="glyphicon glyphicon-calendar"></span> </label>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="control-group col-sm-6">
-									<label class="control-label">Aktueller Kilomenterstand</label>
-									<div class="controls">
-										<div class="input-group">
-											<input class="form-control" id="aktKmInput" type="text"
-												th:field="*{kmStand}" maxlength="6" max="999999" size="3"
-												pattern="\d{1,6}" /> <label for="aktKmInput"
-												class="input-group-addon"> <span class="glyphicon">Km</span>
-											</label>
-										</div>
-									</div>
-								</div>
-								<div class="control-group col-sm-6">
-									<label for="inputLiter" class="control-label">Liter</label>
-									<div class="input-group">
-										<input class="form-control" id="inputLiter" type="text"
-											th:field="*{liter}" required="required" size="3" /><label
-											for="aktKmInput" class="input-group-addon"> <span
-											class="glyphicon">L</span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="control-group col-sm-6">
-									<label for="inputKosten" class="control-label">Kosten</label>
-
-									<div class="input-group">
-										<input class="form-control" id="inputKosten" size="3"
-											type="text" th:field="*{kosten}" /><label for="inputKosten"
-											class="input-group-addon"> <span
-											class="glyphicon glyphicon-euro" aria-hidden="true"></span>
-										</label>
-									</div>
-								</div>
-								<div class="control-group col-sm-6">
-									<label for="inputPreisProLiter" class="control-label">Preis
-										pro Liter</label>
-									<div class="input-group">
-										<input class="form-control" id="inputPreisProLiter" size="3"
-											type="text" th:field="*{preisProLiter}" /> <label
-											for="inputPreisProLiter" class="input-group-addon"><span
-											class="glyphicon glyphicon-euro"> </span> </label>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="control-group col-sm-6">
-									<label for="selectLand">Land</label> <select
-										th:field="*{landId}" class="form-control" id="selectLand" th:remove="all-but-first">
-										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option th:each="land : *{laender}"
-											th:value="${land.id}" th:text="${land.name}">land</option>
-									</select>
-								</div>
-								<div class="control-group col-sm-6">
-									<label for="selectOrt">Ort</label> <select th:field="*{ortId}"
-										class="form-control" id="selectOrt">
-									</select>
-
-								</div>
-							</div>
-							<div class="row">
-								<div class="control-group col-sm-6">
-									<label for="selectBenzinart">Kraftstoffsorte</label> <select
-										th:field="*{userKraftstoffsorte}" class="form-control"
-										id="selectBenzinart">
-										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option
-											th:each="kraftstoffsorte : ${tankenView.newTanken.kraftstoffsorten}"
-											th:value="${kraftstoffsorte.id}"
-											th:text="${kraftstoffsorte.name}">benzinarten</option>
-									</select>
-								</div>
-								<div class="control-group col-sm-6">
-									<label for="selectBenzinart">Tankf&uuml;llstand nach
-										Tanken</label> <select th:field="*{tankId}" class="form-control"
-										id="selectFuellstaendet">
-										<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-										<option th:each="fuellstand : ${tankenView.newTanken.fuellstaende}"
-											th:value="${fuellstand.id}"
-											th:text="${fuellstand.beschreibung}">fuellstaende</option>
-									</select>
-								</div>
-
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Schlie&szlig;en</button>
-							<button type="submit" class="btn btn-primary">Speichern</button>
-						</div>
-
-					</form>
-				</div>
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Neue Tankf&uuml;llung</h4>
 			</div>
+			<form class="form-horizontal" role="form"
+				th:object="${tankenView.newTanken}" th:action="@{/user/tanken/save}"
+				method="post">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-2"></div>
+						<div class='control-group col-sm-8'>
+							<label for="inputTankenDatum" class="control-label">Datum</label>
+							<div class="controls">
+								<div class="input-group">
+									<input type="text" id="inputTankenDatum" th:field="*{datum}"
+										class="date-picker form-control" /> <label
+										for="inputKaufDatum" class="input-group-addon btn"><span
+										class="glyphicon glyphicon-calendar"></span> </label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="control-group col-sm-6">
+							<label class="control-label">Aktueller Kilomenterstand</label>
+							<div class="controls">
+								<div class="input-group">
+									<input class="form-control" id="aktKmInput" type="text"
+										th:field="*{kmStand}" maxlength="6" max="999999" size="3"
+										pattern="\d{1,6}" /> <label for="aktKmInput"
+										class="input-group-addon"> <span class="glyphicon">Km</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="inputLiter" class="control-label">Liter</label>
+							<div class="input-group">
+								<input class="form-control" id="inputLiter" type="text"
+									th:field="*{liter}" required="required" size="3" /><label
+									for="aktKmInput" class="input-group-addon"> <span
+									class="glyphicon">L</span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="control-group col-sm-6">
+							<label for="inputKosten" class="control-label">Kosten</label>
+							<div class="input-group">
+								<input class="form-control" id="inputKosten" size="3"
+									type="text" th:field="*{kosten}" /><label for="inputKosten"
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+								</label>
+							</div>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="inputPreisProLiter" class="control-label">Preis
+								pro Liter</label>
+							<div class="input-group">
+								<input class="form-control" id="inputPreisProLiter" size="3"
+									type="text" th:field="*{preisProLiter}" /> <label
+									for="inputPreisProLiter" class="input-group-addon"><span
+									class="glyphicon glyphicon-euro"> </span> </label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="control-group col-sm-6">
+							<label for="selectLand">Land</label> <select th:field="*{landId}"
+								class="form-control" id="selectLand" th:remove="all-but-first">
+								<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
+								<option th:each="land : *{laender}" th:value="${land.id}"
+									th:text="${land.name}">land</option>
+							</select>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="selectOrt">Ort</label> <select th:field="*{ortId}"
+								class="form-control" id="selectOrt">
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="control-group col-sm-6">
+							<label for="selectBenzinart">Kraftstoffsorte</label> <select
+								th:field="*{userKraftstoffsorte}" class="form-control"
+								id="selectBenzinart">
+								<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
+								<option
+									th:each="kraftstoffsorte : ${tankenView.newTanken.kraftstoffsorten}"
+									th:value="${kraftstoffsorte.id}"
+									th:text="${kraftstoffsorte.name}">benzinarten</option>
+							</select>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="selectBenzinart">Tankf&uuml;llstand nach
+								Tanken</label> <select th:field="*{tankId}" class="form-control"
+								id="selectFuellstaendet">
+								<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
+								<option
+									th:each="fuellstand : ${tankenView.newTanken.fuellstaende}"
+									th:value="${fuellstand.id}"
+									th:text="${fuellstand.beschreibung}">fuellstaende</option>
+							</select>
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Schlie&szlig;en</button>
+					<button type="submit" class="btn btn-primary">Speichern</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
 </body>
 </html>

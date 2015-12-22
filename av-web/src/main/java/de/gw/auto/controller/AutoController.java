@@ -23,7 +23,6 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.service.RegisteredUser;
 import de.gw.auto.view.ViewName;
 import de.gw.auto.view.model.AutoModel;
-import de.gw.auto.view.model.AutoModelShow;
 import de.gw.auto.view.model.helper.NewAutoModelHelper;
 
 @Controller
@@ -61,7 +60,7 @@ public class AutoController extends ControllerHelper {
 		autoDAO.save(user, auto);
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
-
+/*
 	@RequestMapping(value = "/updateCurrent", method = RequestMethod.POST)
 	public String updateCurrentAuto(Principal principal,
 			AutoModelShow autoModel, HttpServletRequest request, BindingResult bindingResult, Model model) {
@@ -77,4 +76,5 @@ public class AutoController extends ControllerHelper {
 		 String referer = request.getHeader("Referer");
 		    return "redirect:"+ referer;
 	}
+	*/
 }
