@@ -1,6 +1,6 @@
 allprojects {
 
-	version = '1.0.03-Beta'
+	version = '1.0.04'
 	group = "de.gw.auto"
 	repositories {
 		mavenCentral()

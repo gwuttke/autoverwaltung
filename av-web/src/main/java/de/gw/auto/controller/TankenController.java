@@ -103,7 +103,11 @@ public class TankenController extends ControllerHelper {
 				.getKraftstoffsorte(newTanken.getUserKraftstoffsorte());
 		Land l = stammdatenService.getLand(newTanken.getLandId());
 		Tank t = stammdatenService.getTankstand(newTanken.getTankId());
-		Ort o = l.getOrt(newTanken.getOrtId());
+		Ort o = null;
+		if(newTanken.getOrtId() < 0){
+			o = l.getOrt(newTanken.getOrtId());	
+		}
+		
 		Tanken tanken = new Tanken(newTanken.getKmStand(), l, o, t,
 				newTanken.getKosten(), user.getCurrentAuto(),
 				newTanken.getDatum(), newTanken.getLiter(),

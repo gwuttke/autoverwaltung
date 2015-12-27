@@ -57,6 +57,8 @@ $(function() {
 			dataType : 'json',
 			success : function(json) {
 				$("#selectOrt").empty();
+				$('#selectOrt').append($('<option>').text('keine Angabe').attr('value', '0'));
+				$('#selectOrt').append('</option>');
 				$.each(json, function(i, value) {
 					$('#selectOrt').append($('<option>').text(value.ort).attr('value', value.id));
 					$('#selectOrt').append('</option>');
