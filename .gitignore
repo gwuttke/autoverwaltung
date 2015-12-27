@@ -5,6 +5,7 @@
 GitCredStore*
 /build/
 .gradle/*
-.project
+
+*.project
 *.classpath
 .settings/*

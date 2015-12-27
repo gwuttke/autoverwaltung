@@ -17,8 +17,6 @@ import ch.qos.logback.classic.joran.action.ConfigurationAction;
 import de.gw.auto.view.ViewName;
 
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan
 @EnableTransactionManagement
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ApplicationWeb extends Application {
@@ -35,11 +33,6 @@ public class ApplicationWeb extends Application {
 		if(!registry.hasMappingForPattern("/fonts/**")){
 			registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/assert/bootstrap/3_3_5/fonts/");
 		}
-	}
-	
-	@Bean
-	public ConfigurationSecurity configurationSecurity(){
-		return new ConfigurationSecurity();
 	}
 	
     public static void main(String[] args) {

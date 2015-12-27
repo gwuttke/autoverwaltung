@@ -3,6 +3,7 @@
 	
 	<group name="jQuery-plugin">
 		<js>classpath:assert/Formatter/jquery.number.js</js>
+		<js>classpath:assert/Formatter/autoNumeric.js</js>
 	</group>
 	<group name="jQuery">
 		<js>classpath:assert/jQuery/jquery-1.11.3.min.js</js>
