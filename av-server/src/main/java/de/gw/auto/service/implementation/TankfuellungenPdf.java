@@ -81,7 +81,7 @@ public class TankfuellungenPdf {
 		// header
 		table.setHeaderRows(1);
 		addRow(table, tableHeader());
-		if (tankfuellungen ==null || tankfuellungen.isEmpty()) {
+		if (tankfuellungen == null || tankfuellungen.isEmpty()) {
 			for (int i = 0; i < MAX_TABLE_ROWS - 1; i++) {
 				addRow(table, tableEmptyRow());
 			}
@@ -114,21 +114,25 @@ public class TankfuellungenPdf {
 						tankfuellung.getKosten(), 2)));
 		PdfPCell liter = new PdfPCell(new Phrase(
 				NumberHelper.getGermanBigDecimalValue(tankfuellung.getLiter(),
-						2,"l")));
+						2, "l")));
 		PdfPCell gefKm = new PdfPCell(new Phrase(String.valueOf(tankfuellung
 				.getGefahreneKm()) + " km"));
 		PdfPCell verbPro100Km = new PdfPCell(new Phrase(
 				NumberHelper.getGermanBigDecimalValue(
-						tankfuellung.getVerbrauch100Km(), 2,"l/100km")));
+						tankfuellung.getVerbrauch100Km(), 2, "l")));
 		PdfPCell preisProLiter = new PdfPCell(new Phrase(
 				CurrencyHelper.getCurrencyByGermany(
 						tankfuellung.getPreisProLiter(), 3)));
-		PdfPCell land = new PdfPCell(new Phrase(tankfuellung.getLand()
-				.getName()));
-		PdfPCell ort = new PdfPCell(new Phrase(tankfuellung.getOrt().getOrt()));
+		PdfPCell land = new PdfPCell(new Phrase("keine Angabe"));
+		if (tankfuellung.getLand() != null) {
+			land = new PdfPCell(new Phrase(tankfuellung.getLand().getName()));
+		}
+		PdfPCell ort = new PdfPCell(new Phrase("keine Angabe"));
+		if (tankfuellung.getOrt() != null) {
+			ort = new PdfPCell(new Phrase(tankfuellung.getOrt().getOrt()));
+		}
 		PdfPCell[] rowCells = { datum, kmStand, kosten, liter, gefKm,
 				verbPro100Km, preisProLiter, land, ort };
-		
 		land.setColspan(2);
 		ort.setColspan(2);
 		return new PdfPRow(rowCells);
@@ -150,23 +154,23 @@ public class TankfuellungenPdf {
 		PdfPCell[] rowCells = { datum, kmStand, kosten, liter, gefKm,
 				verbPro100Km, preisProLiter, land, ort };
 		PdfPRow pdfPRow = new PdfPRow(rowCells);
-		
 		return pdfPRow;
 	}
 
 	private PdfPRow tableHeader() {
 		Font font = FontFactory.getFont("Times-Roman");
 		font.setStyle(Font.BOLD);
-		PdfPCell datum = new PdfPCell(new Phrase("Datum",font));
-		PdfPCell kmStand = new PdfPCell(new Phrase("Km-Stand",font));
-		PdfPCell kosten = new PdfPCell(new Phrase("Kosten",font));
-		PdfPCell liter = new PdfPCell(new Phrase("Liter",font));
-		PdfPCell gefKm = new PdfPCell(new Phrase("gefahren",font));
-		PdfPCell verbPro100Km = new PdfPCell(new Phrase("Verbrauch",font));
-		PdfPCell preisProLiter = new PdfPCell(new Phrase("Preis pro Liter",font));
-		PdfPCell land = new PdfPCell(new Phrase("Land",font));
+		PdfPCell datum = new PdfPCell(new Phrase("Datum", font));
+		PdfPCell kmStand = new PdfPCell(new Phrase("Km-Stand", font));
+		PdfPCell kosten = new PdfPCell(new Phrase("Kosten", font));
+		PdfPCell liter = new PdfPCell(new Phrase("Liter", font));
+		PdfPCell gefKm = new PdfPCell(new Phrase("gefahren", font));
+		PdfPCell verbPro100Km = new PdfPCell(new Phrase("Verbrauch / 100km", font));
+		PdfPCell preisProLiter = new PdfPCell(new Phrase("Preis pro Liter",
+				font));
+		PdfPCell land = new PdfPCell(new Phrase("Land", font));
 		land.setColspan(2);
-		PdfPCell ort = new PdfPCell(new Phrase("Ort",font));
+		PdfPCell ort = new PdfPCell(new Phrase("Ort", font));
 		ort.setColspan(2);
 		PdfPCell[] headerCells = { datum, kmStand, kosten, liter, gefKm,
 				verbPro100Km, preisProLiter, land, ort };
