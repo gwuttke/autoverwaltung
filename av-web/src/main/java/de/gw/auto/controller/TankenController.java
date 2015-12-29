@@ -104,7 +104,7 @@ public class TankenController extends ControllerHelper {
 		Land l = stammdatenService.getLand(newTanken.getLandId());
 		Tank t = stammdatenService.getTankstand(newTanken.getTankId());
 		Ort o = null;
-		if(newTanken.getOrtId() < 0){
+		if(newTanken.getOrtId() > 0){
 			o = l.getOrt(newTanken.getOrtId());	
 		}
 		
