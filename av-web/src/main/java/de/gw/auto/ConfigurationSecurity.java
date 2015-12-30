@@ -20,7 +20,7 @@ public class ConfigurationSecurity extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 				.antMatchers("/", "/wro/**", "/" + ViewName.REGISTER,
-						"/" + ViewName.REGISTRATION, "/login").permitAll()
+						"/" + ViewName.REGISTRATION, "/login","/fonts/*").permitAll()
 				.anyRequest().fullyAuthenticated()
 				.and().formLogin().loginPage("/login")
 				.failureUrl("/login?error")
