@@ -8,27 +8,29 @@
         <title>Autoverwaltung - Login</title>
     </head>
     <body>
-    	<div th:include="fragments/header :: header">header</div>
-     	<div class="container form">
-			<h2 >Please sign in</h2>
-			<div th:if="${param.logout}" class="alert alert-success">
-			  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			  <span class="glyphicon glyphicon-thumbs-up"></span><strong> Gl&uuml;ckwunsch</strong> Sie sind jetzt Abgemeldet!
-			</div>
-			<div th:if="${param.error}" class="alert alert-danger">
-			  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			  <span class="glyphicon glyphicon-remove"></span><strong>Achtung</strong> Ihre Angaben sind falsch, bitte versuchen Sie es erneut oder Registrieren Sie sich! 
-			</div>
-			<form name="form" th:action="@{/login}" action="/login" method="POST">
-					<fieldset>
-						<label for="inputEmail" class="sr-only">e-Mail Addresse</label>
-		        		<input type= "email" name="username" value="" id="inputEmail" class="form-control" placeholder="e-Mail Addresse" required="autofocus" />
-						<label for="inputPassword" class="sr-only">Password</label>
-		        		<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="true" />
-					</fieldset>
-		        <button class="btn btn-lg btn-primary btn-lg" type="submit" name="login"><span class="glyphicon glyphicon-log-in"></span> Anmelden</button>
-		        <a class="btn btn-lg btn-primary"  th:href="@{/register}">Registrieren</a>
-	     </form>
-  	</div> <!-- /container --> 
+    	<div th:replace="fragments/header :: header">header</div>
+     	<div class="container">
+     		<div class="form-signin form">
+				<h2 class="form-signin-heading">Bitte melden Sie sich an</h2>
+				<div th:if="${param.logout}" class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<span class="glyphicon glyphicon-thumbs-up"></span><strong> Gl&uuml;ckwunsch</strong> Sie sind jetzt Abgemeldet!
+				</div>
+				<div th:if="${param.error}" class="alert alert-danger">
+				  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				  <span class="glyphicon glyphicon-remove"></span><strong>Achtung</strong> Ihre Angaben sind falsch, bitte versuchen Sie es erneut oder Registrieren Sie sich! 
+				</div>
+				<form name="form" th:action="@{/login}" action="/login" method="POST">
+						<fieldset>
+							<label for="inputEmail" class="sr-only">e-Mail Addresse</label>
+			        		<input type= "email" name="username" value="" id="inputEmail" class="form-control" placeholder="e-Mail Addresse" required="autofocus" />
+							<label for="inputPassword" class="sr-only">Password</label>
+			        		<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="true" />
+						</fieldset>
+			        <button class="btn btn-lg btn-primary btn-lg" type="submit" name="login"><span class="glyphicon glyphicon-log-in"></span> Anmelden</button>
+			        <a class="btn btn-lg btn-primary"  th:href="@{/register}">Registrieren</a>
+				</form>
+	     	</div>
+  		</div> <!-- /container --> 
     </body>
 </html>
