@@ -18,6 +18,14 @@
 	<js>classpath:assert/bootstrap/switch/bootstrap-switch.js</js>
 	</group>
 	
+	<group name="selectize">
+	<css>classpath:assert/selectize/css/selectize.bootstrap3.css</css>
+	<css>classpath:assert/selectize/css/selectize.selectize.css</css>
+	<css>classpath:assert/selectize/css/selectize.selectize.default.css</css>
+	<css>classpath:assert/selectize/css/selectize.selectize.legacy.css</css>
+	<js>classpath:assert/selectize/js/standalone/selectize.js</js>
+	</group>
+	
 	<group name="datepicker">
 	<css>classpath:assert/datepicker/css/datepicker.css</css>
 	<js>classpath:assert/datepicker/js/bootstrap-datepicker.js</js>
@@ -34,6 +42,7 @@
 		<group-ref>bootstrap</group-ref>
 		<group-ref>datepicker</group-ref>
 		<group-ref>bootstrap-switch</group-ref>
+		<group-ref>selectize</group-ref>
 	</group>
 	
 	<group name="login">
