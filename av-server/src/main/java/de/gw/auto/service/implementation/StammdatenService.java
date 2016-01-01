@@ -25,45 +25,42 @@ public class StammdatenService {
 
 	@Autowired
 	private KraftstoffDAO kraftstoffDao;
-	
+
 	@Autowired
 	private KraftstoffsorteDAO kraftstoffsorteDAO;
-	
+
 	@Autowired
 	private KraftstoffsorteRepository kraftstoffsorteRepository;
 
 	public List<Land> getLaender() {
 		return landDao.getLaenderAlphabetisch();
 	}
-	
-	public Land getLand(int landId){
+
+	public Land getLand(int landId) {
 		return landDao.searchLand(landId);
 	}
 
 	public List<Tank> getTankstaende() {
-		return tankDao.getTankAlphabetisch();
+		return tankDao.getTankAlphabetischAbsteigend();
 	}
-	
-	public Tank getTankstand(int TankId){
+
+	public Tank getTankstand(int TankId) {
 		return tankDao.searchTank(TankId);
 	}
 
 	public List<Kraftstoff> getKrftstoffe() {
 		return kraftstoffDao.getKraftstoffAlphabetisch();
 	}
-	
-	public List<Kraftstoffsorte> getKraftstoffsorten(){
+
+	public List<Kraftstoffsorte> getKraftstoffsorten() {
 		return kraftstoffsorteDAO.getKraftstoffsorteAlphabetisch();
 	}
-	
-	public Kraftstoffsorte getKraftstoffsorte(int id){
+
+	public Kraftstoffsorte getKraftstoffsorte(int id) {
 		return kraftstoffsorteDAO.searchById(id);
 	}
-	
-	public List<Kraftstoffsorte> getKraftstoffsorten(Kraftstoff kraftstoff){
+
+	public List<Kraftstoffsorte> getKraftstoffsorten(Kraftstoff kraftstoff) {
 		return kraftstoffDao.getKraftstoffsorten(kraftstoff);
 	}
-	
-	
-	
 }

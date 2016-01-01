@@ -21,6 +21,10 @@ public class TankDAO extends DefaultDao{
 	public List<Tank> getTankAlphabetisch() {
 		return tankRepository.findAll(sortByBeschreibungAsc());
 	}
+	
+	public List<Tank> getTankAlphabetischAbsteigend() {
+		return tankRepository.findAll(sortByBeschreibungDesc());
+	}
 
 	public Tank searchTank(int id) {
 		return tankRepository.findOne(id);

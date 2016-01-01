@@ -7,8 +7,16 @@ public class DefaultDao {
 	    return new Sort(Sort.Direction.ASC, "name");
 	}
 	
+	protected static Sort sortByNameDesc() {
+	    return new Sort(Sort.Direction.DESC, "name");
+	}
+	
 	protected static Sort sortByBeschreibungAsc() {
 	    return new Sort(Sort.Direction.ASC, "beschreibung");
+	}
+	
+	protected static Sort sortByBeschreibungDesc() {
+	    return new Sort(Sort.Direction.DESC, "beschreibung");
 	}
 	
 	
