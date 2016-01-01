@@ -5,10 +5,26 @@ $(function() {
 				format : "dd.mm.yyyy",
 				language:'de'
 			});
+			$('#selectLand').selectize({
+			    create: false,
+			    sortField: 'text'
+			});
+			
 			$('#selectOrt').selectize({
 			    create: false,
 			    sortField: 'text'
 			});
+			
+			$('#selectBenzinart').selectize({
+			    create: false,
+			    sortField: 'text'
+			});
+			
+			$('#selectFuellstaendet').selectize({
+			    create: false,
+			    sortField: 'text'
+			});
+							
 			updateOrte();
 			
 			$('#selectLand').change(function(){updateOrte();});

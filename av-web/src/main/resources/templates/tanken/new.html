@@ -102,7 +102,6 @@
 							<label for="selectBenzinart">Kraftstoffsorte</label> <select
 								th:field="*{userKraftstoffsorte}" class="form-control"
 								id="selectBenzinart">
-								<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
 								<option
 									th:each="kraftstoffsorte : ${tankenView.newTanken.kraftstoffsorten}"
 									th:value="${kraftstoffsorte.id}"
