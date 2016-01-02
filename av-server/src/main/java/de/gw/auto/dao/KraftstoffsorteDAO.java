@@ -21,6 +21,10 @@ public class KraftstoffsorteDAO extends DefaultDao {
 	public List<Kraftstoffsorte> getKraftstoffsorteAlphabetisch() {
 		return kraftstoffsorteRepository.findAll(sortByNameAsc());
 	}
+	
+	public List<Kraftstoffsorte> getKraftstoffsorteAlphabetischAbsteigend() {
+		return kraftstoffsorteRepository.findAll(sortByNameDesc());
+	}
 
 	public Kraftstoffsorte searchById(int id) {
 		return kraftstoffsorteRepository.findOne(id);

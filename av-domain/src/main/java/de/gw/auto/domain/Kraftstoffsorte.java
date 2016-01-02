@@ -1,6 +1,7 @@
 package de.gw.auto.domain;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Kraftstoffsorte")
 @SequenceGenerator(name = "kraftstoffsorte_gen", sequenceName = "kraftstoffsorte_id_seq")
-public class Kraftstoffsorte implements Serializable {
+public class Kraftstoffsorte implements Serializable, Comparator<Kraftstoffsorte> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "kraftstoffsorte_gen")
@@ -48,6 +49,12 @@ public class Kraftstoffsorte implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int compare(Kraftstoffsorte o1, Kraftstoffsorte o2) {
+		
+		return o1.name.hashCode() - o2.name.hashCode();
 	}
 
 	/*public Set<Auto> getAutos() {

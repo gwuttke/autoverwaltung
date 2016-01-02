@@ -1,8 +1,10 @@
 package de.gw.auto.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ public class KraftstoffDAO extends DefaultDao {
 
 	public List<Kraftstoffsorte> getKraftstoffsorten(Kraftstoff kraftstoff) {
 		Kraftstoff k = searchById(kraftstoff.getId());
-		return new ArrayList<Kraftstoffsorte>(k.getKraftstoffsorten());
+		ArrayList<Kraftstoffsorte> kraftstoffsorten = new ArrayList<Kraftstoffsorte>(k.getKraftstoffsorten());
+		kraftstoffsorten.sort(new Kraftstoffsorte());
+		return kraftstoffsorten;
 	}
 }
