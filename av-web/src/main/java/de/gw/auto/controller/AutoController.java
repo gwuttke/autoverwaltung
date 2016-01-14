@@ -39,14 +39,14 @@ public class AutoController extends ControllerHelper {
 		RegisteredUser user = giveRegisteredUser(principal);
 		autoModel = autoHelper.prepareAutoModel(autoModel);
 		model.addAttribute("autoModel", autoModel);
-		return "auto/new :: newAutoModal";
+		return "auto/new";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveAuto(Principal principal, @Valid AutoModel autoModel,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return "auto/new :: newAutoModal";
+			return "auto/new";
 		}
 		RegisteredUser user = giveRegisteredUser(principal);
 		
