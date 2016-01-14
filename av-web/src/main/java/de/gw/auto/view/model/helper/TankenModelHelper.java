@@ -176,6 +176,9 @@ public class TankenModelHelper {
 			int page) {
 		List<Tankfuellung> tankfuellungen = tankenService
 				.getTankfuellungen(auto);
+		if(tankfuellungen.isEmpty()){
+			return;
+		}
 		List<TankenModel> tankenModels = new ArrayList<TankenModel>();
 		for (Tankfuellung tfuellung : tankfuellungen) {
 			tankenModels.add(new TankenModel(tfuellung));

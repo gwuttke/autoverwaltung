@@ -4,56 +4,69 @@
 <body>
 	<div class="container" th:fragment="tankenTable"
 		th:object="${tankenView}">
-		<div th:if="*{#lists.isEmpty(tankfuellungenView)}" id="tankenEmpty">
-			<div class="alert alert-danger">noch keine Tankvorg&auml;nge
-				vorhanden</div>
+		<div th:if="*{#lists.isEmpty(tankfuellungenView.getSource())}"
+			id="tankenEmpty">
+			<br/>
+			<div class="alert alert-danger">
+				<span class="glyphicon glyphicon-remove-sign"></span> noch keine
+				Tankvorg&auml;nge vorhanden, bitte f&uuml;gen Sie minderstens einen hinzu!
+			</div>
 		</div>
-		<div th:if="*{not #lists.isEmpty(tankfuellungenView)}"
+		<div th:if="*{not #lists.isEmpty(tankfuellungenView.getSource())}"
 			id="tankenNotEmpty">
-
-
-
-			<ul class="pagination">
-				<li
-					th:each="number : *{#numbers.sequence(0,tankfuellungenView.getPageCount()-1)}"
-					 th:class="${number}==*{tankfuellungenView.page}?'active':''">
-					<a th:text="${number+1}" th:href="@{/user/tanken/show(page=${number})}">1</a>
-				</li>
-			</ul>
-			
-			
-				<div class="list-group">
-				<div  th:each="tankenModel : *{tankfuellungenView.pageList}" class="list-group-item col-sm-12" th:classappend="|list-group-item-${tankenModel.cssStyleRow}|">	
+			<div class="list-group">
+				<ul class="pagination">
+					<li
+						th:each="number : *{#numbers.sequence(0,tankfuellungenView.getPageCount()-1)}"
+						th:class="${number}==*{tankfuellungenView.page}?'active':''">
+						<a th:text="${number+1}"
+						th:href="@{/user/tanken/show(page=${number})}">1</a>
+					</li>
+				</ul>
+				<div th:each="tankenModel : *{tankfuellungenView.pageList}"
+					class="list-group-item col-sm-12"
+					th:classappend="|list-group-item-${tankenModel.cssStyleRow}|">
 					<dl class="dl-horizontal">
 						<div class="col-sm-3">
 							<dt>Datum</dt>
-						  	<dd th:text="${#dates.format(tankenModel.datum,'dd.MM.yyyy')}">12.12.2015</dd>
+							<dd th:text="${#dates.format(tankenModel.datum,'dd.MM.yyyy')}">12.12.2015</dd>
 						</div>
-					  	<div class="col-sm-3">
-					  		<dt>Preis pro Liter</dt>
-							<dd th:text="${#numbers.formatDecimal(tankenModel.preisProLiter,1,3,'COMMA')}+ &euro;">1.689 &euro;</dd>
+						<div class="col-sm-3">
+							<dt>Preis pro Liter</dt>
+							<dd
+								th:text="${#numbers.formatDecimal(tankenModel.preisProLiter,1,3,'COMMA')}+ &euro;">1.689
+								&euro;</dd>
 							<dt>Kosten</dt>
-					  		<dd th:text="${#numbers.formatDecimal(tankenModel.kosten,2,2,'COMMA')} + &euro;">32.45 &euro;</dd>
-					  		<dt>verbrauch auf 100km</dt>
-					  		<dd th:text="${#numbers.formatDecimal(tankenModel.getVerbrauch100Km(),1,2,'COMMA')} + ' l'"> 4.35 l</dd>
-					  	</div>
-					  	<div class="col-sm-3">
-					  		<dt>Liter</dt>
-							<dd th:text="${#numbers.formatDecimal(tankenModel.liter,1,2,'COMMA')} + ' l'">10.30 l</dd>
+							<dd
+								th:text="${#numbers.formatDecimal(tankenModel.kosten,2,2,'COMMA')} + &euro;">32.45
+								&euro;</dd>
+							<dt>verbrauch auf 100km</dt>
+							<dd
+								th:text="${#numbers.formatDecimal(tankenModel.getVerbrauch100Km(),1,2,'COMMA')} + ' l'">
+								4.35 l</dd>
+						</div>
+						<div class="col-sm-3">
+							<dt>Liter</dt>
+							<dd
+								th:text="${#numbers.formatDecimal(tankenModel.liter,1,2,'COMMA')} + ' l'">10.30
+								l</dd>
 							<dt>Km-Stand</dt>
-						  	<dd th:text="${tankenModel.kmStand} + ' Km'" style="width: 80px !important">168543 Km</dd>
+							<dd th:text="${tankenModel.kmStand} + ' Km'"
+								style="width: 80px !important">168543 Km</dd>
 							<dt>gefahren</dt>
-							<dd th:text="${#numbers.formatInteger(tankenModel.getGefahreneKm(),3)} + ' Km'">460 km</dd>
-					  	</div>
-					  	<div class="col-sm-3">
-					  		<dt>Land</dt>
-					  		<dd th:text="${tankenModel.land}">Deutschland</dd>
+							<dd
+								th:text="${#numbers.formatInteger(tankenModel.getGefahreneKm(),3)} + ' Km'">460
+								km</dd>
+						</div>
+						<div class="col-sm-3">
+							<dt>Land</dt>
+							<dd th:text="${tankenModel.land}">Deutschland</dd>
 							<dt>Ort</dt>
 							<th:block th:switch="${tankenModel.ort} == null">
 								<dd th:case="true">keine Angabe</dd>
 								<dd th:case="false" th:text="${tankenModel.ort}">M&uuml;nchen</dd>
 							</th:block>
-					  	</div>
+						</div>
 					</dl>
 				</div>
 			</div>

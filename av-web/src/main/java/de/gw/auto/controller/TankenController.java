@@ -63,9 +63,6 @@ public class TankenController extends ControllerHelper {
 		if (user.getCurrentAuto() == null) {
 			return "redirect:/user/auto/new";
 		}
-		if (user.getCurrentAuto().getTankfuellungen().isEmpty()) {
-			return "redirect:/user/tanken/new";
-		}
 		tankenView = this.tankenHelper.prepareTankViewModel(tankenView,
 				user.getCurrentAuto(), page);
 		model.addAttribute("tankenView", tankenView);
