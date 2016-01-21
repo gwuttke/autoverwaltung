@@ -39,6 +39,10 @@ public class StammdatenService {
 	public Land getLand(int landId) {
 		return landDao.searchLand(landId);
 	}
+	
+	public Land saveLand(Land land){
+		return landDao.saveUpdateLand(land);
+	}
 
 	public List<Tank> getTankstaende() {
 		return tankDao.getTankAlphabetischAbsteigend();

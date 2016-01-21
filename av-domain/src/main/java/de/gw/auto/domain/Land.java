@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 public class Land implements Serializable {
@@ -21,7 +24,7 @@ public class Land implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "land_seq")
 	private int id;
 	private String name;	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "Laenderorte", joinColumns = { @JoinColumn(name = "idland") }, inverseJoinColumns = { @JoinColumn(name = "idort") })
 	private Set<Ort> orte = new HashSet<Ort>();
 	
@@ -33,10 +36,19 @@ public class Land implements Serializable {
 	public Land() {
 
 	}
+	
+	public void addOrt(Ort o){
+		this.orte.add(o);
+	}
+	
+	public Land(final String name){
+		this();
+		this.name = name;
+	}
 
 	public Land(final String name, final Set<Ort> orte) {
+		this(name);
 		this.orte = orte;
-		this.name = name;
 	}
 
 	public String getName() {

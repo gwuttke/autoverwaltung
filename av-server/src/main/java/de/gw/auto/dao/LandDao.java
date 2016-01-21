@@ -28,6 +28,10 @@ public class LandDao extends DefaultDao {
 	public Land searchLand(int id) {
 		return landRepository.findOne(id);
 	}
+	
+	public Land saveUpdateLand(Land land){
+		return landRepository.save(land);
+	}
 
 	public Land searchByName(String name){
 		return landRepository.findByName(name);

@@ -8,9 +8,12 @@
 
 <link rel="stylesheet" th:href="@{/wro/tanken.css}" type="text/css" />
 <script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" >
-/*<![CDATA[*/
-/*]]>*/
+
 </script>
+
+	<meta name="_csrf" th:attr="content=${_csrf.token}"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
 
 <script th:inline="javascript">
 /*<![CDATA[*/
@@ -19,6 +22,7 @@ var urlLaender = /*[[@{/user/json/orte(land=${tankenView.newTanken.landId})}]]*/
 var urlNewAuto = /*[[@{/user/auto/new}]]*/;
 var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
 var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
+var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
 /*]]>*/
 <script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" th:remove="tag"/>
 </script>

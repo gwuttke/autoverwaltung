@@ -1,6 +1,7 @@
 package de.gw.auto.controller;
 
 import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lowagie.text.DocumentException;
 
@@ -29,6 +32,7 @@ import de.gw.auto.service.RegisteredUser;
 import de.gw.auto.service.implementation.StammdatenService;
 import de.gw.auto.service.implementation.TankenService;
 import de.gw.auto.view.ViewName;
+import de.gw.auto.view.model.NewLandOrCity;
 import de.gw.auto.view.model.NewTanken;
 import de.gw.auto.view.model.TankenViewModel;
 import de.gw.auto.view.model.helper.NewTankenModelHelper;
@@ -43,7 +47,7 @@ public class TankenController extends ControllerHelper {
 
 	@Autowired
 	private TankenService tankenService;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -55,11 +59,10 @@ public class TankenController extends ControllerHelper {
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String show(
-			@ModelAttribute("tankenView") TankenViewModel tankenView, Principal principal,
-			Model model, HttpServletRequest request,
+			@ModelAttribute("tankenView") TankenViewModel tankenView,
+			Principal principal, Model model, HttpServletRequest request,
 			@RequestParam(value = "page", defaultValue = "0") int page) {
 		RegisteredUser user = giveRegisteredUser(principal);
-				
 		if (user.getCurrentAuto() == null) {
 			return "redirect:/user/auto/new";
 		}
@@ -101,10 +104,9 @@ public class TankenController extends ControllerHelper {
 		Land l = stammdatenService.getLand(newTanken.getLandId());
 		Tank t = stammdatenService.getTankstand(newTanken.getTankId());
 		Ort o = null;
-		if(newTanken.getOrtId() > 0){
-			o = l.getOrt(newTanken.getOrtId());	
+		if (newTanken.getOrtId() > 0) {
+			o = l.getOrt(newTanken.getOrtId());
 		}
-		
 		Tanken tanken = new Tanken(newTanken.getKmStand(), l, o, t,
 				newTanken.getKosten(), user.getCurrentAuto(),
 				newTanken.getDatum(), newTanken.getLiter(),
@@ -112,9 +114,33 @@ public class TankenController extends ControllerHelper {
 		tankenService.save(tanken, user);
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
-	
-	@RequestMapping(value="downloadEmptyTanken",method=RequestMethod.GET, produces="application/pdf")
-	public ResponseEntity<byte[]> downloadEmptyTanken(Model model,Principal principal) throws DocumentException{
+
+	@RequestMapping(value = "addOrt", method=RequestMethod.POST)
+	@ResponseBody
+	public int addOrt( @RequestBody NewLandOrCity ort) {
+		if (ort.getParent() > 0l) {
+			if (!ort.getText().trim().isEmpty()) {
+				Land l = stammdatenService.getLand((int)ort.getParent());
+				for (Ort o : l.getOrte()) {
+					if (o.getOrt().equalsIgnoreCase(ort.getText())) {
+						return o.getId();
+					}
+				}
+				l.addOrt(new Ort(ort.getText()));
+				stammdatenService.saveLand(l);
+				for (Ort o : l.getOrte()) {
+					if (o.getOrt().equalsIgnoreCase(ort.getText())) {
+						return o.getId();
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
+	@RequestMapping(value = "downloadEmptyTanken", method = RequestMethod.GET, produces = "application/pdf")
+	public ResponseEntity<byte[]> downloadEmptyTanken(Model model,
+			Principal principal) throws DocumentException {
 		RegisteredUser user = giveRegisteredUser(principal);
 		if (user == null) {
 			return null;
@@ -123,7 +149,7 @@ public class TankenController extends ControllerHelper {
 				.getCurrentAuto()), HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value="/downloadTanken" , method=RequestMethod.GET,produces="application/pdf")
+	@RequestMapping(value = "/downloadTanken", method = RequestMethod.GET, produces = "application/pdf")
 	public ResponseEntity<byte[]> download(
 			@ModelAttribute("tankenView") TankenViewModel tankenView,
 			BindingResult bindingResult, Model model, Principal principal)

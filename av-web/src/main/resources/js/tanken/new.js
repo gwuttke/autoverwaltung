@@ -1,4 +1,10 @@
 $(function() {	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	
 	$('#TankenAdd').click(function() {
 		openModal('newTankenModal', urlNewTanken, function(){
 			$('#inputTankenDatum').datepicker({
@@ -11,8 +17,28 @@ $(function() {
 			});
 			
 			$('#selectOrt').selectize({
-			    create: false,
-			    sortField: 'text'
+			    sortField: 'text',
+			    create:function (input, callback){
+			    	var landID = $('#selectLand').val();
+			    	var newData = {parent: landID, text: input}
+			    	var $this = $(this); 
+			    	$.ajax({
+			            type : "POST",
+			            url : urlAddOrt,
+			            contentType: "application/json; charset=utf-8",
+			            dataType: 'json',
+			            data: JSON.stringify(newData),
+			            success : function(result) {
+			            	if (result>0) {
+	                            callback({ value: result, text: input });
+	                            //$this[0].selectize.setValue(result);
+	                        }
+			            },
+			            error : function(e) {
+			               alert('Failed!: ' + e.message);
+			            }
+			        });
+			    }
 			});
 			
 			$('#selectBenzinart').selectize({
@@ -92,13 +118,11 @@ $(function() {
 				    callback(list);
 				});
 				/*
-				$('#selectOrt').append($('<option>').text('keine Angabe').attr('value', '0'));
-				$('#selectOrt').append('</option>');
-				$.each(json, function(i, value) {
-					$('#selectOrt').append($('<option>').text(value.ort).attr('value', value.id));
-					$('#selectOrt').append('</option>');
-				});
-				*/
+				 * $('#selectOrt').append($('<option>').text('keine
+				 * Angabe').attr('value', '0')); $('#selectOrt').append('</option>');
+				 * $.each(json, function(i, value) { $('#selectOrt').append($('<option>').text(value.ort).attr('value',
+				 * value.id)); $('#selectOrt').append('</option>'); });
+				 */
 			}
 		});
 	};
