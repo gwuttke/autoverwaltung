@@ -12,8 +12,25 @@ $(function() {
 				language:'de'
 			});
 			$('#selectLand').selectize({
-			    create: false,
-			    sortField: 'text'
+			    sortField: 'text',
+			    create:function (input, callback){
+			    	var newData = {text: input}
+			    	$.ajax({
+			            type : "POST",
+			            url : urlAddLand,
+			            contentType: "application/json; charset=utf-8",
+			            dataType: 'json',
+			            data: JSON.stringify(newData),
+			            success : function(result) {
+			            	if (result>0) {
+	                            callback({ value: result, text: input });
+	                        }
+			            },
+			            error : function(e) {
+			               alert('Failed!: ' + e);
+			            }
+			        });
+			    }
 			});
 			
 			$('#selectOrt').selectize({
@@ -21,7 +38,6 @@ $(function() {
 			    create:function (input, callback){
 			    	var landID = $('#selectLand').val();
 			    	var newData = {parent: landID, text: input}
-			    	var $this = $(this); 
 			    	$.ajax({
 			            type : "POST",
 			            url : urlAddOrt,
@@ -31,11 +47,10 @@ $(function() {
 			            success : function(result) {
 			            	if (result>0) {
 	                            callback({ value: result, text: input });
-	                            //$this[0].selectize.setValue(result);
 	                        }
 			            },
 			            error : function(e) {
-			               alert('Failed!: ' + e.message);
+			               alert('Failed!: ' + e);
 			            }
 			        });
 			    }

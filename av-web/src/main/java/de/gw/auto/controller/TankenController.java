@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -115,12 +116,27 @@ public class TankenController extends ControllerHelper {
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
 
-	@RequestMapping(value = "addOrt", method=RequestMethod.POST)
+	@RequestMapping(value = "addLand", method = RequestMethod.POST)
 	@ResponseBody
-	public int addOrt( @RequestBody NewLandOrCity ort) {
+	public int addLand(@RequestBody NewLandOrCity land) {
+		if (!StringUtils.isBlank(land.getText())) {
+			for (Land l : stammdatenService.getLaender()) {
+				if (l.getName().equalsIgnoreCase(land.getText())) {
+					return l.getId();
+				}
+			}
+			Land lSave = stammdatenService.saveLand(new Land(land.getText()));
+			return lSave.getId();
+		}
+		return 0;
+	}
+
+	@RequestMapping(value = "addOrt", method = RequestMethod.POST)
+	@ResponseBody
+	public int addOrt(@RequestBody NewLandOrCity ort) {
 		if (ort.getParent() > 0l) {
 			if (!ort.getText().trim().isEmpty()) {
-				Land l = stammdatenService.getLand((int)ort.getParent());
+				Land l = stammdatenService.getLand((int) ort.getParent());
 				for (Ort o : l.getOrte()) {
 					if (o.getOrt().equalsIgnoreCase(ort.getText())) {
 						return o.getId();
