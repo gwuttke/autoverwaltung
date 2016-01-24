@@ -14,11 +14,11 @@ import de.gw.auto.domain.Benutzer;
 import de.gw.auto.domain.Role;
 
 public class RegisteredUser extends Benutzer implements UserDetails, Principal {
-	
 	public RegisteredUser(final Benutzer user) {
 		if (user != null) {
 			this.setId(user.getId());
 			this.setName(user.getName());
+			this.setVorname(user.getVorname());
 			this.seteMail(user.geteMail());
 			this.setPasswort(user.getPasswort());
 			this.setAutos(user.getAutos());
@@ -27,11 +27,16 @@ public class RegisteredUser extends Benutzer implements UserDetails, Principal {
 		}
 	}
 
+	public Benutzer toBenutzer() {
+		return new Benutzer(this.getId(), getName(), getVorname(),
+				getBenutzername(), getPassword(), geteMail(), getAutos(),
+				getCurrentAuto(), getRoles());
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		List<Role> userRoles = this.getRoles();
-
 		if (userRoles != null) {
 			for (Role role : userRoles) {
 				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
@@ -54,26 +59,21 @@ public class RegisteredUser extends Benutzer implements UserDetails, Principal {
 
 	@Override
 	public boolean isAccountNonExpired() {
-
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-
 		return true;
 	}
-
 }

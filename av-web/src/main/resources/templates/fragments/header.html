@@ -20,6 +20,24 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li th:if="${anonymous}"><a th:href="@{register}">Registrieren</a></li>
+            <li th:if="!${anonymous}" class="dropdown">
+	                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+	                	<span th:text="${headerModel.currentAutoModel.kfz}"></span>
+	                	<span class="caret"></span>
+	                </a>
+	                <ul class="dropdown-menu">
+	                	<th:block th:if="!${#lists.isEmpty(headerModel.autoModels)}">
+	                		<li th:each="auto : ${headerModel.autoModels}">
+	                  			<a class="btn btn-link" th:href="@{/user/auto/updateCurrent(autoId=${auto.id})}" th:text="${auto.kfz}"></a>
+	                  		</li>
+	                   <li class="divider"></li>
+	                	</th:block>
+                    	<li><a id="addAuto" class="btn btn-link"><span class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen</a></li>
+	                </ul>
+	               <form id="currentAutoForm" method="post">
+	               	<input hidden="true" name="autoId" th:value="${headerModel.currentAutoModel.id}"/>
+	               </form>
+	           </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
            	<li th:switch="${anonymous}">

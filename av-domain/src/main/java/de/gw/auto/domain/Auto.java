@@ -57,7 +57,7 @@ public class Auto implements Serializable {
 	private Set<Tanken> tankfuellungen = new HashSet<Tanken>();
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "auto_benutzer")
+	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "Auto_id")}, inverseJoinColumns = { @JoinColumn(name = "users_id") })
 	private List<Benutzer> users = new ArrayList<Benutzer>();
 
 	public Auto(String kfz, int kmKauf, int kmStart, Date kauf,

@@ -13,10 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import de.gw.auto.dao.AutoDAO;
+import de.gw.auto.dao.BenutzerDAO;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.service.RegisteredUser;
@@ -29,6 +29,9 @@ import de.gw.auto.view.model.helper.NewAutoModelHelper;
 public class AutoController extends ControllerHelper {
 	@Autowired
 	NewAutoModelHelper autoHelper;
+	
+	@Autowired
+	BenutzerDAO benutzerDAO;
 
 	@Autowired
 	private AutoDAO autoDAO;
@@ -49,7 +52,6 @@ public class AutoController extends ControllerHelper {
 			return "auto/new";
 		}
 		RegisteredUser user = giveRegisteredUser(principal);
-		
 		List<Benutzer> users = new ArrayList<Benutzer>();
 		users.add(user);
 		Auto auto = new Auto(autoModel.getKfz(), autoModel.getKmKauf(),
@@ -59,21 +61,19 @@ public class AutoController extends ControllerHelper {
 		autoDAO.save(user, auto);
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
-/*
-	@RequestMapping(value = "/updateCurrent", method = RequestMethod.POST)
-	public String updateCurrentAuto(Principal principal,
-			AutoModelShow autoModel, HttpServletRequest request, BindingResult bindingResult, Model model) {
-		RegisteredUser user = giveRegisteredUser(principal);
-		Auto a = autoDAO.findById(autoModel.getId());
-		if(user.getAutos().contains(a)){
-			user.setCurrentAuto(a);
-			return "redirect:/user/tanken/show";
-		}
-		bindingResult.reject("no.Car", String.format(
-				"Es gibt kein Auto mit dem Kennzeichen: %s .",
-				autoModel.getKfz()));
-		 String referer = request.getHeader("Referer");
-		    return "redirect:"+ referer;
+
+	@RequestMapping(value = "/updateCurrent",params={"autoId"}, method = RequestMethod.GET)
+	public String updateCurrentAuto(@RequestParam("autoId") int autoId,
+			HttpServletRequest request, Principal principal) {
+
+			RegisteredUser user = giveRegisteredUser(principal);
+			Auto a = autoDAO.findById(autoId);
+			if (user.getAutos().contains(a)) {
+				user.setCurrentAuto(a);
+				user = benutzerDAO.save(user);
+				return "redirect:/user/tanken/show";
+			}
+		String referer = request.getHeader("Referer");
+		return "redirect:" + referer;
 	}
-	*/
 }
