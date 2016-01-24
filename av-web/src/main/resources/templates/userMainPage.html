@@ -45,14 +45,19 @@ var urlAddLand = /*[[@{/user/tanken/addLand}]]*/;
 					Tankf&uuml;llungen 
 				</h1>
 				<br/>
-				<a id="TankenAdd" class="btn btn-success"> <span
-					class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen
+				<a id="TankenAdd" class="btn btn-success"> 
+					<span class="glyphicon glyphicon-plus"></span>
+				 	<span class="hidden-xs"> Hinzuf&uuml;gen</span>
 				</a>
-				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadTanken}"> <span
-					class="glyphicon glyphicon-print"></span> Drucken
+				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadTanken}"> 
+					<span class="glyphicon glyphicon-print glyphicon-list-alt"/>
+					<span class="visible-xs glyphicon glyphicon-list-alt"/>
+					<span class="hidden-xs"> Drucken</span>
 				</a>
-				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadEmptyTanken}"> <span
-					class="glyphicon glyphicon-print"></span> Drucke Leere Tabelle
+				<a id="TankenDownload" class="btn btn-success" th:href="@{/user/tanken/downloadEmptyTanken}"> 
+					<span class="glyphicon glyphicon-print"></span>
+					<span class="visible-xs glyphicon glyphicon-file"></span>
+					<span class="hidden-xs">Drucke leere Tabelle</span>
 				</a>
 				
 				<br />
