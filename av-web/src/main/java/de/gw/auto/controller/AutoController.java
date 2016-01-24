@@ -8,26 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import de.gw.auto.dao.AutoDAO;
+import de.gw.auto.dao.BenutzerDAO;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Benutzer;
 import de.gw.auto.service.RegisteredUser;
 import de.gw.auto.view.ViewName;
 import de.gw.auto.view.model.AutoModel;
-import de.gw.auto.view.model.AutoModelShow;
-import de.gw.auto.view.model.HeaderModel;
 import de.gw.auto.view.model.helper.NewAutoModelHelper;
 
 @Controller
@@ -35,6 +29,9 @@ import de.gw.auto.view.model.helper.NewAutoModelHelper;
 public class AutoController extends ControllerHelper {
 	@Autowired
 	NewAutoModelHelper autoHelper;
+	
+	@Autowired
+	BenutzerDAO benutzerDAO;
 
 	@Autowired
 	private AutoDAO autoDAO;
@@ -64,24 +61,19 @@ public class AutoController extends ControllerHelper {
 		autoDAO.save(user, auto);
 		return ViewName.REDIRECT_USER_MAIN_PAGE;
 	}
-/*
-	@RequestMapping(value = "/updateCurrent", method = RequestMethod.POST)
-	public String updateCurrentAuto(Principal principal,
-			@Validated Integer autoId,
-			 BindingResult bindingResult, Model model,HttpServletRequest request) {
-		if(!bindingResult.hasErrors()){
+
+	@RequestMapping(value = "/updateCurrent",params={"autoId"}, method = RequestMethod.GET)
+	public String updateCurrentAuto(@RequestParam("autoId") int autoId,
+			HttpServletRequest request, Principal principal) {
+
 			RegisteredUser user = giveRegisteredUser(principal);
 			Auto a = autoDAO.findById(autoId);
 			if (user.getAutos().contains(a)) {
 				user.setCurrentAuto(a);
+				user = benutzerDAO.save(user);
 				return "redirect:/user/tanken/show";
 			}
-		}
-		bindingResult.reject("no.Car", String.format(
-				"Es gibt kein Auto mit der id: %s .",
-				autoId));
 		String referer = request.getHeader("Referer");
 		return "redirect:" + referer;
 	}
-	*/
 }

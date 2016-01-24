@@ -22,6 +22,14 @@ public class BenutzerDAO {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	public RegisteredUser save(RegisteredUser user){
+		return new RegisteredUser(this.save(user.toBenutzer()));
+	}
+	
+	public Benutzer save(Benutzer user){
+		return userRepository.save(user);
+	}
 
 	public Benutzer logInBenutzer(Benutzer loginBenutzer) {
 		return userRepository.findByBenutzernameOrEMailAndPasswort(

@@ -47,34 +47,24 @@ public class Benutzer implements Serializable {
 	@Column(name = "email", unique = true)
 	private String eMail;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name = "benutzer_auto")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "users_id") }, inverseJoinColumns = { @JoinColumn(name = "Auto_id") })
 	private List<Auto> autos;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(nullable=true, name="currentautoid")
+	@JoinColumn(nullable = true, name = "currentautoid")
 	private Auto currentAuto;
 
-	@OneToMany 
-	@JoinTable(name="benutzer_role")
+	@OneToMany
+	@JoinTable(name = "benutzer_role")
 	private List<Role> roles;
 
 	protected Benutzer() {
-		// for Hibernate
+		super();
 	}
 
 	public List<Role> getRoles() {
 		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Benutzer(String benutzername, String passwort) {
-		this();
-		this.benutzername = benutzername;
-		this.passwort = passwort;
 	}
 
 	public Benutzer(String name, String vorname, String benutzername,
@@ -85,6 +75,26 @@ public class Benutzer implements Serializable {
 		this.eMail = eMail;
 		this.roles = new ArrayList<Role>();
 		roles.add(role);
+	}
+
+	public Benutzer(int id, String name, String vorname, String benutzername,
+			String passwort, String eMail, List<Auto> autos, Auto currentAuto,
+			List<Role> roles) {
+		this(name, vorname, benutzername, passwort, eMail, null);
+		this.id = id;
+		this.autos = autos;
+		this.currentAuto = currentAuto;
+		this.roles = roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Benutzer(String benutzername, String passwort) {
+		this();
+		this.benutzername = benutzername;
+		this.passwort = passwort;
 	}
 
 	public Auto getCurrentAuto() {
@@ -133,6 +143,10 @@ public class Benutzer implements Serializable {
 
 	public String getVorname() {
 		return vorname;
+	}
+
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
 	}
 
 	public String getBenutzername() {

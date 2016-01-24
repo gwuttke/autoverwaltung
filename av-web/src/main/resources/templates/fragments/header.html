@@ -5,7 +5,6 @@
 </head>
 <body>
 	<div th:fragment="header">
-<<<<<<< HEAD
 <!-- Fixed navbar -->
     <nav class="navbar navbar-default" th:with="anonymous=${#authorization.expression('hasRole(''ROLE_ANONYMOUS'')')}">
       <div class="container">
@@ -22,21 +21,23 @@
           <ul class="nav navbar-nav">
             <li th:if="${anonymous}"><a th:href="@{register}">Registrieren</a></li>
             <li th:if="!${anonymous}" class="dropdown">
-				<a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                	<span th:text="${headerModel.currentAutoModel.kfz}"></span>
-                	<b class="caret"></b>
-	            </a>
-                <ul class="dropdown-menu">
-                	<li th:each="auto : ${headerModel.autoModels}">
-                 	<button name="btnAuto" class="dropdown-item" th:text="${auto.kfz}" th:attr="data-id=${auto.id}" type="button">Auto</button>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a class="btn btn-link" id="addAuto">Hinzuf&uuml;gen</a></li>
-               </ul>
-               <form id="currentAutoForm" method="post">
-               	<input hidden="true" name="autoId" th:value="${headerModel.currentAutoModel.id}"/>
-               </form>
-           </li>
+	                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+	                	<span th:text="${headerModel.currentAutoModel.kfz}"></span>
+	                	<span class="caret"></span>
+	                </a>
+	                <ul class="dropdown-menu">
+	                	<th:block th:if="!${#lists.isEmpty(headerModel.autoModels)}">
+	                		<li th:each="auto : ${headerModel.autoModels}">
+	                  			<a class="btn btn-link" th:href="@{/user/auto/updateCurrent(autoId=${auto.id})}" th:text="${auto.kfz}"></a>
+	                  		</li>
+	                   <li class="divider"></li>
+	                	</th:block>
+                    	<li><a id="addAuto" class="btn btn-link"><span class="glyphicon glyphicon-plus"></span> Hinzuf&uuml;gen</a></li>
+	                </ul>
+	               <form id="currentAutoForm" method="post">
+	               	<input hidden="true" name="autoId" th:value="${headerModel.currentAutoModel.id}"/>
+	               </form>
+	           </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
            	<li th:switch="${anonymous}">
@@ -47,28 +48,6 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-=======
-		<nav class="navbar navbar-default" th:with="anonymous=${#authorization.expression('hasRole(''ROLE_ANONYMOUS'')')}">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" th:href="@{/}">Autoverwaltung</a>
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li th:if="${anonymous}"><a th:href="@{register}">Registrieren</a></li>
-						
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li th:switch="${anonymous}">
-						 	<a th:case="true" th:href="@{/}"><span class="glyphicon glyphicon-log-in"></span> Anmelden</a>
-						 	<a th:case="false" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Abmelden</a>
-						 </li>
-						 
-					</ul>
-				</div>
-			</div>
-		</nav>
->>>>>>> versuch ein header auto dropdown zu machen
 		<div class="modal" id="modelWindow" role="dialog"></div>
 	</div>
 </body>
