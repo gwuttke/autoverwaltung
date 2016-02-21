@@ -39,78 +39,76 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Kennzeichen</label>
 								<div class="col-sm-6">
-									<input class="form-control" id="kfzInput" type="text"
-										th:field="*{kfz}" required="required" />
+									<input class="form-control" id="kfzInput" type="text" th:field="*{kfz}" required="required" />
+									<th:block th:include="fragments/dialect/error :: field('kfz',${'Fehler!!!'})"></th:block>
 								</div>
 							</div>
-							<div class='control-group col-sm-6'>
+							<div class="control-group col-sm-6">
 								<label for="inputKaufDatum" class="control-label">Kaufdatum</label>
 								<div class="controls">
 									<div class="input-group">
-										<input type="text" id="inputKaufDatum" th:field="*{kauf}"
-											class="date-picker form-control" /> <label
-											for="inputKaufDatum" class="input-group-addon btn"><span
-											class="glyphicon glyphicon-calendar"></span> </label>
+										<input type="text" id="inputKaufDatum" th:field="*{kauf}" class="date-picker form-control" /> 
+										<label for="inputKaufDatum" class="input-group-addon btn">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</label>
 									</div>
 								</div>
+								<th:block th:include="fragments/dialect/error :: field('kauf',${'Fehler!!!'})"></th:block>
 							</div>
 							<div class='control-group col-sm-6'>
 								<label for="inputErstZulassungDatum" class="control-label">Erstzulassungsdatum</label>
 								<div class="controls">
 									<div class="input-group">
-										<input type="text" id="inputErstZulassungDatum"
-											th:field="*{erstZulassung}"
-											class="date-picker form-control" /> <label
-											for="inputErstZulassungDatum" class="input-group-addon btn"><span
-											class="glyphicon glyphicon-calendar"></span> </label>
+										<input type="text" id="inputErstZulassungDatum" th:field="*{erstZulassung}" class="date-picker form-control" />
+										<label for="inputErstZulassungDatum" class="input-group-addon btn">
+											<span class="glyphicon glyphicon-calendar"></span> 
+										</label>
 									</div>
 								</div>
+								<th:block th:include="fragments/dialect/error :: field('erstZulassung',${'Fehler!!!'})"></th:block>
 							</div>
 							<div class="col-sm-6">
 								<div class="control-group">
 									<label class="control-label">Kilometerstand beim Kauf</label>
 									<div class="input-group">
-										<input class="form-control" id="kmInput" type="text"
-											th:field="*{kmKauf}" maxlength="6" max="999999"
-											pattern="[0-9]{1,6}" /> <label for="kmInput"
-											class="input-group-addon"> <span class="glyphicon">Km</span>
+										<input class="form-control" id="kmInput" type="text" th:field="*{kmKauf}" maxlength="6" max="999999" pattern="[0-9]{1,6}" /> 
+										<label for="kmInput" class="input-group-addon"> 
+											<span class="glyphicon">Km</span>
 										</label>
 									</div>
+									<th:block th:include="fragments/dialect/error :: field('kmKauf',${'Fehler!!!'})"></th:block>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="control-group">
 									<label class="control-label">Akteller Kilomenterstand</label>
 									<div class="input-group">
-										<input class="form-control" id="aktKmInput" type="text"
-											th:field="*{kmAktuell}" maxlength="6" max="999999" size="3"
-											pattern="\d{1,6}" /> <label for="aktKmInput"
-											class="input-group-addon"> <span class="glyphicon">Km</span>
+										<input class="form-control" id="aktKmInput" type="text" th:field="*{kmAktuell}" maxlength="6" max="999999" size="3" pattern="\d{1,6}" /> 
+										<label for="aktKmInput" class="input-group-addon"> 
+											<span class="glyphicon">Km</span>
 										</label>
 									</div>
+									<th:block th:include="fragments/dialect/error :: field('kmAktuell',${'Fehler!!!'})"></th:block>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="control-group">
-									<label class="control-label">Kilomenterstand bei
-										beginn der Datenerfassung</label>
+									<label class="control-label">Kilomenterstand bei beginn der Datenerfassung</label>
 									<div class="input-group">
-										<input class="form-control" id="startKmInput" type="text"
-											th:field="*{kmStart}" maxlength="6" max="999999" size="3"
-											pattern="\d{1,6}" /> <label for="startKmInput"
-											class="input-group-addon"> <span class="glyphicon">Km</span>
+										<input class="form-control" id="startKmInput" type="text" th:field="*{kmStart}" maxlength="6" max="999999" size="3" pattern="\d{1,6}" /> 
+										<label for="startKmInput" class="input-group-addon"> 
+											<span class="glyphicon">Km</span>
 										</label>
 									</div>
+									<th:block th:include="fragments/dialect/error :: field('kmStart',${'Fehler!!!'})"></th:block>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="control-group">
 									<label for="selectBenzinart">Kraftstoffart</label>
-									<div class="input-group">
-										<select class="form-control" th:field="*{userKraftstoffart}"
-											id="selectBenzinarten">
-											<option
-												th:each="kraftstoffart : ${autoModel.kraftstoffarten}"
+									<div class="form-group">
+										<select class="form-control" th:field="*{userKraftstoffart}" id="selectBenzinarten">
+											<option	th:each="kraftstoffart : ${autoModel.kraftstoffarten}"
 												th:value="${kraftstoffart.id}"
 												th:text="${kraftstoffart.name}">Kraftstoffarten</option>
 										</select>
@@ -120,8 +118,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger"
-							data-dismiss="modal">Schlie&szlig;en</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Schlie&szlig;en</button>
 						<button type="submit" id="btnSave" class="btn btn-primary">Speichern</button>
 					</div>
 				</form>

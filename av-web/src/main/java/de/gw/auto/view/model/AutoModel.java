@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Kraftstoff;
 import de.gw.auto.domain.Kraftstoffsorte;
@@ -17,18 +24,25 @@ import de.gw.auto.domain.Kraftstoffsorte;
 public class AutoModel {
 	private String kfz;
 
+	@Max(value=999999,message="Der Kauf Km-Stand darf 999999 nicht überschreiten")
+	@Min(value=1,message="Der Kauf Km-Stnd darf 1 nicht unterschreiten")
 	private int kmKauf;
 
+	@NotBlank(message="Es muss ein Kaufdatum angegeben werden")
 	private Date kauf;
 
+	@NotBlank(message="Es muss ein Erstzulassungsdatum angegeben werden")
 	private Date erstZulassung;
 
 	private List<Kraftstoff> kraftstoffarten = new ArrayList<Kraftstoff>();
 
+	@NotNull(message="es muss ein Kaftstoff ausgewählt werden")
 	private Kraftstoff userKraftstoffart;
 
+	@Min(value=1,message="Der aktuelle Km-Stand darf nicht 1 unterschreiten und sollte größer ald der Kauf Km-Stand sein")
 	private int kmAktuell;
 
+	@Min(value=1,message="Der Start Km-Stand darf nicht 1 unterschreiten und sollte kleiner oder Gleich dem kmAktuell sein")
 	private int kmStart;
 
 	protected AutoModel() {
