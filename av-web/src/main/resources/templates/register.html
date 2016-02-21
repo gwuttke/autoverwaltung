@@ -10,25 +10,59 @@
 		<th:block th:include="fragments/header :: header">header</th:block>
 		<h1>Registration</h1>
 		<form role="form" th:action="@{registration}" th:object="${registrationModel}" method="post">
-		  <div class="form-group"> 
-		    <input type="text" th:field="*{name}" id="txtNachname" placeholder="Nachname" required="required" />
-		  </div>
-		  <div class="form-group"> 
-		  	<input type="text" th:field="*{vorname}" id="txtVorname" placeholder="Vorname" required="required"/>
-		  </div>
-		  <div class="form-group"> 
-		    <input type="text" th:field="*{benutzername}" placeholder="Benutzername" required="required"/>
-		  </div>
-		  <div class="form-group"> 
-		    <input type="password" th:field="*{passwort}" id="txtPasswort" placeholder="Passwort" required="required"/>
-		    <input type="password" th:field="*{wiederholungPasswort}" id="txtWiederholungPasswort" placeholder="wiederhole Passwort" required="required"/> 
-		  </div>
-		  <div class="form-group"> 
-		    <input type="text" th:field="*{eMail}" id="txtEMail" placeholder="e-Mail" required="required"/>
-		  </div>
-		  <div class="form-group"> 
-			<button class="btn btn-lg btn-primary" type="submit" name="registration">Registration</button>
-		  </div>
+			<div class="row col-sm-12">
+				<div class="form-group col-sm-5"> 
+	  				<label class="control-label">Nachnahme</label>
+	  				<div>
+	  					<input class="form-control" type="text" th:field="*{name}" id="txtNachname" placeholder="Nachname" required="required" />    
+						<th:block th:include="fragments/dialect/error :: field('name',${'Fehler!!!'})"></th:block>
+	  				</div>
+			  	</div>
+				<div class="form-group col-sm-5">
+					<label class="control-label">Vornahme</label>
+				   	<div> 
+						<input class="form-control" type="text" th:field="*{vorname}" id="txtVorname" placeholder="Vorname" required="required"/>
+						<th:block th:include="fragments/dialect/error :: field('name',${'Fehler!!!'})"></th:block>
+				 	</div>
+				</div>
+		  	</div>
+		  	<div class="row col-sm-12">
+				<div class="form-group col-sm-5">
+			  		<label class="control-label">Benutzername</label>
+			   		<div> 
+				    	<input class="form-control" type="text" th:field="*{benutzername}" placeholder="Benutzername" required="required"/>
+				  		<th:block th:include="fragments/dialect/error :: field('benutzername',${'Fehler!!!'})"></th:block>
+			 		</div>
+			  	</div>
+				<div class="form-group col-sm-5">
+			  		<label class="control-label">e-Mail</label>
+				  	<div> 
+					    <input class="form-control" type="text" th:field="*{eMail}" id="txtEMail" placeholder="e-Mail" required="required"/>
+					    <th:block th:include="fragments/dialect/error :: field('eMail',${'Fehler!!!'})"></th:block>
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-12">
+			  <div class="form-group col-sm-5"> 
+			    <label class="control-label">Passwort</label>
+			   	<div> 
+				    <input class="form-control" type="password" th:field="*{passwort}" id="txtPasswort" placeholder="Passwort" required="required"/>
+				    <th:block th:include="fragments/dialect/error :: field('passwort',${'Fehler!!!'})"></th:block>
+			    </div>
+			   </div>
+			   <div class="form-group col-sm-5">
+			   	<label class="control-label">wiederhole Passwort</label>
+			   	<div> 
+				    <input class="form-control" type="password" th:field="*{wiederholungPasswort}" id="txtWiederholungPasswort" placeholder="wiederhole Passwort" required="required"/> 
+					<th:block th:include="fragments/dialect/error :: field('wiederholungPasswort',${'Fehler!!!'})"></th:block>
+			  	</div>
+			  </div>
+			</div>
+			 <div class="row">
+			  <div class="form-group"> 
+				<button class="btn btn-lg btn-primary" type="submit" name="registration">Registration</button>
+			  </div>
+			 </div>
 		</form> 
 	</div>
 </body>
