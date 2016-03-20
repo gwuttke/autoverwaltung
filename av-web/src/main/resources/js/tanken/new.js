@@ -9,8 +9,11 @@ $(function() {
 		openModal('newTankenModal', urlNewTanken, function(){
 			$('#inputTankenDatum').datepicker({
 				format : "dd.mm.yyyy",
-				language:'de'
+				language:'de',
+				todayBtn: 'linked'
 			});
+			$('#inputTankenDatum').datepicker('setDate', new Date());
+			
 			$('#selectLand').selectize({
 			    sortField: 'text',
 			    create:function (input, callback){

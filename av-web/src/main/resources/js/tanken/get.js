@@ -5,7 +5,8 @@ $(function() {
 			$('.date-picker').each(function(){
 				$(this).datepicker({
 					format : "dd.mm.yyyy",
-					language:'de'
+					language:'de',
+					todayBtn: 'linked'
 				});
 			});
 		});

@@ -5,28 +5,56 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Kraftstoff;
-import de.gw.auto.domain.Kraftstoffsorte;
 import de.gw.auto.domain.Land;
-import de.gw.auto.domain.Ort;
-import de.gw.auto.domain.Tank;
 
 public class NewTanken extends ListTanken {
+	
+	@NumberFormat(style=Style.NUMBER)
+	@Max(value=999999,message="Der Km-Stand darf 999999 nicht überschreiten")
+	@Min(value=1,message="Der Km-Stand darf 1 nicht unterschreiten")
 	private int kmStand;
 
 	private int landId;
 
+
+	@NotBlank(message="Bitte wählen Sie etwas aus, oder fügen Sie einen Ort hinzu")
 	private int ortId;
 
 	private int tankId;
-	
-	private BigDecimal kosten;
 
+	@NumberFormat(style=Style.NUMBER, pattern="#.##")
+	@NotNull(message="Bitte geben Sie die Kosten an")
+	@DecimalMin(value="0,01", message="Die Kosten dürfen 0,01 nicht unterschreiten")
+	@DecimalMax(value="1000",message="Die Kosten dürfen 1000,00 nicht unterschreiten")
+	private BigDecimal kosten;
+	
+	@NotNull(message="Ein Datum muss angegeben werden")
+    @DateTimeFormat(pattern="dd.MM.YYYY")
 	private Date datum;
 
+	@NotNull(message="Bitte geben Sie eine Literanzahl an")
+	@DecimalMin(value="0.01", message="Die Literanzahl darf 0,01 nicht unterschreiten")
+	@DecimalMax(value="1000.00", message="Die Literanzahl darf 1000,00 nicht üerschreiten")
 	private BigDecimal liter;
 
+	@NumberFormat(pattern="#.###")
+	@NotNull(message="Bitte geben Sie einen Preis je Liter ein im Format 0.000")
+	@DecimalMin(value="0.01", message="Bitte geben Sie relevante Plausible daten ein")
+	@DecimalMax(value="5.00", message="Bitte geben Sie relevante Plausible daten ein")
 	private BigDecimal preisProLiter;
 
 	private int userKraftstoffsorte;
@@ -44,9 +72,6 @@ public class NewTanken extends ListTanken {
 	public void setLandId(int landId) {
 		this.landId = landId;
 	}
-
-
-
 
 	public int getOrtId() {
 		return ortId;
@@ -89,13 +114,13 @@ public class NewTanken extends ListTanken {
 		return datum;
 	}
 
+	public void setDatum(Date date) { this.datum = date; }
+	 
 	/*
-	 * public void setDatum(Date date) { this.datum = date; }
-	 */
 	public void setDatum(String datum) throws ParseException {
 		this.datum = AutoModel.stringToDate(datum);
 	}
-
+*/
 	public BigDecimal getLiter() {
 		return liter;
 	}

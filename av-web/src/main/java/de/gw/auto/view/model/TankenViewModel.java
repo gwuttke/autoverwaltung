@@ -12,6 +12,7 @@ import de.gw.auto.domain.Tankfuellung;
 
 public class TankenViewModel {
 	private PagedListHolder<TankenModel> tankfuellungenView = new PagedListHolder<TankenModel>();
+	
 	private NewTanken newTanken = new NewTanken();
 
 	/**

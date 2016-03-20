@@ -7,11 +7,8 @@
 <body>
 
 
-<div th:fragment="field (fieldname,text)">
-  <div class="alert alert-danger"  th:if="${#fields.hasErrors('__${fieldname}__')}" th:errors="*{__${fieldname}__}">
-  	<strong>Danger!</strong>
-  	<span th:text="${text}"></span>
-  </div>
+<div th:fragment="field (fieldname, text)">
+  <div class="alert alert-danger" th:if="${#fields.hasErrors('__${fieldname}__')}" th:errors="*{__${fieldname}__}" />
  </div>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lowagie.text.DocumentException;
 
@@ -83,21 +85,25 @@ public class TankenController extends ControllerHelper {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String prepareNew(
-			@ModelAttribute("tankenView") TankenViewModel tankenView,
+			@ModelAttribute("tankenView") TankenViewModel tankenView, BindingResult bindingResult,
 			Model model, Principal principal) {
 		RegisteredUser user = giveRegisteredUser(principal);
 		newTankenModelHelper.prepareNewTankenModel(tankenView,
 				user.getCurrentAuto());
 		model.addAttribute(tankenView);
-		return "tanken/new :: newTankenModal";
+		return "tanken/new";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveTankfuellung(
+	public String saveTankfuellung(@Valid
 			@ModelAttribute("tankenView") TankenViewModel tankenView,
-			BindingResult bindingResult, Model model, Principal principal) {
+			BindingResult bindingResult, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			return "redirect:/user/tanken/new";
+			RegisteredUser user = giveRegisteredUser(principal);
+			newTankenModelHelper.prepareNewTankenModel(tankenView,
+					user.getCurrentAuto());
+			model.addAttribute(tankenView);
+			return "tanken/new";
 		}
 		RegisteredUser user = giveRegisteredUser(principal);
 		if (user == null) {
