@@ -85,31 +85,29 @@ public class TankenController extends ControllerHelper {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String prepareNew(
-			@ModelAttribute("tankenView") TankenViewModel tankenView, BindingResult bindingResult,
+			NewTanken newTanken, BindingResult bindingResult,
 			Model model, Principal principal) {
 		RegisteredUser user = giveRegisteredUser(principal);
-		newTankenModelHelper.prepareNewTankenModel(tankenView,
+		newTankenModelHelper.prepareNewTankenModel(newTanken,
 				user.getCurrentAuto());
-		model.addAttribute(tankenView);
+		model.addAttribute(newTanken);
 		return "tanken/new";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveTankfuellung(@Valid
-			@ModelAttribute("tankenView") TankenViewModel tankenView,
+		 NewTanken newTanken,
 			BindingResult bindingResult, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+		
 		if (bindingResult.hasErrors()) {
 			RegisteredUser user = giveRegisteredUser(principal);
-			newTankenModelHelper.prepareNewTankenModel(tankenView,
+			newTankenModelHelper.prepareNewTankenModel(newTanken,
 					user.getCurrentAuto());
-			model.addAttribute(tankenView);
+			model.addAttribute(newTanken);
 			return "tanken/new";
 		}
 		RegisteredUser user = giveRegisteredUser(principal);
-		if (user == null) {
-			return ViewName.REDIRECT_LOGIN;
-		}
-		NewTanken newTanken = tankenView.getNewTanken();
+		
 		Kraftstoffsorte kraftstoffsorte = stammdatenService
 				.getKraftstoffsorte(newTanken.getUserKraftstoffsorte());
 		Land l = stammdatenService.getLand(newTanken.getLandId());

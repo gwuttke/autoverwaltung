@@ -14,13 +14,15 @@ public class NewTankenModelHelper {
 	@Autowired
 	private StammdatenService stammdatenService;
 
-	public void prepareNewTankenModel(final TankenViewModel tankenView, Auto auto) {
-		NewTanken newTanken = tankenView.getNewTanken();
+	public void prepareNewTankenModel(NewTanken newTanken, Auto auto) {
+		if(newTanken == null){
+			 newTanken = new NewTanken();
+		}
+		
 		newTanken.setAuto(auto);
 		newTanken.setLaender(stammdatenService.getLaender());
 		newTanken.setKraftstoffsorten(stammdatenService.getKraftstoffsorten(auto.getKraftstoff()));
 		newTanken.setFuellstaende(stammdatenService.getTankstaende());
 		newTanken.setLaender(stammdatenService.getLaender());
-		tankenView.setNewTanken(newTanken);
 	}
 }

@@ -11,17 +11,14 @@
 
 </script>
 
-	<meta name="_csrf" th:attr="content=${_csrf.token}"/>
-	<!-- default header name is X-CSRF-TOKEN -->
-	<meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
-
 <script th:inline="javascript">
 /*<![CDATA[*/
 var urlNewTanken = /*[[@{/user/tanken/new}]]*/;
-var urlLaender = /*[[@{/user/json/orte(land=${tankenView.newTanken.landId})}]]*/;
+var urlLaender = /*[[@{/user/json/orte(land='')}]]*/ '';
 var urlNewAuto = /*[[@{/user/auto/new}]]*/;
 var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
 var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
+var urlSaveTankenCancel = /*[[@{/user/tanken/show}]]*/;
 var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
 var urlAddLand = /*[[@{/user/tanken/addLand}]]*/; 
 /*]]>*/

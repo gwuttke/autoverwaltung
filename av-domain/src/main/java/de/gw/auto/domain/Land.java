@@ -15,8 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.Cascade;
-
 @Entity
 @SequenceGenerator(name = "land_seq", sequenceName = "land_id_seq")
 public class Land implements Serializable {

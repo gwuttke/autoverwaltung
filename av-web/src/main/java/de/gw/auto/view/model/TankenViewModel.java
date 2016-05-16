@@ -12,8 +12,6 @@ import de.gw.auto.domain.Tankfuellung;
 
 public class TankenViewModel {
 	private PagedListHolder<TankenModel> tankfuellungenView = new PagedListHolder<TankenModel>();
-	
-	private NewTanken newTanken = new NewTanken();
 
 	/**
 	 * key = Jahr, Double = Wert;
@@ -90,13 +88,5 @@ public class TankenViewModel {
 
 	public void setLiter(LinkedHashMap<Integer, Double> liter) {
 		this.liter = liter;
-	}
-
-	public NewTanken getNewTanken() {
-		return newTanken;
-	}
-
-	public void setNewTanken(NewTanken newTanken) {
-		this.newTanken = newTanken;
 	}
 }

@@ -1,7 +1,6 @@
 package de.gw.auto.view.model;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -28,17 +24,17 @@ public class NewTanken extends ListTanken {
 	@Min(value=1,message="Der Km-Stand darf 1 nicht unterschreiten")
 	private int kmStand;
 
+	@Min(value=1,message="Bitte wählen Sie etwas aus")
 	private int landId;
 
 
-	@NotBlank(message="Bitte wählen Sie etwas aus, oder fügen Sie einen Ort hinzu")
+	@Min(value=1 ,message="Bitte wählen Sie etwas aus, oder fügen Sie einen Ort hinzu")
 	private int ortId;
 
 	private int tankId;
 
-	@NumberFormat(style=Style.NUMBER, pattern="#.##")
 	@NotNull(message="Bitte geben Sie die Kosten an")
-	@DecimalMin(value="0,01", message="Die Kosten dürfen 0,01 nicht unterschreiten")
+	@DecimalMin(value="0.01", message="Die Kosten dürfen 0,01 nicht unterschreiten")
 	@DecimalMax(value="1000",message="Die Kosten dürfen 1000,00 nicht unterschreiten")
 	private BigDecimal kosten;
 	
@@ -51,7 +47,6 @@ public class NewTanken extends ListTanken {
 	@DecimalMax(value="1000.00", message="Die Literanzahl darf 1000,00 nicht üerschreiten")
 	private BigDecimal liter;
 
-	@NumberFormat(pattern="#.###")
 	@NotNull(message="Bitte geben Sie einen Preis je Liter ein im Format 0.000")
 	@DecimalMin(value="0.01", message="Bitte geben Sie relevante Plausible daten ein")
 	@DecimalMax(value="5.00", message="Bitte geben Sie relevante Plausible daten ein")
@@ -106,8 +101,8 @@ public class NewTanken extends ListTanken {
 		return kosten;
 	}
 
-	public void setKosten(String kosten) {
-		this.kosten = new BigDecimal(kosten);
+	public void setKosten(BigDecimal kosten) {
+		this.kosten = kosten;
 	}
 
 	public Date getDatum() {
@@ -133,8 +128,8 @@ public class NewTanken extends ListTanken {
 		return preisProLiter;
 	}
 
-	public void setPreisProLiter(String preisProLiter) {
-		this.preisProLiter = new BigDecimal(preisProLiter);
+	public void setPreisProLiter(BigDecimal preisProLiter) {
+		this.preisProLiter = preisProLiter;
 	}
 
 	public int getUserKraftstoffsorte() {

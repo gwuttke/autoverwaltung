@@ -3,7 +3,22 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+<link rel="stylesheet" th:href="@{/wro/tanken.css}" type="text/css" />
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+var urlNewTanken = /*[[@{/user/tanken/new}]]*/;
+var urlLaender = /*[[@{/user/json/orte(land='')}]]*/;
+var urlNewAuto = /*[[@{/user/auto/new}]]*/;
+var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
+var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
+var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
+var urlAddLand = /*[[@{/user/tanken/addLand}]]*/;
+var urlSaveTankenCancel = /*[[@{/user/tanken/show}]]*/;
+/*]]>*/
+</script>
 <th:block th:include="fragments/headTag :: head" />
+<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS"/>
 
 <title>Autoverwaltung - Neue Tankf&uuml;llung</title>
 </head>
@@ -18,7 +33,7 @@
 					<h4 class="modal-title">Neue Tankf&uuml;llung</h4>
 				</div>
 				<form class="form-horizontal" role="form" id="newTankenForm"
-					th:object="${tankenView.newTanken}" th:action="@{/user/tanken/save}"
+					th:object="${newTanken}" th:action="@{/user/tanken/save}"
 					method="post">
 					<div class="modal-body">
 						<div class="row">
@@ -104,7 +119,7 @@
 							<div class="control-group col-sm-6">
 								<label for="selectBenzinart">Kraftstoffsorte</label>
 								<select th:field="*{userKraftstoffsorte}" class="form-control" id="selectBenzinart">
-									<option th:each="kraftstoffsorte : ${tankenView.newTanken.kraftstoffsorten}"
+									<option th:each="kraftstoffsorte : ${newTanken.kraftstoffsorten}"
 										th:value="${kraftstoffsorte.id}"
 										th:text="${kraftstoffsorte.name}">benzinarten</option>
 								</select>
@@ -114,7 +129,7 @@
 								<label for="selectBenzinart">Tankf&uuml;llstand nach Tanken</label> 
 								<select th:field="*{tankId}" class="form-control" id="selectFuellstaendet">
 									<!-- <option value="k.A.">bitte ausw&auml;len</option> -->
-									<option th:each="fuellstand : ${tankenView.newTanken.fuellstaende}"
+									<option th:each="fuellstand : ${newTanken.fuellstaende}"
 										th:value="${fuellstand.id}"
 										th:text="${fuellstand.beschreibung}">
 										fuellstaende
@@ -125,7 +140,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Schlie&szlig;en</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" id="btnSaveTankenCancel">Schlie&szlig;en</button>
 						<button type="button" class="btn btn-primary" id="btnSaveTanken">Speichern</button>
 					</div>
 	
