@@ -103,11 +103,13 @@ $(function() {
 			if($(this).val() != ''){
 				if($('#inputKosten').val().length > 0){
 					var preisProLiter = $(this).val() * $('#inputKosten').val();
-					$('#inputPreisProLiter').autoNumeric('set',preisProLiter);
-					return;
+					if(preisProLiter.toString().length === 5){
+						$('#inputPreisProLiter').autoNumeric('set',preisProLiter);
+						return;
+					}
 				}
 				if( $('#inputPreisProLiter').val().length > 0){
-					var kosten = $(this).val() *  $('#inputPreisProLiter').val();
+					var kosten = $(this).val() * $('#inputPreisProLiter').val();
 					$('#inputKosten').autoNumeric('set',kosten);
 					return;
 				}
