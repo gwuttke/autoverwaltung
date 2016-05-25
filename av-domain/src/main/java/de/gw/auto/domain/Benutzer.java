@@ -20,11 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.engine.internal.Cascade;
-import org.hibernate.validator.constraints.Email;
-
 @Entity
-// @SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
+@SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
 @Table(name = "Benutzer", uniqueConstraints = {
 		@UniqueConstraint(name = "ui_name_passwort", columnNames = {
 				"benutzername", "passwort" }),
@@ -43,7 +40,6 @@ public class Benutzer implements Serializable {
 
 	private String passwort;
 
-	@Email
 	@Column(name = "email", unique = true)
 	private String eMail;
 

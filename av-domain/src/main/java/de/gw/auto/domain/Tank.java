@@ -11,6 +11,9 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "tank_gen", sequenceName = "tank_id_seq")
 public class Tank implements Serializable {
+	
+	public static final String VOLL = "4/4";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tank_gen")
 	private int id;

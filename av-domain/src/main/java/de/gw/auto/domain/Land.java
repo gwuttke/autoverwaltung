@@ -31,8 +31,7 @@ public class Land implements Serializable {
 		return orte;
 	}
 
-	public Land() {
-
+	protected Land() {
 	}
 	
 	public void addOrt(Ort o){
