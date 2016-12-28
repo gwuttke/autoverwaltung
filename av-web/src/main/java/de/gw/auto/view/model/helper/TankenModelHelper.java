@@ -77,12 +77,12 @@ public class TankenModelHelper {
 		return tankenService.getKmOfYear(year, auto);
 	}
 
-/**
- * 
- * @param year
- * @param auto
- * @return  Kosten eines Jahres vom angegebenen Auto;
- */
+	/**
+	 * 
+	 * @param year
+	 * @param auto
+	 * @return  Kosten eines Jahres vom angegebenen Auto;
+	 */
 	private Double getKosten(int year, Auto auto) {
 			return tankenService.getKostenOfYear(year, auto);
 	}
@@ -94,39 +94,39 @@ public class TankenModelHelper {
 	 * @param auto
 	 * @return  Kosten eines Jahres vom angegebenen Auto;
 	 */
-		private Double getPreisProLiterAVG(int year, Auto auto) {
-				return tankenService.getAVGPreisLiter(year, auto);
-		}
-		
-		/**
-		 * 
-		 * @param year
-		 * @param auto
-		 * @return Liter eines Jahres vom angegebenen Auto;
-		 */
-		private Double getLiter(int year, Auto auto) {
-				return tankenService.getLiterOfYear(year, auto);
-		}
-		
-		/**
-		* 
-		* @param year
-		* @param auto
-		* @return  Minimum Preis Pro Liter eines Jahres vom angegebenen Auto;
-		*/
-		private Double getPreisProLiterMin(int year, Auto auto) {
-				return tankenService.getMinPreisProLiter(year, auto);
-		}
-		/**
-		* 
-		* @param year
-		* @param auto
-		* @return  Maximum Preis Pro Liter eines Jahres vom angegebenen Auto;
-		*/
-		private Double getPreisProLiterMax(int year, Auto auto) {
-				return tankenService.getMaxPreisProLiter(year, auto);
-		}	
+	private Double getPreisProLiterAVG(int year, Auto auto) {
+			return tankenService.getAVGPreisLiter(year, auto);
+	}
 	
+	/**
+	 * 
+	 * @param year
+	 * @param auto
+	 * @return Liter eines Jahres vom angegebenen Auto;
+	 */
+	private Double getLiter(int year, Auto auto) {
+			return tankenService.getLiterOfYear(year, auto);
+	}
+	
+	/**
+	* 
+	* @param year
+	* @param auto
+	* @return  Minimum Preis Pro Liter eines Jahres vom angegebenen Auto;
+	*/
+	private Double getPreisProLiterMin(int year, Auto auto) {
+			return tankenService.getMinPreisProLiter(year, auto);
+	}
+	/**
+	* 
+	* @param year
+	* @param auto
+	* @return  Maximum Preis Pro Liter eines Jahres vom angegebenen Auto;
+	*/
+	private Double getPreisProLiterMax(int year, Auto auto) {
+			return tankenService.getMaxPreisProLiter(year, auto);
+	}	
+
 
 	private void setPagination(TankenViewModel tankenViewModel, Auto auto,
 			int page) {
