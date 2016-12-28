@@ -29,6 +29,8 @@ var urlAddLand = /*[[@{/user/tanken/addLand}]]*/;
 <body>
 	<div th:include="fragments/header :: header">header</div>
 	<div class="container" id="UserMainPage" th:object="${tankenView}">
+		
+		<div th:include="tanken/aggregationView :: body">AggregationViewTable</div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab"
 				href="#tankfuellungenTable"> Tankf&uuml;llungen </a></li>

@@ -25,6 +25,7 @@ import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.service.implementation.TankenService;
 import de.gw.auto.service.implementation.TankfuellungenPdf;
+import de.gw.auto.view.model.AuswertungProJahr;
 import de.gw.auto.view.model.NewTanken;
 import de.gw.auto.view.model.TankenModel;
 import de.gw.auto.view.model.TankenViewModel;
@@ -44,133 +45,88 @@ public class TankenModelHelper {
 		}
 		DateTime kaufDatum = new DateTime(auto.getKauf().getTime());
 		int currentYear = DateTime.now().getYear();
-		LinkedHashMap<Integer, Double> kosten;
-		LinkedHashMap<Integer, Double> liter;
-		LinkedHashMap<Integer, Map<String, Double>> preisProLiter;
-		LinkedHashMap<Integer, Integer> kms;
-		kosten = getKosten(currentYear - 1, currentYear, auto);
-		liter = getLiter(currentYear - 1, currentYear, auto);
-		preisProLiter = getPreisProLiter(currentYear - 1, currentYear, auto);
-		kms = getKm(currentYear - 1, currentYear, auto);
+		
+		List<AuswertungProJahr> auswertungProJahre = new ArrayList<AuswertungProJahr>();
+		
+		for (int year = currentYear; year >= currentYear-3;year--){
+			AuswertungProJahr auswertung = new AuswertungProJahr();
+			auswertung.setJahr(year);
+			auswertung.setLiter(getLiter(year, auto));
+			auswertung.setKosten(getKosten(year, auto));
+			auswertung.setKm(getKm(year, auto));
+			auswertung.setPreisProLiterMin(getPreisProLiterMin(year, auto));
+			auswertung.setPreisProLiterMax(getPreisProLiterMax(year, auto));
+			auswertung.setPreisProLiterAvg(getPreisProLiterAVG(year, auto));
+			auswertungProJahre.add(auswertung);
+		}
 		setPagination(tankenViewModel, auto, page);
-		tankenViewModel.setKosten(kosten);
-		tankenViewModel.setLiter(liter);
-		tankenViewModel.setKms(kms);
-		tankenViewModel.setPreisProLiter(preisProLiter);
+		tankenViewModel.setAuswertungProJahre(auswertungProJahre);
+		
 		return tankenViewModel;
 	}
 
+
+	
 	/**
 	 * 
 	 * @param year
-	 * @param toYear
 	 * @param auto
-	 * @return a LinkedHashMap<Integer,Integer> of Km between year and toYear
-	 *         and with key -2 all Kms
-	 * @throws AssertionError
-	 *             - if year > toYear
+	 * @return Kilomenter eines Jahres vom angegebenen Auto
 	 */
-	private LinkedHashMap<Integer, Integer> getKm(int year, int toYear,
-			Auto auto) throws AssertionError {
-		Assert.isTrue((year <= toYear),
-				"Year darf nicht kleiner sein als toYear");
-		Assert.isTrue((year > 0 || toYear > 0),
-				"Year oder toYear darf nicht negativ oder 0 sein");
-		LinkedHashMap<Integer, Integer> kms = new LinkedHashMap<Integer, Integer>();
-		int km = 0;
-		for (int i = year; i <= toYear; i++) {
-			int kmOfYear = tankenService.getKmOfYear(i, auto);
-			kms.put(i, kmOfYear);
-			km += kmOfYear;
-		}
-		kms.put(-2, km);
-		return kms;
+	private Integer getKm(int year, Auto auto) {
+		return tankenService.getKmOfYear(year, auto);
 	}
 
-	/**
-	 * 
-	 * @param year
-	 * @param toYear
-	 * @param auto
-	 * @return a LinkedHashMap<Integer,Double> of costs between year and toYear
-	 *         and with key -2 all costs
-	 * @throws AssertionError
-	 *             - if year > toYear
-	 */
-	private LinkedHashMap<Integer, Double> getKosten(int year, int toYear,
-			Auto auto) throws AssertionError {
-		Assert.isTrue(
-				(year <= toYear),"Year darf nicht kleiner sein als toYear");
-		Assert.isTrue(
-				(year > 0 || toYear > 0),"Year oder toYear darf nicht negativ oder 0 sein");
-		LinkedHashMap<Integer, Double> kosten = new LinkedHashMap<Integer, Double>();
-		double costs = 0d;
-		for (int i = year; i <= toYear; i++) {
-			double kostenOfYear = tankenService.getKostenOfYear(i, auto);
-			kosten.put(i, kostenOfYear);
-			costs += kostenOfYear;
-		}
-		kosten.put(-2, costs);
-		return kosten;
+/**
+ * 
+ * @param year
+ * @param auto
+ * @return  Kosten eines Jahres vom angegebenen Auto;
+ */
+	private Double getKosten(int year, Auto auto) {
+			return tankenService.getKostenOfYear(year, auto);
 	}
 
+	
 	/**
 	 * 
 	 * @param year
-	 * @param toYear
 	 * @param auto
-	 * @return a LinkedHashMap<Integer,Double> of liters between year and toYear
-	 *         and with key -2 all Liter
-	 * @throws AssertionError
-	 *             - if year > toYear
+	 * @return  Kosten eines Jahres vom angegebenen Auto;
 	 */
-	private LinkedHashMap<Integer, Double> getLiter(int year, int toYear,
-			Auto auto) throws AssertionError {
-		Assert.isTrue((year <= toYear),
-				"Year darf nicht kleiner sein als toYear");
-		Assert.isTrue((year > 0 || toYear > 0),
-				"Year oder toYear darf nicht negativ oder 0 sein");
-		LinkedHashMap<Integer, Double> liter = new LinkedHashMap<Integer, Double>();
-		double liters = 0d;
-		for (int i = year; i <= toYear; i++) {
-			double litersOfYear = tankenService.getLiterOfYear(i, auto);
-			liter.put(i, litersOfYear);
-			liters += litersOfYear;
+		private Double getPreisProLiterAVG(int year, Auto auto) {
+				return tankenService.getAVGPreisLiter(year, auto);
 		}
-		liter.put(-2, liters);
-		return liter;
-	}
-
-	/**
-	 * 
-	 * @param year
-	 * @param toYear
-	 * @param auto
-	 * @return a LinkedHashMap<Integer,Double> of costs per liter between year
-	 *         and toYear
-	 * @throws AssertionError
-	 *             - if year > toYear
-	 */
-	private LinkedHashMap<Integer, Map<String, Double>> getPreisProLiter(
-			int year, int toYear, Auto auto) throws AssertionError {
-		Assert.isTrue((year <= toYear),
-				"Year darf nicht kleiner sein als toYear");
-		Assert.isTrue((year > 0 || toYear > 0),
-				"Year oder toYear darf nicht negativ oder 0 sein");
-		LinkedHashMap<Integer, Map<String, Double>> preisProLiter = new LinkedHashMap<Integer, Map<String, Double>>();
-		double liters = 0d;
-		for (int i = year; i <= toYear; i++) {
-			Map<String, Double> litersOfYear = new HashMap<String, Double>();
-			double maxLiterOfYear = tankenService.getMaxPreisProLiter(i, auto);
-			double minLiterOfYear = tankenService.getMinPreisProLiter(i, auto);
-			double avgLiterOfYear = tankenService.getAVGPreisLiter(i, auto);
-			litersOfYear.put("max", maxLiterOfYear);
-			litersOfYear.put("min", minLiterOfYear);
-			litersOfYear.put("avg", avgLiterOfYear);
-			preisProLiter.put(i, litersOfYear);
+		
+		/**
+		 * 
+		 * @param year
+		 * @param auto
+		 * @return Liter eines Jahres vom angegebenen Auto;
+		 */
+		private Double getLiter(int year, Auto auto) {
+				return tankenService.getLiterOfYear(year, auto);
 		}
-		return preisProLiter;
-	}
+		
+		/**
+		* 
+		* @param year
+		* @param auto
+		* @return  Minimum Preis Pro Liter eines Jahres vom angegebenen Auto;
+		*/
+		private Double getPreisProLiterMin(int year, Auto auto) {
+				return tankenService.getMinPreisProLiter(year, auto);
+		}
+		/**
+		* 
+		* @param year
+		* @param auto
+		* @return  Maximum Preis Pro Liter eines Jahres vom angegebenen Auto;
+		*/
+		private Double getPreisProLiterMax(int year, Auto auto) {
+				return tankenService.getMaxPreisProLiter(year, auto);
+		}	
+	
 
 	private void setPagination(TankenViewModel tankenViewModel, Auto auto,
 			int page) {

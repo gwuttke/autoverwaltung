@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	<div class="container" th:fragment="tankenTable"
+		th:object="${tankenView}">
+		<div th:if="*{ #lists.isEmpty(auswertungProJahre)}"
+			id="auswertuungEmpty">
+			<br/>
+			<div class="alert alert-danger">
+				<span class="glyphicon glyphicon-remove-sign"></span> noch keine
+				Tankvorg&auml;nge vorhanden, bitte f&uuml;gen Sie minderstens einen hinzu, damit die berechnungen gemacht werden ko&uml;nnen!
+			</div>
+		</div>
+		<div th:if="*{not #lists.isEmpty(auswertungProJahre)}" id="auswertung">
+			<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Bezeichnung</th>
+							<th th:each="auswertung : *{auswertungProJahre}" th:text="${auswertung.jahr}">Firstname</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Liter</td>
+							<td th:each="auswertung : *{auswertungProJahre}">
+							<span th:text="${#numbers.formatDecimal(auswertung.liter, 1, 2)}"></span>
+							<span>l</span>
+							</td>
+						</tr>
+						<tr>
+							<td>Kosten</td>
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${#numbers.formatDecimal(auswertung.kosten, 1, 2)}"></span>
+								<span>&euro;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>Verbrauch p. 100km</td> 
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${#numbers.formatDecimal(auswertung.giveVerbrauch(), 1, 2)}"></span>
+								<span>l</span>
+							</td>
+						</tr>
+						<tr>
+							<td>Preis p. Liter Min</td> 
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMax, 1, 3)}"></span>
+								<span>&euro;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>Preis p. Liter Max</td>
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMin, 1, 3)}"></span>
+								<span>&euro;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>&Oslash; Preis p. Liter</td>
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMax, 1, 3)}"></span>
+								<span>&euro;</span>
+							</td>
+						</tr>
+						<tr>
+							<td>gefahrene Km</td>
+							<td th:each="auswertung : *{auswertungProJahre}">
+								<span th:text="${auswertung.km}"></span>
+								<span>km</span>
+							</td>
+						</tr>
+					</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

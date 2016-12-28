@@ -131,12 +131,10 @@ public class TankenInfo {
 	}
 
 	public int getKmOfYear(int year, Auto auto) {
-		Set<Tanken> tankfuellungen = getTankfuellung(year, auto);
-		int sumKm = 0;
-		for (Tanken t : tankfuellungen) {
-			sumKm += t.getKmStand();
-		}
-		return sumKm;
+		List<Tanken> tankfuellungen = getTankfuellungSorted(year, auto);
+		
+		return tankfuellungen.get(tankfuellungen.size()-1).getKmStand() - tankfuellungen.get(0).getKmStand();
+		
 	}
 
 	public int getAllKm(Auto auto) {
@@ -193,6 +191,10 @@ public class TankenInfo {
 
 	private List<Tanken> getTankfuellungSorted(Auto auto) {
 		return tankenDao.getTankungen(auto);
+	}
+	
+	private List<Tanken> getTankfuellungSorted(int year, Auto auto) {
+		return tankenDao.getTankungen(auto, year);
 	}
 
 	/**
