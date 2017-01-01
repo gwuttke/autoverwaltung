@@ -27,8 +27,10 @@ public class TankenDao {
 	@Autowired
 	private AutoRepository autoRepository;
 
+	@Deprecated
 	private List<Tankfuellung> tankfuellungList = new ArrayList<Tankfuellung>();
 
+	@Deprecated
 	private List<Tanken> tankenList = new ArrayList<Tanken>();
 
 	private Tank voll;
@@ -47,26 +49,48 @@ public class TankenDao {
 		setTankenList(registeredUser);
 	}
 
+	/**
+	 * 
+	 * @param auto
+	 * @return gibt den Durchschittspreis pro Liter eines autos in einem
+	 *  bestimmten Jahr aus liefert -1 wenn die anzahl der Tankfüllungen
+	 *  0 ergeben
+	 */
+	public Double getAvgPreisProLiter(int year, Auto auto) {
+		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
+		Double avg = tankenRepository.findAvgByPreisProLiter(auto, dateOfYear[0].toDate(), dateOfYear[1].toDate());
+		return avg == null?-1d:avg;
+	}
+
 	public Tanken getMinPreisProLiter(int year, Auto auto) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
-		return tankenRepository
-				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterDesc(auto,
-						dateOfYear[0].toDate(), dateOfYear[1].toDate());
+		return tankenRepository.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterAsc(auto, dateOfYear[0].toDate(),
+				dateOfYear[1].toDate());
 	}
 
 	public Tanken getMaxPreisProLiter(int year, Auto auto) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
-		return tankenRepository
-				.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterAsc(auto,
-						dateOfYear[0].toDate(), dateOfYear[1].toDate());
+		return tankenRepository.findFirst1ByAutoAndDatumBetweenOrderByPreisProLiterDesc(auto, dateOfYear[0].toDate(),
+				dateOfYear[1].toDate());
 	}
 
 	public Tanken getMaxPreisProLiter(Auto auto) {
-		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterAsc(auto);
+		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterDesc(auto);
 	}
 
 	public Tanken getMinPreisProLiter(Auto auto) {
-		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterDesc(auto);
+		return tankenRepository.findFirst1ByAutoOrderByPreisProLiterAsc(auto);
+	}
+
+	/**
+	 * 
+	 * @param auto
+	 * @return gibt den Durchschittspreis pro Liter eines autos aus liefert -1
+	 *         wenn die anzahl der Tankfüllungen 0 ergeben
+	 */
+	public Double getAvgPreisProLiter(Auto auto) {
+		Double avg = tankenRepository.findAvgByPreisProLiter(auto);
+		return avg == null?-1d:avg;
 	}
 
 	public List<Tanken> getTankungen(Auto auto) {
@@ -77,19 +101,17 @@ public class TankenDao {
 	 * 
 	 * @param year
 	 * @param auto
-	 * @return An List of Tankungen form an Car at one year
+	 * @return An List of Tankungen form a Car at one year
 	 */
 	public List<Tanken> getTankungen(Auto auto, int year) {
 		DateTime[] dateOfYear = DateHelper.getHoleYear(year);
-		return tankenRepository.findByAutoAndDatumBetween(auto, dateOfYear[0].toDate(),
-				dateOfYear[1].toDate());
+		return tankenRepository.findByAutoAndDatumBetween(auto, dateOfYear[0].toDate(), dateOfYear[1].toDate());
 	}
 
 	@Deprecated
 	public void setTankenList(RegisteredUser registedUser) {
 		Auto aktuellesAuto = registedUser.getCurrentAuto();
-		tankenList = tankenRepository
-				.findByAutoOrderByKmStandAsc(aktuellesAuto);
+		tankenList = tankenRepository.findByAutoOrderByKmStandAsc(aktuellesAuto);
 		Tanken tVoll = null;
 		Tankfuellung tVorFuellung = null;
 		for (Tanken t : tankenList) {
@@ -125,8 +147,7 @@ public class TankenDao {
 		return false;
 	}
 
-	public List<Tankfuellung> tankenUpdate(Tanken tanken,
-			RegisteredUser registedUser) {
+	public List<Tankfuellung> tankenUpdate(Tanken tanken, RegisteredUser registedUser) {
 		Auto auto = registedUser.getCurrentAuto();
 		tankenRepository.save(tanken);
 		auto.updateTanken(tanken);

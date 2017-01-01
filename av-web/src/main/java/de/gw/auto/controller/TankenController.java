@@ -46,6 +46,7 @@ import de.gw.auto.view.model.helper.TankenModelHelper;
 @RequestMapping("user/tanken")
 @Secured("ROLE_USER")
 public class TankenController extends ControllerHelper {
+	
 	@Autowired
 	private TankenModelHelper tankenHelper;
 

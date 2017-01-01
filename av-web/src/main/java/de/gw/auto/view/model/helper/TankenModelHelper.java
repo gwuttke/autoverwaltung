@@ -56,7 +56,7 @@ public class TankenModelHelper {
 			auswertung.setKm(getKm(year, auto));
 			auswertung.setPreisProLiterMin(getPreisProLiterMin(year, auto));
 			auswertung.setPreisProLiterMax(getPreisProLiterMax(year, auto));
-			auswertung.setPreisProLiterAvg(getPreisProLiterAVG(year, auto));
+			auswertung.setPreisProLiterAvg(getPreisProLiterAvg(year, auto));
 			auswertungProJahre.add(auswertung);
 		}
 		setPagination(tankenViewModel, auto, page);
@@ -86,17 +86,6 @@ public class TankenModelHelper {
 	private Double getKosten(int year, Auto auto) {
 			return tankenService.getKostenOfYear(year, auto);
 	}
-
-	
-	/**
-	 * 
-	 * @param year
-	 * @param auto
-	 * @return  Kosten eines Jahres vom angegebenen Auto;
-	 */
-	private Double getPreisProLiterAVG(int year, Auto auto) {
-			return tankenService.getAVGPreisLiter(year, auto);
-	}
 	
 	/**
 	 * 
@@ -117,6 +106,17 @@ public class TankenModelHelper {
 	private Double getPreisProLiterMin(int year, Auto auto) {
 			return tankenService.getMinPreisProLiter(year, auto);
 	}
+	
+	/**
+	* 
+	* @param year
+	* @param auto
+	* @return  Minimum Preis Pro Liter eines Jahres vom angegebenen Auto;
+	*/
+	private Double getPreisProLiterAvg(int year, Auto auto) {
+			return tankenService.getAvgPreisProLiter(year, auto);
+	}	
+	
 	/**
 	* 
 	* @param year

@@ -45,22 +45,25 @@
 						<tr>
 							<td>Preis p. Liter Min</td> 
 							<td th:each="auswertung : *{auswertungProJahre}">
-								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMax, 1, 3)}"></span>
+								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMin, 1, 3)}"></span>
 								<span>&euro;</span>
 							</td>
 						</tr>
 						<tr>
 							<td>Preis p. Liter Max</td>
 							<td th:each="auswertung : *{auswertungProJahre}">
-								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMin, 1, 3)}"></span>
+								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMax, 1, 3)}"></span>
 								<span>&euro;</span>
 							</td>
 						</tr>
 						<tr>
 							<td>&Oslash; Preis p. Liter</td>
 							<td th:each="auswertung : *{auswertungProJahre}">
-								<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterMax, 1, 3)}"></span>
-								<span>&euro;</span>
+								<span th:if="${auswertung.preisProLiterAvg == -1}" >k.a.</span>
+								<span th:if="${auswertung.preisProLiterAvg != -1}">
+									<span th:text="${#numbers.formatDecimal(auswertung.preisProLiterAvg, 1, 3)}" />
+									<span>&euro;</span>
+								</span>
 							</td>
 						</tr>
 						<tr>

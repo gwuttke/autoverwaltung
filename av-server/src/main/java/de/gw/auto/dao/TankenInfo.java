@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,16 @@ public class TankenInfo {
 				.doubleValue();
 	}
 
+	/**
+	 * @see TankenDao#getAvgPreisProLiter(int, Auto)
+	 * @param year
+	 * @param auto
+	 * @return
+	 */
+	public Double getAvgPreisProLiter(int year, Auto auto) {
+		return tankenDao.getAvgPreisProLiter(year, auto);
+	}
+	
 	public double getMinPreisProLiter(int year, Auto auto) {
 		Tanken minPreisProLiter = tankenDao.getMinPreisProLiter(year, auto);
 		if(minPreisProLiter==null){
@@ -80,6 +91,14 @@ public class TankenInfo {
 				.doubleValue();
 	}
 
+	/**
+	 * @deprecated
+	 * @since 1.2.1
+	 * @param year
+	 * @param auto
+	 * @return
+	 */
+	@Deprecated
 	public double getAVGPreisLiter(int year, Auto auto) {
 		Set<Tanken> tankfuellungen = getTankfuellung(year, auto);
 		double sumPreisProLiter = 0d;
@@ -89,7 +108,12 @@ public class TankenInfo {
 		}
 		return count == 0 ? 0 : sumPreisProLiter / count;
 	}
-	
+	/**
+	 * * @deprecated
+	 * @since 1.2.1
+	 * @param auto
+	 * @return
+	 */
 	public double getAVGPreisLiter(Auto auto) {
 		Set<Tanken> tankfuellungen = getTankfuellung(auto);
 		double sumPreisProLiter = 0d;
@@ -132,9 +156,11 @@ public class TankenInfo {
 
 	public int getKmOfYear(int year, Auto auto) {
 		List<Tanken> tankfuellungen = getTankfuellungSorted(year, auto);
-		
-		return tankfuellungen.get(tankfuellungen.size()-1).getKmStand() - tankfuellungen.get(0).getKmStand();
-		
+		int result = 0;
+		if(tankfuellungen != null && !tankfuellungen.isEmpty()){
+			result = tankfuellungen.get(tankfuellungen.size()-1).getKmStand() - tankfuellungen.get(0).getKmStand();
+		}
+		return result;
 	}
 
 	public int getAllKm(Auto auto) {
