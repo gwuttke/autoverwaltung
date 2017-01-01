@@ -43,6 +43,7 @@
 		<group-ref>datepicker</group-ref>
 		<group-ref>bootstrap-switch</group-ref>
 		<group-ref>selectize</group-ref>
+		<js>classpath:js/general/init.js</js>
 	</group>
 	
 	<group name="login">

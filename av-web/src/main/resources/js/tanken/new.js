@@ -1,10 +1,4 @@
 $(function() {	
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$(document).ajaxSend(function(e, xhr, options) {
-		xhr.setRequestHeader(header, token);
-	});
-	
 	$('#TankenAdd').click(function() {
 		openModal('newTankenModal', urlNewTanken, function(){
 			initNewTanken();
@@ -14,83 +8,63 @@ $(function() {
 	$("body").on("click","#btnSaveTankenCancel",function(){
 		window.location = urlSaveTankenCancel;
 	});
-		
-		
+	
 	initNewTanken = function(){
-		$('#inputTankenDatum').datepicker({
-			format : "dd.mm.yyyy",
-			language:'de',
-			todayBtn: 'linked'
-		});
+		INIT.field.datePicker('inputTankenDatum');
 		$('#inputTankenDatum').datepicker('setDate', new Date());
 		
-		$('#selectLand').selectize({
-			sortField: 'text',
-			create:function (input, callback){
-				var newData = {text: input}
-				$.ajax({
-					type : "POST",
-					url : urlAddLand,
-					contentType: "application/json; charset=utf-8",
-					dataType: 'json',
-					data: JSON.stringify(newData),
-					success : function(result) {
-						if (result>0) {
-							callback({ value: result, text: input });
-						}
-					},
-					error : function(e) {
-						alert('Failed!: ' + e);
+		INIT.field.selectize('selectLand', function (input, callback){
+			var newData = {text: input}
+			$.ajax({
+				type : "POST",
+				url : urlAddLand,
+				contentType: "application/json; charset=utf-8",
+				dataType: 'json',
+				data: JSON.stringify(newData),
+				success : function(result) {
+					if (result>0) {
+						callback({ value: result, text: input });
 					}
-				});
-			}
+				},
+				error : function(e) {
+					alert('Failed!: ' + e);
+				}
+			});
 		});
-		
-		$('#selectOrt').selectize({
-			sortField: 'text',
-			create:function (input, callback){
-				var landID = $('#selectLand').val();
-				var newData = {parent: landID, text: input}
-				$.ajax({
-					type : "POST",
-					url : urlAddOrt,
-					contentType: "application/json; charset=utf-8",
-					dataType: 'json',
-					data: JSON.stringify(newData),
-					success : function(result) {
-						if (result>0) {
-							callback({ value: result, text: input });
-						}
-					},
-					error : function(e) {
-						alert('Failed!: ' + e);
+
+		INIT.field.selectize('selectOrt', function (input, callback){
+			var landID = $('#selectLand').val();
+			var newData = {parent: landID, text: input}
+			$.ajax({
+				type : "POST",
+				url : urlAddOrt,
+				contentType: "application/json; charset=utf-8",
+				dataType: 'json',
+				data: JSON.stringify(newData),
+				success : function(result) {
+					if (result>0) {
+						callback({ value: result, text: input });
 					}
-				});
-			}
+				},
+				error : function(e) {
+					alert('Failed!: ' + e);
+				}
+			});
 		});
+
+		INIT.field.selectize('selectBenzinart');
 		
-		$('#selectBenzinart').selectize({
-			create: false,
-			sortField: 'text'
-		});
-		
-		$('#selectFuellstaendet').selectize({
-			create: false,
-			sortField: 'text'
-		});
-						
+		INIT.field.selectize('selectFuellstaendet')
+
 		updateOrte();
 		
 		$("body").on("change","#selectLand",function(){
 			 updateOrte();
 		});
-
-		$('#inputKosten').autoNumeric('init');
-		$('#inputLiter').autoNumeric('init');
-		$('#inputPreisProLiter').autoNumeric('init', {mDec:'3'});
-		$('#inputKosten').autoNumeric('set', 0);
-		$('#inputLiter').autoNumeric('set', 0);
-		$('#inputPreisProLiter').autoNumeric('set', 0);
+		
+		INIT.field.numberic('inputKosten', {value:0});
+		INIT.field.numberic('inputLiter', {value:0});
+		INIT.field.numberic('inputPreisProLiter', {option:{mDec:'3'},value:0});
 		
 		$("body").on("change","#inputKosten",function(){
 			if(($('#inputLiter').val().length > 0) && ($(this).val().length > 0)){
