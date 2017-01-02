@@ -49,6 +49,7 @@
 		<group-ref>bootstrap-switch</group-ref>
 		<group-ref>selectize</group-ref>
 		<group-ref>own</group-ref>
+		<group-ref>header</group-ref>
 	</group>
 	
 	<group name="login">
@@ -59,6 +60,10 @@
 	<group name="tanken">
 		<js>classpath:js/tanken/get.js</js>
 		<js>classpath:js/tanken/new.js</js>
+	</group>
+	
+	<group name="header">
+		<js>classpath:js/header/get.js</js>
 	</group>
 	
 	
