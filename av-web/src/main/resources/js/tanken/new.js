@@ -95,7 +95,7 @@ updateOrte = function() {
 
 $(function() {	
 	$('#TankenAdd').click(function() {
-		openModal('newTankenModal', urlNewTanken, function(){
+		FUNCTION.modal.open('newTankenModal', urlNewTanken, function(){
 			initNewTanken();
 		});	
 	});

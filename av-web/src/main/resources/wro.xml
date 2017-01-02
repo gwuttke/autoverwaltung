@@ -37,13 +37,18 @@
 	<js>classpath:assert/bootstrap/switch/bootstrap-switch.js</js>
 	</group>
 	
+	<group name="own">
+		<js>classpath:js/general/init.js</js>
+		<js>classpath:js/general/function.js</js>
+	</group>
+	
 	<group name="all">
 		<group-ref>jQuery</group-ref>
 		<group-ref>bootstrap</group-ref>
 		<group-ref>datepicker</group-ref>
 		<group-ref>bootstrap-switch</group-ref>
 		<group-ref>selectize</group-ref>
-		<js>classpath:js/general/init.js</js>
+		<group-ref>own</group-ref>
 	</group>
 	
 	<group name="login">
