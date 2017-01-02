@@ -69,28 +69,31 @@ initNewTanken = function(){
 };
 
 updateOrte = function() {
-	$.ajax({
-		url : urlLaender + $('#selectLand').val(),
-		type : 'GET',
-		dataType : 'json',
-		success : function(json) {
-			var list = new Array();
-			var ort = {text: 'keine Angabe',
-					value: 0};
-			list.push(ort);
-			$.each(json, function(i, value) {
-				var ort = {text: value.ort,
-						value: value.id};
+	var landValue = $('#selectLand').val();
+	if(landValue){
+		$.ajax({
+			url : urlLaender + landValue,
+			type : 'GET',
+			dataType : 'json',
+			success : function(json) {
+				var list = new Array();
+				var ort = {text: 'keine Angabe',
+						value: 0};
 				list.push(ort);
-			});
-			var selectize = $("body").find("#selectOrt")[0].selectize;
-			selectize.clear();
-			selectize.clearOptions();
-			selectize.load(function(callback) {
-				callback(list);
-			});
-		}
-	});
+				$.each(json, function(i, value) {
+					var ort = {text: value.ort,
+							value: value.id};
+					list.push(ort);
+				});
+				var selectize = $("body").find("#selectOrt")[0].selectize;
+				selectize.clear();
+				selectize.clearOptions();
+				selectize.load(function(callback) {
+					callback(list);
+				});
+			}
+		});
+	}
 };
 
 $(function() {	
@@ -103,7 +106,5 @@ $(function() {
 	$("body").on("click","#btnSaveTankenCancel",function(){
 		window.location = urlSaveTankenCancel;
 	});
-	
-	initNewTanken();
 });
 

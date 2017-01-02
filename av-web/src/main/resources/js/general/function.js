@@ -19,7 +19,7 @@ FUNCTION.modal = {
 	 */
 	open : function(id, loadUrl, callback){
 		var data = {show:true, backdrop:'static'};
-		if(!loadUrl){
+		if(loadUrl){
 			$('#modelWindow').modal(data).load(loadUrl,callback);
 		}else{
 			$('#'+id).modal(data);

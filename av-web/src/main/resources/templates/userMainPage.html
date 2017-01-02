@@ -7,22 +7,21 @@
 <title>Autoverwaltung - User</title>
 
 <link rel="stylesheet" th:href="@{/wro/tanken.css}" type="text/css" />
-<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" >
 
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		var urlNewTanken = /*[[@{/user/tanken/new}]]*/;
+		var urlLaender = /*[[@{/user/json/orte(land='')}]]*/ '';
+		var urlNewAuto = /*[[@{/user/auto/new}]]*/;
+		var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
+		var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
+		var urlSaveTankenCancel = /*[[@{/user/tanken/show}]]*/;
+		var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
+		var urlAddLand = /*[[@{/user/tanken/addLand}]]*/; 
+	/*]]>*/
 </script>
+<script th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" >
 
-<script th:inline="javascript">
-/*<![CDATA[*/
-var urlNewTanken = /*[[@{/user/tanken/new}]]*/;
-var urlLaender = /*[[@{/user/json/orte(land='')}]]*/ '';
-var urlNewAuto = /*[[@{/user/auto/new}]]*/;
-var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
-var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
-var urlSaveTankenCancel = /*[[@{/user/tanken/show}]]*/;
-var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
-var urlAddLand = /*[[@{/user/tanken/addLand}]]*/; 
-/*]]>*/
-<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS" th:remove="tag"/>
 </script>
 
 </head>

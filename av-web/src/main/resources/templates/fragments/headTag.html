@@ -7,7 +7,7 @@
 		<meta name="_csrf" th:attr="content=${_csrf.token}"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" th:href="@{/wro/all.css}" type="text/css" />
-		<script type="text/javascript" th:src="@{/wro/all.js}" id="alllJS"></script>
+		<script type="text/javascript" th:inline="javascript" th:src="@{/wro/all.js}" id="alllJS"></script>
 		<meta name="_csrf" th:attr="content=${_csrf.token}"/>
 		<!-- default header name is X-CSRF-TOKEN -->
 		<meta name="_csrf_header" th:attr="content=${_csrf.headerName}"/>
