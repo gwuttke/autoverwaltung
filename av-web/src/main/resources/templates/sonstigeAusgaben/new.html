@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<link rel="stylesheet" th:href="@{/wro/tanken.css}" type="text/css" />
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+var urlNewAuto = /*[[@{/user/auto/new}]]*/;
+var urlUpdateCurrent = /*[[@{/user/auto/updateCurrent}]]*/;
+var urlSaveTanken = /*[[@{/user/tanken/save}]]*/;
+var urlAddOrt = /*[[@{/user/tanken/addOrt}]]*/;
+var urlAddLand = /*[[@{/user/tanken/addLand}]]*/;
+var urlSaveSonstigeAusgabenCancel = /*[[@{/user/show}]]*/;
+/*]]>*/
+</script>
+<th:block th:include="fragments/headTag :: head" />
+<script type="text/javascript" th:inline="javascript" th:src="@{/wro/sonstige-ausgaben.js}" id="sonstigeAusgabenJS" >
+</script>
+<title>Autoverwaltung - Neue Sonstige Ausgabe</title>
+</head>
+<body>
+	<!-- Modal -->
+	<div class="modal-dialog" th:fragment="newSonstigeAusgabenModal">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Neue Ausgabe</h4>
+			</div>
+			<form class="form-horizontal" role="form" id="newSonstigeAusgabenForm"
+				th:object="${newSonstigeAusgaben}" th:action="@{/user/sonstigeAusgaben/save}"
+				method="post">
+				<div class="modal-body">
+					<div class="row">
+						<div class='control-group col-sm-offset-2 col-sm-8'>
+							<label for="inputTankenDatum" class="control-label">Datum</label>
+							<div class="controls">
+								<div class="input-group">
+									<input type="text" id="inputDatum" th:field="*{datum}" class="date-picker form-control" /> 
+									<label for="inputTankenDatum" class="input-group-addon btn">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</label>
+								</div>
+							</div>
+							<th:block th:include="fragments/dialect/error :: field('datum',${'Fehler!!!'})"></th:block>
+						</div>
+					</div>
+					<div class="row">
+						<div class="control-group col-sm-6">
+							<label class="control-label">Aktueller Kilomenterstand</label>
+							<div class="controls">
+								<div class="input-group">
+									<input class="form-control" id="aktKmInput" type="number" th:field="*{kmStand}" maxlength="6" max="999999" size="3" pattern="\d{1,6}" />
+									<label for="aktKmInput" class="input-group-addon">
+										<span class="glyphicon">Km</span>
+									</label>
+								</div>
+								<th:block th:include="fragments/dialect/error :: field('kmStand',${'Fehler!!!'})"></th:block>
+							</div>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="inputKosten" class="control-label">Kosten</label>
+							<div class="input-group">
+								<input class="form-control" id="inputKosten" size="3" type="text" th:field="*{kosten}" />
+								<label for="inputKosten" class="input-group-addon">
+									<span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+								</label>
+							</div>
+							<th:block th:include="fragments/dialect/error :: field('kosten',${'Fehler!!!'})"></th:block>
+						</div>
+					</div>
+					<div class="row">
+						<div class='control-group col-sm-12'>
+							<label for="textareaKommentar" class="control-label">Kommentar</label>
+							<div class="controls">
+								<div class="input-group col-sm-12">
+									<textarea id="textareaKommentar" th:field="*{kommentar}" class="form-control" ></textarea>
+								</div>
+							</div>
+							<th:block th:include="fragments/dialect/error :: field('datum',${'Fehler!!!'})"></th:block>
+						</div>
+					</div>
+					<!-- Andresse -->
+					<!-- <div class="row">
+						<div class="control-group col-sm-6">
+							<label for="selectLand">Land</label> 
+							<select th:field="*{landId}" class="form-control" id="selectLand" th:remove="all-but-first">
+								<option value="k.A.">bitte ausw&auml;len</option>
+								<option th:each="land : *{laender}" th:value="${land.id}" th:text="${land.name}">land</option>
+							</select>
+							<th:block th:include="fragments/dialect/error :: field('landId',${'Fehler!!!'})"></th:block>
+						</div>
+						<div class="control-group col-sm-6">
+							<label for="selectOrt">Ort</label> 
+							<select th:field="*{ortId}" class="form-control" id="selectOrt">
+							</select>
+							<th:block th:include="fragments/dialect/error :: field('ortId',${'Fehler!!!'})"></th:block>
+						</div>
+					</div> -->
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelSonstigeAusgaben">Schlie&szlig;en</button>
+					<button type="button" class="btn btn-primary" id="btnSaveSonstigeAusgaben">Speichern</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

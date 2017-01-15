@@ -14,6 +14,8 @@ public class ViewName {
 	private static final String ROOT_USER = ROOT + USER;
 
 	private static final String ROOT_USER_TANKEN = ROOT_USER + ROOT + TANKEN;
+	
+	public static final String ROOT_USER_SHOW = ROOT_USER +ROOT+ "show"; 
 
 	public static final String LOGIN = "login";
 
@@ -32,6 +34,8 @@ public class ViewName {
 	public static final String REDIRECT_ROOT = REDIRECT + ROOT;
 
 	public static final String REDIRECT_USER_MAIN_PAGE = REDIRECT + USER_MAIN_PAGE;
+
+	public static final String REDIRECT_ROOT_USER_SHOW = REDIRECT + ROOT_USER_SHOW;
 
 	public static final String REDIRECT_REGISTER = REDIRECT + REGISTER;
 

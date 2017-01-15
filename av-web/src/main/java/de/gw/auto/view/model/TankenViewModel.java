@@ -13,10 +13,10 @@ import de.gw.auto.domain.Tankfuellung;
 public class TankenViewModel {
 	private PagedListHolder<TankenModel> tankfuellungenView = new PagedListHolder<TankenModel>();
 
-	private List<AuswertungProJahr> auswertungProJahre;
+	private List<AuswertungProJahr> auswertungProJahre = new ArrayList<AuswertungProJahr>();;
 	
 	
-	private TankenViewModel() {
+	public TankenViewModel() {
 		super();
 	}
 	

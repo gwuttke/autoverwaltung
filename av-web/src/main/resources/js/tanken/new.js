@@ -14,7 +14,7 @@ initNewTanken = function(){
 	});
 
 	INIT.field.selectize('selectBenzinart');
-	INIT.field.selectize('selectFuellstaendet')
+	INIT.field.selectize('selectFuellstaendet');
 
 	updateOrte();
 	
@@ -58,13 +58,14 @@ initNewTanken = function(){
 	});
 	 
 	 $("body").on("click","#btnSaveTanken",function(){
+
 		 if($('#selectLand').val() === undefined || $('#selectLand').val() === '' ){
 			 $('#selectLand').val(0);
 		 }
 		 if($('#selectOrt').val() === undefined || $('#selectOrt').val() === '' ){
 			 $('#selectOrt').val(0);
 		 }
-		$('#newTankenForm').submit();
+		 $('#newTankenForm').submit();
 	});
 };
 
@@ -97,14 +98,13 @@ updateOrte = function() {
 };
 
 $(function() {	
-	$('#TankenAdd').click(function() {
-		FUNCTION.modal.open('newTankenModal', urlNewTanken, function(){
-			initNewTanken();
-		});	
-	});
-	
 	$("body").on("click","#btnSaveTankenCancel",function(){
-		window.location = urlSaveTankenCancel;
+		$.ajax({url: urlSaveTankenCancel, 
+			success: function(result){
+				$("#tankenTable").html(result);
+			}
+		});
 	});
+	initNewTanken();
 });
 

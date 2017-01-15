@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	<div class="container" th:fragment="sonstigeAusgabenTable" >
+		<th:block th:object="${sonstigeAusgabenView}">
+			<div th:if="*{#lists.isEmpty(pages.source)}" id="sonstigeAusgabenEmpty">
+				<br/>
+				<div class="alert alert-danger">
+					<span class="glyphicon glyphicon-remove-sign"></span> noch keine
+					sonstige Ausgaben vorhanden, bitte f&uuml;gen Sie minderstens einen hinzu!
+				</div>
+			</div>
+			<div th:if="*{not #lists.isEmpty(pages.source)}"
+				id="tankenNotEmpty">
+				<div class="list-group">
+					<ul class="pagination">
+						<li
+							th:each="number : *{#numbers.sequence(0,pages.getPageCount()-1)}"
+							th:class="${number}==*{pages.page}?'active':''">
+							<a th:text="${number+1}"
+							th:href="@{/user/sonstigeAusgaben/show(page=${number})}">1</a>
+						</li>
+					</ul>
+					<div th:each="sonstigeAusgabenModel : *{pages.pageList}"
+						class="list-group-item col-sm-12">
+						<dl class="dl-horizontal">
+							<div class="col-sm-3">
+								<dt>Datum</dt>
+								<dd th:text="${#dates.format(sonstigeAusgabenModel.datum,'dd.MM.yyyy')}">12.12.2015</dd>
+							</div>
+							<div class="col-sm-3">
+								<dt>Km-Stand</dt>
+								<dd th:text="${sonstigeAusgabenModel.kmStand} + ' Km'"
+									style="width: 80px !important">168543 Km</dd>
+							</div>
+							<div class="col-sm-3">
+								<dt>Kommentar</dt>
+								<dd th:text="${sonstigeAusgabenModel.kommentar}">Test Kommentar</dd>
+							</div>
+							<div class="col-sm-3">
+								<dt>Kosten</dt>
+								<dd
+									th:text="${#numbers.formatDecimal(sonstigeAusgabenModel.kosten,2,2,'COMMA')} + &euro;">32.45
+									&euro;
+								</dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</th:block>
+	</div>
+</body>
+</html>

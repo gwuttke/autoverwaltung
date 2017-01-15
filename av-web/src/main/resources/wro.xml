@@ -4,6 +4,7 @@
 	<group name="jQuery-plugin">
 		<js>classpath:assert/Formatter/jquery.number.js</js>
 		<js>classpath:assert/Formatter/autoNumeric.js</js>
+		<js>classpath:assert/jQuery/plugin/form.js</js>
 	</group>
 	<group name="jQuery">
 		<js>classpath:assert/jQuery/jquery-1.11.3.min.js</js>
@@ -57,9 +58,16 @@
 		<css>classpath:css/signin.css</css>
 	</group>
 	
+	<group name="main-page">
+		<js>classpath:js/mainPage\get.js</js>
+	</group>
+	
 	<group name="tanken">
-		<js>classpath:js/tanken/get.js</js>
 		<js>classpath:js/tanken/new.js</js>
+	</group>
+	
+		<group name="sonstige-ausgaben">
+		<js>classpath:js/sonstigeAusgaben/new.js</js>
 	</group>
 	
 	<group name="header">

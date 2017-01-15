@@ -37,7 +37,7 @@ public class SonstigeAusgabenInfo {
 
 	@Deprecated
 	private void load(RegisteredUser registeredUser) {
-		List<SonstigeAusgaben> sAs = sonstigeAusgabenDao.getSonstigeAusgabenList(registeredUser);
+		List<SonstigeAusgaben> sAs = sonstigeAusgabenDao.get(registeredUser);
 
 		Info sAIKosten = new Info(Constans.SONSTIGEAUSGABEN_KOSTEN);
 

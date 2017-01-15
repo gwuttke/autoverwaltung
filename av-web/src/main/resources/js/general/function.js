@@ -18,12 +18,43 @@ FUNCTION.modal = {
 	 * @memberOf: {FUNCTION.modal}
 	 */
 	open : function(id, loadUrl, callback){
-		var data = {show:true, backdrop:'static'};
+		var data = 'show';
+		var $modal;
 		if(loadUrl){
-			$('#modelWindow').modal(data).load(loadUrl,callback);
+			$modal = $('#modalWindow');
+			$modal.load(loadUrl, callback);
 		}else{
-			$('#'+id).modal(data);
+			$modal = $('#'+id);
+			if(callback){
+				callback;
+			}
 		}
-		$('#'+id).trigger('modalReady');
+		$modal.on('hidden.bs.modal', function () {
+			$(this).removeData('bs.modal');
+			$(this).empty();
+			$(this).removeAttr('style');
+		});
+		$modal.modal(data);
+		$modal.trigger('modalReady');
+	},
+	close: function(id, callback){
+		var isChild = true;
+		if(id !== 'modalWindow'){
+			if($("#modalWindow > #"+id )){
+				isChild = true;
+			}else{
+				isChild = false;
+			}
+		}
+		if(isChild){
+			$('#modalWindow').modal('hide');
+		}else{
+			$('#'+id).modal('hide');
+		}
+		
+		if(callback){
+			callback;
+		}
 	}
+	
 };

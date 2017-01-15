@@ -78,10 +78,8 @@ public class TankenController extends ControllerHelper {
 		tankenView = this.tankenHelper.prepareTankViewModel(tankenView,
 				user.getCurrentAuto(), page);
 		
-		model.addAttribute("headerModel", headerModel);
 		model.addAttribute("tankenView", tankenView);
-		model.addAttribute("newTanken", new NewTanken());
-		return "userMainPage";
+		return "tanken/table :: tankenTable";
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -89,10 +87,10 @@ public class TankenController extends ControllerHelper {
 			NewTanken newTanken, BindingResult bindingResult,
 			Model model, Principal principal) {
 		RegisteredUser user = giveRegisteredUser(principal);
-		newTankenModelHelper.prepareNewTankenModel(newTanken,
+		newTankenModelHelper.prepare(newTanken,
 				user.getCurrentAuto());
 		model.addAttribute(newTanken);
-		return "tanken/new";
+		return "tanken/new :: newTankenModal";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -102,7 +100,7 @@ public class TankenController extends ControllerHelper {
 		
 		if (bindingResult.hasErrors()) {
 			RegisteredUser user = giveRegisteredUser(principal);
-			newTankenModelHelper.prepareNewTankenModel(newTanken,
+			newTankenModelHelper.prepare(newTanken,
 					user.getCurrentAuto());
 			model.addAttribute(newTanken);
 			return "tanken/new";
@@ -122,7 +120,7 @@ public class TankenController extends ControllerHelper {
 				newTanken.getDatum(), newTanken.getLiter(),
 				newTanken.getPreisProLiter(), kraftstoffsorte);
 		tankenService.save(tanken, user);
-		return ViewName.REDIRECT_USER_MAIN_PAGE;
+		return ViewName.REDIRECT_ROOT_USER_SHOW;
 	}
 
 	@RequestMapping(value = "addLand", method = RequestMethod.POST)

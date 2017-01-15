@@ -2,7 +2,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <body>
-	<div class="container" th:fragment="tankenTable"
+	<div th:fragment="tankenTable"
 		th:object="${tankenView}">
 		<div th:if="*{ #lists.isEmpty(auswertungProJahre)}"
 			id="auswertuungEmpty">

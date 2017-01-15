@@ -162,7 +162,11 @@ public class Auto implements Serializable {
 		this.kmAktuell = kmAktuell;
 	}
 
-	public void addTanken(Tanken tanken) {
+	public void add(SonstigeAusgaben sonstigeAusgaben) {
+		this.sonstigeAusgaben.add(sonstigeAusgaben);
+	}
+	
+	public void add(Tanken tanken) {
 		tankfuellungen.add(tanken);
 	}
 

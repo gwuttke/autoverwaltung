@@ -2,7 +2,7 @@ package de.gw.auto.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,26 +15,49 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sonstigeausgaben")
+@Table(name = "sonstigeausgaben")
 @SequenceGenerator(name = "sonstigeAusgaben_gen", sequenceName = "sonstigeAusgaben_id_seq")
 public class SonstigeAusgaben implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "sonstigeAusgaben_gen")
-	private int id;
+	private Integer id;
 	private Date datum;
-	@Column(name="kmstand")
+	@Column(name = "kmstand")
 	private int kmStand;
 	private String kommentar;
 	private BigDecimal kosten;
 	@ManyToOne
-	@JoinColumn(name="auto_id")
+	@JoinColumn(name = "auto_id")
 	private Auto auto;
 
+	protected SonstigeAusgaben() {
+		super();
+	}
+
+	public SonstigeAusgaben(SonstigeAusgaben sonstigeAusgaben) {
+		this(sonstigeAusgaben.id, sonstigeAusgaben.datum, sonstigeAusgaben.kmStand, sonstigeAusgaben.kommentar,
+				sonstigeAusgaben.kosten, sonstigeAusgaben.auto);
+	}
 	
+	private SonstigeAusgaben(Integer id, Date datum, int kmStand, String kommentar, BigDecimal kosten, Auto auto) {
+		this();
+		this.id = id;
+		this.datum = datum;
+		this.kmStand = kmStand;
+		this.kommentar = kommentar;
+		this.kosten = kosten;
+		this.auto = auto;
+	}
+
+
+	public SonstigeAusgaben(Date datum, int kmStand, String kommentar, BigDecimal kosten, Auto auto) {
+		this(null,datum, kmStand, kommentar, kosten, auto);
+	}
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public Auto getAuto() {
 		return auto;
 	}

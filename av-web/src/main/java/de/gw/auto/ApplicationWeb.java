@@ -29,7 +29,7 @@ public class ApplicationWeb extends Application {
 	public void addViewControllers(ViewControllerRegistry registry) {
 
 		registry.addViewController("/"+ViewName.LOGIN).setViewName(ViewName.LOGIN);
-		registry.addRedirectViewController("/", ViewName.USER_MAIN_PAGE);
+		registry.addRedirectViewController("/", ViewName.ROOT_USER_SHOW);
 	}
 	
 	@Override

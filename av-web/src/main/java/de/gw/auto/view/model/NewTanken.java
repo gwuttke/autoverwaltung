@@ -2,7 +2,6 @@ package de.gw.auto.view.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -15,7 +14,6 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import de.gw.auto.domain.Auto;
-import de.gw.auto.domain.Land;
 
 public class NewTanken extends ListTanken {
 	
@@ -56,10 +54,6 @@ public class NewTanken extends ListTanken {
 
 	private Auto auto;
 
-	public List<Land> getLaender() {
-		return laender;
-	}
-
 	public int getLandId() {
 		return landId;
 	}
@@ -74,10 +68,6 @@ public class NewTanken extends ListTanken {
 
 	public void setOrtId(int ortId) {
 		this.ortId = ortId;
-	}
-
-	public void setLaender(List<Land> laender) {
-		this.laender = laender;
 	}
 
 	public int getKmStand() {
