@@ -14,7 +14,7 @@ public class NewTankenModelHelper {
 	@Autowired
 	private StammdatenService stammdatenService;
 
-	public void prepareNewTankenModel(NewTanken newTanken, Auto auto) {
+	public void prepare(NewTanken newTanken, Auto auto) {
 		if(newTanken == null){
 			 newTanken = new NewTanken();
 		}
@@ -23,6 +23,5 @@ public class NewTankenModelHelper {
 		newTanken.setLaender(stammdatenService.getLaender());
 		newTanken.setKraftstoffsorten(stammdatenService.getKraftstoffsorten(auto.getKraftstoff()));
 		newTanken.setFuellstaende(stammdatenService.getTankstaende());
-		newTanken.setLaender(stammdatenService.getLaender());
 	}
 }

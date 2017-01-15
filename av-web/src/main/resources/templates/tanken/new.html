@@ -18,13 +18,13 @@ var urlSaveTankenCancel = /*[[@{/user/tanken/show}]]*/;
 /*]]>*/
 </script>
 <th:block th:include="fragments/headTag :: head" />
-<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS"/>
+<script type="text/javascript" th:inline="javascript" th:src="@{/wro/tanken.js}" id="tankenJS"></script>
 
 <title>Autoverwaltung - Neue Tankf&uuml;llung</title>
 </head>
 <body>
 	<!-- Modal -->
-	<div class="modal-dialog" th:fragment="newTankenModal">
+	<div class="modal-dialog" th:fragment="newTankenModal" id="newTankenModal">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">

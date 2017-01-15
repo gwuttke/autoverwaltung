@@ -136,7 +136,7 @@ public class TankenDao {
 	}
 
 	public void save(Tanken tanken, Auto auto) {
-		auto.addTanken(tanken);
+		auto.add(tanken);
 		autoRepository.save(auto);
 	}
 

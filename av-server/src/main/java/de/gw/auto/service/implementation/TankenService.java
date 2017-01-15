@@ -51,11 +51,13 @@ public class TankenService extends TankenInfo {
 	}
 
 	/**
+	 * @deprecated only used for Swing GUI
 	 * Folgende Datenstrucktur: Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
 	 * ;Liter;PreisProLitter;Kosten
 	 * 
 	 * @return Object[][] wenn keine Daten vorhanden dann null
 	 */
+	@Deprecated
 	public Object[][] loadTankungen() {
 		List<Tankfuellung> tankungen = tankenList;
 		if (tankungen == null) {
