@@ -28,17 +28,21 @@ public class Tankfuellung extends Tanken implements Comparator<Tanken> {
 	}
 
 	public BigDecimal getVerbrauch100Km() {
-		/*BigDecimal verbrauch;
-		if (this.vorTankfuellung.getTank().equals(Tank.VOLL)) {
-			verbrauch = new BigDecimal((this.getLiter().doubleValue() / this.getGefahreneKm()) * 100);
-		} else {
-			verbrauch = getVerbrauch100Km(this.getLiter().doubleValue(), this.getGefahreneKm(), this.vorTankfuellung,
-					false);
+		/*
+		 * BigDecimal verbrauch; if
+		 * (this.vorTankfuellung.getTank().equals(Tank.VOLL)) { verbrauch = new
+		 * BigDecimal((this.getLiter().doubleValue() / this.getGefahreneKm()) *
+		 * 100); } else { verbrauch =
+		 * getVerbrauch100Km(this.getLiter().doubleValue(),
+		 * this.getGefahreneKm(), this.vorTankfuellung, false); }
+		 * 
+		 * return verbrauch;
+		 */
+		double verbrauch = 0d;
+		if (getGefahreneKm() != 0) {
+			verbrauch = (this.getLiter().doubleValue() / this.getGefahreneKm()) * 100;
 		}
-
-		return verbrauch;
-		*/
-		return new BigDecimal((this.getLiter().doubleValue() / this.getGefahreneKm()) * 100);
+		return new BigDecimal(verbrauch);
 	}
 
 	private BigDecimal getVerbrauch100Km(double liter, int gefahreneKm, Tankfuellung tf, boolean isLastFull) {
