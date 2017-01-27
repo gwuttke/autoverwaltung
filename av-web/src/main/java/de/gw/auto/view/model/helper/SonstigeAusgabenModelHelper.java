@@ -40,10 +40,9 @@ public class SonstigeAusgabenModelHelper {
 		if (user == null) {
 			return tankenViewModel;
 		}
-
-		tankenViewModel = setPagination(user, page);
-
-		return tankenViewModel;
+		SonstigeAusgabenView sav = setPagination(user, page);
+		
+		return (sav == null ? tankenViewModel : sav);
 	}
 
 	private SonstigeAusgabenView setPagination(RegisteredUser user, int page) {
