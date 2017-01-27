@@ -1,7 +1,7 @@
 include(
 ':av-domain',	
 ':av-server',
-':av-client',
+/*':av-client',*/
 ':av-web'
 )
 
