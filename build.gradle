@@ -1,6 +1,6 @@
 allprojects {
 
-	version = '1.2.01'
+	version = '2.0.00'
 	group = "de.gw.auto"
 	repositories {
 		mavenCentral()
@@ -21,10 +21,10 @@ configure(subprojects.findAll { it.name }) {
 	}
 	
 	sourceSets {
-		main.compileClasspath += [configurations.provided]
+		main.compileClasspath.plus(configurations.provided)
 		test {
-			compileClasspath += [configurations.provided]
-			runtimeClasspath += [configurations.provided]
+			compileClasspath.plus(configurations.provided)
+			runtimeClasspath.plus(configurations.provided)
 		}
 	}
 }
@@ -57,5 +57,5 @@ task copyToLib(type: Copy) {
 stage.dependsOn(copyToLib)
 
 task wrapper(type: Wrapper) {
-	gradleVersion = "3.2.1"
+	gradleVersion = "3.3"
 }
