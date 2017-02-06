@@ -5,44 +5,43 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Kraftstoff;
-import de.gw.auto.domain.Kraftstoffsorte;
 
 public class AutoModel {
 	private String kfz;
 
-	@Max(value=999999,message="Der Kauf Km-Stand darf 999999 nicht überschreiten")
-	@Min(value=1,message="Der Kauf Km-Stnd darf 1 nicht unterschreiten")
+	@Max(value = 999999, message = "Der Kauf Km-Stand darf 999999 nicht überschreiten")
+	@Min(value = 1, message = "Der Kauf Km-Stnd darf 1 nicht unterschreiten")
 	private int kmKauf;
 
-	@NotBlank(message="Es muss ein Kaufdatum angegeben werden")
+	@NotNull(message = "Ein Datum muss angegeben werden")
+	@DateTimeFormat(pattern = "dd.MM.YYYY")
 	private Date kauf;
 
-	@NotBlank(message="Es muss ein Erstzulassungsdatum angegeben werden")
+	@NotNull(message = "Ein Datum muss angegeben werden")
+	@DateTimeFormat(pattern = "dd.MM.YYYY")
 	private Date erstZulassung;
 
 	private List<Kraftstoff> kraftstoffarten = new ArrayList<Kraftstoff>();
 
-	@NotNull(message="es muss ein Kaftstoff ausgewählt werden")
+	@NotNull(message = "es muss ein Kaftstoff ausgewählt werden")
 	private Kraftstoff userKraftstoffart;
 
-	@Min(value=1,message="Der aktuelle Km-Stand darf nicht 1 unterschreiten und sollte größer ald der Kauf Km-Stand sein")
+	@Min(value = 1, message = "Der aktuelle Km-Stand darf nicht 1 unterschreiten und sollte größer ald der Kauf Km-Stand sein")
 	private int kmAktuell;
 
-	@Min(value=1,message="Der Start Km-Stand darf nicht 1 unterschreiten und sollte kleiner oder Gleich dem kmAktuell sein")
+	@Min(value = 1, message = "Der Start Km-Stand darf nicht 1 unterschreiten und sollte kleiner oder Gleich dem kmAktuell sein")
 	private int kmStart;
 
 	protected AutoModel() {
@@ -50,14 +49,12 @@ public class AutoModel {
 	}
 
 	public AutoModel(Auto auto) {
-		this(auto.getKfz(), auto.getKmKauf(), auto.getKauf(), auto
-				.getErstZulassung(), null, auto.getKraftstoff(), auto
-				.getKmAktuell(), auto.getKmStart());
+		this(auto.getKfz(), auto.getKmKauf(), auto.getKauf(), auto.getErstZulassung(), null, auto.getKraftstoff(),
+				auto.getKmAktuell(), auto.getKmStart());
 	}
 
-	protected AutoModel(String kfz, int kmKauf, Date kauf, Date erstZulassung,
-			List<Kraftstoff> kraftstoffarten, Kraftstoff userKraftstoffart,
-			int kmAktuell, int kmStart) {
+	protected AutoModel(String kfz, int kmKauf, Date kauf, Date erstZulassung, List<Kraftstoff> kraftstoffarten,
+			Kraftstoff userKraftstoffart, int kmAktuell, int kmStart) {
 		this();
 		this.kfz = kfz;
 		this.kmKauf = kmKauf;
@@ -113,29 +110,42 @@ public class AutoModel {
 		return kauf;
 	}
 
-	public void setKauf(String kauf) throws ParseException {
-		this.kauf = stringToDate(kauf);
+	public void setKauf(Date kauf) throws ParseException {
+		this.kauf = kauf;
 	}
 
+	/**
+	 * @deprecated
+	 * @since 2.0.00
+	 * @param dateString
+	 * @return
+	 * @throws ParseException
+	 */
+	@Deprecated
 	public static Date stringToDate(String dateString) throws ParseException {
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		return format.parse(dateString);
 	}
 
+	/**
+	 * @deprecate
+	 * @since 2.0.00
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	@Deprecated
 	public static String formattedDate(Date date) throws ParseException {
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		return format.format(date);
 	}
 
-	/*
-	 * public void setKauf(Date kauf) { this.kauf = kauf; }
-	 */
 	public Date getErstZulassung() {
 		return erstZulassung;
 	}
 
-	public void setErstZulassung(String erstZulassung) throws ParseException {
-		this.erstZulassung = stringToDate(erstZulassung);
+	public void setErstZulassung(Date erstZulassung) {
+		this.erstZulassung = erstZulassung;
 	}
 
 	public int getKmAktuell() {

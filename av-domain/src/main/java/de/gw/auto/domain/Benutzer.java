@@ -47,7 +47,7 @@ public class Benutzer implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "auto_benutzer", joinColumns = { @JoinColumn(name = "users_id") }, inverseJoinColumns = { @JoinColumn(name = "Auto_id") })
-	private List<Auto> autos;
+	private List<Auto> autos = new ArrayList<Auto>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(nullable = true, name = "currentautoid")
