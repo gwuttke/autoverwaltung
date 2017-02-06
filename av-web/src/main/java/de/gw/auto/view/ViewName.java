@@ -13,8 +13,6 @@ public class ViewName {
 
 	private static final String ROOT_USER = ROOT + USER;
 
-	private static final String ROOT_USER_TANKEN = ROOT_USER + ROOT + TANKEN;
-	
 	public static final String ROOT_USER_SHOW = ROOT_USER +ROOT+ "show"; 
 
 	public static final String LOGIN = "login";
@@ -25,7 +23,7 @@ public class ViewName {
 
 	public static final String REGISTRATION = "registration";
 
-	public static final String USER_MAIN_PAGE = ROOT_USER_TANKEN + "/show";
+	public static final String USER_MAIN_PAGE = ROOT_USER + "/show";
 
 	public static final String DEFAULT_ROOT = ROOT;
 

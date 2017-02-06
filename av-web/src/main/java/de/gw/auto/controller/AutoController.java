@@ -71,7 +71,7 @@ public class AutoController extends ControllerHelper {
 			if (user.getAutos().contains(a)) {
 				user.setCurrentAuto(a);
 				user = benutzerDAO.save(user);
-				return "redirect:/user/tanken/show";
+				return "redirect:/user/show";
 			}
 		String referer = request.getHeader("Referer");
 		return "redirect:" + referer;
