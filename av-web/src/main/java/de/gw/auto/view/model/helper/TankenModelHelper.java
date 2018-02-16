@@ -1,32 +1,21 @@
 package de.gw.auto.view.model.helper;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
 
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Tankfuellung;
 import de.gw.auto.service.implementation.TankenService;
 import de.gw.auto.service.implementation.TankfuellungenPdf;
 import de.gw.auto.view.model.AuswertungProJahr;
-import de.gw.auto.view.model.NewTanken;
 import de.gw.auto.view.model.TankenModel;
 import de.gw.auto.view.model.TankenViewModel;
 
