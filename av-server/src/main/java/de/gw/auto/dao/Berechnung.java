@@ -2,17 +2,12 @@ package de.gw.auto.dao;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.JLabel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +16,6 @@ import de.gw.auto.Constans;
 import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Info;
 import de.gw.auto.domain.Tanken;
-import de.gw.auto.service.RegisteredUser;
 
 @Service
 public class Berechnung {
@@ -34,21 +28,10 @@ public class Berechnung {
 	
 	protected Berechnung(){
 	}
-
-	public void init(RegisteredUser registeredUser) {
-		tankenDao.init(registeredUser);
-		tankenInfo.init(tankenDao, registeredUser);
-	}
 	
 	private double b;
 	private Map<String, List<Info>> ausgabenBerechnungen = new HashMap<String, List<Info>>();
 
-	public List<Info> getTankenInfos(TankenDao tDao) {
-		if (ausgabenBerechnungen.size() == 0) {
-			addAusgabenBerechnungen(Constans.TANKEN, tankenInfo.getTankenInfos());
-		}
-		return ausgabenBerechnungen.get(Constans.TANKEN);
-	}
 
 	public void addAusgabenBerechnungen(String bezeichnung, List<Info> info) {
 		this.ausgabenBerechnungen.put(bezeichnung, info);

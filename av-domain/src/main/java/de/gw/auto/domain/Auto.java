@@ -207,10 +207,4 @@ public class Auto implements Serializable {
 		this.kraftstoff = kraftstoff;
 	}
 
-	@Deprecated
-	public String getBenzinartenString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(kraftstoff);
-		return sb.toString();
-	}
 }
