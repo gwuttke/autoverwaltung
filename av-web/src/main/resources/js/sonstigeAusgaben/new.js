@@ -10,6 +10,7 @@ $(function() {
 	});
 	$("body").on("click","#btnSaveSonstigeAusgaben",function(){
 		$('#newSonstigeAusgabenForm').submit();
+		window.location = urlSaveSonstigeAusgabenCancel;
 	});
 	initNewSonstigeAusgaben();
 });

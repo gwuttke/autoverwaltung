@@ -11,17 +11,9 @@
 					sonstige Ausgaben vorhanden, bitte f&uuml;gen Sie minderstens einen hinzu!
 				</div>
 			</div>
-			<div th:if="*{not #lists.isEmpty(pages.source)}"
-				id="tankenNotEmpty">
+			<div th:if="*{not #lists.isEmpty(pages.source)}" id="tankenNotEmpty">
+				<th:block th:include="fragments/pagination :: pagination(paginationList=*{pages})"/>
 				<div class="list-group">
-					<ul class="pagination">
-						<li
-							th:each="number : *{#numbers.sequence(0,pages.getPageCount()-1)}"
-							th:class="${number}==*{pages.page}?'active':''">
-							<a th:text="${number+1}"
-							th:href="@{/user/sonstigeAusgaben/show(page=${number})}">1</a>
-						</li>
-					</ul>
 					<div th:each="sonstigeAusgabenModel : *{pages.pageList}"
 						class="list-group-item col-sm-12">
 						<dl class="dl-horizontal">
@@ -48,6 +40,7 @@
 						</dl>
 					</div>
 				</div>
+			<th:block th:include="fragments/pagination :: pagination(paginationList=*{pages})"/>
 			</div>
 		</th:block>
 	</div>

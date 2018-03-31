@@ -23,5 +23,12 @@ $(function() {
 		});
 	});
 	
+	$('#tankfuellungenTab').click(function(){
+		$(this).tab('show')
+	});
+	
+	$('#sonstigeAusgabenTab').click(function(){
+		$(this).tab('show')
+	});
 });
 
