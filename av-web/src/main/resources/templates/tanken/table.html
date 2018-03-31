@@ -14,36 +14,8 @@
 			</div>
 			<div th:if="*{not #lists.isEmpty(tankfuellungenView.getSource())}"
 				id="tankenNotEmpty">
+				<th:block th:include="fragments/pagination :: pagination(paginationList=*{tankfuellungenView})"/>
 				<div class="list-group">
-					<ul class="pagination" th:with="maxCount=*{tankfuellungenView.getPageCount()}, currentPage=*{tankfuellungenView.getPage()}">
-						<li>
-							<a th:href="@{/user/show(page=0)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isFirstPage()?'disabled':''}">&lt;&lt;</a>
-						</li>
-						<li>
-							<a th:href="@{/user/show(page=${currentPage}-1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isFirstPage()?'disabled':''}">&lt;</a>
-						</li>
-						<th:block>
-							<li th:each="number : *{#numbers.sequence(tankfuellungenView.getFirstLinkedPage()+1,tankfuellungenView.getLastLinkedPage()+1)}" th:class="${number}==${currentPage}+1?'active':''">
-								<a th:text="${number}" th:href="@{/user/show(page=${number-1})}">1</a>
-							</li>
-						</th:block>
-						<li>
-							<a th:href="@{/user/show(page=${currentPage}+1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isLastPage()?'disabled':''}">&gt;</a>
-						</li>
-						<li>
-							<a th:href="@{/user/show(page=*{tankfuellungenView.getPageCount()}-1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isLastPage()?'disabled':''}">&gt;&gt;</a>
-						</li>
-						<th:block th:if="*{tankfuellungenView.getLastLinkedPage() &lt; tankfuellungenView.getPageCount()-1}">
-							<li>
-								<a th:href="@{/user/show(page=*{tankfuellungenView.getLastLinkedPage()+1})}">...
-								</a>
-							</li>
-							<li th:class="*{tankfuellungenView.isLastPage()}?'active':''" >
-								<a th:href="@{/user/show(page=*{tankfuellungenView.getPageCount()-1})}" th:text="*{tankfuellungenView.getPageCount()}">last Page
-								</a>
-							</li>
-						</th:block>
-					</ul>
 					<div th:each="tankenModel : *{tankfuellungenView.pageList}"
 						class="list-group-item col-sm-12"
 						th:classappend="|list-group-item-${tankenModel.cssStyleRow}|">
@@ -91,6 +63,7 @@
 						</dl>
 					</div>
 				</div>
+				<th:block th:include="fragments/pagination :: pagination(paginationList=*{tankfuellungenView})"/>
 			</div>
 		</th:block>
 	</div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+	<th:block th:fragment="pagination(paginationList)">
+		<ul class="pagination" th:with="maxCount=${paginationList.getPageCount()}, currentPage=${paginationList.getPage()}">
+			<li>
+				<a th:href="@{/user/show(page=0)}" class="btn btn-default" th:classappend="${paginationList.isFirstPage()?'disabled':''}">&lt;&lt;</a>
+			</li>
+			<li>
+				<a th:href="@{/user/show(page=${currentPage}-1)}" class="btn btn-default" th:classappend="${paginationList.isFirstPage()?'disabled':''}">&lt;</a>
+			</li>
+			<th:block>
+				<li th:each="number : ${#numbers.sequence(paginationList.getFirstLinkedPage()+1,paginationList.getLastLinkedPage()+1)}" th:class="${number}==${currentPage}+1?'active':''">
+					<a th:text="${number}" th:href="@{/user/show(page=${number-1})}">1</a>
+				</li>
+			</th:block>
+			<li>
+				<a th:href="@{/user/show(page=${currentPage}+1)}" class="btn btn-default" th:classappend="${paginationList.isLastPage()?'disabled':''}">&gt;</a>
+			</li>
+			<li>
+				<a th:href="@{/user/show(page=${paginationList.getPageCount()}-1)}" class="btn btn-default" th:classappend="${paginationList.isLastPage()?'disabled':''}">&gt;&gt;</a>
+			</li>
+			<th:block th:if="${paginationList.getLastLinkedPage() &lt; paginationList.getPageCount()-1}">
+				<li>
+					<a th:href="@{/user/show(page=${paginationList.getLastLinkedPage()+1})}">...
+					</a>
+				</li>
+				<li th:class="${paginationList.isLastPage()}?'active':''" >
+					<a th:href="@{/user/show(page=${paginationList.getPageCount()-1})}" th:text="${paginationList.getPageCount()}">last Page
+					</a>
+				</li>
+			</th:block>
+		</ul>
+	</th:block>
+</body>
+</html>
