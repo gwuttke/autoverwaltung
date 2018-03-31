@@ -33,6 +33,16 @@
 						<li>
 							<a th:href="@{/user/show(page=*{tankfuellungenView.getPageCount()}-1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isLastPage()?'disabled':''}">&gt;&gt;</a>
 						</li>
+						<th:block th:if="*{tankfuellungenView.getLastLinkedPage() &lt; tankfuellungenView.getPageCount()-1}">
+							<li>
+								<a th:href="@{/user/show(page=*{tankfuellungenView.getLastLinkedPage()+1})}">...
+								</a>
+							</li>
+							<li th:class="*{tankfuellungenView.isLastPage()}?'active':''" >
+								<a th:href="@{/user/show(page=*{tankfuellungenView.getPageCount()-1})}" th:text="*{tankfuellungenView.getPageCount()}">last Page
+								</a>
+							</li>
+						</th:block>
 					</ul>
 					<div th:each="tankenModel : *{tankfuellungenView.pageList}"
 						class="list-group-item col-sm-12"
