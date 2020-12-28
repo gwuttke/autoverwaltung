@@ -9,26 +9,6 @@ allprojects {
 
 apply plugin: "base"
 
-configure(subprojects.findAll { it.name }) {
-	apply plugin: "java"
-	
-	sourceCompatibility = 1.8
-	targetCompatibility = sourceCompatibility
-	
-	configurations {
-		provided
-		compile
-	}
-	
-	sourceSets {
-		main.compileClasspath.plus(configurations.provided)
-		test {
-			compileClasspath.plus(configurations.provided)
-			runtimeClasspath.plus(configurations.provided)
-		}
-	}
-}
-
 subprojects {
 
 	apply plugin: "eclipse"
@@ -40,9 +20,6 @@ subprojects {
 		
 	compileJava.options.encoding = "UTF-8"
 	compileTestJava.options.encoding = "UTF-8"
-
-	eclipse.project.natures "org.springsource.ide.eclipse.gradle.core.nature"	
-	eclipse.classpath.plusConfigurations += [configurations.provided]
 }
 
 task stage {
@@ -57,5 +34,5 @@ task copyToLib(type: Copy) {
 stage.dependsOn(copyToLib)
 
 task wrapper(type: Wrapper) {
-	gradleVersion = "3.3"
+	gradleVersion = "6.7.1"
 }
