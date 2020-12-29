@@ -15,12 +15,23 @@
 			<div th:if="*{not #lists.isEmpty(tankfuellungenView.getSource())}"
 				id="tankenNotEmpty">
 				<div class="list-group">
-					<ul class="pagination">
-						<li
-							th:each="number : *{#numbers.sequence(0,tankfuellungenView.getPageCount()-1)}"
-							th:class="${number}==*{tankfuellungenView.page}?'active':''">
-							<a th:text="${number+1}"
-							th:href="@{/user/tanken/show(page=${number})}">1</a>
+					<ul class="pagination" th:with="maxCount=*{tankfuellungenView.getPageCount()}, currentPage=*{tankfuellungenView.getPage()}">
+						<li>
+							<a th:href="@{/user/show(page=0)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isFirstPage()?'disabled':''}">&lt;&lt;</a>
+						</li>
+						<li>
+							<a th:href="@{/user/show(page=${currentPage}-1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isFirstPage()?'disabled':''}">&lt;</a>
+						</li>
+						<th:block>
+							<li th:each="number : *{#numbers.sequence(tankfuellungenView.getFirstLinkedPage()+1,tankfuellungenView.getLastLinkedPage()+1)}" th:class="${number}==${currentPage}+1?'active':''">
+								<a th:text="${number}" th:href="@{/user/show(page=${number-1})}">1</a>
+							</li>
+						</th:block>
+						<li>
+							<a th:href="@{/user/show(page=${currentPage}+1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isLastPage()?'disabled':''}">&gt;</a>
+						</li>
+						<li>
+							<a th:href="@{/user/show(page=*{tankfuellungenView.getPageCount()}-1)}" class="btn btn-default" th:classappend="*{tankfuellungenView.isLastPage()?'disabled':''}">&gt;&gt;</a>
 						</li>
 					</ul>
 					<div th:each="tankenModel : *{tankfuellungenView.pageList}"
@@ -40,7 +51,7 @@
 								<dd
 									th:text="${#numbers.formatDecimal(tankenModel.kosten,2,2,'COMMA')} + &euro;">32.45
 									&euro;</dd>
-								<dt>verbrauch auf 100km</dt>
+								<dt>&Oslash;-verbrauch auf 100km</dt>
 								<dd
 									th:text="${#numbers.formatDecimal(tankenModel.getVerbrauch100Km(),1,2,'COMMA')} + ' l'">
 									4.35 l</dd>

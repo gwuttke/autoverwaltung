@@ -144,6 +144,7 @@ public class TankenModelHelper {
 				tankenModels, new MutableSortDefinition("getKmStand()", true,
 						false));
 		pages.setPage(page);
+		pages.setMaxLinkedPages(3);
 		tankenViewModel.setTankfuellungenView(pages);
 	}
 
