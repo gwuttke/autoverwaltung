@@ -22,9 +22,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @SequenceGenerator(name = "benutzer_seq", sequenceName = "benutzer_id_seq")
-@Table(name = "Benutzer", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
 		@UniqueConstraint(name = "ui_name_passwort", columnNames = {
-				"benutzername", "passwort" }),
+				"username", "password" }),
 		@UniqueConstraint(name = "ui_name_email_vorname", columnNames = {
 				"name", "vorname", "eMail" }) })
 public class Benutzer implements Serializable {
@@ -35,9 +35,11 @@ public class Benutzer implements Serializable {
 	private String name;
 
 	private String vorname;
-
+	
+	@Column(name="username")
 	private String benutzername;
-
+	
+	@Column(name="password")
 	private String passwort;
 
 	@Column(name = "email", unique = true)
