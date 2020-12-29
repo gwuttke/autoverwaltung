@@ -187,4 +187,20 @@ public class TankenController extends ControllerHelper {
 		return new ResponseEntity<byte[]>(tankenHelper.createPDF(user
 				.getCurrentAuto()), HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value="delete", method=RequestMethod.POST)
+	public String delete(@RequestParam("id")long id, Principal principal) {
+		
+		if (id==0) {
+			return null;
+		}
+		RegisteredUser user = giveRegisteredUser(principal);
+		if (user == null) {
+			return null;
+		}
+		
+		tankenService.delete(id);
+			
+		return ViewName.REDIRECT_ROOT_USER_SHOW;
+	}
 }

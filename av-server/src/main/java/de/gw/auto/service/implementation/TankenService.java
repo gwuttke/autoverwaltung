@@ -52,7 +52,7 @@ public class TankenService extends TankenInfo {
 
 	/**
 	 * @deprecated only used for Swing GUI
-	 * Folgende Datenstrucktur: Datum;Benzinart;Km-Stand;Ort;Land;Tankfüllstand
+	 * Folgende Datenstrucktur: Datum;Benzinart;Km-Stand;Ort;Land;Tankfï¿½llstand
 	 * ;Liter;PreisProLitter;Kosten
 	 * 
 	 * @return Object[][] wenn keine Daten vorhanden dann null
@@ -95,5 +95,9 @@ public class TankenService extends TankenInfo {
 			RegisteredUser registeredUser) {
 		this.tankenList = tankenDao.tankenUpdate(tanken, registeredUser);
 		return tankenList;
+	}
+	
+	public void delete(long id) {
+		tankenDao.delete(id);
 	}
 }

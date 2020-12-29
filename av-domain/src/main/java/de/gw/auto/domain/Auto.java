@@ -183,6 +183,10 @@ public class Auto implements Serializable {
 		}
 		tankfuellungen.add(tanken);
 	}
+	
+	public boolean remove(Tanken tanken) {
+		return tankfuellungen.remove(tanken);
+	}
 
 	@Override
 	public String toString() {

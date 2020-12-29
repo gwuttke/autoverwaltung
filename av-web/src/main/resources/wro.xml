@@ -19,6 +19,10 @@
 	<js>classpath:assert/bootstrap/switch/bootstrap-switch.js</js>
 	</group>
 	
+	<group name="bootbox">
+		<js>classpath:assert/bootbox/bootbox.all.min.js</js>
+	</group>
+	
 	<group name="selectize">
 	<css>classpath:assert/selectize/css/selectize.bootstrap3.css</css>
 	<css>classpath:assert/selectize/css/selectize.selectize.css</css>
@@ -49,6 +53,7 @@
 		<group-ref>datepicker</group-ref>
 		<group-ref>bootstrap-switch</group-ref>
 		<group-ref>selectize</group-ref>
+		<group-ref>bootbox</group-ref>
 		<group-ref>own</group-ref>
 		<group-ref>header</group-ref>
 	</group>
@@ -59,7 +64,7 @@
 	</group>
 	
 	<group name="main-page">
-		<js>classpath:js/mainPage\get.js</js>
+		<js>classpath:js/mainPage/get.js</js>
 	</group>
 	
 	<group name="tanken">

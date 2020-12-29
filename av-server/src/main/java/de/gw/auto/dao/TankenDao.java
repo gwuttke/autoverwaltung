@@ -3,6 +3,8 @@ package de.gw.auto.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +55,7 @@ public class TankenDao {
 	 * 
 	 * @param auto
 	 * @return gibt den Durchschittspreis pro Liter eines autos in einem
-	 *  bestimmten Jahr aus liefert -1 wenn die anzahl der Tankfüllungen
+	 *  bestimmten Jahr aus liefert -1 wenn die anzahl der Tankfï¿½llungen
 	 *  0 ergeben
 	 */
 	public Double getAvgPreisProLiter(int year, Auto auto) {
@@ -86,7 +88,7 @@ public class TankenDao {
 	 * 
 	 * @param auto
 	 * @return gibt den Durchschittspreis pro Liter eines autos aus liefert -1
-	 *         wenn die anzahl der Tankfüllungen 0 ergeben
+	 *         wenn die anzahl der Tankfï¿½llungen 0 ergeben
 	 */
 	public Double getAvgPreisProLiter(Auto auto) {
 		Double avg = tankenRepository.findAvgByPreisProLiter(auto);
@@ -118,6 +120,10 @@ public class TankenDao {
 			Tankfuellung tfuellung = new Tankfuellung(t, tVorFuellung);
 			tankfuellungList.add(tfuellung);
 		}
+	}
+	
+	public void delete(long id) {
+		tankenRepository.delete(id);
 	}
 
 	/**
@@ -157,7 +163,7 @@ public class TankenDao {
 		return getTankenList();
 	}
 
-	public Tanken search(int id) {
+	public Tanken search(long id) {
 		return tankenRepository.findOne(id);
 	}
 

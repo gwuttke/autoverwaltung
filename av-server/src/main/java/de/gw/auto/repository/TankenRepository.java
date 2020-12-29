@@ -13,7 +13,7 @@ import de.gw.auto.domain.Auto;
 import de.gw.auto.domain.Tanken;
 
 @Repository
-public interface TankenRepository extends JpaRepository<Tanken, Integer>,
+public interface TankenRepository extends JpaRepository<Tanken, Long>,
 		JpaSpecificationExecutor<Tanken> {
 
 	public List<Tanken> findByAutoOrderByKmStandDesc(Auto auto);

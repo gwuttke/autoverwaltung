@@ -3,7 +3,6 @@ package de.gw.auto.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -21,7 +21,7 @@ import javax.persistence.SequenceGenerator;
 public class Tanken implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "tanken_gen")
-	private int id;
+	private long id;
 	@Column(name = "kmstand")
 	private int kmStand;
 	@ManyToOne
@@ -45,7 +45,7 @@ public class Tanken implements Serializable {
 	@JoinColumn(name = "auto_id")
 	private Auto auto;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -69,7 +69,7 @@ public class Tanken implements Serializable {
 		this.benzinArt = benzinArt;
 	}
 
-	protected Tanken(int id, int kmStand, Land land, Ort ort, Tank tank,
+	protected Tanken(long id, int kmStand, Land land, Ort ort, Tank tank,
 			BigDecimal kosten, Auto auto, Date datum, BigDecimal liter,
 			BigDecimal preisProLiter, Kraftstoffsorte benzinArt) {
 		this(kmStand, land, ort, tank, kosten, auto, datum, liter,
@@ -186,17 +186,15 @@ public class Tanken implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((auto == null) ? 0 : auto.hashCode());
-		result = prime * result
-				+ ((benzinArt == null) ? 0 : benzinArt.hashCode());
+		result = prime * result + ((benzinArt == null) ? 0 : benzinArt.hashCode());
 		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + kmStand;
 		result = prime * result + ((kosten == null) ? 0 : kosten.hashCode());
 		result = prime * result + ((land == null) ? 0 : land.hashCode());
 		result = prime * result + ((liter == null) ? 0 : liter.hashCode());
 		result = prime * result + ((ort == null) ? 0 : ort.hashCode());
-		result = prime * result
-				+ ((preisProLiter == null) ? 0 : preisProLiter.hashCode());
+		result = prime * result + ((preisProLiter == null) ? 0 : preisProLiter.hashCode());
 		result = prime * result + ((tank == null) ? 0 : tank.hashCode());
 		return result;
 	}
@@ -275,6 +273,11 @@ public class Tanken implements Serializable {
 
 	public void setKmStand(int kmStand) {
 		this.kmStand = kmStand;
+	}
+	
+	@PreRemove
+	private void removeTankenFromAuto() {
+	    this.getAuto().remove(this);
 	}
 
 }

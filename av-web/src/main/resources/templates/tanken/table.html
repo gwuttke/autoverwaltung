@@ -59,13 +59,13 @@
 									km</dd>
 							</div>
 							<div class="col-sm-3">
-								<dt>Land</dt>
-								<dd th:text="${tankenModel.land}">Deutschland</dd>
-								<dt>Ort</dt>
-								<th:block th:switch="${tankenModel.ort} == null">
-									<dd th:case="true">keine Angabe</dd>
-									<dd th:case="false" th:text="${tankenModel.ort}">M&uuml;nchen</dd>
-								</th:block>
+								<a name="TankenDelete" class="btn btn-danger pull-right" data-toggle="tooltip" th:attr="data-dbid=${tankenModel.id}" data-placement="top" title="Löschen"> 
+									<span class="glyphicon glyphicon-trash"/>
+								</a>
+							</div>
+							<div class="col-sm-12 text-center">
+								<strong>Adresse</strong>
+								<span	th:text="|${tankenModel.ort == null ? 'keine Angabe' : tankenModel.ort}, ${tankenModel.land}|">Muenchen, Deutschland</span>
 							</div>
 						</dl>
 					</div>
