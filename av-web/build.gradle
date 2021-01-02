@@ -6,21 +6,19 @@ buildscript {
 		maven { url "http://repo.spring.io/libs-snapshot" }
 		maven { url 'http://dl.bintray.com/sbuettner/maven' }
     }
-    dependencies {
-    	classpath "io.spring.gradle:dependency-management-plugin:0.6.0.BUILD-SNAPSHOT"
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.4.RELEASE")
-        classpath 'org.springframework:springloaded:1.2.0.RELEASE'
-    }
 }
-	apply plugin: 'io.spring.dependency-management'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: "eclipse-wtp"
+
+plugins {
+	id 'org.springframework.boot' version '1.5.22.RELEASE'
+	id 'io.spring.dependency-management' version '0.6.0.RELEASE'
+	id 'eclipse-wtp'
+}
 
 jar {
     baseName = 'autoverwaltung-web'
 }
 
-bootRepackage {
+springBoot {
     mainClass = 'de.gw.auto.ApplicationWeb'
 }
 

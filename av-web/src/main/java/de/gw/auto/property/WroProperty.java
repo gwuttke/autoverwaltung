@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "wro", locations = "classpath:application.properties", ignoreUnknownFields = true)
-public class WroProperty {
+@ConfigurationProperties(prefix = "wro", ignoreUnknownFields = true)
+public class WroProperty { 
 	private boolean debug = false;
 
 	private boolean gzipEnable = true;
