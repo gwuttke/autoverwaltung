@@ -23,16 +23,6 @@
 			<li>
 				<a th:href="@{/user/show(page=${paginationList.getPageCount()}-1)}" class="btn btn-default" th:classappend="${paginationList.isLastPage()?'disabled':''}">&gt;&gt;</a>
 			</li>
-			<th:block th:if="${paginationList.getLastLinkedPage() &lt; paginationList.getPageCount()-1}">
-				<li>
-					<a th:href="@{/user/show(page=${paginationList.getLastLinkedPage()+1})}">...
-					</a>
-				</li>
-				<li th:class="${paginationList.isLastPage()}?'active':''" >
-					<a th:href="@{/user/show(page=${paginationList.getPageCount()-1})}" th:text="${paginationList.getPageCount()}">last Page
-					</a>
-				</li>
-			</th:block>
 		</ul>
 	</th:block>
 </body>
