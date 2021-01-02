@@ -102,5 +102,9 @@ public class TankenDao {
 	public Tanken search(long id) {
 		return tankenRepository.findOne(id);
 	}
+	
+	public void delete(long id) {
+		tankenRepository.delete(id);
+	}
 
 }
